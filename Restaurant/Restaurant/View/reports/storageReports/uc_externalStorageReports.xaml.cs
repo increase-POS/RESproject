@@ -688,8 +688,8 @@ namespace Restaurant.View.reports.storageReports
                           && (comboBranch.SelectedItem != null ? (x.branchId == selectedBranch.branchId) : true)
                           && (comboItem.SelectedItem != null ? (x.itemId == selectedItem.ItemId) : true)
                           && (comboUnit.SelectedItem != null ? (x.unitId == selectedUnit.UnitId) : true)
-                          && (dp_externalItemsStartDate.SelectedDate != null ? (x.updateDate >= startDate.SelectedDate) : true)
-                          && (dp_externalItemsEndDate.SelectedDate != null ? (x.updateDate <= endDate.SelectedDate) : true)
+                          && (dp_externalItemsStartDate.SelectedDate != null ? (x.invDate >= startDate.SelectedDate) : true)
+                          && (dp_externalItemsEndDate.SelectedDate != null ? (x.invDate <= endDate.SelectedDate) : true)
                           )
                           : true
                           )
@@ -699,8 +699,8 @@ namespace Restaurant.View.reports.storageReports
                           && (comboBranch.SelectedItem != null ? (x.branchId == selectedBranch.branchId) : true)
                           && (comboItem.SelectedItem != null ? (x.agentType == cb_externalAgentsAgentsType.SelectedValue.ToString()) : true)
                           && (comboUnit.SelectedItem != null ? (x.agentId == selectedAgent.AgentId) : true)
-                          && (dp_externalAgentsStartDate.SelectedDate != null ? (x.updateDate >= startDate.SelectedDate) : true)
-                          && (dp_externalAgentsEndDate.SelectedDate != null ? (x.updateDate <= endDate.SelectedDate) : true)
+                          && (dp_externalAgentsStartDate.SelectedDate != null ? (x.invDate >= startDate.SelectedDate) : true)
+                          && (dp_externalAgentsEndDate.SelectedDate != null ? (x.invDate <= endDate.SelectedDate) : true)
                           )
                           : true
                           )
@@ -708,8 +708,8 @@ namespace Restaurant.View.reports.storageReports
                             (comboBranch.SelectedItem != null ? (x.branchId == selectedBranch.branchId) : true)
                           && (comboItem.SelectedItem != null ? (getInvoiceType(x.invType) == selectedInvoiceType.InvoiceType) : true)
                           && (comboUnit.SelectedItem != null ? (x.invoiceId == selectedInvoice.InvoiceId) : true)
-                          && (dp_externalInvoicesStartDate.SelectedDate != null ? (x.updateDate >= startDate.SelectedDate) : true)
-                          && (dp_externalInvoicesEndDate.SelectedDate != null ? (x.updateDate <= endDate.SelectedDate) : true)
+                          && (dp_externalInvoicesStartDate.SelectedDate != null ? (x.invDate >= startDate.SelectedDate) : true)
+                          && (dp_externalInvoicesEndDate.SelectedDate != null ? (x.invDate <= endDate.SelectedDate) : true)
                           )
                           : true
                           )

@@ -754,7 +754,7 @@
                                 <DataGrid.Columns>
                                 <DataGridTextColumn x:Name="col_invNumber" Visibility="Hidden" Width="*" Header="No." Binding="{Binding invNumber}"/>
                                 <DataGridTextColumn x:Name="col_invTypeNumber" Visibility="Hidden" Width="*" Header="Invoice Type-Number" Binding="{Binding invType,Converter={StaticResource invoiceTypeConverter }}"/>
-                                <DataGridTextColumn x:Name="col_invDate" Visibility="Hidden" Width="*" Header="Invoice Date" Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter }}"/>
+                                <DataGridTextColumn x:Name="col_invDate" Visibility="Hidden" Width="*" Header="Invoice Date" Binding="{Binding invDate,Converter={StaticResource dateFrameConverter }}"/>
                                 <DataGridTextColumn x:Name="col_branch" Width="*" Header="Brnach" Binding="{Binding branchName}"/>
                                 <DataGridTextColumn x:Name="col_agentType" Visibility="Hidden" Width="*" Header="Agent Type" Binding="{Binding agentType , Converter={StaticResource agentTypeConverter}}"/>
                                 <DataGridTextColumn x:Name="col_agent" Visibility="Hidden" Width="*" Header="Agent Name" Binding="{Binding agentName}"/>

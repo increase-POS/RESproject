@@ -188,8 +188,8 @@ namespace Restaurant.View.reports.storageReports
 
                          (branch.SelectedItem != null ? (x.branchId == selectedBranch.branchId) : true)
                         && (cb.SelectedItem != null ? (x.itemUnitId == selectedType1.ItemsUnitsId) : true)
-                        && (dp_stocktakingFalseStartDate.SelectedDate != null ? (x.IupdateDate >= startDate.SelectedDate) : true)
-                        && (dp_stocktakingFalseEndDate.SelectedDate != null ? (x.IupdateDate <= endDate.SelectedDate) : true)
+                        && (dp_stocktakingFalseStartDate.SelectedDate != null ? (x.inventoryDate >= startDate.SelectedDate) : true)
+                        && (dp_stocktakingFalseEndDate.SelectedDate != null ? (x.inventoryDate <= endDate.SelectedDate) : true)
           ));
             shortFallsLst = result;
             return result;

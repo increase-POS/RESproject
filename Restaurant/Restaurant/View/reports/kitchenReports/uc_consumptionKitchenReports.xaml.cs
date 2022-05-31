@@ -244,10 +244,10 @@ namespace Restaurant.View.reports.kitchenReports
                 searchText = txt_search.Text.ToLower();
 
                 requestsTemp = consumptions.Where(p =>
-                (dp_startDate.SelectedDate != null ? p.updateDate >= dp_startDate.SelectedDate : true)
+                (dp_startDate.SelectedDate != null ? p.invDate >= dp_startDate.SelectedDate : true)
                 &&
                 //end date
-                (dp_endDate.SelectedDate != null ? p.updateDate <= dp_endDate.SelectedDate : true)
+                (dp_endDate.SelectedDate != null ? p.invDate <= dp_endDate.SelectedDate : true)
                 );
 
                 if (selectedTab == 0) await SearchInvoice();

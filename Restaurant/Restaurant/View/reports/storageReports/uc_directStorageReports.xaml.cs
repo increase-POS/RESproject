@@ -304,8 +304,8 @@ namespace Restaurant.View.reports.storageReports
                              (cb_directItemsBranches.SelectedItem != null ? (x.branchId == Convert.ToInt32(cb_directItemsBranches.SelectedValue)) : true)
                           && (cb_directItems.SelectedItem != null ? (x.itemId == Convert.ToInt32(cb_directItems.SelectedValue)) : true)
                           && (cb_directUnits.SelectedItem != null ? (x.unitId == Convert.ToInt32(cb_directUnits.SelectedValue)) : true)//cb_directUnits
-                          && (dp_directStartDate.SelectedDate != null ? (x.updateDate >= dp_directStartDate.SelectedDate) : true)
-                          && (dp_directEndDate.SelectedDate != null ? (x.updateDate <= dp_directEndDate.SelectedDate) : true)
+                          && (dp_directStartDate.SelectedDate != null ? (x.invDate >= dp_directStartDate.SelectedDate) : true)
+                          && (dp_directEndDate.SelectedDate != null ? (x.invDate <= dp_directEndDate.SelectedDate) : true)
                           );
             return result;
 

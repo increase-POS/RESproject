@@ -310,7 +310,7 @@
                         <DataGridTextColumn x:Name="col_branch" Width="*" Header="Brnach" Binding="{Binding branchName}"/>
                         <DataGridTextColumn x:Name="col_use" Width="*" Header="User" Binding="{Binding userdestroy}"/>
                         <DataGridTextColumn x:Name="col_destroiedItemsUnits" Width="*" Header="Items/Units" Binding="{Binding ItemUnits}"/>
-                        <DataGridTextColumn x:Name="col_destroiedDate"       Width="*" Header="Date" Binding="{Binding IupdateDate,Converter={StaticResource dateFrameConverter }}"/>
+                        <DataGridTextColumn x:Name="col_destroiedDate"       Width="*" Header="Date" Binding="{Binding invDate,Converter={StaticResource dateFrameConverter }}"/>
                         <DataGridTextColumn x:Name="col_destroiedReason"     Width="*" Header="Reason" Binding="{Binding causeDestroy}"/>
                         <DataGridTextColumn x:Name="col_destroiedAmount"     Width="*" Header="QTY" Binding="{Binding quantity}"/>
 

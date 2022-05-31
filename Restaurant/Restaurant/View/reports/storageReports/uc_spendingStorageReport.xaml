@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaurant.View.reports.storageReports"
-             mc:Ignorable="d"  Tag="spendingStorageReports"
+             mc:Ignorable="d"  Tag="spendingRequestsKitchenReports"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -72,36 +72,6 @@
                                           Data="{StaticResource invoice}"  >
                                         <Path.ToolTip>
                                             <ToolTip x:Name="tt_invoice" Content="Invoices"
-                                              Placement="left" 
-                                              HorizontalOffset="35"
-                                              PlacementRectangle="50,0,0,0"
-                                              VerticalOffset="-10"/>
-                                        </Path.ToolTip>
-                                    </Path>
-                                </Button>
-                            </Border>
-                            <Border x:Name="bdr_item" Grid.Column="1" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,-1">
-                                <Button x:Name="btn_item"  Background="Transparent" 
-                                    materialDesign:RippleAssist.Feedback="Transparent" Tag="items"
-                                    BorderBrush="Transparent" Height="auto" Click="Btn_item_Click">
-                                    <Button.Triggers>
-                                        <EventTrigger RoutedEvent="Button.Click">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                        Storyboard.TargetName="bdrMain"
-                        Storyboard.TargetProperty="Opacity"
-                        From="0" To="1"
-                        Duration="0:0:1"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </Button.Triggers>
-                                    <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                       Width="25" Height="25"   FlowDirection="LeftToRight"  x:Name="path_item" 
-                                         Data="{StaticResource mainCourses}"   >
-                                        <Path.ToolTip>
-                                            <ToolTip x:Name="tt_item" Content="Items"
                                               Placement="left" 
                                               HorizontalOffset="35"
                                               PlacementRectangle="50,0,0,0"

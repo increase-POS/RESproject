@@ -676,8 +676,8 @@ namespace Restaurant.View.reports.storageReports
 
                            (Items.SelectedItem != null ? (x.itemId == selectedItem.ItemId) : true)
                         && (unit.SelectedItem != null ? (x.unitId == selectedUnit.UnitId) : true)
-                        && (dp_internalItemsStartDate.SelectedDate != null ? (x.updateDate >= startDate.SelectedDate) : true)
-                        && (dp_InternalItemsEndDate.SelectedDate != null ? (x.updateDate <= endDate.SelectedDate) : true)
+                        && (dp_internalItemsStartDate.SelectedDate != null ? (x.invDate >= startDate.SelectedDate) : true)
+                        && (dp_InternalItemsEndDate.SelectedDate != null ? (x.invDate <= endDate.SelectedDate) : true)
                         )
                         ) ;
                 result = result.Where(x => (
@@ -707,8 +707,8 @@ namespace Restaurant.View.reports.storageReports
 
                                          (comboFromBranch.SelectedItem != null ? (x.branchId == selectedFromBranch.branchId) : true)
                                       && (comboToBranch.SelectedItem != null ? (x.invType == cb_internalOperaterType.SelectedValue.ToString()) : true)
-                                      && (dp_internalOperatorStartDate.SelectedDate != null ? (x.updateDate >= startDate.SelectedDate) : true)
-                                      && (dp_InternalOperatorEndDate.SelectedDate != null ? (x.updateDate <= endDate.SelectedDate) : true)
+                                      && (dp_internalOperatorStartDate.SelectedDate != null ? (x.invDate >= startDate.SelectedDate) : true)
+                                      && (dp_InternalOperatorEndDate.SelectedDate != null ? (x.invDate <= endDate.SelectedDate) : true)
                         ));
                 lst = result;
                 return result;

@@ -200,8 +200,8 @@ namespace Restaurant.View.reports.storageReports
 
                          (branch.SelectedItem != null ? (x.branchId == selectedBranch.branchId) : true)
                         && (cb.SelectedItem != null ? (x.itemUnitId == selectedType.ItemsUnitsId) : true)
-                        && (startDate.SelectedDate != null ? (x.IupdateDate >= startDate.SelectedDate) : true)
-                        && (endDate.SelectedDate != null ? (x.IupdateDate <= endDate.SelectedDate) : true)
+                        && (startDate.SelectedDate != null ? (x.invDate >= startDate.SelectedDate) : true)
+                        && (endDate.SelectedDate != null ? (x.invDate <= endDate.SelectedDate) : true)
           ));
 
             lst = result;

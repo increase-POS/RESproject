@@ -79,8 +79,6 @@ namespace Restaurant.View.reports.storageReports
 
                 Btn_invoice_Click(btn_invoice, null);
 
-                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_invoice.Tag.ToString());
-
             }
             catch (Exception ex)
             {
@@ -102,7 +100,6 @@ namespace Restaurant.View.reports.storageReports
             chk_return.Content = AppSettings.resourcemanager.GetString("trReturn");
 
             tt_invoice.Content = AppSettings.resourcemanager.GetString("trInvoices");
-            tt_item.Content = AppSettings.resourcemanager.GetString("trItems");
             //items
             col_invNum.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_itemName.Header = AppSettings.resourcemanager.GetString("trItem");
@@ -149,10 +146,6 @@ namespace Restaurant.View.reports.storageReports
 
         async Task<IEnumerable<ItemTransferInvoice>> RefreshSpendingRequestsList()
         {
-            //if (selectedTab == 0)
-            //    spendingRequests = await statisticsModel.GetSpendingRequest(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
-            //else if (selectedTab == 1)
-            //    spendingRequests = await statisticsModel.GetSpendingItems(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
             spendingRequests = await statisticsModel.GetSpendingStorage(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
             return spendingRequests;
         }
@@ -287,7 +280,7 @@ namespace Restaurant.View.reports.storageReports
             {
                 HelpClass.StartAwait(grid_main);
 
-                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
+                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 hideAllColumns();
                 dkp_chks.Visibility = Visibility.Visible;
                 row_chks.Height = row_cmb.Height;
@@ -302,48 +295,10 @@ namespace Restaurant.View.reports.storageReports
 
                 txt_search.Text = "";
 
-                path_item.Fill = Brushes.White;
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_invoice);
                 path_invoice.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                 chk_allBranches.IsChecked = true;
-
-                await Search();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-        }
-
-        private async void Btn_item_Click(object sender, RoutedEventArgs e)
-        {//items
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                hideAllColumns();
-                dkp_chks.Visibility = Visibility.Collapsed;
-                row_chks.Height = new GridLength(0);
-                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
-                selectedTab = 1;
-                spendingRequests = null;
-
-                chk_allBranches.IsChecked = true;
-
-                col_itemName.Visibility = Visibility.Visible;
-                col_unitName.Visibility = Visibility.Visible;
-                col_quantity.Visibility = Visibility.Visible;
-                col_branch.Visibility = Visibility.Visible;
-
-                txt_search.Text = "";
-                path_invoice.Fill = Brushes.White;
-                bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
-                ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_item);
-                path_item.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                 await Search();
 

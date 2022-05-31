@@ -140,10 +140,10 @@ namespace Restaurant.View.reports.accountsReports
 
             taxTemp = taxTab.Where(t =>
             //start date
-            (dp_startDate.SelectedDate != null ? t.updateDate >= dp_startDate.SelectedDate : true)
+            (dp_startDate.SelectedDate != null ? t.invDate >= dp_startDate.SelectedDate : true)
             &&
             //end date
-            (dp_endDate.SelectedDate != null ? t.updateDate <= dp_endDate.SelectedDate : true)
+            (dp_endDate.SelectedDate != null ? t.invDate <= dp_endDate.SelectedDate : true)
             &&
             //branchID
             (cb_branches.SelectedIndex != -1 ? t.branchId == Convert.ToInt32(cb_branches.SelectedValue) : true)
