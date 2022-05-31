@@ -26,8 +26,8 @@ namespace Restaurant
 
                 //wd_setupFirstPos logIn = new wd_setupFirstPos();
 
-                //wd_logIn logIn = new wd_logIn();
-                MainWindow logIn = new MainWindow();
+                wd_logIn logIn = new wd_logIn();
+                //MainWindow logIn = new MainWindow();
                 logIn.Show();
 
             }
