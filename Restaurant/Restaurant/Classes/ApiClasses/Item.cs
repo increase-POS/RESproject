@@ -181,11 +181,12 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Item>> GetAllSalesItemsInv(int branchId,string day, int membershipId =0)
+        public async Task<List<Item>> GetAllSalesItemsInv(int branchId,string day,string invType, int membershipId =0)
         {
             List<Item> items = new List<Item>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("day", day);
+            parameters.Add("invType", invType);
             parameters.Add("membershipId", membershipId.ToString());
             parameters.Add("branchId", branchId.ToString());
 

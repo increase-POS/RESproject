@@ -148,7 +148,6 @@ namespace Restaurant.View.sales
             }
             translate();
             #endregion
-            // Clear();
 
             #region loading
             loadingList = new List<keyValueBool>();
@@ -335,13 +334,10 @@ namespace Restaurant.View.sales
                 {
                     await addInvoice("ssd");
                 }
-            }
+            }           
 
         }
-        //async Task changeInvTypeView()
-        //{
-
-        //}
+       
         private void translate()
         {
             txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");
@@ -443,8 +439,9 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                //if (items is null)
-                await refreshItemsList();
+                if (items is null)
+                    await refreshItemsList();
+
                 itemsQuery = items.ToList();
 
                 #region search for category
@@ -479,7 +476,7 @@ namespace Restaurant.View.sales
         {
             DateTime dt = DateTime.Now;
             string day = dt.DayOfWeek.ToString();
-            items = await FillCombo.item.GetAllSalesItemsInv(MainWindow.branchLogin.branchId, day.ToLower(), _MemberShipId);
+            items = await FillCombo.item.GetAllSalesItemsInv(MainWindow.branchLogin.branchId, day.ToLower(), AppSettings.invType, _MemberShipId);
         }
         #endregion
         #region Pagination Y
@@ -2156,7 +2153,7 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_invType_Click(object sender, RoutedEventArgs e)
+        private async void Btn_invType_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -2169,10 +2166,13 @@ namespace Restaurant.View.sales
                 w.ShowDialog();
                 if (w.isOk)
                 {
-                    //MessageBox.Show(w.invTypeValue);
-                    //AppSettings.invType = w.invTypeValue;
                     changeInvType();
 
+                    #region refresh items with new price
+                    await refreshItemsList();
+                    Search();
+                    refreshItemsPrice();
+                    #endregion
                 }
 
                 Window.GetWindow(this).Opacity = 1;
@@ -2477,7 +2477,7 @@ namespace Restaurant.View.sales
                     }
 
                     #region refresh items with new price
-                    //await refreshItemsList();
+                    await refreshItemsList();
                     await Search();
                     refreshItemsPrice();
                     #endregion
