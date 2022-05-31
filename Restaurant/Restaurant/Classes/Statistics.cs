@@ -2326,7 +2326,7 @@ namespace Restaurant.Classes
             }
             return list;
 
-
+            #region old
             //List<CashTransferSts> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -2364,7 +2364,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
-
+            #endregion
         }
 
         //المقبوضات
@@ -2388,7 +2388,7 @@ namespace Restaurant.Classes
             }
             return list;
 
-
+            #region old
             //List<CashTransferSts> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -2426,7 +2426,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
-
+            #endregion
         }
 
 
@@ -2452,7 +2452,7 @@ namespace Restaurant.Classes
             }
             return list;
 
-
+            #region old
             //List<CashTransferSts> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -2490,6 +2490,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
 
         }
 
@@ -2515,7 +2516,7 @@ namespace Restaurant.Classes
             return list;
 
 
-
+            #region old
             //List<CashTransferSts> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -2553,7 +2554,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
-
+            #endregion
         }
 
         //كشف حساب
@@ -2577,8 +2578,7 @@ namespace Restaurant.Classes
             }
             return list;
 
-
-
+            #region old
             //List<CashTransferSts> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -2616,7 +2616,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
-
+            #endregion
         }
 
         // رصيد نقاط البيع والفروع
@@ -2641,7 +2641,7 @@ namespace Restaurant.Classes
             }
             return list;
 
-
+            #region old
             //List<BalanceSTS> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -2679,6 +2679,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
 
         // الارباح
@@ -2702,7 +2703,7 @@ namespace Restaurant.Classes
             }
             return list;
 
-
+            #region old
             //List<ItemUnitInvoiceProfit> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -2740,7 +2741,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
-
+            #endregion
         }
 
         // الضرائب
@@ -3935,8 +3936,6 @@ namespace Restaurant.Classes
                 default: return value;
             }
         }
-
- 
 
     }
 }

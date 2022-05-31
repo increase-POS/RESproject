@@ -165,8 +165,15 @@ namespace Restaurant.View.sales.promotion
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
 
             dg_invoicesClass.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
-            dg_invoicesClass.Columns[1].Header = AppSettings.resourcemanager.GetString("trMinimumInvoiceValueHint");
-            dg_invoicesClass.Columns[2].Header = AppSettings.resourcemanager.GetString("trMaximumInvoiceValueHint");
+            string str = AppSettings.resourcemanager.GetString("trMinimumInvoiceValueHint");
+            int index = str.IndexOf("...");
+            if (index != -1)
+            {
+                str = str.Remove(index);
+            }
+            dg_invoicesClass.Columns[1].Header = str;
+            string str1 = AppSettings.resourcemanager.GetString("trMinimumInvoiceValueHint");
+            dg_invoicesClass.Columns[2].Header = str1.Replace("..." , "");
             //dg_invoicesClass.Columns[3].Header = AppSettings.resourcemanager.GetString("trQuantity");
             //dg_invoicesClass.Columns[4].Header = AppSettings.resourcemanager.GetString("trRemainQuantity");
             //dg_invoicesClass.Columns[5].Header = AppSettings.resourcemanager.GetString("trvalidity");

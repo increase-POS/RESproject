@@ -421,6 +421,9 @@ namespace Restaurant.View.reports.storageReports
         {//refresh
             searchText = "";
             txt_search.Text = "";
+            chk_allBranches.IsChecked = true;
+            dp_startDate.SelectedDate = null;
+            dp_endDate.SelectedDate = null;
 
             callSearch(sender);
         }

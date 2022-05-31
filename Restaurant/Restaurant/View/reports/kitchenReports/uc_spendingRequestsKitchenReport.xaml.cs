@@ -249,10 +249,10 @@ namespace Restaurant.View.reports.kitchenReports
                 searchText = txt_search.Text.ToLower();
 
                 requestsTemp = spendingRequests.Where(p =>
-                (dp_startDate.SelectedDate != null ? p.updateDate >= dp_startDate.SelectedDate : true)
+                (dp_startDate.SelectedDate != null ? p.invDate >= dp_startDate.SelectedDate : true)
                 &&
                 //end date
-                (dp_endDate.SelectedDate != null ? p.updateDate <= dp_endDate.SelectedDate : true)
+                (dp_endDate.SelectedDate != null ? p.invDate <= dp_endDate.SelectedDate : true)
                 );
 
                 if (selectedTab == 0) await SearchInvoice();
@@ -457,6 +457,9 @@ namespace Restaurant.View.reports.kitchenReports
         {//refresh
             searchText = "";
             txt_search.Text = "";
+            chk_allBranches.IsChecked = true;
+            dp_startDate.SelectedDate = null;
+            dp_endDate.SelectedDate = null;
             callSearch(sender);
         }
         #endregion
