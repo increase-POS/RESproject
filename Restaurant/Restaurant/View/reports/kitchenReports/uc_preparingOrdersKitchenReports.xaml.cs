@@ -483,7 +483,7 @@ namespace Restaurant.View.reports.kitchenReports
             
             var tempName = ordersQuery.GroupBy(s => new { s.itemUnitId }).Select(s => new
             {
-                Name = s.FirstOrDefault().updateDate,
+                Name = s.FirstOrDefault().createDate,
             });
             names.AddRange(tempName.Select(nn => nn.Name.ToString()));
 
@@ -499,7 +499,7 @@ namespace Restaurant.View.reports.kitchenReports
                     {
                         var firstOfThisMonth = new DateTime(year, month, 1);
                         var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
-                        var drawQuantity = ordersQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Select(s =>  s.itemName ).Count();
+                        var drawQuantity = ordersQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Select(s =>  s.itemName ).Count();
                         orderLst.Add(drawQuantity);
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
 
@@ -521,7 +521,7 @@ namespace Restaurant.View.reports.kitchenReports
                 {
                     var firstOfThisYear = new DateTime(year, 1, 1);
                     var firstOfNextMYear = firstOfThisYear.AddYears(1);
-                    var drawQuantity = ordersQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Select(s => s.itemName).Count();
+                    var drawQuantity = ordersQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Select(s => s.itemName).Count();
 
                     orderLst.Add(drawQuantity);
 
