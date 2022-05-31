@@ -4069,4 +4069,7 @@
   <data name="trMemberships" xml:space="preserve">
     <value>العضويات</value>
   </data>
+  <data name="thereArenodata" xml:space="preserve">
+    <value>للأسف ! لايوجد بيانات</value>
+  </data>
 </root>

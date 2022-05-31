@@ -4084,4 +4084,7 @@ Please add Email in setting</value>
   <data name="trMemberships" xml:space="preserve">
     <value>Memberships</value>
   </data>
+  <data name="thereArenodata" xml:space="preserve">
+    <value>Sorry! There are no data</value>
+  </data>
 </root>
