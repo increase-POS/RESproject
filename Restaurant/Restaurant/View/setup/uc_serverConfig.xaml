@@ -21,63 +21,76 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Server Config" x:Name="txt_title" Foreground="#178DD2" 
+        <TextBlock Text="Server Config" x:Name="txt_title" Foreground="{StaticResource MainColor}" 
          Grid.ColumnSpan="2" FontWeight="Bold" FontSize="18"    VerticalAlignment="Center" 
                         HorizontalAlignment="Left" Margin="10,10,10,5" />
         <Border  Grid.Row="1" Grid.ColumnSpan="3"  Margin="5 0 5 5"      Height="2" 
-                 BorderThickness="0" Background="{StaticResource MainColorBlue}" />
+                 BorderThickness="0" Background="{StaticResource MainColor}" />
         <!--#region  Server Uri-->
         <TextBlock x:Name="txt_serverUriTitle" Text="Server Uri:" FontSize="14"  
                    HorizontalAlignment="Left" Margin="5"
-                           Foreground="{StaticResource MainColorBlue}" 
+                           Foreground="{StaticResource MainColor}" 
                       Grid.Row="2" Grid.Column="0"
                        VerticalAlignment="Center"  />
-        <TextBox x:Name="tb_serverUri" Text="" Padding="10,0,5,0"
+        <Border   Grid.Row="2" Grid.Column="1"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+            <Grid>
+                <TextBox x:Name="tb_serverUri" Text="" Padding="10,0,5,0"
                           Grid.Row="2" Grid.Column="1"      
-                     BorderThickness="0,0,0,2" materialDesign:HintAssist.Hint="Server Uri"
+                      materialDesign:HintAssist.Hint="Server Uri"
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                     Foreground="{StaticResource MainColorBlue}"  TextBlock.FontSize="12" Background="#f8f8f8" 
-                                     BorderBrush="AliceBlue" 
+                                     Foreground="{StaticResource ThickGrey}" 
+                         			BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40" Margin="5" 
+                                     Height="40" 
                                      TextChanged="Tb_validateEmptyTextChange" 
                                      LostFocus="Tb_validateEmptyLostFocus">
-            </TextBox>
-        <Path Fill="#E81123" Stretch="Fill" Margin="0,15,15,15" x:Name="p_errorServerUri"
+                </TextBox>
+                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" x:Name="p_errorServerUri"
                                   HorizontalAlignment="Right" Grid.Column="1"    Grid.Row="2"  Visibility="Collapsed" 
                                   VerticalAlignment="Center" Width="15"  Height="15"
                                   Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                <Path.ToolTip>
-                <ToolTip  x:Name="tt_errorServerUri" Content=""  Style="{StaticResource ToolTipError}"/>
-                </Path.ToolTip>
-            </Path>
-        <!--#endregion-->
+                    <Path.ToolTip>
+                        <ToolTip  x:Name="tt_errorServerUri" Content=""  Style="{StaticResource ToolTipError}"/>
+                    </Path.ToolTip>
+                </Path>
+
+
+
+            </Grid>
+        </Border>
+
+         <!--#endregion-->
 
         <!--#region  Activation key-->
         <TextBlock x:Name="txt_activationkeyTitle" Text="Activation key:" FontSize="14"  
                    HorizontalAlignment="Left" Margin="5"
-                           Foreground="{StaticResource MainColorBlue}" 
+                           Foreground="{StaticResource MainColor}" 
                       Grid.Row="3" Grid.Column="0"
                        VerticalAlignment="Center"  />
-        <TextBox x:Name="tb_activationkey" Text="" Padding="10,0,5,0"
-                          Grid.Row="3" Grid.Column="1"      
-                     BorderThickness="0,0,0,2" materialDesign:HintAssist.Hint="Activation key"
+        <Border Grid.Row="3" Grid.Column="1"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+            <Grid>
+                <TextBox x:Name="tb_activationkey" Text="" Padding="10,0,5,0"
+                      materialDesign:HintAssist.Hint="Activation key"
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                     Foreground="{StaticResource MainColorBlue}"  TextBlock.FontSize="12" Background="#f8f8f8" 
-                                     BorderBrush="AliceBlue" 
+                                     Foreground="{StaticResource ThickGrey}"  
+                         BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                      MaxLength="20" materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40" Margin="5" 
+                                     Height="40" 
                                      TextChanged="Tb_validateEmptyTextChange" 
                                      LostFocus="Tb_validateEmptyLostFocus">
-        </TextBox>
-        <Path Fill="#E81123" Stretch="Fill" Margin="0,15,15,15" x:Name="p_errorActivationkey"
+                </TextBox>
+                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" x:Name="p_errorActivationkey"
                                   HorizontalAlignment="Right" Grid.Column="1"   Grid.Row="3"  Visibility="Collapsed" 
                                   VerticalAlignment="Center" Width="15"  Height="15"
                                   Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-            <Path.ToolTip>
-                <ToolTip  x:Name="tt_errorActivationkey"  Style="{StaticResource ToolTipError}"/>
-            </Path.ToolTip>
-        </Path>
+                    <Path.ToolTip>
+                        <ToolTip  x:Name="tt_errorActivationkey"  Style="{StaticResource ToolTipError}"/>
+                    </Path.ToolTip>
+                </Path>
+
+            </Grid>
+        </Border>
+        
         <!--#endregion-->
 
     </Grid>

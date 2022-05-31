@@ -8,12 +8,12 @@
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"
-        Title="Increase POS"   
+        Title="Increase Restaurant"   
         Height="500" Width="600" 
         Background="Transparent" AllowsTransparency="True"
         Loaded="Window_Loaded" MouseDown="Window_MouseDown">
         <Border x:Name="bdrLogIn" CornerRadius="15"  Background="White"
-                BorderThickness="1" BorderBrush="#4CA8FF" >
+                BorderThickness="1" BorderBrush="{StaticResource LightMainColor}" >
         <Grid x:Name="grid_mainWindow">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -47,16 +47,16 @@
 
 
                 <Button x:Name="btn_cancel" Grid.Row="2"  Grid.Column="0"
-                  BorderBrush="{x:Null}" Click="Btn_cancel_Click" Background="{StaticResource MainColorBlue}"
-                        Margin="0 5 1 1"    Content="Cancel"/>
+                  BorderBrush="{x:Null}" Click="Btn_cancel_Click" Background="{StaticResource ThickGrey}"
+                        Margin="0 5 2.5 1"    Content="Cancel" Foreground="White"/>
 
                 <Button x:Name="btn_back" Tag="back" Grid.Row="2"  Grid.Column="1"
                   BorderBrush="{x:Null}" Click="Btn_back_Click"
-                        Margin="1 5 1 1"    Content="Back"/>
+                        Margin="2.5 5 2.5 1"    Content="Back" Foreground="White"/>
 
                 <Button x:Name="btn_next" Tag="next" Grid.Row="2"  Grid.Column="2"
                   BorderBrush="{x:Null}" Click="Btn_next_Click"
-                        Margin="1 5 0 1"    Content="Next"/>
+                        Margin="2.5 5 0 1"    Content="Next" Foreground="White"/>
             </Grid>
                 
 
@@ -73,7 +73,7 @@
                 </Grid.RowDefinitions>
                 <Border  Grid.RowSpan="10"  CornerRadius="0,15,15,0" >
                     <Border.Background>
-                        <ImageBrush Stretch="Fill"  />
+                        <ImageBrush Stretch="Fill"  ImageSource="/pic/setup-bg.png" />
                     </Border.Background>
                 </Border>
 

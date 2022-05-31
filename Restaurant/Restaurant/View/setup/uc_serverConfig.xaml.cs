@@ -93,12 +93,12 @@ namespace Restaurant.View.setup
                 p_error.Visibility = Visibility.Visible;
                 //tt_error.Content = wd_setupFirstPos.resourcemanager.GetString(tr);
                 tt_error.Content = "This field cann't be empty";
-                tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+                //tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
                 isValid = false;
             }
             else
             {
-                tb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
+                //tb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
                 p_error.Visibility = Visibility.Collapsed;
             }
             return isValid;

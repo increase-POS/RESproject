@@ -77,10 +77,12 @@ namespace Restaurant.View.setup
             if (citynumofcountry.Count() > 0)
             {
                 cb_areaFaxLocal.Visibility = Visibility.Visible;
+                brd_areaFaxLocal.Visibility = Visibility.Visible;
             }
             else
             {
                 cb_areaFaxLocal.Visibility = Visibility.Collapsed;
+                brd_areaFaxLocal.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -235,13 +237,13 @@ namespace Restaurant.View.setup
                 {
                     p_error.Visibility = Visibility.Visible;
                     tt_error.Content = ("Email address is not valid");
-                    tb.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#15FF0000"));   
+                    //tb.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#15FF0000"));   
                     isValid = false;
                 }
                 else
                 {
                     p_error.Visibility = Visibility.Collapsed;
-                    tb.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f8f8f8")); 
+                    //tb.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f8f8f8")); 
                     isValid = true;
                 }
             }
@@ -275,10 +277,12 @@ namespace Restaurant.View.setup
                             {
 
                                 cb_areaPhoneLocal.Visibility = Visibility.Visible;
+                                brd_areaPhoneLocal.Visibility = Visibility.Visible;
                             }
                             else
                             {
                                 cb_areaPhoneLocal.Visibility = Visibility.Collapsed;
+                                brd_areaPhoneLocal.Visibility = Visibility.Collapsed;
                             }
                         }
 
@@ -318,10 +322,12 @@ namespace Restaurant.View.setup
                             if (citynumofcountry.Count() > 0)
                             {
                                 cb_areaFaxLocal.Visibility = Visibility.Visible;
+                                brd_areaFaxLocal.Visibility = Visibility.Visible;
                             }
                             else
                             {
                                 cb_areaFaxLocal.Visibility = Visibility.Collapsed;
+                                brd_areaFaxLocal.Visibility = Visibility.Collapsed;
                             }
                         }
                     }

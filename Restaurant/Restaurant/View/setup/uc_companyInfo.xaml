@@ -6,10 +6,11 @@
              xmlns:local="clr-namespace:Restaurant.View.setup"
              mc:Ignorable="d" 
             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="400" d:DesignWidth="400"
+             d:DesignHeight="420" d:DesignWidth="400"
              Loaded="UserControl_Loaded">
     <Grid x:Name="grid_main">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
@@ -26,7 +27,7 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Company Info" x:Name="txt_title" Foreground="#178DD2" 
+        <TextBlock Text="Company Info" x:Name="txt_title" Foreground="{StaticResource MainColor}" 
          Grid.ColumnSpan="3" FontWeight="Bold" FontSize="18"    VerticalAlignment="Center" 
                         HorizontalAlignment="Left" Margin="10,10,10,5" />
         <Border  Grid.Row="1" Grid.ColumnSpan="3"  Margin="5 0 5 5"      Height="2" 
@@ -43,19 +44,22 @@
             <!--#region  Name-->
         <TextBlock x:Name="txt_nameTitle" Text="Name:" FontSize="14"  
                    HorizontalAlignment="Left" Margin="5"
-                           Foreground="{StaticResource MainColorBlue}" 
+                           Foreground="{StaticResource MainColor}" 
                       Grid.Row="2" Grid.Column="0"
                        VerticalAlignment="Center"  />
+        <Border Grid.Row="2" Grid.Column="1"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+            <Grid>
+           
         <TextBox x:Name="tb_name" Grid.Row="2" Grid.Column="1" Text="{Binding test, Mode=OneWay}" Padding="10,0,5,0"
-                                     BorderThickness="0,0,0,2" materialDesign:HintAssist.Hint="Company Name..."
+                                      materialDesign:HintAssist.Hint="Company Name..."
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      Foreground="#4E4E4E"  TextBlock.FontSize="12" Background="#f8f8f8" 
-                                     BorderBrush="AliceBlue" 
+                                      Foreground="#4E4E4E"   Height="40"   
+                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                      MaxLength="20" materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40" Margin="10,5,10,5" 
+                                       
                                      TextChanged="Tb_validateEmptyTextChange" 
                                      LostFocus="Tb_validateEmptyLostFocus"/>
-        <Path Fill="#E81123" Stretch="Fill" Margin="0,15,15,15" x:Name="p_errorName"
+        <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" x:Name="p_errorName"
                                   HorizontalAlignment="Right"  Grid.Row="2" Grid.Column="1"  Visibility="Collapsed" 
                                   VerticalAlignment="Center" Width="15"  Height="15"
                                   Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
@@ -63,19 +67,24 @@
                     <ToolTip  x:Name="tt_errorName"  Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
                 </Path.ToolTip>
             </Path>
-            <!--#endregion-->
+            </Grid>
+        </Border>
+        <!--#endregion-->
             <!--#region  Address-->
         <TextBlock x:Name="txt_addressTitle" Text="Address:" FontSize="14"  
                    HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top"
-                           Foreground="{StaticResource MainColorBlue}" 
+                           Foreground="{StaticResource MainColor}" 
                       Grid.Row="3" Grid.Column="0"   />
-        <TextBox x:Name="tb_address"  Grid.Row="3" Grid.RowSpan="2" Grid.Column="1"  Text="{Binding address, Mode=OneWay}"    Padding="10,0,5,0" 
+        <Border Grid.Row="3" Grid.RowSpan="2" Grid.Column="1"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+            <Grid>
+                <TextBox x:Name="tb_address"  Grid.Row="3" Grid.RowSpan="2" Grid.Column="1"  Text="{Binding address, Mode=OneWay}"    Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                     BorderThickness="0,0,0,2" materialDesign:HintAssist.Hint="Address..."    
-                                     Foreground="#4E4E4E"  TextBlock.FontSize="12" Background="#f8f8f8"
-                                     BorderBrush="AliceBlue" MaxLength="100"
+                                     materialDesign:HintAssist.Hint="Address..."    
+                                     Foreground="#4E4E4E"  Height="80"  
+                                    BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                 MaxLength="100"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                       Margin="10,5,10,5" Width="174"  TextWrapping="Wrap"
+                                     TextWrapping="Wrap"
                                      TextChanged="Tb_validateEmptyTextChange" 
                                      LostFocus="Tb_validateEmptyLostFocus"/>
         <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" Grid.Row="3" Grid.RowSpan="2" Grid.Column="1"
@@ -86,20 +95,29 @@
                     <ToolTip x:Name="tt_errorAddress"  Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
                 </Path.ToolTip>
             </Path>
-            <!--#endregion-->
+            </Grid>
+        </Border>
+        <!--#endregion-->
             <!--#region  Email-->
         <TextBlock x:Name="txt_emailTitle" Text="Email:" FontSize="14"  
                    HorizontalAlignment="Left" Margin="5"
-                           Foreground="{StaticResource MainColorBlue}" 
+                           Foreground="{StaticResource MainColor}" 
                       Grid.Row="5" Grid.Column="0"
                        VerticalAlignment="Center"  />
+        <Border Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"   CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+            <Grid>
+
+
+
+          
         <TextBox x:Name="tb_email" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding email, Mode=OneWay}"   Padding="10,0,5,0"  
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                     BorderThickness="0,0,0,2" materialDesign:HintAssist.Hint="Email..."    
-                                     Foreground="#4E4E4E"  TextBlock.FontSize="12" Background="#f8f8f8"
-                                     BorderBrush="AliceBlue" MaxLength="100"
+                                     materialDesign:HintAssist.Hint="Email..."    
+                                     Foreground="#4E4E4E"   
+                                      MaxLength="100"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="10,5,10,5"
+                                     Height="40"  
+                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                     TextChanged="Tb_validateEmptyTextChange" 
                                      LostFocus="Tb_validateEmptyLostFocus" 
                                      PreviewKeyDown="Tb_PreviewKeyDown"/>
@@ -112,23 +130,45 @@
                     <ToolTip  x:Name="tt_errorEmail"  Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
                 </Path.ToolTip>
             </Path>
-            <!--#endregion-->
+            </Grid>
+        </Border>
+        <!--#endregion-->
             <!--#region  Phone-->
         <TextBlock x:Name="txt_mobileTitle" Text="Mobile:" FontSize="14"  
                    HorizontalAlignment="Left" Margin="5"
-                           Foreground="{StaticResource MainColorBlue}" 
+                           Foreground="{StaticResource MainColor}" 
                       Grid.Row="6" Grid.Column="0"
                        VerticalAlignment="Center"  />
-        <Grid  Grid.Row="6" Grid.Column="1" Margin="5,0,5,0" Grid.ColumnSpan="2">
+        <Grid  Grid.Row="6" Grid.Column="1"  Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-            <ComboBox Grid.Column="0" x:Name="cb_areaMobile" Padding="10,10,5,0"  SelectedIndex="0"   TextBlock.Foreground="#4E4E4E"    TextBlock.FontSize="12" Margin="5,5,0,5" VerticalAlignment="Center"   Height="40" Width="60" Background="#f8f8f8"   BorderBrush="#737373"      BorderThickness="0"  FontFamily="{StaticResource Font-cairo-light}"  />
-            <TextBox x:Name="tb_mobile" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Stretch" Text="{Binding mobile, Mode=OneWay}" Padding="10,0,5,0"     BorderThickness="0,0,0,2" materialDesign:HintAssist.Hint="Mobile..."   Foreground="#4E4E4E"  
-                     TextBlock.FontSize="12" Background="#f8f8f8" BorderBrush="AliceBlue" MaxLength="9" 
-                     PreviewTextInput="NumberValidationTextBox"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40"   Margin="5" 
+            <Border Grid.Row="0"  CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <Grid>
+
+            <ComboBox Grid.Column="0" x:Name="cb_areaMobile"
+                      Padding="10,10,5,0"  SelectedIndex="0" 
+                      TextBlock.Foreground="#4E4E4E"   
+                       
+                      VerticalAlignment="Center"   Height="40"
+                      Width="60"  
+                      BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                   
+                      FontFamily="{StaticResource Font-cairo-light}"  />
+                </Grid>
+            </Border>
+            <Border Grid.Column="1"  CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <Grid>
+
+
+
+                <TextBox x:Name="tb_mobile" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Stretch" Text="{Binding mobile, Mode=OneWay}" Padding="10,0,5,0"   
+                         materialDesign:HintAssist.Hint="Mobile..."   Foreground="#4E4E4E"  
+                     MaxLength="9" 
+                     PreviewTextInput="NumberValidationTextBox"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40"  
                              PreviewKeyDown="Tb_PreviewKeyDown"   
+                         BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                              TextChanged="Tb_validateEmptyTextChange" 
                              LostFocus="Tb_validateEmptyLostFocus"/>
             <Path Fill="#E81123" Stretch="Fill" Grid.Column="1" DockPanel.Dock="Right" x:Name="p_errorMobile"   HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" Width="15"  Height="15" Margin="5,5,15,5" Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17L11,17 L11,15 L13,15 L13,17 Z">
@@ -136,44 +176,58 @@
                         <ToolTip x:Name="tt_errorMobile" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
                     </Path.ToolTip>
                 </Path>
-            </Grid>
+                </Grid>
+            </Border>
+
+        </Grid>
         <TextBlock x:Name="txt_phoneTitle" Text="phone:" FontSize="14"  
                    HorizontalAlignment="Left" Margin="5"
-                           Foreground="{StaticResource MainColorBlue}" 
+                           Foreground="{StaticResource MainColor}" 
                       Grid.Row="7" Grid.Column="0"
                        VerticalAlignment="Center"  />
-        <Grid   Grid.Row="7" Grid.Column="1" Margin="5,0,5,0"  Grid.ColumnSpan="2" >
+        <Grid   Grid.Row="7" Grid.Column="1"   Grid.ColumnSpan="2" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-            <ComboBox x:Name="cb_areaPhone" Padding="10,10,5,0" TextBlock.Foreground="#4E4E4E"
+            <Border Grid.Row="0"   CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <Grid>
+                    <ComboBox x:Name="cb_areaPhone" Padding="10,10,5,0" TextBlock.Foreground="#4E4E4E"
                             SelectedIndex="0"  Grid.Column="0" Height="40"
-                           TextBlock.FontSize="12" Margin="5,5,0,5"
-                  
-               Width="60"  
-                                  Background="#f8f8f8" 
-                           BorderBrush="#737373"       BorderThickness="0" 
-                            FontFamily="{StaticResource Font-cairo-light}"   
+                            
+                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+               Width="60"         FontFamily="{StaticResource Font-cairo-light}"   
                              Grid.Row="2" SelectionChanged="Cb_areaPhone_SelectionChanged"  />
-
+                </Grid>
+            </Border>
+            <Border x:Name="brd_areaPhoneLocal" Grid.Row="0"  Grid.Column="1" Visibility="Collapsed"   CornerRadius="10" Margin="5,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Grid>
+						 
+						
             <ComboBox Visibility="Collapsed" x:Name="cb_areaPhoneLocal" Padding="10,10,5,0" TextBlock.Foreground="#4E4E4E"
                             SelectedIndex="0"  
-                           TextBlock.FontSize="12" Margin="5,5,5,5"
-                  
+                           
+                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                 Height="40" Width="60"  Grid.Column="1"
-                                  Background="#f8f8f8"
-                           BorderBrush="#737373"       BorderThickness="0" 
-                            FontFamily="{StaticResource Font-cairo-light}"  />
+                             FontFamily="{StaticResource Font-cairo-light}"  />
+                </Grid>
+            </Border>
+            <Border  Grid.Column="2"  CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <Grid>
+
+
+
+               
             <TextBox x:Name="tb_phone"  Text="{Binding phone, Mode=OneWay}" Grid.Column="2"  Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    BorderThickness="0,0,0,2" materialDesign:HintAssist.Hint="Phone..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12" Background="#f8f8f8"
-                           BorderBrush="AliceBlue" PreviewTextInput="NumberValidationTextBox"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                   materialDesign:HintAssist.Hint="Phone..."    
+                           Foreground="#4E4E4E"   
+                    PreviewTextInput="NumberValidationTextBox"
+                               BorderBrush="#737373"   BorderThickness="0" Margin="4,0"   
+                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                      MaxLength="9"
-                  Height="40"   Margin="5"    PreviewKeyDown="Tb_PreviewKeyDown"
+                  Height="40"   PreviewKeyDown="Tb_PreviewKeyDown"
                               TextChanged="Tb_validateEmptyTextChange" 
                               LostFocus="Tb_validateEmptyLostFocus"/>
 
@@ -185,45 +239,59 @@
                         <ToolTip  x:Name="tt_errorPhone"  Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
                     </Path.ToolTip>
                 </Path>
-            </Grid>
+                </Grid>
+            </Border>
+        </Grid>
         <TextBlock x:Name="txt_faxTitle" Text="fax:" FontSize="14"  
                    HorizontalAlignment="Left" Margin="5"
-                           Foreground="{StaticResource MainColorBlue}" 
+                           Foreground="{StaticResource MainColor}" 
                       Grid.Row="8" Grid.Column="0"
                        VerticalAlignment="Center"  />
-        <Grid  Grid.Row="8" Grid.Column="1"  Margin="5,0,5,0"  Grid.ColumnSpan="2" >
+        <Grid  Grid.Row="8" Grid.Column="1"    Grid.ColumnSpan="2" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+            <Border Grid.Row="0"   CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <Grid>
             <ComboBox x:Name="cb_areaFax" Padding="10,10,5,0" TextBlock.Foreground="#4E4E4E"
                             SelectedIndex="0"  Grid.Column="0"
-                           TextBlock.FontSize="12" Margin="5,5,0,5"
-                    
+                           
+                    BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                 Height="40" Width="60" 
-                                  Background="#f8f8f8" 
-                           BorderBrush="#737373"       BorderThickness="0" 
                             FontFamily="{StaticResource Font-cairo-light}"   
                              Grid.Row="2" SelectionChanged="Cb_areaFax_SelectionChanged"  />
-            <ComboBox Visibility="Collapsed" x:Name="cb_areaFaxLocal" Padding="10,10,5,0" TextBlock.Foreground="#4E4E4E"
+                </Grid>
+            </Border>
+            <Border x:Name="brd_areaFaxLocal" Grid.Column="1" Visibility="Collapsed"   CornerRadius="10" Margin="5,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <Grid>
+
+                <ComboBox Visibility="Collapsed" x:Name="cb_areaFaxLocal" Padding="10,10,5,0" TextBlock.Foreground="#4E4E4E"
                             SelectedIndex="0"
-                           TextBlock.FontSize="12" Margin="5,5,5,5"
+                           
                      HorizontalAlignment="Center" VerticalAlignment="Center" 
                 Height="40" Width="60"  Grid.Column="1"
-                                  Background="#f8f8f8"  
-                           BorderBrush="#737373"       BorderThickness="0" 
+                          BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                  
                             FontFamily="{StaticResource Font-cairo-light}"  />
+
+
+                </Grid>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="2"    CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <Grid>
 
 
             <TextBox x:Name="tb_fax"  Text="{Binding fax, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                     BorderThickness="0,0,0,2" materialDesign:HintAssist.Hint="Fax..."    
-                                     Foreground="#4E4E4E"  TextBlock.FontSize="12" Background="#f8f8f8"
-                                     BorderBrush="AliceBlue" PreviewTextInput="NumberValidationTextBox"
-                                     Height="40"   Margin="5" Grid.Column="2" 
+                                     materialDesign:HintAssist.Hint="Fax..."    
+                                     Foreground="#4E4E4E" 
+                                      PreviewTextInput="NumberValidationTextBox"
+                                     Height="40"   Grid.Column="2" 
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                       MaxLength="9"
+                     BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                       PreviewKeyDown="Tb_PreviewKeyDown"
                                      TextChanged="Tb_validateEmptyTextChange" 
                                      LostFocus="Tb_validateEmptyLostFocus"/>
@@ -236,7 +304,10 @@
                     </Path.ToolTip>
                 </Path>
 
-            </Grid>
+                </Grid>
+            </Border>
+
+        </Grid>
         
             <!--#endregion-->
     </Grid>

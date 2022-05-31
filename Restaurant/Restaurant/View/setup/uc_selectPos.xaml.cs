@@ -149,11 +149,11 @@ namespace Restaurant.View.setup
             {
                 p_error.Visibility = Visibility.Visible;
                 tt_error.Content = wd_setupOtherPos.resourcemanager.GetString(tr);
-                cb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+                //cb.Background = (Brush)bc.ConvertFrom("#15FF0000");
             }
             else
             {
-                cb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
+                //cb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
                 p_error.Visibility = Visibility.Collapsed;
 
             }
