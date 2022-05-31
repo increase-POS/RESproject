@@ -505,8 +505,8 @@
     <Compile Include="View\reports\storageReports\uc_internalStorageReports.xaml.cs">
       <DependentUpon>uc_internalStorageReports.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\reports\storageReports\uc_spendingStorageReport.xaml.cs">
-      <DependentUpon>uc_spendingStorageReport.xaml</DependentUpon>
+    <Compile Include="View\reports\storageReports\uc_spendingStorageReports.xaml.cs">
+      <DependentUpon>uc_spendingStorageReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\storageReports\uc_stockStorageReports.xaml.cs">
       <DependentUpon>uc_stockStorageReports.xaml</DependentUpon>
@@ -1175,9 +1175,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\reports\storageReports\uc_spendingStorageReport.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="View\reports\storageReports\uc_spendingStorageReports.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\reports\storageReports\uc_stockStorageReports.xaml">
       <SubType>Designer</SubType>
@@ -1712,6 +1712,7 @@
     <Content Include="EmailTemplates\images\req2.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="pic\setup-bg.png" />
     <Content Include="Reports\StatisticReport\Storage\Ar\ArExternalAgent.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

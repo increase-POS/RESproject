@@ -24,9 +24,9 @@ using System.Windows.Shapes;
 namespace Restaurant.View.reports.storageReports
 {
     /// <summary>
-    /// Interaction logic for uc_spendingStorageReport.xaml
+    /// Interaction logic for uc_spendingStorageReports.xaml
     /// </summary>
-    public partial class uc_spendingStorageReport : UserControl
+    public partial class uc_spendingStorageReports : UserControl
     {
         IEnumerable<ItemTransferInvoice> spendingRequests;
         Statistics statisticsModel = new Statistics();
@@ -39,7 +39,7 @@ namespace Restaurant.View.reports.storageReports
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-        public uc_spendingStorageReport()
+        public uc_spendingStorageReports()
         {
             try
             {
@@ -49,13 +49,13 @@ namespace Restaurant.View.reports.storageReports
             { }
         }
 
-        private static uc_spendingStorageReport _instance;
-        public static uc_spendingStorageReport Instance
+        private static uc_spendingStorageReports _instance;
+        public static uc_spendingStorageReports Instance
         {
             get
             {
                 if (_instance is null)
-                    _instance = new uc_spendingStorageReport();
+                    _instance = new uc_spendingStorageReports();
                 return _instance;
             }
             set

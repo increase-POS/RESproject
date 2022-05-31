@@ -2946,7 +2946,10 @@ namespace Restaurant
                 case "consumptionKitchenReports":
                     grid_main.Children.Add(uc_consumptionKitchenReports.Instance);
                     break;
-
+                //303 spendingStorageReports
+                case "spendingStorageReports":
+                    grid_main.Children.Add(uc_spendingStorageReports.Instance);
+                    break;
 
 
 

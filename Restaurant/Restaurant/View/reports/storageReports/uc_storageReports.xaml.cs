@@ -244,12 +244,12 @@ namespace Restaurant.View.reports.storageReports
             }
         }
 
-        private void Btn_spendingStorage_Click(object sender, RoutedEventArgs e)
+        private void Btn_spendingStorageReports_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 MainWindow.mainWindow.grid_main.Children.Clear();
-                MainWindow.mainWindow.grid_main.Children.Add(uc_spendingStorageReport.Instance);
+                MainWindow.mainWindow.grid_main.Children.Add(uc_spendingStorageReports.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
