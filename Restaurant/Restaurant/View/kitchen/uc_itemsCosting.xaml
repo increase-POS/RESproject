@@ -432,7 +432,7 @@
                             </Button>
                             <Button FlowDirection="LeftToRight"   Background="{x:Null}"    Grid.Column="2" Margin="2.5,0,2.5,0" 
                             Padding="0" Height="20" Width="25"   x:Name="btn_pieChart"   
-                                       BorderBrush="{x:Null}"  >
+                                       BorderBrush="{x:Null}" Click="Btn_pieChart_Click"  >
                                 <Grid Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>

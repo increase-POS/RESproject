@@ -20,6 +20,7 @@ using Microsoft.Win32;
 //using System.IO;
 using Restaurant.View.windows;
 using Microsoft.Reporting.WinForms;
+using Restaurant.View.sales;
 
 namespace Restaurant.View.kitchen
 {
@@ -374,8 +375,8 @@ namespace Restaurant.View.kitchen
             {
                 searchText = tb_search.Text.ToLower();
 
-                itemsQuery = FillCombo.salesItems.Where(s => s.name.ToLower().Contains(searchText) 
-                                                        || s.code.ToLower().Contains(searchText) 
+                itemsQuery = FillCombo.salesItems.Where(s => s.name.ToLower().Contains(searchText)
+                                                        || s.code.ToLower().Contains(searchText)
                                                         || s.details.ToLower().Contains(searchText))
                     .Select(x => new Item()
                     {
@@ -389,6 +390,7 @@ namespace Restaurant.View.kitchen
                         isActive = x.isActive,
                         categoryId = x.categoryId,
                         tagId = x.tagId,
+                        createDate = x.createDate
                     }).ToList();
 
                 if (categoryId > 0)
@@ -467,9 +469,7 @@ namespace Restaurant.View.kitchen
 
         }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {
-
-            //pdf
+        {//pdf
             try
             {
 
@@ -626,12 +626,12 @@ namespace Restaurant.View.kitchen
 
                 //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 //{
-                    #region
-                    //Window.GetWindow(this).Opacity = 0.2;
-                    //win_lvc win = new win_lvc(banksQuery, 5);
-                    //win.ShowDialog();
-                    //Window.GetWindow(this).Opacity = 1;
-                    #endregion
+                #region
+                Window.GetWindow(this).Opacity = 0.2;
+                win_lvcSales win = new win_lvcSales(itemsQuery, 3);
+                win.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                #endregion
                 //}
                 //else
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -653,5 +653,6 @@ namespace Restaurant.View.kitchen
 
         #endregion
 
+     
     }
 }
