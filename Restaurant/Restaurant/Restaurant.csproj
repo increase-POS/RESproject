@@ -208,6 +208,7 @@
     <Compile Include="Classes\ApiClasses\AgentMemberships.cs" />
     <Compile Include="Classes\ApiClasses\OrderPreparing.cs" />
     <Compile Include="Classes\ApiClasses\ResidentialSectorsUsers.cs" />
+    <Compile Include="Classes\ApiClasses\setupConfiguration.cs" />
     <Compile Include="Classes\ApiClasses\SubscriptionFees.cs" />
     <Compile Include="Classes\ApiClasses\Memberships.cs" />
     <Compile Include="Classes\ApiClasses\ItemUnitOffer.cs" />
@@ -633,6 +634,18 @@
     <Compile Include="View\settings\uc_settings.xaml.cs">
       <DependentUpon>uc_settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\setup\uc_companyInfo.xaml.cs">
+      <DependentUpon>uc_companyInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\setup\uc_FirstPosGeneralSettings.xaml.cs">
+      <DependentUpon>uc_FirstPosGeneralSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\setup\uc_selectPos.xaml.cs">
+      <DependentUpon>uc_selectPos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\setup\uc_serverConfig.xaml.cs">
+      <DependentUpon>uc_serverConfig.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\storage\movementsOperations\uc_spendingOrder.xaml.cs">
       <DependentUpon>uc_spendingOrder.xaml</DependentUpon>
     </Compile>
@@ -785,6 +798,12 @@
     </Compile>
     <Compile Include="View\windows\wd_residentialSectorsList.xaml.cs">
       <DependentUpon>wd_residentialSectorsList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_setupFirstPos.xaml.cs">
+      <DependentUpon>wd_setupFirstPos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_setupOtherPos.xaml.cs">
+      <DependentUpon>wd_setupOtherPos.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_typesOfService.xaml.cs">
       <DependentUpon>wd_typesOfService.xaml</DependentUpon>
@@ -1328,6 +1347,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\setup\uc_companyInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="View\setup\uc_FirstPosGeneralSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="View\setup\uc_selectPos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="View\setup\uc_serverConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="View\storage\movementsOperations\uc_spendingOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1531,6 +1566,14 @@
     <Page Include="View\windows\wd_residentialSectorsList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_setupFirstPos.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_setupOtherPos.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_typesOfService.xaml">
       <SubType>Designer</SubType>
