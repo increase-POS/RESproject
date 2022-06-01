@@ -340,7 +340,7 @@
                             <DataGrid.Columns>
                         <DataGridTextColumn x:Name="col_invNum"        Width="*" Header="No."       Binding="{Binding invNumber}"/>
                         <DataGridTextColumn x:Name="col_invType"       Width="*" Header="Type"      Binding="{Binding Path=invType ,Converter={StaticResource invoiceTypeConverter}}"/>
-                        <DataGridTextColumn x:Name="col_invDate"       Width="*" Header="Date"      Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter }}"/>
+                        <DataGridTextColumn x:Name="col_invDate"       Width="*" Header="Date"      Binding="{Binding invDate,Converter={StaticResource dateFrameConverter }}"/>
                         <DataGridTextColumn x:Name="col_invTotal"      Width="*" Header="Total"     Binding="{Binding totalNet     ,Converter={StaticResource accuracyConverter}}" />
                         <DataGridTextColumn x:Name="col_itemName"      Width="*" Header="Item"      Binding="{Binding ITitemName}"/>
                         <DataGridTextColumn x:Name="col_unitName"      Width="*" Header="Unit"      Binding="{Binding ITunitName }" />

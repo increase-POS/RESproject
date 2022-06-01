@@ -418,7 +418,7 @@ namespace Restaurant.View.reports.accountsReports
 
             var tempName = taxTemp.GroupBy(s => new { s.branchId }).Select(s => new
             {
-                Name = s.FirstOrDefault().updateDate,
+                Name = s.FirstOrDefault().invDate,
             });
             names.AddRange(tempName.Select(nn => nn.Name.ToString()));
             string title = "";
@@ -441,13 +441,13 @@ namespace Restaurant.View.reports.accountsReports
                         var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
                         if (selectedTab == 0)
                         {
-                            var drawTax = taxTemp.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Select(c => c.invTaxVal.Value).Sum();
+                            var drawTax = taxTemp.ToList().Where(c => c.invDate > firstOfThisMonth && c.invDate <= firstOfNextMonth).Select(c => c.invTaxVal.Value).Sum();
 
                             taxLst.Add(drawTax);
                         }
                         if (selectedTab == 1)
                         {
-                            var drawTax = taxTemp.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Select(c => c.itemUnitTaxwithQTY.Value).Sum();
+                            var drawTax = taxTemp.ToList().Where(c => c.invDate > firstOfThisMonth && c.invDate <= firstOfNextMonth).Select(c => c.itemUnitTaxwithQTY.Value).Sum();
 
                             taxLst.Add(drawTax);
                         }
@@ -473,12 +473,12 @@ namespace Restaurant.View.reports.accountsReports
                     var firstOfNextMYear = firstOfThisYear.AddYears(1);
                     if (selectedTab == 0)
                     {
-                        var drawTax = taxTemp.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Select(c => c.invTaxVal.Value).Sum();
+                        var drawTax = taxTemp.ToList().Where(c => c.invDate > firstOfThisYear && c.invDate <= firstOfNextMYear).Select(c => c.invTaxVal.Value).Sum();
                         taxLst.Add(drawTax);
                     }
                     if (selectedTab == 1)
                     {
-                        var drawTax = taxTemp.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Select(c => c.itemUnitTaxwithQTY.Value).Sum();
+                        var drawTax = taxTemp.ToList().Where(c => c.invDate > firstOfThisYear && c.invDate <= firstOfNextMYear).Select(c => c.itemUnitTaxwithQTY.Value).Sum();
                         taxLst.Add(drawTax);
                     }
                     MyAxis.Labels.Add(year.ToString());

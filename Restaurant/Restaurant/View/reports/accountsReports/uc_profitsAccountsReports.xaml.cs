@@ -150,10 +150,10 @@ namespace Restaurant.View.reports.accountsReports
 
             profitsTemp = profits
                 .Where(p =>
-            (dp_startDate.SelectedDate != null ? p.updateDate >= dp_startDate.SelectedDate : true)
+            (dp_startDate.SelectedDate != null ? p.invDate >= dp_startDate.SelectedDate : true)
             &&
             //end date
-            (dp_endDate.SelectedDate != null ? p.updateDate <= dp_endDate.SelectedDate : true)
+            (dp_endDate.SelectedDate != null ? p.invDate <= dp_endDate.SelectedDate : true)
             );
 
             if (selectedTab == 0) await SearchInvoice();
@@ -797,7 +797,7 @@ namespace Restaurant.View.reports.accountsReports
                         {
                             if (ch == 'n')
                             {
-                                var drawProfit = profitsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.branchCreatorId.Value == id)
+                                var drawProfit = profitsQuery.ToList().Where(c => c.invDate > firstOfThisMonth && c.invDate <= firstOfNextMonth && c.branchCreatorId.Value == id)
                                                               .Select(b => b.invoiceProfit).Sum();
 
                                 profitLst.Add(decimal.Parse(HelpClass.DecTostring(drawProfit)));
@@ -807,7 +807,7 @@ namespace Restaurant.View.reports.accountsReports
                                 decimal sum = 0;
                                 for (int i = 0; i < otherIds.Count; i++)
                                 {
-                                    var drawProfit = profitsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.branchCreatorId.Value == otherIds[i])
+                                    var drawProfit = profitsQuery.ToList().Where(c => c.invDate > firstOfThisMonth && c.invDate <= firstOfNextMonth && c.branchCreatorId.Value == otherIds[i])
                                                              .Select(b => b.invoiceProfit).Sum();
                                     sum = sum + drawProfit;
                                 }
@@ -818,7 +818,7 @@ namespace Restaurant.View.reports.accountsReports
                         {
                             if (ch == 'n')
                             {
-                                var drawProfit = profitsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.ITitemId.Value == id)
+                                var drawProfit = profitsQuery.ToList().Where(c => c.invDate > firstOfThisMonth && c.invDate <= firstOfNextMonth && c.ITitemId.Value == id)
                                                               .Select(b => b.itemunitProfit).Sum();
 
                                 profitLst.Add(decimal.Parse(HelpClass.DecTostring(drawProfit)));
@@ -828,7 +828,7 @@ namespace Restaurant.View.reports.accountsReports
                                 decimal sum = 0;
                                 for (int i = 0; i < otherIds.Count; i++)
                                 {
-                                    var drawProfit = profitsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.ITitemId.Value == otherIds[i])
+                                    var drawProfit = profitsQuery.ToList().Where(c => c.invDate > firstOfThisMonth && c.invDate <= firstOfNextMonth && c.ITitemId.Value == otherIds[i])
                                                              .Select(b => b.itemunitProfit).Sum();
                                     sum = sum + drawProfit;
                                 }
@@ -860,7 +860,7 @@ namespace Restaurant.View.reports.accountsReports
                     {
                         if (ch == 'n')
                         {
-                            var drawProfit = profitsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.branchCreatorId.Value == id)
+                            var drawProfit = profitsQuery.ToList().Where(c => c.invDate > firstOfThisYear && c.invDate <= firstOfNextMYear && c.branchCreatorId.Value == id)
                                                            .Select(b => b.invoiceProfit).Sum();
 
                             profitLst.Add(decimal.Parse(HelpClass.DecTostring(drawProfit)));
@@ -870,7 +870,7 @@ namespace Restaurant.View.reports.accountsReports
                             decimal sum = 0;
                             for (int i = 0; i < otherIds.Count; i++)
                             {
-                                var drawProfit = profitsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.branchCreatorId.Value == otherIds[i])
+                                var drawProfit = profitsQuery.ToList().Where(c => c.invDate > firstOfThisYear && c.invDate <= firstOfNextMYear && c.branchCreatorId.Value == otherIds[i])
                                                           .Select(b => b.invoiceProfit).Sum();
                                 sum = sum + drawProfit;
                             }
@@ -881,7 +881,7 @@ namespace Restaurant.View.reports.accountsReports
                     {
                         if (ch == 'n')
                         {
-                            var drawProfit = profitsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.ITitemId.Value == id)
+                            var drawProfit = profitsQuery.ToList().Where(c => c.invDate > firstOfThisYear && c.invDate <= firstOfNextMYear && c.ITitemId.Value == id)
                                                            .Select(b => b.itemunitProfit).Sum();
 
                             profitLst.Add(decimal.Parse(HelpClass.DecTostring(drawProfit)));
@@ -891,7 +891,7 @@ namespace Restaurant.View.reports.accountsReports
                             decimal sum = 0;
                             for (int i = 0; i < otherIds.Count; i++)
                             {
-                                var drawProfit = profitsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.ITitemId.Value == otherIds[i])
+                                var drawProfit = profitsQuery.ToList().Where(c => c.invDate > firstOfThisYear && c.invDate <= firstOfNextMYear && c.ITitemId.Value == otherIds[i])
                                                            .Select(b => b.itemunitProfit).Sum();
                                 sum = sum + drawProfit;
                             }
