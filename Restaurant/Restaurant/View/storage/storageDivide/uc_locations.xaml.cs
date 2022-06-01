@@ -21,6 +21,8 @@ using System.Windows.Shapes;
 using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using System.IO;
+using Restaurant.View.sales;
+
 namespace Restaurant.View.storage.storageDivide
 {
     /// <summary>
@@ -643,12 +645,9 @@ namespace Restaurant.View.storage.storageDivide
 
         }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {
-
-            //pdf
+        {//pdf
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
@@ -793,12 +792,38 @@ namespace Restaurant.View.storage.storageDivide
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-      
-    
 
-#endregion
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
-    private void Btn_addRange_Click(object sender, RoutedEventArgs e)
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
+                {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_lvcSales win = new win_lvcSales(locationsQuery, 9);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        #endregion
+
+        private void Btn_addRange_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -823,6 +848,6 @@ namespace Restaurant.View.storage.storageDivide
             }
         }
 
-     
+       
     }
 }

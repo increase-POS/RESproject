@@ -102,7 +102,7 @@ namespace Restaurant.View.storage.movementsOperations
             dg_billDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNo.");
             dg_billDetails.Columns[2].Header = AppSettings.resourcemanager.GetString("trItem");
             dg_billDetails.Columns[3].Header = AppSettings.resourcemanager.GetString("trUnit");
-            dg_billDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trQuantity");
+            dg_billDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trQTR");
 
             txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementImport");
 

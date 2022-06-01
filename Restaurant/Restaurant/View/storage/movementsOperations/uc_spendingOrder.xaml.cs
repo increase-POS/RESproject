@@ -92,13 +92,11 @@ namespace Restaurant.View.storage.movementsOperations
         public static List<string> requiredControlList;
         private void translate()
         {
-           
-
             ////////////////////////////////----Order----/////////////////////////////////
             dg_billDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNum");
             dg_billDetails.Columns[2].Header = AppSettings.resourcemanager.GetString("trItem");
             dg_billDetails.Columns[3].Header = AppSettings.resourcemanager.GetString("trUnit");
-            dg_billDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trQuantity");
+            dg_billDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trQTR");
 
             txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");
             txt_items.Text = AppSettings.resourcemanager.GetString("trItems");

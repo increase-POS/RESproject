@@ -36,6 +36,10 @@ namespace Restaurant.View.sales
         IEnumerable<TablesReservation> reservationsQuery;
         IEnumerable<Invoice> ordersQuery;
         IEnumerable<ShippingCompanies> shCompanysQuery;
+        IEnumerable<Location> locationsQuery;
+        IEnumerable<Classes.Section> sectionsQuery;
+        IEnumerable<ItemLocation> itemLocationsQuery;
+        IEnumerable<StorageCost> storageCostsQuery;
 
         List<double> chartList;
         List<double> PiechartList;
@@ -145,6 +149,58 @@ namespace Restaurant.View.sales
             {
                 InitializeComponent();
                 shCompanysQuery = _shCompanysQuery;
+                sales = _sales;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public win_lvcSales(IEnumerable<Location> _locationsQuery, int _sales)
+        {
+            try
+            {
+                InitializeComponent();
+                locationsQuery = _locationsQuery;
+                sales = _sales;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public win_lvcSales(IEnumerable<Classes.Section> _sectionsQuery, int _sales)
+        {
+            try
+            {
+                InitializeComponent();
+                sectionsQuery = _sectionsQuery;
+                sales = _sales;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public win_lvcSales(IEnumerable<ItemLocation> _itemLocationsQuery, int _sales)
+        {
+            try
+            {
+                InitializeComponent();
+                itemLocationsQuery = _itemLocationsQuery;
+                sales = _sales;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public win_lvcSales(IEnumerable<StorageCost> _storageCostsQuery, int _sales)
+        {
+            try
+            {
+                InitializeComponent();
+                storageCostsQuery = _storageCostsQuery;
                 sales = _sales;
             }
             catch (Exception ex)
@@ -294,6 +350,30 @@ namespace Restaurant.View.sales
                             chartList.Add(Draw);
                             label = AppSettings.resourcemanager.GetString("trShippingCompanies");
                         }
+                        else if (sales == 9)
+                        {
+                            var Draw = locationsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            chartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trLocations");
+                        }
+                        else if (sales == 10)
+                        {
+                            var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            chartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trSections");
+                        }
+                        else if (sales == 11)
+                        {
+                            var Draw = itemLocationsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            chartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trItems");
+                        }
+                        else if (sales == 12)
+                        {
+                            var Draw = storageCostsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            chartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trStorageCost");
+                        }
                         MyAxis.Separator.Step = 2;
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -361,6 +441,30 @@ namespace Restaurant.View.sales
                         var Draw = shCompanysQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
                         label = AppSettings.resourcemanager.GetString("trShippingCompanies");
+                    }
+                    else if (sales == 9)
+                    {
+                        var Draw = locationsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        chartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trLocations");
+                    }
+                    else if (sales == 10)
+                    {
+                        var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        chartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trSections");
+                    }
+                    else if (sales == 11)
+                    {
+                        var Draw = itemLocationsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        chartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trItems");
+                    }
+                    else if (sales == 12)
+                    {
+                        var Draw = itemLocationsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        chartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trStorageCost");
                     }
                     MyAxis.Separator.Step = 1;
                     MyAxis.Labels.Add(year.ToString());
@@ -462,6 +566,30 @@ namespace Restaurant.View.sales
                             PiechartList.Add(Draw);
                             label = AppSettings.resourcemanager.GetString("trShippingCompanies");
                         }
+                        else if (sales == 9)
+                        {
+                            var Draw = locationsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            PiechartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trLocations");
+                        }
+                        else if (sales == 10)
+                        {
+                            var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            PiechartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trSections");
+                        }
+                        else if (sales == 11)
+                        {
+                            var Draw = itemLocationsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            PiechartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trItems");
+                        }
+                        else if (sales == 12)
+                        {
+                            var Draw = storageCostsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            PiechartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trStorageCost");
+                        }
                         titles.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
                         {
@@ -528,6 +656,30 @@ namespace Restaurant.View.sales
                         var Draw = shCompanysQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
                         label = AppSettings.resourcemanager.GetString("trShippingCompanies");
+                    }
+                    else if (sales == 9)
+                    {
+                        var Draw = locationsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        PiechartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trLocations");
+                    }
+                    else if (sales == 10)
+                    {
+                        var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        PiechartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trSections");
+                    }
+                    else if (sales == 11)
+                    {
+                        var Draw = itemLocationsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        PiechartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trItems");
+                    }
+                    else if (sales == 12)
+                    {
+                        var Draw = storageCostsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        PiechartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trStorageCost");
                     }
                     titles.Add(year.ToString());
                 }
@@ -631,6 +783,30 @@ namespace Restaurant.View.sales
                             ColumnchartList.Add(Draw);
                             label = AppSettings.resourcemanager.GetString("trShippingCompanies");
                         }
+                        else if (sales == 9)
+                        {
+                            var Draw = locationsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            ColumnchartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trLocations");
+                        }
+                        else if (sales == 10)
+                        {
+                            var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            ColumnchartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trSections");
+                        }
+                        else if (sales == 11)
+                        {
+                            var Draw = itemLocationsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            ColumnchartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trItems");
+                        }
+                        else if (sales == 12)
+                        {
+                            var Draw = storageCostsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            ColumnchartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trStorageCost");
+                        }
                         columnAxis.Separator.Step = 2;
                         columnAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -698,6 +874,30 @@ namespace Restaurant.View.sales
                         var Draw = shCompanysQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
                         label = AppSettings.resourcemanager.GetString("trShippingCompanies");
+                    }
+                    else if (sales == 9)
+                    {
+                        var Draw = locationsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        ColumnchartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trLocations");
+                    }
+                    else if (sales == 10)
+                    {
+                        var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        ColumnchartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trSections");
+                    }
+                    else if (sales == 11)
+                    {
+                        var Draw = itemLocationsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        ColumnchartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trItems");
+                    }
+                    else if (sales == 12)
+                    {
+                        var Draw = storageCostsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        ColumnchartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trStorageCost");
                     }
                     columnAxis.Separator.Step = 1;
                     columnAxis.Labels.Add(year.ToString());
