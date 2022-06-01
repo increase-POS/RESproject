@@ -5,6 +5,7 @@ using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using Restaurant.Classes;
 using Restaurant.View.kitchen;
+using Restaurant.View.storage.movementsOperations;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -398,17 +399,17 @@ namespace Restaurant.View.reports.storageReports
                             Invoice invoice = new Invoice();
                             invoice = await invoice.GetByInvoiceId(row.invoiceId);
 
-                            MainWindow.mainWindow.Btn_kitchen_Click(MainWindow.mainWindow.btn_kitchen, null);
-                            MainWindow.mainWindow.initializationMainTrack("spendingRequests");
+                            MainWindow.mainWindow.Btn_storage_Click(MainWindow.mainWindow.btn_storage, null);
+                            MainWindow.mainWindow.initializationMainTrack("spendingOrder");
                             MainWindow.mainWindow.grid_main.Children.Clear();
-                            MainWindow.mainWindow.grid_main.Children.Add(uc_spendingRequest.Instance);
+                            MainWindow.mainWindow.grid_main.Children.Add(uc_spendingOrder.Instance);
                             uc_spendingRequest.Instance.invoice = invoice;
                             uc_spendingRequest._InvoiceType = invoice.invType;
                             uc_spendingRequest._invoiceId = invoice.invoiceId;
                             uc_spendingRequest.isFromReport = true;
                             uc_spendingRequest.archived = false;
                             //setNotifications();
-                            await uc_spendingRequest.Instance.fillInvoiceInputs(invoice);
+                            await uc_spendingOrder.Instance.fillInvoiceInputs(invoice);
                         }
 
                     }

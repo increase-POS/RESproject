@@ -371,7 +371,7 @@ namespace Restaurant.View.reports.kitchenReports
                             invoice = await invoice.GetByInvoiceId(row.invoiceId);
 
                             MainWindow.mainWindow.Btn_kitchen_Click(MainWindow.mainWindow.btn_kitchen,null);
-                            MainWindow.mainWindow.initializationMainTrack("spendingRequests");
+                            MainWindow.mainWindow.initializationMainTrack("spendingRequest");
                             MainWindow.mainWindow.grid_main.Children.Clear();
                             MainWindow.mainWindow.grid_main.Children.Add(uc_spendingRequest.Instance);
                             uc_spendingRequest.Instance.invoice = invoice;
