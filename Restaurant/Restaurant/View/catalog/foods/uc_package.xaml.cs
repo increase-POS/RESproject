@@ -23,6 +23,7 @@ using Restaurant.View.windows;
 using Zen.Barcode;
 
 using Microsoft.Reporting.WinForms;
+using Restaurant.View.accounts;
 
 namespace Restaurant.View.catalog.foods
 {
@@ -1017,10 +1018,10 @@ namespace Restaurant.View.catalog.foods
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
-                    //Window.GetWindow(this).Opacity = 0.2;
-                    //win_lvc win = new win_lvc(banksQuery, 5);
-                    //win.ShowDialog();
-                    //Window.GetWindow(this).Opacity = 1;
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_IvcAccount win = new win_IvcAccount(itemsQuery, 4);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
                     #endregion
                 }
                 else
@@ -1533,6 +1534,6 @@ namespace Restaurant.View.catalog.foods
             }
         }
 
-      
+       
     }
 }

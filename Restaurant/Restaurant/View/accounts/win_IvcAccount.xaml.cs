@@ -32,6 +32,9 @@ namespace Restaurant.View.accounts
         IEnumerable<CashTransfer> cashQuery;
         IEnumerable<Invoice> invoiceQuery;
         IEnumerable<AgentMembershipCash> subscriptionQuery;
+        IEnumerable<Item> itemsQuery;
+        IEnumerable<Category> categoriesQuery;
+        IEnumerable<Unit> unitsQuery;
         List<double> chartList;
         List<double> PiechartList;
         List<double> ColumnchartList;
@@ -74,6 +77,46 @@ namespace Restaurant.View.accounts
             {
                 InitializeComponent();
                 subscriptionQuery = _subscriptionQuery;
+                account = _account;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public win_IvcAccount(IEnumerable<Item> _itemsQuery, int _account)
+        {
+            try
+            {
+                InitializeComponent();
+                itemsQuery = _itemsQuery;
+                account = _account;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public win_IvcAccount(IEnumerable<Category> _categoriesQuery, int _account)
+        {
+            try
+            {
+                InitializeComponent();
+                categoriesQuery = _categoriesQuery;
+                account = _account;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        public win_IvcAccount(IEnumerable<Unit> _unitsQuery, int _account)
+        {
+            try
+            {
+                InitializeComponent();
+                unitsQuery = _unitsQuery;
                 account = _account;
             }
             catch (Exception ex)
@@ -196,6 +239,24 @@ namespace Restaurant.View.accounts
                             chartList.Add(Draw);
                             label = AppSettings.resourcemanager.GetString("trSubscriptions");
                         }
+                        else if (account == 4)
+                        {
+                            var Draw = itemsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            chartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trItems");
+                        }
+                        else if (account == 5)
+                        {
+                            var Draw = categoriesQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            chartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trCategories");
+                        }
+                        else if (account == 6)
+                        {
+                            var Draw = unitsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            chartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trUnits");
+                        }
                         MyAxis.Separator.Step = 2;
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -233,6 +294,24 @@ namespace Restaurant.View.accounts
                         var Draw = subscriptionQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
                         label = AppSettings.resourcemanager.GetString("trSubscriptions");
+                    }
+                    if (account == 4)
+                    {
+                        var Draw = itemsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        chartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trItems");
+                    }
+                    if (account == 5)
+                    {
+                        var Draw = categoriesQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        chartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trCategories");
+                    }
+                    if (account == 6)
+                    {
+                        var Draw = unitsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        chartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trUnits");
                     }
 
                     MyAxis.Separator.Step = 1;
@@ -304,6 +383,24 @@ namespace Restaurant.View.accounts
                             PiechartList.Add(Draw);
                             label = AppSettings.resourcemanager.GetString("trSubscriptions");
                         }
+                        if (account == 4)
+                        {
+                            var Draw = itemsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            PiechartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trItems");
+                        }
+                        if (account == 5)
+                        {
+                            var Draw = categoriesQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            PiechartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trCategories");
+                        }
+                        if (account == 6)
+                        {
+                            var Draw = unitsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            PiechartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trUnits");
+                        }
                         titles.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
                         {
@@ -340,6 +437,24 @@ namespace Restaurant.View.accounts
                         var Draw = subscriptionQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
                         label = AppSettings.resourcemanager.GetString("trSubscriptions");
+                    }
+                    else if (account == 4)
+                    {
+                        var Draw = itemsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        PiechartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trItems");
+                    }
+                    else if (account == 5)
+                    {
+                        var Draw = categoriesQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        PiechartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trCategories");
+                    }
+                    else if (account == 6)
+                    {
+                        var Draw = unitsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        PiechartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trUnits");
                     }
                     titles.Add(year.ToString());
                 }
@@ -412,6 +527,24 @@ namespace Restaurant.View.accounts
                             ColumnchartList.Add(Draw);
                             label = AppSettings.resourcemanager.GetString("trSubscriptions");
                         }
+                        else if (account == 4)
+                        {
+                            var Draw = itemsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            ColumnchartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trItems");
+                        }
+                        else if (account == 5)
+                        {
+                            var Draw = categoriesQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            ColumnchartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trCategories");
+                        }
+                        else if (account == 6)
+                        {
+                            var Draw = unitsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            ColumnchartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trUnits");
+                        }
                         columnAxis.Separator.Step = 2;
                         columnAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -449,6 +582,24 @@ namespace Restaurant.View.accounts
                         var Draw = subscriptionQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
                         label = AppSettings.resourcemanager.GetString("trSubscriptions");
+                    }
+                    else if (account == 4)
+                    {
+                        var Draw = itemsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        ColumnchartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trItems");
+                    }
+                    else if (account == 5)
+                    {
+                        var Draw = categoriesQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        ColumnchartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trCategories");
+                    }
+                    else if (account == 6)
+                    {
+                        var Draw = unitsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        ColumnchartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trUnits");
                     }
                     columnAxis.Separator.Step = 1;
                     columnAxis.Labels.Add(year.ToString());

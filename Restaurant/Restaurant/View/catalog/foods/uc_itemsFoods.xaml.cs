@@ -23,6 +23,7 @@ using Restaurant.View.windows;
 using Zen.Barcode;
 
 using Microsoft.Reporting.WinForms;
+using Restaurant.View.accounts;
 
 namespace Restaurant.View.catalog.foods
 {
@@ -202,9 +203,6 @@ namespace Restaurant.View.catalog.foods
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
             txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
-
-
-
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh - validateValues
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -880,9 +878,7 @@ namespace Restaurant.View.catalog.foods
 
         }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {
-
-            //pdf
+        {//pdf
             try
             {
 
@@ -1040,10 +1036,10 @@ namespace Restaurant.View.catalog.foods
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
-                    //Window.GetWindow(this).Opacity = 0.2;
-                    //win_lvc win = new win_lvc(banksQuery, 5);
-                    //win.ShowDialog();
-                    //Window.GetWindow(this).Opacity = 1;
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_IvcAccount win = new win_IvcAccount(itemsQuery, 4);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
                     #endregion
                 }
                 else
@@ -1607,5 +1603,6 @@ namespace Restaurant.View.catalog.foods
 
         }
 
+       
     }
 }
