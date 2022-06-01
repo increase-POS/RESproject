@@ -15,7 +15,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="APIUri" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">http://192.168.1.5:4437/api/</Value>
     </Setting>
   </Settings>
 </SettingsFile>

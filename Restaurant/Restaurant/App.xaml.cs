@@ -24,12 +24,20 @@ namespace Restaurant
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
-                //wd_setupFirstPos logIn = new wd_setupFirstPos();
+                System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-                wd_logIn logIn = new wd_logIn();
-                //MainWindow logIn = new MainWindow();
-                logIn.Show();
+                //if (config.AppSettings.Settings["posId"] == null)
+                //{
+                //    wd_setupFirstPos logIn = new wd_setupFirstPos();
+                //    logIn.Show();
+                //}
+                //else
+                {
 
+                    wd_logIn logIn = new wd_logIn();
+                    //MainWindow logIn = new MainWindow();
+                    logIn.Show();
+                }
             }
             catch (Exception ex)
             {

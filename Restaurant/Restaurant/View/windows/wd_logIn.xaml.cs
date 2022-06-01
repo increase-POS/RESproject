@@ -30,6 +30,7 @@ namespace Restaurant.View.windows
         UsersLogs userLogsModel = new UsersLogs();
         User userModel = new User();
         User user = new User();
+        int posId;
         public wd_logIn()
         {
             try
@@ -50,6 +51,11 @@ namespace Restaurant.View.windows
 
                 bdrLogIn.RenderTransform = Animations.borderAnimation(-100, bdrLogIn, true);
                 //AppSettings.lang = "en";
+
+               posId = int.Parse(Properties.Settings.Default.posId);
+                Global.APIUri = Properties.Settings.Default.APIUri;
+                //Global.APIUri = "http://localhost:107/api/";
+
                 #region properties
                 if (Properties.Settings.Default.userName != string.Empty)
                 {
@@ -231,8 +237,9 @@ namespace Restaurant.View.windows
 
                     string password = Md5Encription.MD5Hash("Inc-m" + txtPassword.Password);
                     string userName = txtUserName.Text;
+                  
 
-                    //int canLogin = await userModel.checkLoginAvalability(MainWindow.posID.Value, userName, password);
+                    int canLogin = await userModel.checkLoginAvalability(posId, userName, password);
                     //if (canLogin == 1)
                     //{
 
@@ -241,6 +248,7 @@ namespace Restaurant.View.windows
                     MainWindow.posLogin = new Pos();
                     MainWindow.branchLogin = new Branch();
                     MainWindow.userLog = null;
+
                     //MainWindow.userLog;
                     user = await userModel.Getloginuser(userName, password);
 
@@ -261,8 +269,8 @@ namespace Restaurant.View.windows
                             //correct
                             //send user info to main window
                             MainWindow.userLogin.userId = user.userId;
-                            MainWindow.userLogin = user;
-                             MainWindow.posLogin = await MainWindow.posLogin.getById(1); 
+                            MainWindow.userLogin = user;             
+                            MainWindow.posLogin = await MainWindow.posLogin.getById(posId); 
                             MainWindow.branchLogin = await MainWindow.branchLogin.getBranchById(MainWindow.posLogin.branchId);
 
                             //make user online
