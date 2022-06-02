@@ -52,7 +52,11 @@ namespace Restaurant.View.windows
                 bdrLogIn.RenderTransform = Animations.borderAnimation(-100, bdrLogIn, true);
                 //AppSettings.lang = "en";
 
-               posId = int.Parse(Properties.Settings.Default.posId);
+                try
+                {
+                    posId = int.Parse(Properties.Settings.Default.posId);
+                }
+                catch { }
                 Global.APIUri = Properties.Settings.Default.APIUri;
                 //Global.APIUri = "http://localhost:107/api/";
                 posId = 1;
