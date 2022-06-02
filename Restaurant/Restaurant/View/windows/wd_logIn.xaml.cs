@@ -55,6 +55,7 @@ namespace Restaurant.View.windows
                posId = int.Parse(Properties.Settings.Default.posId);
                 Global.APIUri = Properties.Settings.Default.APIUri;
                 //Global.APIUri = "http://localhost:107/api/";
+                posId = 1;
 
                 #region properties
                 if (Properties.Settings.Default.userName != string.Empty)
