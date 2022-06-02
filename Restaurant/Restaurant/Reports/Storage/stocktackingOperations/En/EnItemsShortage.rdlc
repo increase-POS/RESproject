@@ -556,6 +556,9 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
             <Left>1.18768cm</Left>
             <Height>1.2cm</Height>
             <Width>18.5cm</Width>
+            <Visibility>
+              <Hidden>=CountRows("DataSetItemsShortage") = 0</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Color>LightGrey</Color>
@@ -627,7 +630,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
             <Width>18.50001cm</Width>
             <ZIndex>2</ZIndex>
             <Visibility>
-              <Hidden>=CountRows() &lt;&gt; 0</Hidden>
+              <Hidden>=CountRows("DataSetItemsShortage") &lt;&gt; 0</Hidden>
             </Visibility>
             <Style>
               <Border>

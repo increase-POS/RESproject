@@ -37,6 +37,14 @@
           <DataField>createUserId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="finalDiscount">
+          <DataField>finalDiscount</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="forAgents">
+          <DataField>forAgents</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="inventoryItemLocId">
           <DataField>inventoryItemLocId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
@@ -69,6 +77,10 @@
           <DataField>itemsTransId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="itemTax">
+          <DataField>itemTax</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
         <Field Name="itemType">
           <DataField>itemType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -76,6 +88,10 @@
         <Field Name="itemUnitId">
           <DataField>itemUnitId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="itemUnitPrice">
+          <DataField>itemUnitPrice</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="locationIdNew">
           <DataField>locationIdNew</DataField>
@@ -97,9 +113,25 @@
           <DataField>notes</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="offerCode">
+          <DataField>offerCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="offerId">
           <DataField>offerId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="offerName">
+          <DataField>offerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="offerType">
+          <DataField>offerType</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="offerValue">
+          <DataField>offerValue</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="price">
           <DataField>price</DataField>
@@ -116,6 +148,10 @@
         <Field Name="quantity">
           <DataField>quantity</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="subTotal">
+          <DataField>subTotal</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="unitId">
           <DataField>unitId</DataField>
@@ -663,6 +699,9 @@
             <Height>1.2cm</Height>
             <Width>18.5cm</Width>
             <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>=CountRows("DataSetStorageInvoice") = 0</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Color>LightGrey</Color>
@@ -691,13 +730,13 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.39345cm</Top>
+            <Top>2.02845cm</Top>
             <Left>1.25cm</Left>
             <Height>0.95911cm</Height>
             <Width>18.50001cm</Width>
             <ZIndex>2</ZIndex>
             <Visibility>
-              <Hidden>=CountRows() &lt;&gt; 0</Hidden>
+              <Hidden>=CountRows("DataSetStorageInvoice") &lt;&gt; 0</Hidden>
             </Visibility>
             <Style>
               <Border>

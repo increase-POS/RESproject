@@ -1077,6 +1077,9 @@
             <Height>1.2cm</Height>
             <Width>27.09899cm</Width>
             <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>=CountRows("DataSetITinvoice")= 0</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1191,13 +1194,13 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.70745cm</Top>
+            <Top>2.02495cm</Top>
             <Left>1.30052cm</Left>
             <Height>0.95911cm</Height>
             <Width>27.09896cm</Width>
             <ZIndex>3</ZIndex>
             <Visibility>
-              <Hidden>=CountRows() &lt;&gt; 0</Hidden>
+              <Hidden>=CountRows("DataSetITinvoice") &lt;&gt; 0</Hidden>
             </Visibility>
             <Style>
               <Border>

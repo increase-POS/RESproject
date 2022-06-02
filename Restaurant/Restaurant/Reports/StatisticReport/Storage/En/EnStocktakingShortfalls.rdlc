@@ -1260,6 +1260,9 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
             <Height>1.2cm</Height>
             <Width>27.09897cm</Width>
             <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>=CountRows("DataSetItemTransferInvoice") = 0</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1287,13 +1290,13 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.5398cm</Top>
+            <Top>2.1748cm</Top>
             <Left>1.30052cm</Left>
             <Height>0.95911cm</Height>
             <Width>27.09896cm</Width>
             <ZIndex>2</ZIndex>
             <Visibility>
-              <Hidden>=CountRows() &lt;&gt; 0</Hidden>
+              <Hidden>=CountRows("DataSetItemTransferInvoice") &lt;&gt; 0</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -1308,7 +1311,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>4.03871cm</Height>
+        <Height>3.45663cm</Height>
         <Style>
           <Border>
             <Style>None</Style>

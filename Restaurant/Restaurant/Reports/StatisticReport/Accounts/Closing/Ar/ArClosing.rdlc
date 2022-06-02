@@ -612,6 +612,9 @@
             <Height>1.2cm</Height>
             <Width>27.09898cm</Width>
             <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>=CountRows("DataSetBalanceSTS")= 0</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -639,13 +642,13 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.46622cm</Top>
+            <Top>2.73622cm</Top>
             <Left>1.30052cm</Left>
             <Height>0.95911cm</Height>
             <Width>27.09896cm</Width>
             <ZIndex>2</ZIndex>
             <Visibility>
-              <Hidden>=CountRows() &lt;&gt; 0</Hidden>
+              <Hidden>=CountRows("DataSetBalanceSTS") &lt;&gt; 0</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -660,7 +663,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>3.89154cm</Height>
+        <Height>3.81216cm</Height>
         <Style>
           <Border>
             <Style>None</Style>

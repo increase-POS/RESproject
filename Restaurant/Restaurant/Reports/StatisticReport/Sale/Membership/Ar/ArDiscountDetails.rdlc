@@ -1853,7 +1853,7 @@
             <Width>27.04255cm</Width>
             <ZIndex>6</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!hideoff.Value = "1", True, False)</Hidden>
+              <Hidden>=iif(Parameters!hideoff.Value = "1" or  CountRows("DataSetOffer")= 0, True, False)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -2235,7 +2235,7 @@
             <Width>26.98614cm</Width>
             <ZIndex>8</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!hideinvclass.Value = "1", True, False)</Hidden>
+              <Hidden>=iif(Parameters!hideinvclass.Value = "1" or CountRows("DataSetinvoicesClasses") =0, True, False)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -2271,6 +2271,88 @@
             <ZIndex>9</ZIndex>
             <Visibility>
               <Hidden>=CountRows("DataSetCoupon") &lt;&gt; 0</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Color>DimGray</Color>
+                <Style>None</Style>
+                <Width>2pt</Width>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox40">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Parameters!trNoData.Value</Value>
+                    <Style>
+                      <FontSize>12pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>DimGray</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox1</rd:DefaultName>
+            <Top>10.51116cm</Top>
+            <Left>1.30052cm</Left>
+            <Height>0.95911cm</Height>
+            <Width>27.09896cm</Width>
+            <ZIndex>10</ZIndex>
+            <Visibility>
+              <Hidden>=CountRows("DataSetinvoicesClasses") &lt;&gt; 0</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Color>DimGray</Color>
+                <Style>None</Style>
+                <Width>2pt</Width>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox42">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Parameters!trNoData.Value</Value>
+                    <Style>
+                      <FontSize>12pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>DimGray</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox1</rd:DefaultName>
+            <Top>8.28866cm</Top>
+            <Left>1.30052cm</Left>
+            <Height>0.95911cm</Height>
+            <Width>27.09896cm</Width>
+            <ZIndex>11</ZIndex>
+            <Visibility>
+              <Hidden>=CountRows("DataSetOffer") &lt;&gt; 0</Hidden>
             </Visibility>
             <Style>
               <Border>

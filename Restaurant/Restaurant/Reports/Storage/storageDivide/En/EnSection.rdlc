@@ -417,6 +417,9 @@
             <Left>1.18768cm</Left>
             <Height>1.2cm</Height>
             <Width>18.50002cm</Width>
+            <Visibility>
+              <Hidden>=CountRows("DataSetSection") =0</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Color>LightGrey</Color>
@@ -482,13 +485,13 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.39345cm</Top>
+            <Top>2.02845cm</Top>
             <Left>1.25cm</Left>
             <Height>0.95911cm</Height>
             <Width>18.50001cm</Width>
             <ZIndex>2</ZIndex>
             <Visibility>
-              <Hidden>=CountRows() &lt;&gt; 0</Hidden>
+              <Hidden>=CountRows("DataSetSection") &lt;&gt; 0</Hidden>
             </Visibility>
             <Style>
               <Border>

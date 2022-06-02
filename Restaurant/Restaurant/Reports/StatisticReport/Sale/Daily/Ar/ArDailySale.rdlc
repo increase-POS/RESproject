@@ -1275,7 +1275,7 @@
             <Width>27.09896cm</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
-              <Hidden>=Parameters!isTax.Value = True</Hidden>
+              <Hidden>=Parameters!isTax.Value = True or  CountRows("DataSetITinvoice") = 0</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -1914,7 +1914,7 @@
             <Width>27.09897cm</Width>
             <ZIndex>2</ZIndex>
             <Visibility>
-              <Hidden>=Parameters!isTax.Value = False</Hidden>
+              <Hidden>=Parameters!isTax.Value = False or  CountRows("DataSetITinvoice") = 0</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -2022,13 +2022,13 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.99429cm</Top>
+            <Top>2.31179cm</Top>
             <Left>1.30052cm</Left>
             <Height>0.95911cm</Height>
             <Width>27.09896cm</Width>
             <ZIndex>5</ZIndex>
             <Visibility>
-              <Hidden>=CountRows() &lt;&gt; 0</Hidden>
+              <Hidden>=CountRows("DataSetITinvoice") &lt;&gt; 0</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -2043,7 +2043,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>3.67769cm</Height>
+        <Height>3.52363cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
