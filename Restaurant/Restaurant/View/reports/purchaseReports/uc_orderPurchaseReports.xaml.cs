@@ -894,16 +894,13 @@ namespace Restaurant.View.reports.purchaseReports
         {//refresh
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
-                cb_branches.SelectedItem = null;
                 dp_endDate.SelectedDate = null;
                 dp_startDate.SelectedDate = null;
                 dt_startTime.SelectedTime = null;
                 dt_endTime.SelectedTime = null;
                 chk_allBranches.IsChecked = false;
-                cb_branches.IsEnabled = true;
                 if (selectedTab == 0)
                 {
                     for (int i = 0; i < comboBrachTemp.Count; i++)
@@ -951,13 +948,11 @@ namespace Restaurant.View.reports.purchaseReports
                 fillEvent();
                 txt_search.Text = "";
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

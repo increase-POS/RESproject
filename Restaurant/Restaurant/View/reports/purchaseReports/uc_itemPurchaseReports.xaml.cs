@@ -1504,8 +1504,7 @@ namespace Restaurant.View.reports.purchaseReports
         {//refresh
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (selectedTab == 0)
                 {
@@ -1540,13 +1539,11 @@ namespace Restaurant.View.reports.purchaseReports
 
                 txt_search.Text = "";
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1583,8 +1580,7 @@ namespace Restaurant.View.reports.purchaseReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 invoice = new Invoice();
                 if (dgInvoice.SelectedIndex != -1)
@@ -1614,13 +1610,11 @@ namespace Restaurant.View.reports.purchaseReports
                     }
                 }
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
