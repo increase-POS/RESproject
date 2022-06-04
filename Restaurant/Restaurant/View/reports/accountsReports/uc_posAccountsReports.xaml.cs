@@ -797,8 +797,7 @@ namespace Restaurant.View.reports.accountsReports
         {//refresh
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_formBranch.SelectedItem = null;
                 cb_toBranch.SelectedItem = null;
@@ -817,13 +816,11 @@ namespace Restaurant.View.reports.accountsReports
 
                 fillEvents();
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

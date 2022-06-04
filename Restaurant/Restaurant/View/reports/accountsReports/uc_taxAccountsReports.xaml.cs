@@ -267,8 +267,6 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allBranches.IsChecked = true;
                 Chk_allBranches_Checked(chk_allBranches, null);
 
-                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -304,11 +302,9 @@ namespace Restaurant.View.reports.accountsReports
 
                 txt_search.Text = "";
                 path_invoice.Fill = Brushes.White;
-                bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
+                //bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_item);
                 path_item.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-
-                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -390,7 +386,21 @@ namespace Restaurant.View.reports.accountsReports
 
         private void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
-            callSearch(sender);
+            try
+            {
+                cb_branches.IsEnabled = true;
+
+                txt_search.Text = "";
+                searchText = "";
+                chk_allBranches.IsChecked = true;
+                dp_startDate.SelectedDate = null;
+                dp_endDate.SelectedDate = null;
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
 

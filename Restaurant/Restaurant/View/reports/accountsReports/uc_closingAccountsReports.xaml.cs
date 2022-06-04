@@ -345,6 +345,9 @@ namespace Restaurant.View.reports.accountsReports
 
                 txt_search.Text = "";
                 searchText = "";
+                chk_closingBranches.IsChecked = true;
+                dp_closingStartDate.SelectedDate = null;
+                dp_closingEndDate.SelectedDate = null;
                 await Search();
                 
                 HelpClass.EndAwait(grid_main);

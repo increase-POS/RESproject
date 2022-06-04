@@ -603,6 +603,8 @@ namespace Restaurant.View.reports.accountsReports
 
                 searchText = "";
                 txt_search.Text = "";
+                chk_allBranches.IsChecked = true;
+                chk_allPos.IsChecked = true;
                 await RefreshBalanceSTSList();
                 await Search();
                 

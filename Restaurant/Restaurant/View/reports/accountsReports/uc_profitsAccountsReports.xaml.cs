@@ -461,13 +461,19 @@ namespace Restaurant.View.reports.accountsReports
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
-            searchText = "";
-            txt_search.Text = "";
-            chk_allBranches.IsChecked = true;
-            chk_allPos.IsChecked = true;
-            dp_startDate.SelectedDate = null;
-            dp_orderDate.SelectedDate = null;
-            callSearch(sender);
+            try
+            {
+                searchText = "";
+                txt_search.Text = "";
+                chk_allBranches.IsChecked = true;
+                chk_allPos.IsChecked = true;
+                dp_startDate.SelectedDate = null;
+                dp_orderDate.SelectedDate = null;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private void RefreshView_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {//change selection

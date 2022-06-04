@@ -1070,8 +1070,7 @@ namespace Restaurant.View.reports.accountsReports
         {//refresh
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 txt_search.Text = "";
 
@@ -1105,13 +1104,11 @@ namespace Restaurant.View.reports.accountsReports
                     fillEvents("sh");
                 }
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
