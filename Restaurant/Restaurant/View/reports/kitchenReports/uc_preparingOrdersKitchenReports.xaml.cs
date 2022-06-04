@@ -323,6 +323,8 @@ namespace Restaurant.View.reports.kitchenReports
 
                 searchText = "";
                 txt_search.Text = "";
+                cb_branches.SelectedItem = null;
+                chk_allCategories.IsChecked = true;
                 await RefreshPreparingOredersList();
                 dp_startDate.SelectedDate = null;
                 dp_endDate.SelectedDate = null;
