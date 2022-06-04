@@ -359,7 +359,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*" IsReadOnly="False" Header="purchasePrice"  Binding="{Binding Path=avgPurchasePrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridTextColumn Width="*" IsReadOnly="False" Header="purchasePrice"  Binding="{Binding Path=avgPurchasePrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged ,Converter={StaticResource accuracyConverter}}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -370,7 +370,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*" IsReadOnly="False"  Header="price" Binding="{Binding Path=price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridTextColumn Width="*" IsReadOnly="False"  Header="price" Binding="{Binding Path=price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource accuracyConverter}}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -381,7 +381,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*" IsReadOnly="False"  Header="priceWithService" Binding="{Binding Path=priceWithService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridTextColumn Width="*" IsReadOnly="False"  Header="priceWithService" Binding="{Binding Path=priceWithService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource accuracyConverter}}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>

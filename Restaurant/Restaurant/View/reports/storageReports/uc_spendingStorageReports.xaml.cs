@@ -252,7 +252,6 @@ namespace Restaurant.View.reports.storageReports
             spendingRequestsQuery = spendingRequestsQuery.Where(s => s.ITquantity != 0).ToList();
         }
 
-
         void RefreshSpendingRequestsView()
         {
             dg_request.ItemsSource = spendingRequestsQuery;
