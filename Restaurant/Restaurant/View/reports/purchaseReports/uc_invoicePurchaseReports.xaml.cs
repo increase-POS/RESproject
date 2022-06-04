@@ -474,7 +474,7 @@ namespace Restaurant.View.reports.purchaseReports
         private List<ItemTransferInvoice> fillPdfList(ComboBox comboBox, ObservableCollection<int> stackedButton)
         {
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
-            //var temp = fillRowChartList(Invoices, chk_invoice, chk_return, chk_drafs, dp_startDate, dp_endDate, dt_startTime, dt_endTime);
+            
             var temp = fillList(Invoices, chk_invoice, chk_return, chk_drafs, dp_startDate, dp_endDate, dt_startTime, dt_endTime);
             if (selectedTab == 0)
             {

@@ -72,8 +72,7 @@ namespace Restaurant.View.reports.storageReports
         List<ItemTransferInvoice> itemsTransfer;
         List<ItemTransferInvoice> itemsTransferQuery;
 
-        IEnumerable<ItemTransferInvoice> agentsCount;//???????
-        IEnumerable<ItemTransferInvoice> invCount;//?????????????
+        IEnumerable<ItemTransferInvoice> invCount;
 
         Statistics statisticModel = new Statistics();
         string searchText = "";
@@ -83,14 +82,6 @@ namespace Restaurant.View.reports.storageReports
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-
-
-        List<ExternalitemCombo> comboExternalItemsItems;
-        List<ExternalUnitCombo> comboExternalItemsUnits;
-        List<AgentCombo> comboExternalAgentsAgents;
-        List<InvTypeCombo> comboExternalInvType;
-        List<InvCombo> comboExternalInvoiceInvoice;
-
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -106,7 +97,7 @@ namespace Restaurant.View.reports.storageReports
                 translate();
                 #endregion
 
-                await FillCombo.fillComboBranchesAllWithoutMain(cb_branches);
+                //await FillCombo.fillComboBranchesAllWithoutMain(cb_branches);
 
                 btn_externalItems_Click(btn_item, null);
                
@@ -139,6 +130,7 @@ namespace Restaurant.View.reports.storageReports
         async Task<IEnumerable<ItemTransferInvoice>> RefreshExternalList()
         {
             itemsTransfer = await statisticModel.GetExternalMov((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+            fillBranches();
             fillItems();
             fillVendors();
             return itemsTransfer;
@@ -168,16 +160,19 @@ namespace Restaurant.View.reports.storageReports
             ( cb_branches.SelectedIndex != -1 ? s.branchId == Convert.ToInt32(cb_branches.SelectedValue) : true)
              &&
              //in
-            (chk_in.IsChecked == true ? (s.invType == "p") || (s.invType == "sb") : true)
-             && 
+            ((chk_in.IsChecked == true   ? (s.invType == "p") : false)
+             || 
              //out
-             (chk_out.IsChecked == true ? (s.invType == "s") || (s.invType == "pb") : true)
+             (chk_out.IsChecked == true ? (s.invType == "pb") : false))
              &&
              //item
              (cb_items.SelectedItem != null ? s.itemId == Convert.ToInt32(cb_items.SelectedValue) : true)
              &&
              //unit
-             (cb_units.SelectedItem != null ? s.itemId == Convert.ToInt32(cb_units.SelectedValue) : true)
+             (cb_units.SelectedItem != null ? s.unitId == Convert.ToInt32(cb_units.SelectedValue) : true)
+             &&
+             //vendor
+             (cb_vendor.SelectedItem != null ? s.agentId == Convert.ToInt32(cb_vendor.SelectedValue) : true)
              && 
              //start date
              (dp_startDate.SelectedDate != null ? s.invDate == dp_startDate.SelectedDate : true)
@@ -286,6 +281,12 @@ namespace Restaurant.View.reports.storageReports
             col_agentTypeAgent.Visibility = Visibility.Hidden;
         }
 
+        private void fillBranches()
+        {
+            cb_branches.SelectedValuePath = "branchId";
+            cb_branches.DisplayMemberPath = "branchName";
+            cb_branches.ItemsSource = itemsTransfer.GroupBy(g => g.branchId).Select(i => new { i.FirstOrDefault().branchName, i.FirstOrDefault().branchId });
+        }
         private void fillItems()
         {
             cb_items.SelectedValuePath = "itemId";
@@ -302,9 +303,9 @@ namespace Restaurant.View.reports.storageReports
         }
         private void fillVendors()
         {
-            cb_items.SelectedValuePath = "agentId";
-            cb_items.DisplayMemberPath = "AgentNameAgent";
-            cb_items.ItemsSource = itemsTransfer.GroupBy(g => g.agentId).Select(i => new { i.FirstOrDefault().AgentNameAgent, i.FirstOrDefault().agentId });
+            cb_vendor.SelectedValuePath = "agentId";
+            cb_vendor.DisplayMemberPath = "AgentNameAgent";
+            cb_vendor.ItemsSource = itemsTransfer.GroupBy(g => g.agentId).Select(i => new { i.FirstOrDefault().AgentNameAgent, i.FirstOrDefault().agentId });
         }
         #endregion
 
@@ -333,7 +334,7 @@ namespace Restaurant.View.reports.storageReports
                 chk_out.IsChecked = true;
                 chk_allBranches.IsChecked = true;
                 chk_allItems.IsChecked = true;
-                chk_allVendors.IsChecked = true;
+                chk_allUnits.IsChecked = true;
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -343,7 +344,6 @@ namespace Restaurant.View.reports.storageReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private async void btn_externalAgents_Click(object sender, RoutedEventArgs e)
         {//agents
             try
@@ -378,7 +378,6 @@ namespace Restaurant.View.reports.storageReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void chk_externalItemsAllBranches_Checked(object sender, RoutedEventArgs e)
         {
             try
@@ -558,7 +557,6 @@ namespace Restaurant.View.reports.storageReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void chk_externalAgentsAllCustomers_Unchecked(object sender, RoutedEventArgs e)
         {
             try
@@ -571,47 +569,6 @@ namespace Restaurant.View.reports.storageReports
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        Invoice invoice;//??????
-        private async void DgStock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-
-                HelpClass.StartAwait(grid_main);
-                invoice = new Invoice();
-                if (dgStock.SelectedIndex != -1)
-                {
-                    ItemTransferInvoice item = dgStock.SelectedItem as ItemTransferInvoice;
-                    if (item.invoiceId > 0)
-                    {
-                        invoice = await invoice.GetByInvoiceId(item.invoiceId);
-                        MainWindow.mainWindow.Btn_storage_Click(MainWindow.mainWindow.btn_storage, null);
-
-                        //View.uc_storage.Instance.UserControl_Loaded(null, null);
-                        //View.uc_storage.Instance.Btn_itemsExport_Click(View.uc_storage.Instance.btn_importExport, null);
-
-                        MainWindow.mainWindow.grid_main.Children.Clear();
-                        MainWindow.mainWindow.grid_main.Children.Add(uc_storageMovements.Instance);
-
-                        MainWindow.mainWindow.initializationMainTrack("storageMovements");
-                        //uc_storageMovements.Instance.UserControl_Loaded(uc_storageMovements.Instance, null);
-                        uc_storageMovements._ProcessType = invoice.invType;
-                        uc_storageMovements.Instance.invoice = invoice;
-                        uc_storageMovements.isFromReport = true;
-                        await uc_storageMovements.Instance.fillOrderInputs(invoice);
-                    }
-                }
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -803,42 +760,36 @@ namespace Restaurant.View.reports.storageReports
             MyAxis.Labels = new List<string>();
             List<string> names = new List<string>();
             List<int> pTemp = new List<int>();
-            List<int> sTemp = new List<int>();
             List<int> pbTemp = new List<int>();
-            List<int> sbTemp = new List<int>();
 
             var result = itemsTransferQuery.GroupBy(x => new { x.branchId, x.invoiceId }).Select(x => new ItemTransferInvoice
             {
                 invType = x.FirstOrDefault().invType,
-                branchId = x.FirstOrDefault().branchId
-            });
+                branchId = x.FirstOrDefault().branchId,
+                branchName = x.FirstOrDefault().branchName
+            }) ;
 
             invCount = result.GroupBy(x => x.branchId).Select(x => new ItemTransferInvoice
             {
                 PCount = x.Where(g => g.invType == "p").Count(),
-                SCount = x.Where(g => g.invType == "s").Count(),
                 PbCount = x.Where(g => g.invType == "pb").Count(),
-                SbCount = x.Where(g => g.invType == "sb").Count()
+                branchName = x.FirstOrDefault().branchName
             });
 
-            for (int i = 0; i < agentsCount.Count(); i++)
+            for (int i = 0; i < invCount.Count(); i++)
             {
                 pTemp.Add(invCount.ToList().Skip(i).FirstOrDefault().PCount);
                 pbTemp.Add(invCount.ToList().Skip(i).FirstOrDefault().PbCount);
-                sTemp.Add(invCount.ToList().Skip(i).FirstOrDefault().SCount);
-                sbTemp.Add(invCount.ToList().Skip(i).FirstOrDefault().SbCount);
             }
-            var tempName = itemsTransferQuery.GroupBy(s => new { s.branchId, s.invType }).Select(s => new
-            {
-                locationName = s.FirstOrDefault().branchName
-            });
-            names.AddRange(tempName.Select(nn => nn.locationName));
-
-            SeriesCollection rowChartData = new SeriesCollection();
+           
+            names.AddRange(invCount.Select(nn => nn.branchName));
             for (int i = 0; i < pTemp.Count(); i++)
             {
                 MyAxis.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
             }
+
+            SeriesCollection rowChartData = new SeriesCollection();
+           
 
             rowChartData.Add(
           new LineSeries
@@ -847,25 +798,13 @@ namespace Restaurant.View.reports.storageReports
               Title = AppSettings.resourcemanager.GetString("tr_Purchases")
 
           }); ;
-            rowChartData.Add(
-      new LineSeries
-      {
-          Values = pbTemp.AsChartValues(),
-          Title = AppSettings.resourcemanager.GetString("trPurchaseReturnInvoice")
-      });
-            rowChartData.Add(
-      new LineSeries
-      {
-          Values = sTemp.AsChartValues(),
-          Title = AppSettings.resourcemanager.GetString("tr_Sales")
-      });
-            rowChartData.Add(
-      new LineSeries
-      {
-          Values = sbTemp.AsChartValues(),
-          Title = AppSettings.resourcemanager.GetString("trSalesReturnInvoice")
-
-      });
+          rowChartData.Add(
+          new LineSeries
+          {
+              Values = pbTemp.AsChartValues(),
+              Title = AppSettings.resourcemanager.GetString("trPurchaseReturnInvoice")
+          });
+           
             rowChart.Series = rowChartData;
             DataContext = this;
         }
@@ -875,23 +814,15 @@ namespace Restaurant.View.reports.storageReports
             axcolumn.Labels = new List<string>();
             List<string> names = new List<string>();
 
-            var res = itemsTransferQuery.GroupBy(x => new { x.agentId }).Select(x => new ItemTransferInvoice
+            var res = itemsTransferQuery.GroupBy(x => new { x.AgentNameAgent }).Select(x => new 
             {
                 agentId = x.FirstOrDefault().agentId,
                 agentName = x.FirstOrDefault().AgentNameAgent,
+                iCount = x.Where(m => m.invType == "p").Count(),
+                rCount = x.Where(m => m.invType == "pb").Count()
             });
 
-            var temp = res.GroupBy(s => s.branchId).Select(s => new
-            {
-                iCount = s.Where(m => m.invType == "p" || m.invType == "s").Count(),
-                rCount = s.Where(m => m.invType == "pb" || m.invType == "sb").Count(),
-            });
-
-            var tempName = res.GroupBy(s => new { s.agentId }).Select(s => new
-            {
-                name = s.FirstOrDefault().AgentNameAgent,
-            });
-            names.AddRange(tempName.Select(nn => nn.name));
+            names.AddRange(res.Select(nn => nn.agentName));
 
             List<string> lable = new List<string>();
             SeriesCollection columnChartData = new SeriesCollection();
@@ -899,21 +830,21 @@ namespace Restaurant.View.reports.storageReports
             List<int> cPb = new List<int>();
 
             int xCount = 6;
-            if (temp.Count() <= 6) xCount = temp.Count();
+            if (res.Count() <= 6) xCount = res.Count();
 
             for (int i = 0; i < xCount; i++)
             {
-                cP.Add(temp.ToList().Skip(i).FirstOrDefault().iCount);
-                cPb.Add(temp.ToList().Skip(i).FirstOrDefault().rCount);
+                cP.Add(res.ToList().Skip(i).FirstOrDefault().iCount);
+                cPb.Add(res.ToList().Skip(i).FirstOrDefault().rCount);
                 axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
             }
-            if (agentsCount.Count() > 6)
+            if (res.Count() > 6)
             {
                 int _ivoice = 0, _return = 0;
-                for (int i = 6; i < temp.Count(); i++)
+                for (int i = 6; i < res.Count(); i++)
                 {
-                    _ivoice = _ivoice + temp.ToList().Skip(i).FirstOrDefault().iCount;
-                    _return = _return + temp.ToList().Skip(i).FirstOrDefault().rCount;
+                    _ivoice = _ivoice + res.ToList().Skip(i).FirstOrDefault().iCount;
+                    _return = _return + res.ToList().Skip(i).FirstOrDefault().rCount;
                 }
                 if (!((_ivoice == 0) && (_return == 0)))
                 {
@@ -934,7 +865,7 @@ namespace Restaurant.View.reports.storageReports
             {
                 Values = cPb.AsChartValues(),
                 DataLabels = true,
-                Title = AppSettings.resourcemanager.GetString("tr_Return")
+                Title = AppSettings.resourcemanager.GetString("trReturned")
             });
 
             DataContext = this;
@@ -949,7 +880,6 @@ namespace Restaurant.View.reports.storageReports
             titles.Clear();
             titles1.Clear();
 
-            // var temp = itemTransferInvoicesLst;
             var result = itemsTransferQuery
                 .GroupBy(s => new { s.itemId, s.unitId })
                 .Select(s => new ItemTransferInvoice
@@ -1003,5 +933,6 @@ namespace Restaurant.View.reports.storageReports
 
         #endregion
 
+       
     }
 }

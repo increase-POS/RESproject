@@ -428,10 +428,8 @@
                             <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                             <DataGrid  Margin="5"  IsReadOnly="True"  Background="White"
-                             Name="dgStock" 
-                                AutoGenerateColumns="False" 
-                                ColumnWidth="SizeToHeader"
-                                    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                                       Name="dgStock" AutoGenerateColumns="False"  ColumnWidth="SizeToHeader"
+                                       AlternatingRowBackground="#f3f3f3" AlternationCount="2" >
                                 <DataGrid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                                 </DataGrid.OpacityMask>
