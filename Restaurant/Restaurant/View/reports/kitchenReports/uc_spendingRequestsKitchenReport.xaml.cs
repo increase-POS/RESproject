@@ -81,8 +81,6 @@ namespace Restaurant.View.reports.kitchenReports
 
                 Btn_invoice_Click(btn_invoice, null);
 
-                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_invoice.Tag.ToString());
-
             }
             catch (Exception ex)
             {
@@ -285,7 +283,7 @@ namespace Restaurant.View.reports.kitchenReports
             (
             //normal
             (
-                chk_normal.IsChecked == true ?  s.invType == "sr" : false
+                chk_normal.IsChecked == true ?  (s.invType == "sr" || s.invType == "srw") : false
             )
             ||
             //return
@@ -300,7 +298,7 @@ namespace Restaurant.View.reports.kitchenReports
         async Task SearchItem()
         {
             var quantitiesNormal = requestsTemp.GroupBy(s => s.ITitemUnitId).Select(inv => new {
-                ITquantity = inv.Where(m => m.invType == "sr").Sum(p => p.ITquantity.Value),
+                ITquantity = inv.Where(m => m.invType == "sr" || m.invType == "srw").Sum(p => p.ITquantity.Value),
             }).ToList();
             var quantitiesReturn = requestsTemp.GroupBy(s => s.ITitemUnitId).Select(inv => new {
                 ITquantity = inv.Where(m => m.invType == "srb").Sum(p => p.ITquantity.Value),
@@ -488,7 +486,7 @@ namespace Restaurant.View.reports.kitchenReports
             {
                 var tempRequestsLst = temp.GroupBy(s => s.branchId).Select(s => new
                 {
-                    reqNormal = s.Where(m => m.invType == "sr").Count(),
+                    reqNormal = s.Where(m => m.invType == "sr" || m.invType == "srw").Count(),
                     reqReturn = s.Where(m => m.invType == "srb").Count(),
                 });
 
@@ -817,8 +815,6 @@ namespace Restaurant.View.reports.kitchenReports
         }
 
         #endregion
-
-        
 
         #region reports
         private void BuildReport()
