@@ -199,7 +199,7 @@ namespace Restaurant.View.reports.storageReports
             (
             //normal
             (
-                chk_normal.IsChecked == true ? s.invType == "sr" : false
+                chk_normal.IsChecked == true ? (s.invType == "sr") : false
             )
             ||
             //return
@@ -214,7 +214,7 @@ namespace Restaurant.View.reports.storageReports
         async Task SearchItem()
         {
             var quantitiesNormal = requestsTemp.GroupBy(s => s.ITitemUnitId).Select(inv => new {
-                ITquantity = inv.Where(m => m.invType == "sr").Sum(p => p.ITquantity.Value),
+                ITquantity = inv.Where(m => (m.invType == "sr" )).Sum(p => p.ITquantity.Value),
             }).ToList();
             var quantitiesReturn = requestsTemp.GroupBy(s => s.ITitemUnitId).Select(inv => new {
                 ITquantity = inv.Where(m => m.invType == "srb").Sum(p => p.ITquantity.Value),
