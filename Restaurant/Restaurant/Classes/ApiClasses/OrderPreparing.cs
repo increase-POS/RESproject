@@ -81,9 +81,10 @@ namespace Restaurant.Classes.ApiClasses
         public Nullable<int> categoryId { get; set; }
         public string categoryCode { get; set; }
         public string categoryName { get; set; }
+        public string sectionTable { get; set; }
         //-------------------------------------------
 
-            // for check dataGrid
+        // for check dataGrid
         public bool IsChecked { get; set; }
 
         public async Task<List<OrderPreparing>> GetInvoicePreparingOrders( int invoiceId)
@@ -355,6 +356,7 @@ namespace Restaurant.Classes.ApiClasses
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("invoiceId", invoiceId.ToString());
             IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetOrdersByInvoiceId", parameters);
+
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")

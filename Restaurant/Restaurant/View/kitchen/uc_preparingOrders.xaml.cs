@@ -371,7 +371,7 @@ namespace Restaurant.View.kitchen
 
                             List<int> invoiceIds = selectedOrders.GroupBy(X => X.invoiceId).Select(X => (int)X.FirstOrDefault().invoiceId).ToList();
                             List<int> orderIds = selectedOrders.Select(X => X.orderPreparingId).ToList();
-                            Thread t2 = new Thread(async() =>
+                            Thread t2 = new Thread(async () =>
                             {
                                 List<OrderPreparing> OrderList = new List<OrderPreparing>();
 
@@ -389,11 +389,11 @@ namespace Restaurant.View.kitchen
                                 //t2.Start();
                             }
 
-                        });
-                        t2.Start();
+                            });
+                            t2.Start();
 
 
-                }
+                        }
 
                         #endregion
                         break;

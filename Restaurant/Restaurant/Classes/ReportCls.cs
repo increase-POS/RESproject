@@ -147,11 +147,19 @@ namespace Restaurant.Classes
 
         public string TimeToString(TimeSpan? time)
         {
+            if (time != null)
+            {
 
-            TimeSpan ts = TimeSpan.Parse(time.ToString());
-            // @"hh\:mm\:ss"
-            string stime = ts.ToString(@"hh\:mm");
-            return stime;
+
+                TimeSpan ts = TimeSpan.Parse(time.ToString());
+                // @"hh\:mm\:ss"
+                string stime = ts.ToString(@"hh\:mm");
+                return stime;
+            }
+            else
+            {
+                return "-";
+            }
         }
 
         public string DateToString(DateTime? date)

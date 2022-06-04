@@ -2790,7 +2790,7 @@ namespace Restaurant.Classes
 
             paramarr.Add(new ReportParameter("trTables", AppSettings.resourcemanagerreport.GetString("trTables")));
 
-            paramarr.Add(new ReportParameter("Tables", list.FirstOrDefault().tables));
+            paramarr.Add(new ReportParameter("Tables", list.FirstOrDefault().sectionTable));
             paramarr.Add(new ReportParameter("trInvoice", AppSettings.resourcemanagerreport.GetString("trBranch")));
             paramarr.Add(new ReportParameter("trOrder", AppSettings.resourcemanagerreport.GetString("trBranch")));
             paramarr.Add(new ReportParameter("orderNum", list.FirstOrDefault().orderNum));
