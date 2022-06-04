@@ -381,8 +381,6 @@ namespace Restaurant.View.reports.salesReports
                 chk_allBranches.IsChecked = true;
                 chk_allPos.IsChecked = true;
 
-                await Search();
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

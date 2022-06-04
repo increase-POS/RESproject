@@ -915,8 +915,7 @@ namespace Restaurant.View.reports.salesReports
         {//refresh
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_branches.SelectedItem = null;
                 chk_drafs.IsChecked = false;
@@ -975,13 +974,11 @@ namespace Restaurant.View.reports.salesReports
 
                 txt_search.Text = "";
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

@@ -324,7 +324,8 @@ namespace Restaurant.View.reports.salesReports
                 await RefreshMembershipsList();
                 dp_startDate.SelectedDate = null;
                 dp_endDate.SelectedDate = null;
-                await Search();
+                chk_allMemberships.IsChecked = true;
+                chk_allBranches.IsChecked = true;
 
                 HelpClass.EndAwait(grid_main);
             }
