@@ -421,6 +421,11 @@ namespace Restaurant.View.reports.storageReports
 
                 txt_search.Text = "";
                 searchText = "";
+                chk_directAllBranches.IsChecked = true;
+                chk_directAllItems.IsChecked = true;
+                chk_directAllUnits.IsChecked = true;
+                dp_directStartDate.SelectedDate = null;
+                dp_directEndDate.SelectedDate = null;
                 
                 fillEvents();
 

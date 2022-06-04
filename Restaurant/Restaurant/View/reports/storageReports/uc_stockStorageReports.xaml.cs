@@ -1525,13 +1525,11 @@ namespace Restaurant.View.reports.storageReports
                     dp_startDateCollect.SelectedDate = null;
                 }
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

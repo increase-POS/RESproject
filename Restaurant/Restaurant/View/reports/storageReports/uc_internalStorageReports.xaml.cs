@@ -996,8 +996,7 @@ namespace Restaurant.View.reports.storageReports
         {//refresh
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (selectedTab == 0)
                 {
@@ -1023,13 +1022,11 @@ namespace Restaurant.View.reports.storageReports
                     chk_internalOperatorAllTypes.IsChecked = false;
                 }
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

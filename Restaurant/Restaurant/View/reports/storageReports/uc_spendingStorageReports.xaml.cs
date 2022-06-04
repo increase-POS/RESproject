@@ -374,13 +374,21 @@ namespace Restaurant.View.reports.storageReports
 
         private void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
-            searchText = "";
-            txt_search.Text = "";
-            chk_allBranches.IsChecked = true;
-            dp_startDate.SelectedDate = null;
-            dp_endDate.SelectedDate = null;
+            try
+            {
+                searchText = "";
+                txt_search.Text = "";
+                chk_allBranches.IsChecked = true;
+                dp_startDate.SelectedDate = null;
+                dp_endDate.SelectedDate = null;
+                chk_normal.IsChecked = true;
+                chk_return.IsChecked = false;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
-            callSearch(sender);
         }
 
         private async void detailsRowinDatagrid(object sender, RoutedEventArgs e)
