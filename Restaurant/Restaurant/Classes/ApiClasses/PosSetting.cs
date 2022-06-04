@@ -53,29 +53,6 @@ namespace Restaurant.Classes
         /// <returns></returns>
         /// 
 
-
-
-        public async Task<List<PosSetting>> GetAll()
-        {
-
-            List<PosSetting> list = new List<PosSetting>();
-    
-            IEnumerable<Claim> claims = await APIResult.getList("PosSetting/GetAll");
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<PosSetting>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
-
-
- 
-
-        }
-
         public string getdefaultPrinters()
         {
 

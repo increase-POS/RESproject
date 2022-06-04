@@ -40,24 +40,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<ResidentialSectors> GeById(int itemId)
-        {
-            ResidentialSectors item = new ResidentialSectors();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("itemId", itemId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("ResidentialSectors/GeById", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    item = JsonConvert.DeserializeObject<ResidentialSectors>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                    break;
-                }
-            }
-            return item;
-        }
+        
         public async Task<int> Save(ResidentialSectors item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();

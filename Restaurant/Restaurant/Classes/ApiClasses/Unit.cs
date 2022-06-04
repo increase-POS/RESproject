@@ -59,38 +59,9 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Unit>> GetU()
-        {
-            List<Unit> items = new List<Unit>();
-            IEnumerable<Claim> claims = await APIResult.getList("Units/GetU");
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<Unit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;
-        }
+   
 
-        public async Task<Unit> getById(int itemId)
-        {
-            Unit item = new Unit();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("itemId", itemId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("Units/GetUnitByID", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    item = JsonConvert.DeserializeObject<Unit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                    break;
-                }
-            }
-            return item;
-        }
+      
         public async Task<List<Unit>> getSmallUnits(int itemId, int unitId)
         {
             List<Unit> items = new List<Unit>();

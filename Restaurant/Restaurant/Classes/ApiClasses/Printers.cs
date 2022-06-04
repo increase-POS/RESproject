@@ -30,30 +30,7 @@ namespace Restaurant.Classes
         /// <returns></returns>
         /// 
 
-
-
-        public async Task<List<Printers>> GetAll()
-        {
-            List<Printers> list = new List<Printers>();
-            //  Dictionary<string, string> parameters = new Dictionary<string, string>();
-            //parameters.Add("mainBranchId", mainBranchId.ToString());
-            //parameters.Add("userId", userId.ToString());
-            //parameters.Add("date", date.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("PrinterController/GetAll");
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<Printers>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
- 
-
-        }
-
+   
         public async Task<int> Save(Printers obj)
         {
 
@@ -87,27 +64,8 @@ namespace Restaurant.Classes
                 }
             }
             return item;
-
-
-            
+         
         }
-
-        public async Task<int> Delete(int printerId)
-        {
-
-
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("posSettingId", printerId.ToString());
-
-
-            string method = "PrinterController/Delete";
-            return await APIResult.post(method, parameters);
-
-      
-        }
-
-
-
 
 
     }

@@ -121,20 +121,7 @@ namespace Restaurant.Classes
             parameters.Add("itemUnit",myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<List<Item>> Get()
-        {
-            List<Item> items = new List<Item>();
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetAllItems");
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;
-        }
+        
         public async Task<List<Item>> GetKitchenItemsWithUnits(int branchId,int categoryId)
         {
             List<Item> items = new List<Item>();
@@ -218,26 +205,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Item>> GetSaleOrPurItems(int categoryId, short defaultSale, short defaultPurchase, int branchId)
-        {
-            List<Item> items = new List<Item>() ;
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("categoryId", categoryId.ToString());
-            parameters.Add("defaultSale", defaultSale.ToString());
-            parameters.Add("defaultPurchase", defaultPurchase.ToString());
-            parameters.Add("branchId", branchId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetSaleOrPurItems",parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;            
-        }
+      
         public async Task<List<Item>> GetKitchenItems(int categoryId, int branchId)
         {
             List<Item> items = new List<Item>() ;
@@ -265,59 +233,7 @@ namespace Restaurant.Classes
 
             string method = "Items/Delete";
            return await APIResult.post(method, parameters);         
-        }
-
-        // get codes of all items
-        public async Task<List<string>> GetItemsCodes()
-        {
-            List<string> codes = new List<string>();
-
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetItemsCodes");
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    codes.Add(c.Value.ToString());
-                }
-            }
-            return codes;    
-        }
-        // get items of type
-        public async Task<List<Item>> GetItemsByType(string type)
-        {
-            List<Item> items = new List<Item>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("type", type);
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetItemsByType", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;  
-        }
-        public async Task<List<Item>> GetSubItems(int itemId)
-        {
-            List<Item> items = new List<Item>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("itemId", itemId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetSubItems", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;
-        }
+        }                 
 
         public async Task<Item> GetItemByID(int itemId)
         {
@@ -355,44 +271,8 @@ namespace Restaurant.Classes
             }
             return list;
         }
-        public async Task<List<Item>> GetItemsWichHasUnits(List<string> type)
-        {
-            List<Item> items = new List<Item>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            var myContent = JsonConvert.SerializeObject(type);
-            parameters.Add("type", myContent);
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetItemsWichHasUnits",parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;        
-        }
        
-        // get items in category and sub
-        public async Task<List<Item>> GetItemsInCategoryAndSub(int categoryId)
-        {
-            List<Item> items = new List<Item>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("categoryId", categoryId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetItemsInCategoryAndSub", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;
-        }
-
+      
         #region image
         // update image field in DB
         public async Task<int> updateImage(int itemId, string imageName)
@@ -522,44 +402,7 @@ namespace Restaurant.Classes
 
 
         #endregion
-
-
-        //service
-
-        public async Task<List<Item>> GetAllSrItems()
-        {
-            List<Item> items = new List<Item>();
-
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetAllSrItems");
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;
-        }
-
-
-        public async Task<List<Item>> GetSrItemsInCategoryAndSub(int categoryId)
-        {
-            List<Item> items = new List<Item>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("categoryId", categoryId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetSrItemsInCategoryAndSub", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;
-        }
+    
 
     }
 }

@@ -58,23 +58,6 @@ namespace Restaurant.Classes
             }
             return item;
         }
-        public async Task<int> save(MembershipsOffers item)
-        {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "membershipsOffers/Save";
-            var myContent = JsonConvert.SerializeObject(item);
-            parameters.Add("itemObject", myContent);
-           return await APIResult.post(method, parameters);
-        }
-        public async Task<int> delete(int itemId, int userId, Boolean final)
-        {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("itemId", itemId.ToString());
-            parameters.Add("userId", userId.ToString());
-            parameters.Add("final", final.ToString());
-            string method = "membershipsOffers/Delete";
-           return await APIResult.post(method, parameters);
-        }
 
         public async Task<int> UpdateOffersByMembershipId(List<MembershipsOffers> newList, int membershipId, int updateUserId)
         {

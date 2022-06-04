@@ -43,24 +43,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<StorageCost> getById(int itemId)
-        {
-            StorageCost item = new StorageCost();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("itemId", itemId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("StorageCost/GetByID", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    item = JsonConvert.DeserializeObject<StorageCost>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                    break;
-                }
-            }
-            return item;
-        }
+     
         public async Task<int> save(StorageCost item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();

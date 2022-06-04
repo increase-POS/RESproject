@@ -111,14 +111,6 @@ namespace Restaurant.Classes
             return count;
         }
 
-        public async Task<int> save(NotificationUser item)
-        {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "notificationUser/Save";
-            var myContent = JsonConvert.SerializeObject(item);
-            parameters.Add("itemObject", myContent);
-           return await APIResult.post(method, parameters);
-        }
         public async Task<int> setAsRead(int notUserId, int posId, string type)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();

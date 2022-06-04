@@ -47,41 +47,8 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<Tag> GetByID(int itemId)
-        {
-            Tag item = new Tag();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("itemId", itemId.ToString());
-           
-            IEnumerable<Claim> claims = await APIResult.getList("Tags/GetByID", parameters);
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    item = JsonConvert.DeserializeObject<Tag>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                    break;
-                }
-            }
-            return item;
-        }
-        public async Task<Tag> GetByisActive(byte isActive)
-        {
-            Tag item = new Tag();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("isActive", isActive.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("Tags/GetByisActive", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    item = JsonConvert.DeserializeObject<Tag>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                    break;
-                }
-            }
-            return item;
-        }
+     
+    
         public async Task<int> Save(Tag item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();

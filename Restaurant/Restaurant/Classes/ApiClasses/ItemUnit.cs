@@ -51,66 +51,7 @@ namespace Restaurant.Classes
         public string type { get; set; }
         public Nullable<int> categoryId { get; set; }
         //**************************************************
-        //*************** item unit methods *********************
-        public async Task<List<ItemUnit>> GetAllItemUnits(int itemId)
-        {
-
-
-            List<ItemUnit> list = new List<ItemUnit>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("itemId", itemId.ToString());
-
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("ItemsUnits/GetAll", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<ItemUnit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
-            //List<ItemUnit> items = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "ItemsUnits/GetAll?itemId=" + itemId);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //        // fix date format
-            //        JsonSerializerSettings settings = new JsonSerializerSettings
-            //        {
-            //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //            DateParseHandling = DateParseHandling.None
-            //        };
-            //        items = JsonConvert.DeserializeObject<List<ItemUnit>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return items;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        items = new List<ItemUnit>();
-            //    }
-            //    return items;
-            //}
-        }
-
-
+        //*************** item unit methods *********************     
         public async Task<ItemUnit> GetById(int itemUnitId)
         {
             ItemUnit item = new ItemUnit();
@@ -128,44 +69,6 @@ namespace Restaurant.Classes
                 }
             }
             return item;
-
-            //ItemUnit items = null;
-            //... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "ItemsUnits/GetById?itemUnitId=" + itemUnitId);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //       // fix date format
-            //       JsonSerializerSettings settings = new JsonSerializerSettings
-            //       {
-            //           Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //           DateParseHandling = DateParseHandling.None
-            //       };
-            //        items = JsonConvert.DeserializeObject<ItemUnit>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return items;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        items = new ItemUnit();
-            //    }
-            //    return items;
-            //}
         }
         public async Task<List<ItemUnit>> GetItemUnits(int itemId = 0)
         {
@@ -237,67 +140,6 @@ namespace Restaurant.Classes
             }
         }
 
-
-        //***************************************
-        // get all barcodes from DB , return list of string represent barcodes
-        //***************************************
-        public async Task<List<ItemUnit>> getAllBarcodes()
-        {
-            List<ItemUnit> list = new List<ItemUnit>();
-            //  Dictionary<string, string> parameters = new Dictionary<string, string>();
-            //parameters.Add("mainBranchId", mainBranchId.ToString());
-            //parameters.Add("userId", userId.ToString());
-            //parameters.Add("date", date.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("ItemsUnits/GetAllBarcodes");
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<ItemUnit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
-
-            //List<ItemUnit> barcodes = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "ItemsUnits/GetAllBarcodes");
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //        // fix date format
-            //        JsonSerializerSettings settings = new JsonSerializerSettings
-            //        {
-            //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //            DateParseHandling = DateParseHandling.None
-            //        };
-            //        barcodes = JsonConvert.DeserializeObject<List<ItemUnit>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return barcodes;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        barcodes = new List<ItemUnit>();
-            //    }
-            //    return barcodes;
-            //}
-        }
         //***************************************
         // add or update item unit
         //***************************************
@@ -323,30 +165,6 @@ namespace Restaurant.Classes
             string method = "ItemsUnits/Delete";
            return await APIResult.post(method, parameters);
 
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "ItemsUnits/Delete?ItemUnitId=" + ItemUnitId+ "&userId="+userId+"&final="+isFinal);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Post;
-            //    //set content type
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        return true;
-            //    }
-            //    return false;
-            //}
         }
 
         public async Task<List<ItemUnit>> Getall()
@@ -362,61 +180,9 @@ namespace Restaurant.Classes
                 }
             }
             return list;
-
-            //List<ItemUnit> items = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "ItemsUnits/Getall");
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //        // fix date format
-            //        JsonSerializerSettings settings = new JsonSerializerSettings
-            //        {
-            //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //            DateParseHandling = DateParseHandling.None
-            //        };
-            //        items = JsonConvert.DeserializeObject<List<ItemUnit>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return items;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        items = new List<ItemUnit>();
-            //    }
-            //    return items;
-            //}
+          
         }
-       
-        public async Task<List<Item>> GetForSale()
-        {
-            List<Item> list = new List<Item>();
-            IEnumerable<Claim> claims = await APIResult.getList("ItemsUnits/GetForSale");
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list; 
-        }
-
+            
         public async Task<List<ItemUnit>> GetIU()
         {
             List<ItemUnit> list = new List<ItemUnit>();
@@ -431,86 +197,8 @@ namespace Restaurant.Classes
             }
             return list;
         }
-
-        public async Task<List<ItemUnit>> GetActiveItemsUnits()
-        {
-            List<ItemUnit> list = new List<ItemUnit>();
-            IEnumerable<Claim> claims = await APIResult.getList("ItemsUnits/GetActiveItemsUnits");
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<ItemUnit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;   
-        }
-        public async Task<List<ItemUnit>> GetUnitsForSales(int branchId)
-        {
-            List<ItemUnit> list = new List<ItemUnit>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("branchId", branchId.ToString());
-            IEnumerable<Claim> claims = await APIResult.getList("ItemsUnits/GetUnitsForSales",parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<ItemUnit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
-        }
-            //***************************************
-
-            //public async Task<List<ItemUnit>> GetbyOfferId(int offerId)
-            //{
-
-
-            //    List<ItemUnit> items = null;
-            //    // ... Use HttpClient.
-            //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //    using (var client = new HttpClient())
-            //    {
-            //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //        client.BaseAddress = new Uri(Global.APIUri);
-            //        client.DefaultRequestHeaders.Clear();
-            //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //        HttpRequestMessage request = new HttpRequestMessage();
-            //        request.RequestUri = new Uri(Global.APIUri + "ItemsUnits/GetbyOfferId");
-            //        request.Headers.Add("APIKey", Global.APIKey);
-            //        request.Headers.Add("offerId", offerId.ToString());
-            //        request.Method = HttpMethod.Get;
-            //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //        HttpResponseMessage response = await client.SendAsync(request);
-
-            //        if (response.IsSuccessStatusCode)
-            //        {
-            //            var jsonString = await response.Content.ReadAsStringAsync();
-            //            jsonString = jsonString.Replace("\\", string.Empty);
-            //            jsonString = jsonString.Trim('"');
-            //            // fix date format
-            //            JsonSerializerSettings settings = new JsonSerializerSettings
-            //            {
-            //                Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //                DateParseHandling = DateParseHandling.None
-            //            };
-            //            items = JsonConvert.DeserializeObject<List<ItemUnit>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //            return items;
-            //        }
-            //        else //web api sent error response 
-            //        {
-            //            items = new List<ItemUnit>();
-            //        }
-            //        return items;
-            //    }
-            //}
-
-
-            //*******************************
-            public async Task<List<ItemUnit>> getSmallItemUnits(int itemId, int itemUnitId)
+           
+        public async Task<List<ItemUnit>> getSmallItemUnits(int itemId, int itemUnitId)
         {
 
             List<ItemUnit> list = new List<ItemUnit>();
@@ -529,43 +217,11 @@ namespace Restaurant.Classes
                 }
             }
             return list;
-            //List<ItemUnit> units = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "itemsUnits/getSmallItemUnits?itemId=" + itemId + "&itemUnitId=" + itemUnitId);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-
-            //        units = JsonConvert.DeserializeObject<List<ItemUnit>>(jsonString);
-
-            //        return units;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        units = new List<ItemUnit>();
-            //    }
-            //    return units;
-            //}
-
+           
         }
         public async Task<int> largeToSmallUnitQuan(int fromItemUnit, int toItemUnit)
         {
             int AvailableAmount = 0;
-
            
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("fromItemUnit", fromItemUnit.ToString());

@@ -647,22 +647,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<ItemTransfer>> getOrderItems(int invoiceId, int branchId)
-        {
-            List<ItemTransfer> items = new List<ItemTransfer>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("invoiceId", invoiceId.ToString());
-            parameters.Add("branchId", branchId.ToString());
-            IEnumerable<Claim> claims = await APIResult.getList("ItemsTransfer/getOrderItems", parameters);
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<ItemTransfer>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;
-        }
+       
         public async Task<List<ItemTransfer>> getShortageItems(int branchId)
         {
             List<ItemTransfer> items = new List<ItemTransfer>();
@@ -763,14 +748,7 @@ namespace Restaurant.Classes
             parameters.Add("tablesObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> saveOrderStatus(invoiceStatus item)
-        {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "InvoiceStatus/Save";
-            var myContent = JsonConvert.SerializeObject(item);
-            parameters.Add("itemObject", myContent);
-           return await APIResult.post(method, parameters);
-        }
+       
         public async Task<int> saveInvoiceItems(List<ItemTransfer> invoiceItems, int invoiceId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -824,13 +802,7 @@ namespace Restaurant.Classes
             string method = "Invoices/delete";
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> deleteOrder(int invoiceId)
-        {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("itemId", invoiceId.ToString());
-            string method = "Invoices/deleteOrder";
-           return await APIResult.post(method, parameters);
-        }
+
         public async Task<string> generateInvNumber(string invoiceCode, string branchCode, int branchId)
         {
             int sequence = await GetLastNumOfInv(invoiceCode, branchId);

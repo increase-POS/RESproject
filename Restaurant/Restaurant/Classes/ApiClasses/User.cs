@@ -66,24 +66,7 @@ namespace Restaurant.Classes
             }
             return users;
         }
-        public async Task<List<User>> getBranchSalesMan(int branchId, string objectName)
-        {
-            List<User> items = new List<User>();
-
-            //########### to pass parameters (optional)
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("branchId", branchId.ToString());
-            parameters.Add("objectName", objectName);
-            IEnumerable<Claim> claims = await APIResult.getList("Users/GetSalesMan", parameters);
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<User>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;
-        }
+      
         public async Task<List<User>> GetUsersActive()
         {
             List<User> items = new List<User>();
