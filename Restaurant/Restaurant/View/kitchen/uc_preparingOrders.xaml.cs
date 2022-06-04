@@ -17,6 +17,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Microsoft.Reporting.WinForms;
+using System.Threading;
+
 
 namespace Restaurant.View.kitchen
 {
@@ -30,7 +33,7 @@ namespace Restaurant.View.kitchen
             try
             {
                 InitializeComponent();
-               
+
 
             }
             catch (Exception ex)
@@ -44,8 +47,8 @@ namespace Restaurant.View.kitchen
             get
             {
                 //if (_instance == null)
-                if(_instance is null)
-                _instance = new uc_preparingOrders();
+                if (_instance is null)
+                    _instance = new uc_preparingOrders();
                 return _instance;
             }
             set
@@ -114,7 +117,7 @@ namespace Restaurant.View.kitchen
                 }
                 while (!isDone);
                 #endregion
-               
+
                 FillCombo.FillInvoiceTypeWithDefault(cb_searchInvType);
                 //FillCombo.FillPreparingOrderStatusWithDefault(cb_searchStatus);
 
@@ -137,7 +140,7 @@ namespace Restaurant.View.kitchen
 
         private void translate()
         {
-            
+
             // Title
             if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
                 txt_title.Text = AppSettings.resourcemanager.GetString(
@@ -246,7 +249,7 @@ namespace Restaurant.View.kitchen
                 }
             }
         }
-       async void loading_salesItems()
+        async void loading_salesItems()
         {
             try
             {
@@ -279,8 +282,8 @@ namespace Restaurant.View.kitchen
                         selectedOrders.Add(preparingOrder);
                     decimal preparingTime = decimal.Parse(tb_preparingTime.Text);
                     int res = await preparingOrder.EditPreparingOrdersPrepTime(selectedOrders, preparingTime, MainWindow.userLogin.userId);
-                    
-                    if(res > 0)
+
+                    if (res > 0)
                     {
                         await refreshPreparingOrders();
                         await Search();
@@ -306,7 +309,7 @@ namespace Restaurant.View.kitchen
                 if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
                     var selectedOrders = ordersQuery.Where(x => x.IsChecked == true).ToList();
-                        if (HelpClass.validate(requiredControlList, this)  || selectedOrders.Count > 0)
+                    if (HelpClass.validate(requiredControlList, this) || selectedOrders.Count > 0)
                     {
                         await saveOrderPreparing();
                     }
@@ -326,7 +329,7 @@ namespace Restaurant.View.kitchen
         async Task saveOrderPreparing()
         {
             var selectedOrders = ordersQuery.Where(x => x.IsChecked == true).ToList();
-            if (selectedOrders.Count == 0 && preparingOrder.invoiceId != null )// one row is clicked
+            if (selectedOrders.Count == 0 && preparingOrder.invoiceId != null)// one row is clicked
                 selectedOrders.Add(preparingOrder);
 
             if (selectedOrders.Count > 0)
@@ -343,7 +346,7 @@ namespace Restaurant.View.kitchen
 
                 if (selectedOrders.Count == 1)
                     status = preparingOrder.status;
-                else if(chk_ready.IsChecked.Value)
+                else if (chk_ready.IsChecked.Value)
                     status = "Ready";
                 else if (chk_preparing.IsChecked.Value)
                     status = "Preparing";
@@ -355,23 +358,55 @@ namespace Restaurant.View.kitchen
 
                         statusObject.status = "Preparing";
 
-                        foreach(OrderPreparing or in selectedOrders)
+                        foreach (OrderPreparing or in selectedOrders)
                         {
                             or.notes = tb_notes.Text;
                             or.updateUserId = MainWindow.userLogin.userId;
                         }
                         res = await preparingOrder.editPreparingOrdersAndStatus(selectedOrders, statusObject);
+
+                        #region print orders
+                        if (AppSettings.print_kitchen_on_preparing == "1")
+                        {
+
+                            List<int> invoiceIds = selectedOrders.GroupBy(X => X.invoiceId).Select(X => (int)X.FirstOrDefault().invoiceId).ToList();
+                            List<int> orderIds = selectedOrders.Select(X => X.orderPreparingId).ToList();
+                            Thread t2 = new Thread(async() =>
+                            {
+                                List<OrderPreparing> OrderList = new List<OrderPreparing>();
+
+                            foreach (int prinvoiceId in invoiceIds)
+                            {
+                                // get orders by invoiceid
+                                OrderList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
+                                //get selected orders only
+                                OrderList = OrderList.Where(X => orderIds.Contains(X.orderPreparingId)).ToList();
+                                //Thread t2 = new Thread(() =>
+                                //{
+
+                                    printInvoiceInkitchen(prinvoiceId, OrderList);
+                                //});
+                                //t2.Start();
+                            }
+
+                        });
+                        t2.Start();
+
+
+                }
+
+                        #endregion
                         break;
                     case "Preparing":
                         statusObject.status = "Ready";
 
-                    res = await preparingOrder.updateListOrdersStatus(selectedOrders, statusObject);
-                    break;
+                        res = await preparingOrder.updateListOrdersStatus(selectedOrders, statusObject);
+                        break;
                     case "Ready":
                         statusObject.status = "Done";
 
-                    res = await preparingOrder.updateListOrdersStatus(selectedOrders, statusObject);
-                    break;
+                        res = await preparingOrder.updateListOrdersStatus(selectedOrders, statusObject);
+                        break;
                 }
                 if (res > 0)
                 {
@@ -419,7 +454,7 @@ namespace Restaurant.View.kitchen
                 }
                 else
                 {
-                    if(dg_orders.Items.Count > 0)
+                    if (dg_orders.Items.Count > 0)
                     {
                         //var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
                         //var statusCol = dg_orders.Columns[1] as DataGridTextColumn;
@@ -552,7 +587,7 @@ namespace Restaurant.View.kitchen
                 //{
                 if (chk_allForDelivery.IsChecked != true)
                 {
-                OrderPreparing selectedOrder = dg_orders.SelectedItem as OrderPreparing;
+                    OrderPreparing selectedOrder = dg_orders.SelectedItem as OrderPreparing;
                 }
 
                 //selectedOrders.Add(selectedOrder);
@@ -578,7 +613,7 @@ namespace Restaurant.View.kitchen
                 }
                 //else
                 //{
-                   
+
                 //}
 
             }
@@ -685,7 +720,7 @@ namespace Restaurant.View.kitchen
                             preparingOrder.IsChecked = !preparingOrder.IsChecked;
                             dg_orders.Items.Refresh();
                         }
-                        
+
 
                         //if (selectedOrders.Count > 0)
                         //{
@@ -718,10 +753,10 @@ namespace Restaurant.View.kitchen
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-               
+
                 await refreshPreparingOrders();
                 await Search();
-               
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -738,8 +773,8 @@ namespace Restaurant.View.kitchen
             List<string> statusLst = new List<string>() { "Listed", "Preparing", "Ready" };
 
             int duration = 24;
-            orders = await preparingOrder.GetKitchenPreparingOrders(MainWindow.branchLogin.branchId, "",duration);
-            orders = orders.Where(x=>statusLst.Contains(x.status)).ToList();
+            orders = await preparingOrder.GetKitchenPreparingOrders(MainWindow.branchLogin.branchId, "", duration);
+            orders = orders.Where(x => statusLst.Contains(x.status)).ToList();
             orders = orders.Where(x => x.status != "Ready" || (x.status == "Ready" && x.shippingCompanyId == null)).ToList();
         }
         async Task Search()
@@ -750,7 +785,7 @@ namespace Restaurant.View.kitchen
             ordersQuery = orders.ToList();
 
             searchText = tb_search.Text.ToLower();
-            ordersQuery = ordersQuery.Where(s => s.orderNum.ToLower().Contains(searchText) ).ToList();
+            ordersQuery = ordersQuery.Where(s => s.orderNum.ToLower().Contains(searchText)).ToList();
 
             #region seacrch in catalog
             if (cb_searchCatalog.SelectedIndex > 0)
@@ -785,15 +820,15 @@ namespace Restaurant.View.kitchen
                 List<string> invoiceTypes;
 
                 if (cb_searchInvType.SelectedValue.ToString() == "diningHall")
-                    invoiceTypes = new List<string>(){"s","sd" };
+                    invoiceTypes = new List<string>() { "s", "sd" };
 
-                else if(cb_searchInvType.SelectedValue.ToString() == "takeAway")
+                else if (cb_searchInvType.SelectedValue.ToString() == "takeAway")
                     invoiceTypes = new List<string>() { "ts" };
 
                 else
                     invoiceTypes = new List<string>() { "ss" }; // self service
 
-                ordersQuery = ordersQuery.Where(c => invoiceTypes.Contains( c.invType)).ToList();
+                ordersQuery = ordersQuery.Where(c => invoiceTypes.Contains(c.invType)).ToList();
             }
             #endregion
             dg_orders.ItemsSource = ordersQuery;
@@ -804,7 +839,7 @@ namespace Restaurant.View.kitchen
             try
             {
                 //selectedOrders.Clear();
-                
+
 
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsChecked == true)
@@ -962,6 +997,64 @@ namespace Restaurant.View.kitchen
 
         #endregion
         #region report
+        ReportCls reportclass = new ReportCls();
+        public void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
+        {
+            try
+            {
+                //   prInvoice = new Invoice();
+
+                if (invoiceId > 0)
+                {
+                    reportsize rs = reportclass.PrintPrepOrder(OrderPreparingList);
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        if (AppSettings.kitchenPaperSize == "A4")
+                        {
+                            //   LocalReportExtensionsPrint locrepext = new LocalReportExtensionsPrint();
+                            LocalReportExtensionsPrint.PrintToPrinterbyNameAndCopy(rs.rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count));
+
+                        }
+                        else
+                        {
+
+                            //  LocalReportExtensionsPrint locrepext = new LocalReportExtensionsPrint();
+                            LocalReportExtensionsPrint.customPrintToPrinter(rs.rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count), rs.width, rs.height);
+
+                        }
+
+                    });
+                    //foreach (OrderPreparing row in OrderPreparingList)
+                    //{
+                    //    List<OrderPreparing> templist = new List<OrderPreparing>();
+                    //    templist.Add(row);
+                    //    printPrepOrder(templist);
+                    //}
+
+                }
+                else
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPrintEmptyInvoice"), animation: ToasterAnimation.FadeIn);
+
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+                this.Dispatcher.Invoke(async () =>
+                {
+                    await Task.Delay(500);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: "Not completed", animation: ToasterAnimation.FadeIn);
+                });
+            }
+
+
+        }
+
         /*
         // report
         ReportCls reportclass = new ReportCls();
@@ -1190,7 +1283,7 @@ namespace Restaurant.View.kitchen
         */
         #endregion
         #region items
-   
+
         List<ItemOrderPreparing> itemsList = new List<ItemOrderPreparing>();
         void BuildOrderItemsDesign()
         {
@@ -1222,7 +1315,7 @@ namespace Restaurant.View.kitchen
                 itemSequenceText.VerticalAlignment = VerticalAlignment.Center;
                 itemSequenceText.HorizontalAlignment = HorizontalAlignment.Left;
                 Grid.SetColumn(itemSequenceText, 0);
-               
+
                 gridContainer.Children.Add(itemSequenceText);
                 #endregion
                 #region   name
@@ -1240,7 +1333,7 @@ namespace Restaurant.View.kitchen
                 #region   count
                 var itemCountText = new TextBlock();
                 itemCountText.Text = item.quantity.ToString();
-                itemCountText.Margin = new Thickness(5, 5 ,10 , 5);
+                itemCountText.Margin = new Thickness(5, 5, 10, 5);
                 itemCountText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
                 //itemCountText.FontWeight = FontWeights.SemiBold;
                 itemCountText.VerticalAlignment = VerticalAlignment.Center;
@@ -1261,7 +1354,7 @@ namespace Restaurant.View.kitchen
         #region inputEditable
         private void inputEditable(string status)
         {
-            switch(status)
+            switch (status)
             {
                 case "Listed":
                     gd_preparingTime.Visibility = Visibility.Visible;
@@ -1277,7 +1370,7 @@ namespace Restaurant.View.kitchen
                     gd_preparingTime.Visibility = Visibility.Collapsed;
                     btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
 
-                    if(preparingOrder.shippingCompanyId != null) // order is take away (make done in delivery managment)
+                    if (preparingOrder.shippingCompanyId != null) // order is take away (make done in delivery managment)
                         btn_save.IsEnabled = false;
                     else
                         btn_save.IsEnabled = true;
@@ -1293,6 +1386,6 @@ namespace Restaurant.View.kitchen
 
         #endregion
 
-       
+
     }
 }
