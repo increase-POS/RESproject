@@ -980,7 +980,6 @@ namespace Restaurant.View.reports.salesReports
         {//refresh
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
                 txt_search.Text = "";
@@ -989,6 +988,7 @@ namespace Restaurant.View.reports.salesReports
                 {
                     chk_allBranchesItem.IsChecked = true;
                     chk_allItems.IsChecked = true;
+                    chk_allTypes.IsChecked = true;
                     dp_ItemStartDate.SelectedDate = null;
                     dp_ItemEndDate.SelectedDate = null;
 
