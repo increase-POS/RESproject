@@ -410,11 +410,11 @@ namespace Restaurant.View.reports.storageReports
                             MainWindow.mainWindow.initializationMainTrack("spendingOrder");
                             MainWindow.mainWindow.grid_main.Children.Clear();
                             MainWindow.mainWindow.grid_main.Children.Add(uc_spendingOrder.Instance);
-                            uc_spendingRequest.Instance.invoice = invoice;
-                            uc_spendingRequest._InvoiceType = invoice.invType;
-                            uc_spendingRequest._invoiceId = invoice.invoiceId;
-                            uc_spendingRequest.isFromReport = true;
-                            uc_spendingRequest.archived = false;
+                            uc_spendingOrder.Instance.invoice = invoice;
+                            uc_spendingOrder._InvoiceType = invoice.invType;
+                            //uc_spendingOrder._invoiceId = invoice.invoiceId;
+                            uc_spendingOrder.isFromReport = true;
+                            uc_spendingOrder.archived = false;
                             //setNotifications();
                             await uc_spendingOrder.Instance.fillInvoiceInputs(invoice);
                         }
