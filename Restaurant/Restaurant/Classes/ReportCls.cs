@@ -1137,17 +1137,17 @@ namespace Restaurant.Classes
             //
 
             string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-      if (rs.height > 0)
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(reppath);
+      //if (rs.height > 0)
+      //      {
+      //          XmlDocument doc = new XmlDocument();
+      //          doc.Load(reppath);
 
-                //   XmlNodeList nlist=   doc.GetElementsByTagName("PageHeight"); 
-                decimal h = rs.height/40;
-              //  decimal h = (decimal) 0.6 * itemscount + 9;
-                doc.GetElementsByTagName("PageHeight")[0].InnerXml = (h).ToString()+"cm";
-                doc.Save(@reppath);
-            }
+      //          //   XmlNodeList nlist=   doc.GetElementsByTagName("PageHeight"); 
+      //          decimal h = rs.height/40;
+      //        //  decimal h = (decimal) 0.6 * itemscount + 9;
+      //          doc.GetElementsByTagName("PageHeight")[0].InnerXml = (h).ToString()+"cm";
+      //          doc.Save(@reppath);
+      //      }
             
             rep.ReportPath = reppath;
             rs.rep = rep;

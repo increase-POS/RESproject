@@ -2867,42 +2867,46 @@ namespace Restaurant.View.sales
                             //thread  
                             if (prinvoiceId > 0)
                             {
-                                prInvoice = await invoiceModel.GetByInvoiceId(prinvoiceId);
+                                //Thread t1 = new Thread(async () =>
+                                //{
+                                    prInvoice = await invoiceModel.GetByInvoiceId(prinvoiceId);
                                 if (prInvoice.invType == "s" || prInvoice.invType == "ss" || prInvoice.invType == "ts")
                                 {
 
                                     if (AppSettings.print_on_save_sale == "1")
                                     {
                                         // printInvoice();
-                                        Thread t1 = new Thread(async() =>
-                                        {
+                                        //Thread t1 = new Thread(async() =>
+                                        //{
                                            await  printInvoice(prinvoiceId);
-                                        });
-                                        t1.Start();
+                                        //});
+                                        //t1.Start();
                                     }
                                     if (AppSettings.print_kitchen_on_sale == "1" && (prInvoice.invType == "ss" || prInvoice.invType == "ts"))
                                     {
                                         prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
 
                                         // printInvoice();
-                                        Thread t2 = new Thread(() =>
-                                       {
+                                       // Thread t2 = new Thread(() =>
+                                       //{
 
                                            printInvoiceInkitchen(prinvoiceId, prOrderPreparingList);
-                                       });
-                                        t2.Start();
+                                       //});
+                                       // t2.Start();
                                     }
                                     if (AppSettings.email_on_save_sale == "1")
                                     {
                                         //sendsaleEmail();
-                                        Thread t3 = new Thread(() =>
-                                        {
+                                        //Thread t3 = new Thread(() =>
+                                        //{
                                             sendsaleEmail(prinvoiceId);
-                                        });
-                                        t3.Start();
+                                        //});
+                                        //t3.Start();
                                     }
                                 }
-                            }
+                            //});
+                            //t1.Start();
+                        }
                             #endregion
                         }
                         paymentsList = new List<CashTransfer>();
@@ -3099,12 +3103,12 @@ namespace Restaurant.View.sales
 
                     // prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
 
-                    Thread t2 = new Thread(() =>
-                    {
+                    //Thread t2 = new Thread(() =>
+                    //{
                       //  send all
                        printInvoiceInkitchen(prinvoiceId, prOrderPreparingList);
-                    });
-                    t2.Start();
+                    //});
+                    //t2.Start();
                 }
             }
 
@@ -3789,12 +3793,12 @@ namespace Restaurant.View.sales
                                     if (AppSettings.salePaperSize == "A4")
                                     {
 
-                                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(resmsg.rs.rep, AppSettings.sale_printer_name, 1);
+                                        LocalReportExtensionsPrint.PrintToPrinterbyNameAndCopy(resmsg.rs.rep, AppSettings.sale_printer_name, 1);
 
                                     }
                                     else
                                     {
-                                        LocalReportExtensions.customPrintToPrinter(resmsg.rs.rep, AppSettings.sale_printer_name, 1, resmsg.rs.width, resmsg.rs.height);
+                                        LocalReportExtensionsPrint.customPrintToPrinter(resmsg.rs.rep, AppSettings.sale_printer_name, 1, resmsg.rs.width, resmsg.rs.height);
 
                                     }
 
