@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -221,6 +222,28 @@ namespace Restaurant.View.windows
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+        private void Tgl_Checked(object sender, RoutedEventArgs e)
+        {
+            ToggleButton tgl = sender as ToggleButton;
+            if (tgl != null && tgl_printOnSale != null && tgl_printOnPreparing != null && tgl.IsChecked == true)
+            {
+                if (tgl.Name == "tgl_printOnSale")
+                {
+                    tgl_printOnPreparing.IsChecked = false;
+                }
+                else if (tgl.Name == "tgl_printOnPreparing")
+                {
+                    tgl_printOnSale.IsChecked = false;
+                }
+               
+            }
+        }
+
+        private void Tgl_Unchecked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

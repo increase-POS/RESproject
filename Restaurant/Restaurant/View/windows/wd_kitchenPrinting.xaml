@@ -60,13 +60,17 @@
                                 Margin="10" Text="printOnSale" Foreground="#6e6e6e"
                             HorizontalAlignment="Left" VerticalAlignment="Center"
                                   FontSize="12"/>
-                <ToggleButton x:Name="tgl_printOnSale" Grid.Row="0" Grid.Column="1"    IsChecked="True"
-                                 VerticalAlignment="Center" Padding="10,0,5,0" 
+                <ToggleButton x:Name="tgl_printOnSale" Grid.Row="0" Grid.Column="1" 
+                             Checked="Tgl_Checked"
+                              Unchecked="Tgl_Unchecked"
+                              VerticalAlignment="Center" Padding="10,0,5,0" 
                                               Margin="10"  />
                 <TextBlock x:Name="txt_printOnPreparing" Grid.Row="1" Grid.Column="0" 
                               Margin="10" Text="printOnPreparing" Foreground="#6e6e6e"
                             HorizontalAlignment="Left" VerticalAlignment="Center" />
-                <ToggleButton x:Name="tgl_printOnPreparing" Grid.Row="1" Grid.Column="1"    IsChecked="True"
+                <ToggleButton x:Name="tgl_printOnPreparing" Grid.Row="1" Grid.Column="1"   
+                              Checked="Tgl_Checked"
+                              Unchecked="Tgl_Unchecked"
                                  VerticalAlignment="Center" Padding="10,0,5,0"
                                               Margin="10"  />
                 
