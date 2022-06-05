@@ -2787,8 +2787,9 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trNotes", AppSettings.resourcemanagerreport.GetString("trNotes")));
 
             paramarr.Add(new ReportParameter("trWaiter", AppSettings.resourcemanagerreport.GetString("trWaiter")));
+            
 
-            paramarr.Add(new ReportParameter("trTables", AppSettings.resourcemanagerreport.GetString("trTables")));
+            paramarr.Add(new ReportParameter("trTables", AppSettings.resourcemanagerreport.GetString("trSection") +"/"+ AppSettings.resourcemanagerreport.GetString("trTables")));
 
             paramarr.Add(new ReportParameter("Tables", list.FirstOrDefault().sectionTable));
             paramarr.Add(new ReportParameter("trInvoice", AppSettings.resourcemanagerreport.GetString("trBranch")));
