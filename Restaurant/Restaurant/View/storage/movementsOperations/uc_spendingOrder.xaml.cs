@@ -1140,9 +1140,10 @@ namespace Restaurant.View.storage.movementsOperations
                     else
                         Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                 }
-                clear();
-                setNotifications();
+                
             }
+            clear();
+            setNotifications();
         }
         private async void Btn_draft_Click(object sender, RoutedEventArgs e)
         {
@@ -1359,6 +1360,13 @@ namespace Restaurant.View.storage.movementsOperations
                 {
                     var cmb = sender as ComboBox;
                     cmb.SelectedValue = (int)billDetails[0].itemUnitId;
+
+                    #region disable & enable unit comboBox
+                    if (_InvoiceType == "sr")
+                        cmb.IsEnabled = false;
+                    else
+                        cmb.IsEnabled = true;
+                    #endregion
                 }
             }
             catch (Exception ex)
@@ -1509,19 +1517,21 @@ namespace Restaurant.View.storage.movementsOperations
             {
                 btn_items.IsEnabled = true;
                 btn_deleteInvoice.Visibility = Visibility.Visible;
+                btn_save.IsEnabled = true;
             }
             else
             {
                 btn_items.IsEnabled = false;
                 btn_deleteInvoice.Visibility = Visibility.Collapsed;
-
+                btn_save.IsEnabled = false;
             }
 
-            btn_deleteInvoice.Visibility = Visibility.Visible;
+           // btn_deleteInvoice.Visibility = Visibility.Visible;
             if (!isFromReport)
             {
                 btn_next.Visibility = Visibility.Visible;
                 btn_previous.Visibility = Visibility.Visible;
+                btn_deleteInvoice.Visibility = Visibility.Visible;
             }
         }
         #endregion
