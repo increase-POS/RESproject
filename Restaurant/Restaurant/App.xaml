@@ -8,6 +8,7 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
+            <converters:isLimitedDateConverter x:Key="isLimitedDateConverter"/>
             <converters:deliveryConverter x:Key="deliveryConverter"/>
             <converters:toolTipConverter x:Key="toolTipConverter"/>
             <converters:accuracyTaxConverter x:Key="accuracyTaxConverter"/>

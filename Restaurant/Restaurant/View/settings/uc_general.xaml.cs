@@ -1806,7 +1806,23 @@ namespace Restaurant.View.settings
             }
         }
 
-       
+        private void Book_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_packageBookSetting.Instance);
+
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+
         #region validate - clearValidate - textChange - lostFocus - . . . . 
 
         string input;

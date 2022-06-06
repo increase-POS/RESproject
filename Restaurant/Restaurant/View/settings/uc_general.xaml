@@ -1086,6 +1086,10 @@
                         </Grid>
                     </Border>
                     <!--#endregion-->
+
+                    <!--#region book-->
+                    <Button x:Name="book" Content="book" Width="250" Margin="20" Background="White" Click="Book_Click" />
+                    <!--#endregion-->
                 </WrapPanel>
             </ScrollViewer>
         </Grid>
