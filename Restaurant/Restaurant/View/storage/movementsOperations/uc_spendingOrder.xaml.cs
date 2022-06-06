@@ -1467,6 +1467,8 @@ namespace Restaurant.View.storage.movementsOperations
             btn_next.Visibility = Visibility.Collapsed;
             btn_previous.Visibility = Visibility.Collapsed;
 
+            btn_items.IsEnabled = true;
+            btn_save.IsEnabled = true;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
