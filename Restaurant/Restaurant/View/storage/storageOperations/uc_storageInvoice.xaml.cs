@@ -157,6 +157,9 @@ namespace Restaurant.View.storage.storageOperations
                     HelpClass.StartAwait(grid_main);
                 MainWindow.mainWindow.KeyDown += HandleKeyPress;
 
+                tb_moneyIcon.Text = AppSettings.Currency;
+                tb_moneyIconTotal.Text = AppSettings.Currency;
+
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -826,15 +829,15 @@ namespace Restaurant.View.storage.storageOperations
             {
                 tb_sum.Visibility = Visibility.Visible;
                 txt_sum.Visibility = Visibility.Visible;
-                txt_total.Visibility = Visibility.Visible;
-                tb_total.Visibility = Visibility.Visible;
+                //txt_total.Visibility = Visibility.Visible;
+                //tb_total.Visibility = Visibility.Visible;
             }
             else
             {
                 tb_sum.Visibility = Visibility.Collapsed;
                 txt_sum.Visibility = Visibility.Collapsed;
-                txt_total.Visibility = Visibility.Collapsed;
-                tb_total.Visibility = Visibility.Collapsed;
+                //txt_total.Visibility = Visibility.Collapsed;
+                //tb_total.Visibility = Visibility.Collapsed;
             }
             txt_branch.Text = invoice.branchName;
             txt_invNumber.Text = invoice.invNumber;
@@ -916,8 +919,8 @@ namespace Restaurant.View.storage.storageOperations
                     tb_sum.Visibility = Visibility.Collapsed;
                     txt_sum.Visibility = Visibility.Collapsed;
                     tb_moneyIcon.Visibility = Visibility.Collapsed;
-                    txt_total.Visibility = Visibility.Collapsed;
-                    tb_total.Visibility = Visibility.Collapsed;
+                   // txt_total.Visibility = Visibility.Collapsed;
+                    //tb_total.Visibility = Visibility.Collapsed;
                     tb_moneyIconTotal.Visibility = Visibility.Collapsed;
 
                     btn_save.IsEnabled = true;
@@ -933,8 +936,8 @@ namespace Restaurant.View.storage.storageOperations
                     tb_sum.Visibility = Visibility.Visible;
                     txt_sum.Visibility = Visibility.Visible;
                     tb_moneyIcon.Visibility = Visibility.Visible;
-                    txt_total.Visibility = Visibility.Visible;
-                    tb_total.Visibility = Visibility.Visible;
+                    //txt_total.Visibility = Visibility.Visible;
+                    //tb_total.Visibility = Visibility.Visible;
                     tb_moneyIconTotal.Visibility = Visibility.Visible;
 
                     btn_save.IsEnabled = true;
@@ -950,8 +953,8 @@ namespace Restaurant.View.storage.storageOperations
                     tb_sum.Visibility = Visibility.Collapsed;
                     txt_sum.Visibility = Visibility.Collapsed;
                     tb_moneyIcon.Visibility = Visibility.Collapsed;
-                    txt_total.Visibility = Visibility.Collapsed;
-                    tb_total.Visibility = Visibility.Collapsed;
+                    //txt_total.Visibility = Visibility.Collapsed;
+                    //tb_total.Visibility = Visibility.Collapsed;
                     tb_moneyIconTotal.Visibility = Visibility.Collapsed;
 
                     btn_save.IsEnabled = false;
@@ -965,8 +968,8 @@ namespace Restaurant.View.storage.storageOperations
                     tb_sum.Visibility = Visibility.Visible;
                     txt_sum.Visibility = Visibility.Visible;
                     tb_moneyIcon.Visibility = Visibility.Visible;
-                    txt_total.Visibility = Visibility.Visible;
-                    tb_total.Visibility = Visibility.Visible;
+                    //txt_total.Visibility = Visibility.Visible;
+                   // tb_total.Visibility = Visibility.Visible;
                     tb_moneyIconTotal.Visibility = Visibility.Visible;
 
                     btn_save.IsEnabled = false;
