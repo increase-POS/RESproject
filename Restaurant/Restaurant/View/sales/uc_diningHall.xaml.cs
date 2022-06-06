@@ -128,75 +128,86 @@ namespace Restaurant.View.sales
         #endregion
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            // for pagination onTop Always
-            btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
-            catigoriesAndItemsView.ucdiningHall = this;
-
-            catalogMenuList = new List<string> { "allMenu", "appetizers", "beverages", "fastFood", "mainCourses", "desserts" };
-            categoryBtns = new List<Button> { btn_appetizers, btn_beverages, btn_fastFood, btn_mainCourses, btn_desserts };
-            #region translate
-            changeInvType();
-            tb_moneyIcon.Text = AppSettings.Currency;
-            tb_moneyIconTotal.Text = AppSettings.Currency;
-            if (AppSettings.lang.Equals("en"))
+            try
             {
-                grid_main.FlowDirection = FlowDirection.LeftToRight;
-            }
-            else
-            {
-                grid_main.FlowDirection = FlowDirection.RightToLeft;
-            }
-            translate();
-            #endregion
 
-            #region loading
-            loadingList = new List<keyValueBool>();
-            bool isDone = true;
-            loadingList.Add(new keyValueBool { key = "loading_items", value = false });
-            loadingList.Add(new keyValueBool { key = "loading_categories", value = false });
-            loadingList.Add(new keyValueBool { key = "loading_customers", value = false });
+                HelpClass.StartAwait(grid_main);
+                // for pagination onTop Always
+                btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
+                catigoriesAndItemsView.ucdiningHall = this;
 
-            loading_items();
-            loading_categories();
-            loading_customers();
-            do
-            {
-                isDone = true;
-                foreach (var item in loadingList)
+                catalogMenuList = new List<string> { "allMenu", "appetizers", "beverages", "fastFood", "mainCourses", "desserts" };
+                categoryBtns = new List<Button> { btn_appetizers, btn_beverages, btn_fastFood, btn_mainCourses, btn_desserts };
+                #region translate
+                changeInvType();
+                tb_moneyIcon.Text = AppSettings.Currency;
+                tb_moneyIconTotal.Text = AppSettings.Currency;
+                if (AppSettings.lang.Equals("en"))
                 {
-                    if (item.value == false)
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else
+                {
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                }
+                translate();
+                #endregion
+
+                #region loading
+                loadingList = new List<keyValueBool>();
+                bool isDone = true;
+                loadingList.Add(new keyValueBool { key = "loading_items", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_categories", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_customers", value = false });
+
+                loading_items();
+                loading_categories();
+                loading_customers();
+                do
+                {
+                    isDone = true;
+                    foreach (var item in loadingList)
                     {
-                        isDone = false;
-                        break;
+                        if (item.value == false)
+                        {
+                            isDone = false;
+                            break;
+                        }
+                    }
+                    if (!isDone)
+                    {
+                        await Task.Delay(0500);
                     }
                 }
-                if (!isDone)
+                while (!isDone);
+                #endregion
+                #region invoice tax
+                if (AppSettings.invoiceTax_bool == false)
                 {
-                    await Task.Delay(0500);
+                    txt_tax.Visibility = Visibility.Collapsed;
+                    tb_tax.Visibility = Visibility.Collapsed;
                 }
+                else
+                    tb_tax.Text = HelpClass.PercentageDecTostring(AppSettings.invoiceTax_decimal);
+                #endregion
+
+                tb_moneyIcon.Text = AppSettings.Currency;
+                #region notification
+                setTimer();
+                refreshDraftNotification();
+                refreshOrdersNotification();
+                #endregion
+                HelpClass.activateCategoriesButtons(items, FillCombo.categoriesList, categoryBtns);
+                // FillBillDetailsList(0);
+                await Search();
+                HelpClass.EndAwait(grid_main);
             }
-            while (!isDone);
-            #endregion
-            #region invoice tax
-            if (AppSettings.invoiceTax_bool == false)
+            catch (Exception ex)
             {
-                txt_tax.Visibility = Visibility.Collapsed;
-                tb_tax.Visibility = Visibility.Collapsed;
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
-            else
-                tb_tax.Text = HelpClass.PercentageDecTostring(AppSettings.invoiceTax_decimal);
-            #endregion
-
-            tb_moneyIcon.Text = AppSettings.Currency;
-            #region notification
-            setTimer();
-            refreshDraftNotification();
-            refreshOrdersNotification();
-            #endregion
-            HelpClass.activateCategoriesButtons(items, FillCombo.categoriesList, categoryBtns);
-            // FillBillDetailsList(0);
-            await Search();
-
         }
 
         public async void changeInvType()
@@ -387,8 +398,20 @@ namespace Restaurant.View.sales
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            Instance = null;
-            GC.Collect();
+            try
+            {
+
+                //HelpClass.StartAwait(grid_main);
+                Instance = null;
+                GC.Collect();
+                //HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                //HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         #region  Cards
