@@ -431,8 +431,8 @@ namespace Restaurant.Classes
         public string Description1
         {//
             get =>
-                //description1 = (transType == "p" && processType != "inv") ? description1 = AppSettings.resourcemanager.GetString("trPaymentReceipt")
-                description1 = (transType == "p" && processType != "inv") ? description1 = AppSettings.resourcemanager.GetString("trPayment")
+                description1 = (side == "mb" ) ? description1 = AppSettings.resourcemanager.GetString("trMembership")
+                : description1 = (transType == "p" && processType != "inv") ? description1 = AppSettings.resourcemanager.GetString("trPayment")
                 : description1 = (transType == "d" && processType != "inv") ? description1 = AppSettings.resourcemanager.GetString("trReceipt")
                 : invId > 0 && processType == "inv" ? description1 = AppSettings.resourcemanager.GetString("tr_Invoice") + " " + AppSettings.resourcemanager.GetString("trNum:") + " : " + invNumber
                 : ""
@@ -2632,18 +2632,7 @@ namespace Restaurant.Classes
         {
             List<CashTransferSts> list2 = new List<CashTransferSts>();
             IEnumerable<CashTransferSts> temp = list;
-            //if (tab == 1)
-            //{
-            //    temp = list.Where(t => (t.shippingCompanyId == null && t.shipUserId == null && t.invAgentId != null) ||
-            //                              (t.shippingCompanyId != null && t.shipUserId != null && t.invAgentId != null));
-            //}
-            //else if (tab == 3)
-            //{
-            //    temp = list.Where(t => (t.shippingCompanyId != null && t.shipUserId == null && t.invAgentId != null)
-            //                         ||
-            //                         (t.shippingCompanyId != null && t.shipUserId == null && t.invAgentId == null)
-            //    );
-            //}
+            
             if (tab == 1)
             {
                 temp = list.Where(t => (t.invShippingCompanyId == null && t.shipUserId == null && t.invAgentId != null) ||
@@ -2651,9 +2640,9 @@ namespace Restaurant.Classes
             }
             else if (tab == 3)
             {
-                temp = list.Where(t => (t.shippingCompanyId != null && t.shipUserId == null && t.invAgentId != null)
+                temp = list.Where(t => (t.invShippingCompanyId != null && t.shipUserId == null && t.invAgentId != null)
                                      ||
-                                     (t.shippingCompanyId != null && t.shipUserId == null && t.invAgentId == null)
+                                     (t.invShippingCompanyId != null && t.shipUserId == null && t.invAgentId == null)
                 );
             }
 
