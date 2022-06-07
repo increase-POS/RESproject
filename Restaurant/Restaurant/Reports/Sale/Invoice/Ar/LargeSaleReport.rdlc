@@ -2064,7 +2064,7 @@
               <Width>2.80929cm</Width>
               <ZIndex>1</ZIndex>
               <Visibility>
-                <Hidden>=iif(Parameters!isSaved.Value="n" or Parameters!isSaved.Value="y" and Parameters!watermark.Value = 1,False,True)</Hidden>
+                <Hidden>=iif(Parameters!isSaved.Value="n" or( Parameters!isSaved.Value="y" and  Parameters!watermark.Value=1),True,False)</Hidden>
               </Visibility>
               <Style>
                 <Border />

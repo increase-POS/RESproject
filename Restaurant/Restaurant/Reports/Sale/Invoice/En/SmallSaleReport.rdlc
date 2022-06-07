@@ -240,7 +240,7 @@
             <rd:DefaultName>Textbox30</rd:DefaultName>
             <Top>1.09716cm</Top>
             <Left>0.56055cm</Left>
-            <Height>2.19762cm</Height>
+            <Height>1.63596cm</Height>
             <Width>4.57891cm</Width>
             <Visibility>
               <Hidden>=iif(Parameters!isOrginal.Value = "False" Or Parameters!isOrginal.Value = "false" Or  Parameters!isOrginal.Value = "0" And Parameters!watermark.Value="0" And Parameters!isSaved.Value="y" ,False,True)</Hidden>
@@ -983,7 +983,6 @@
             </Style>
           </Textbox>
           <Textbox Name="Textbox30">
-            <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
               <Paragraph>
@@ -1006,7 +1005,7 @@
             <rd:DefaultName>Textbox4</rd:DefaultName>
             <Top>3.54326in</Top>
             <Left>0.06036in</Left>
-            <Height>0.25in</Height>
+            <Height>0.17844in</Height>
             <Width>2.08385in</Width>
             <ZIndex>14</ZIndex>
             <Style>
@@ -1914,7 +1913,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>9.63488cm</Height>
+        <Height>9.45312cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2199,7 +2198,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>1.66369cm</Top>
+              <Top>1.34619cm</Top>
               <Left>1.52764cm</Left>
               <Height>0.71465cm</Height>
               <Width>2.19275cm</Width>
@@ -2230,7 +2229,7 @@
         <RightMargin>0cm</RightMargin>
         <TopMargin>0cm</TopMargin>
         <BottomMargin>0cm</BottomMargin>
-        <ColumnSpacing>1cm</ColumnSpacing>
+        <ColumnSpacing>0cm</ColumnSpacing>
         <Style />
       </Page>
     </ReportSection>

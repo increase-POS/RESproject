@@ -646,7 +646,7 @@ namespace Microsoft.Reporting.WinForms
                        "<EmbedFonts>None</EmbedFonts>" +
                   "</DeviceInfo>",
 
-                  ToInches(height + 100),
+                  ToInches(height+10 ),
                   ToInches(width));
             byte[] Bytes = report.Render(format: "PDF", deviceInfo: deviceInfo);
             // File.SetAttributes(savePath, FileAttributes.Normal);

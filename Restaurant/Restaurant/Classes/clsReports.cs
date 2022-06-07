@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.Windows.Threading;
 using System.Collections.Specialized;
 using Microsoft.Win32;
+using System.Xml;
 //Restaurant.Classes
 namespace Restaurant.Classes
 {
@@ -3388,13 +3389,13 @@ namespace Restaurant.Classes
                             paramarr = reportclass.fillSaleInvReport(prInvoice, paramarr, shippingcom);
                             //   multiplePaytable(paramarr);
                             // payment methods
-
+                            List<PayedInvclass> payedList = new List<PayedInvclass>();
                             if (prInvoice.invType == "s" || prInvoice.invType == "sd" || prInvoice.invType == "sbd" || prInvoice.invType == "sb"
                                 || prInvoice.invType == "ts" || prInvoice.invType == "ss" || prInvoice.invType == "tsd" || prInvoice.invType == "ssd"
                                 )
                             {
                                 CashTransfer cachModel = new CashTransfer();
-                                List<PayedInvclass> payedList = new List<PayedInvclass>();
+                             
                                 payedList = await cachModel.GetPayedByInvId(prInvoice.invoiceId);
                                 //mailpayedList = payedList;
                                 decimal sump = payedList.Sum(x => x.cash);
@@ -3409,14 +3410,74 @@ namespace Restaurant.Classes
                                 paramarr.Add(new ReportParameter("sumP", reportclass.DecTostring(sump)));
                                 paramarr.Add(new ReportParameter("deserved", reportclass.DecTostring(deservd)));
                                 rs.rep.DataSources.Add(new ReportDataSource("DataSetPayedInvclass", payedList));
-
+                            
 
                             }
+                         
+                            //heigh
+                            string sp = GetparameterByname(paramarr, "sumP");
+                            int spn = GetparameterByname(paramarr, "sumP").Count();
+                            //Currency
+                            int curlen= GetparameterByname(paramarr, "Currency").Count(); //deserved
+                            if (GetparameterByname(paramarr, "sumP").Count()+ curlen > 11)
+                            {
+                                rs.height = rs.height + 40;
+                            }
+                            if (GetparameterByname(paramarr, "deserved").Count() + curlen > 8)
+                            {
+                                rs.height = rs.height +40;
+                            }
+                            //if (GetparameterByname(paramarr, "total").Count()  > 10)
+                            //{
+                            //    rs.height = rs.height + 40;
+                            //}
+                            //if (GetparameterByname(paramarr, "discountValue").Count() + curlen > 10)
+                            //{
+                            //    rs.height = rs.height + 40;
+                            //}
+                            //if (GetparameterByname(paramarr, "totalNoShip").Count() + curlen > 10)
+                            //{
+                            //    rs.height = rs.height + 40;
+                            //}
+                            if (prInvoice.shippingCompanyId>0 &&  GetparameterByname(paramarr, "shippingCost").Count() + curlen > 10)
+                            {
+                                rs.height = rs.height + 40;
+                            }
+                            //if (prInvoice.shippingCost > 0 && GetparameterByname(paramarr, "totalNet").Count() + curlen > 10)
+                            //{
+                            //    rs.height = rs.height + 40;
+                            //}
+                            if (prInvoice.shippingCompanyId > 0  )
+                            {
+                                rs.height = rs.height + 80;
+                            }
+                            if (payedList.Count > 1)
+                            {
+                                rs.height = rs.height + ((payedList.Count-1)*45);
+                            }
+                           if( buttonSrc == "prev")
+                            {
+                                rs.height = rs.height +  40;
+                            }
+                            //shippingCost 
+                            if (rs.height > 0)
+                            {
+                                XmlDocument doc = new XmlDocument();
+                                doc.Load(rs.rep.ReportPath);
 
+                                //   XmlNodeList nlist=   doc.GetElementsByTagName("PageHeight"); 
+                                decimal h = (rs.height / 40);
+                                //  decimal h = (decimal) 0.6 * itemscount + 9;
+                                doc.GetElementsByTagName("PageHeight")[0].InnerXml = (h).ToString() + "cm";
+                                //     doc.GetElementsByTagName("InteractiveHeight")[0].InnerXml = (h).ToString() + "cm";
+                                //InteractiveHeight
+                                doc.Save(rs.rep.ReportPath);
+                            }
 
                             rs.rep.SetParameters(paramarr);
 
                             rs.rep.Refresh();
+                          //  int pcont = rs.rep.GetTotalPages();
                             #endregion
                             /////////////////////////////////////////////////////////
                             if (buttonSrc != "directprint")
@@ -3919,6 +3980,13 @@ namespace Restaurant.Classes
             List<int> oldids = OrderListbeforesave.Select(X => (int)X.orderPreparingId).ToList();
             newOrderList = OrderListaftersave.Where(X => !oldids.Contains(X.orderPreparingId)).ToList().OrderBy(X => X.categoryId).ToList();
             return newOrderList;
+        }
+
+        public string GetparameterByname(List<ReportParameter> paramarr, string name)
+        {
+            string value = "";
+            value= paramarr.Where(x => x.Name == name).FirstOrDefault().Values[0].ToString() ;
+            return value;
         }
     }
 }

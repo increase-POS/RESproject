@@ -830,11 +830,7 @@ namespace Restaurant.Classes
             if (isArabic)
             {
 
-                //if (invoice.invType == "q" || invoice.invType == "qd" || invoice.invType == "qs")
-                //{
-                //    addpath = @"\Reports\Sale\Ar\ArInvPurQtReport.rdlc";
-                //}
-                //else
+              
                 if (invoice.invType == "or" || invoice.invType == "ord" || invoice.invType == "ors")
                 {
                     addpath = @"\Reports\Sale\Invoice\Ar\ArInvPurOrderReport.rdlc";
@@ -866,9 +862,7 @@ namespace Restaurant.Classes
                         addpath = @"\Reports\Sale\Invoice\Ar\ArInvPurReport.rdlc";
                     }
 
-                    //   addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
+                  
                 }
 
             }
@@ -911,10 +905,7 @@ namespace Restaurant.Classes
 
                         addpath = @"\Reports\Sale\Invoice\En\InvPurReport.rdlc";
                     }
-                    //  addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
-                    //    addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
-                    // addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
+                  
                 }
 
             }
@@ -1039,11 +1030,7 @@ namespace Restaurant.Classes
             if (isArabic)
             {
 
-                //if ((invoice.invType == "q" || invoice.invType == "qd" || invoice.invType == "qs"))
-                //{
-                //    addpath = @"\Reports\Sale\Ar\ArInvPurQtReport.rdlc";
-                //}
-                //else 
+             
                 if (invoice.invType == "or" || invoice.invType == "ord" || invoice.invType == "ors")
                 {
                     addpath = @"\Reports\Sale\Invoice\Ar\ArInvPurOrderReport.rdlc";
@@ -1055,22 +1042,24 @@ namespace Restaurant.Classes
                     {
                         addpath = @"\Reports\Sale\Invoice\Ar\LargeSaleReport.rdlc";
                         rs.width = 400;//400 =10cm
-                        rs.height = GetpageHeight( itemscount, 500);
+                        //rs.height = GetpageHeight( itemscount, 500);
+                        rs.height = GetpageHeight(itemscount,400, 15);
 
                     }
                     else if ( PaperSize == "8cm" && isPreview == 1)
                     {
                         addpath = @"\Reports\Sale\Invoice\Ar\MediumSaleReport.rdlc";
                         rs.width = 315;//315 =8cm
-                        rs.height = GetpageHeight( itemscount, 500);
-
+                       // rs.height = GetpageHeight( itemscount, 500);
+                        rs.height = GetpageHeight(itemscount, 400, 19);
 
                     }
                     else if ( PaperSize == "5.7cm" && isPreview == 1)
                     {
                         addpath = @"\Reports\Sale\Invoice\Ar\SmallSaleReport.rdlc";
                         rs.width = 224;//224 =5.7cm
-                        rs.height = GetpageHeight( itemscount, 460);
+                      //  rs.height = GetpageHeight( itemscount, 460);
+                        rs.height = GetpageHeight(itemscount, 380, 19);
 
                     }
                     else //MainWindow.salePaperSize == "A4"
@@ -1078,15 +1067,12 @@ namespace Restaurant.Classes
 
                         addpath = @"\Reports\Sale\Invoice\Ar\ArInvPurReport.rdlc";
                     }
-
-                    //   addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
+ 
                 }
 
             }
             else
-            {
+            {// en
                 //if (invoice.invType == "q" || invoice.invType == "qd" || invoice.invType == "qs")
                 //{
                 //    addpath = @"\Reports\Sale\En\InvPurQtReport.rdlc";
@@ -1102,22 +1088,24 @@ namespace Restaurant.Classes
                     {
                         addpath = @"\Reports\Sale\Invoice\En\LargeSaleReport.rdlc";
                        rs.width = 400;//400 =10cm
-                         rs.height = GetpageHeight( itemscount, 500);
-
+                     
+                        rs.height = GetpageHeight(itemscount, 380, 15);
                     }
                     else if (PaperSize == "8cm" && isPreview == 1)
                     {
                         addpath = @"\Reports\Sale\Invoice\En\MediumSaleReport.rdlc";
                         rs.width = 315;//315 =8cm
-                        rs.height = GetpageHeight( itemscount, 500);
-
+                     //   rs.height = GetpageHeight( itemscount, 500);
+                        rs.height = GetpageHeight(itemscount, 400, 19);
                     }
                     else if (PaperSize == "5.7cm" && isPreview == 1)
                     {
                         addpath = @"\Reports\Sale\Invoice\En\SmallSaleReport.rdlc";
-
+                      //  string reppath5 = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
                         rs.width = 224;//224 =5.7cm
-                        rs.height = GetpageHeight( itemscount, 460,24);
+                        rs.height = GetpageHeight( itemscount,365, 19);
+
+                  
 
                     }
                     else //MainWindow.salePaperSize == "A4"
@@ -1125,10 +1113,7 @@ namespace Restaurant.Classes
 
                         addpath = @"\Reports\Sale\Invoice\En\InvPurReport.rdlc";
                     }
-                    //  addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
-                    //    addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
-                    // addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
+                
                 }
 
             }
@@ -1137,17 +1122,7 @@ namespace Restaurant.Classes
             //
 
             string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-      //if (rs.height > 0)
-      //      {
-      //          XmlDocument doc = new XmlDocument();
-      //          doc.Load(reppath);
-
-      //          //   XmlNodeList nlist=   doc.GetElementsByTagName("PageHeight"); 
-      //          decimal h = rs.height/40;
-      //        //  decimal h = (decimal) 0.6 * itemscount + 9;
-      //          doc.GetElementsByTagName("PageHeight")[0].InnerXml = (h).ToString()+"cm";
-      //          doc.Save(@reppath);
-      //      }
+ 
             
             rep.ReportPath = reppath;
             rs.rep = rep;
