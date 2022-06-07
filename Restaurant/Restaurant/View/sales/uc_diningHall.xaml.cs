@@ -715,6 +715,7 @@ namespace Restaurant.View.sales
         async void refreshCatalogTags(string tag)
         {
             tagsList = await FillCombo.tag.Get(categoryId);
+            tagsList = tagsList.Where(x => x.isActive == 1).ToList();
 
             if (tagsList.Count > 1)
             {

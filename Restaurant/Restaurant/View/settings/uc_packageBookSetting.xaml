@@ -24,6 +24,14 @@
                 <Border BorderThickness="0" Grid.Row="0"  Grid.RowSpan="2"    Grid.Column="0"    
                         Margin="5,0,10,10"
                         CornerRadius="7" BorderBrush="Black" Background="White"  Padding="0">
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -111,6 +119,14 @@
                 <Border BorderThickness="0" Grid.Row="0"   Grid.Column="1"   
                         Margin="10,0,5,10"
                     CornerRadius="7" BorderBrush="Black" Background="White" Padding="0">
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -150,6 +166,14 @@
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" BorderThickness="0"  Margin="10,0,5,10"
                     CornerRadius="7" BorderBrush="Black" Background="White" Padding="0">
+                        <Border.Effect>
+                            <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                        </Border.Effect>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -217,7 +241,7 @@
                     </Border>
 
 
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1" Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition x:Name="col_extend" Width="*"/>
                             <ColumnDefinition x:Name="col_upgrade" Width="*"/>
@@ -226,13 +250,13 @@
                         <Button Content="Extend" Height="40" BorderBrush="{x:Null}"
                                 Foreground="White" FontSize="18" FontWeight="Bold"
                                 x:Name="btn_extend" Grid.Column="0" Margin="10 5 5 5"
-                                IsEnabled="True" 
+                                IsEnabled="True" materialDesign:ButtonAssist.CornerRadius="7"
                                 Background="{StaticResource MainColor}"
                                 Click="Btn_extend_Click"/>
                         <Button Content="Upgrade"  Height="40" BorderBrush="{x:Null}"
                                 Foreground="White" FontSize="18" FontWeight="Bold"
                                 x:Name="btn_upgrade" Grid.Column="1" Margin="5"
-                                IsEnabled="True" 
+                                IsEnabled="True"  materialDesign:ButtonAssist.CornerRadius="7"
                                 Background="{StaticResource MainColor}" Click="Btn_upgrade_Click"
                                 />
                     </Grid>
@@ -240,6 +264,14 @@
 
                 <Border BorderThickness="0" Grid.Row="2"   Grid.ColumnSpan="2"     Margin="5,10,5,10"
                     CornerRadius="7" BorderBrush="Black" Background="White" Padding="0">
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
