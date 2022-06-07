@@ -2,6 +2,7 @@
 using netoaster;
 using Newtonsoft.Json;
 using Restaurant.Classes;
+using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -464,13 +465,13 @@ namespace Restaurant.View.settings
             {
                 HelpClass.StartAwait(grid_main);
 
-                //Window.GetWindow(this).Opacity = 0.2;
-                //wd_serials w = new wd_serials();
-                //w.activationCode = progDetails.packageSaleCode;
-                //w.ShowDialog();
-                //Window.GetWindow(this).Opacity = 1;
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_serials w = new wd_serials();
+                w.activationCode = progDetails.packageSaleCode;
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
 
-                //progDetails = await progDetailsModel.getCurrentInfo();
+                progDetails = await progDetailsModel.getCurrentInfo();
 
                 HelpClass.EndAwait(grid_main);
             }

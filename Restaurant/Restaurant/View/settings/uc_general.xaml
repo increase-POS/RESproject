@@ -1088,7 +1088,7 @@
                     <!--#endregion-->
 
                     <!--#region book-->
-                    <Button x:Name="book" Content="book" Width="250" Margin="20" Background="White" Click="Book_Click" />
+                    <Button x:Name="book" Content="book" Width="250" Margin="20" Background="White" Click="Book_Click" Visibility="Collapsed" />
                     <!--#endregion-->
                 </WrapPanel>
             </ScrollViewer>
