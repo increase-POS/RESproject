@@ -4120,4 +4120,10 @@
   <data name="trVersion" xml:space="preserve">
     <value>الإصدار</value>
   </data>
+  <data name="packageBook" xml:space="preserve">
+    <value>حجز الحزمة</value>
+  </data>
+  <data name="packageBookSettings" xml:space="preserve">
+    <value>إعدادات حجز الحزمة</value>
+  </data>
 </root>
