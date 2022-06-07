@@ -47,11 +47,14 @@ namespace Restaurant.View.windows
             }
         }
         public string activationCode = "";
+        public static List<string> requiredControlList;
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
                 HelpClass.StartAwait(grid_main);
+
+                requiredControlList = new List<string> { "serial" };
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -125,20 +128,20 @@ namespace Restaurant.View.windows
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
             int res = 0;
-            HelpClass.validateEmpty("tb_serial", p_errorSerial);
-            if (!tb_serial.Text.Equals(""))
+
+            if (HelpClass.validate(requiredControlList, this))
             {
                 res = await asModel.updatesalecode(tb_serial.Text);
-            }
-            if (res > 0)
-            {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                await Task.Delay(2000);
-                this.Close();
-            }
-            else
-                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
+                if (res > 0)
+                {
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    await Task.Delay(2000);
+                    this.Close();
+                }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            }
 
         }
     }
