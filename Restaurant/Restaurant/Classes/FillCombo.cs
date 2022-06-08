@@ -78,6 +78,15 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "branchId";
             cmb.SelectedIndex = -1;
         }
+        static public async Task fillComboOnlyBranch(ComboBox cmb)
+        {
+            if (branchsList is null)
+                await RefreshBranches();
+            cmb.ItemsSource = branchsList.Where(b => b.type == "b");
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "branchId";
+            cmb.SelectedIndex = -1;
+        }
         static public async Task<IEnumerable<Branch>> RefreshBranchesAllWithoutMain()
         {
             branchesAllWithoutMain = await  branch.GetAllWithoutMain("all");

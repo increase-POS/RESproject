@@ -488,7 +488,7 @@
                                 <ComboBox x:Name="cb_branchId" SelectedValue="{Binding branchId, Mode=OneWay}"
                                       TextBlock.Foreground="#4E4E4E"
                                          Margin="4,0"
-                                      materialDesign:HintAssist.Hint="Store/Branch..."    
+                                      materialDesign:HintAssist.Hint="Branch..."    
                                        
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                     Padding="10,0,5,0" 

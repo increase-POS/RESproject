@@ -108,7 +108,6 @@ namespace Restaurant.View.sectionData.hallDivide
             {
                 HelpClass.StartAwait(grid_main);
 
-                //requiredControlList = new List<string> { "x", "y", "z" };
                 requiredControlList = new List<string> { "name", "personsCount" };
 
                 #region translate
@@ -123,10 +122,8 @@ namespace Restaurant.View.sectionData.hallDivide
                 translate();
                 #endregion
 
-
-
-
-                await FillCombo.fillComboBranchesAllWithoutMain(cb_branchId);
+                await FillCombo.fillComboOnlyBranch(cb_branchId);
+            
                 table = new Tables();
                 table.branchId = MainWindow.branchLogin.branchId;
                 if (HelpClass.isAdminPermision())
@@ -134,11 +131,7 @@ namespace Restaurant.View.sectionData.hallDivide
                 else
                     cb_branchId.IsEnabled = false;
 
-
                 Keyboard.Focus(tb_name);
-
-
-
 
                 await Search();
 
@@ -180,7 +173,7 @@ namespace Restaurant.View.sectionData.hallDivide
             tt_add_Button.Content = AppSettings.resourcemanager.GetString("trAdd");
             tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchId, AppSettings.resourcemanager.GetString("trBranch/StoreHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchId, AppSettings.resourcemanager.GetString("trBranchHint"));
 
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
@@ -194,7 +187,7 @@ namespace Restaurant.View.sectionData.hallDivide
             dg_table.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
             dg_table.Columns[1].Header = AppSettings.resourcemanager.GetString("trPersonsCount");
             dg_table.Columns[2].Header = AppSettings.resourcemanager.GetString("trSection");
-            dg_table.Columns[3].Header = AppSettings.resourcemanager.GetString("trBranch/Store");
+            dg_table.Columns[3].Header = AppSettings.resourcemanager.GetString("trBranch");
             dg_table.Columns[4].Header = AppSettings.resourcemanager.GetString("trNote");
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh

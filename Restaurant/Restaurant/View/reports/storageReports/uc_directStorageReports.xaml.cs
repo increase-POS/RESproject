@@ -197,7 +197,7 @@ namespace Restaurant.View.reports.storageReports
             {
                 Values = cP.AsChartValues(),
                 DataLabels = true,
-                Title = AppSettings.resourcemanager.GetString("trBranch")
+                Title = AppSettings.resourcemanager.GetString("trBranch/Store")
             }); ;
 
             DataContext = this;
@@ -271,7 +271,7 @@ namespace Restaurant.View.reports.storageReports
         {
             tt_item.Content = AppSettings.resourcemanager.GetString("trItems");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_directItemsBranches, AppSettings.resourcemanager.GetString("trBranchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_directItemsBranches, AppSettings.resourcemanager.GetString("trBranch/StoreHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_directItems, AppSettings.resourcemanager.GetString("trItemHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_directUnits, AppSettings.resourcemanager.GetString("trUnitHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_directStartDate, AppSettings.resourcemanager.GetString("trStartDateHint"));
@@ -286,7 +286,7 @@ namespace Restaurant.View.reports.storageReports
 
             col_Num.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_date.Header = AppSettings.resourcemanager.GetString("trDate");
-            col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
+            col_branch.Header = AppSettings.resourcemanager.GetString("trBranch/Store");
             col_item.Header = AppSettings.resourcemanager.GetString("trItem");
             col_unit.Header = AppSettings.resourcemanager.GetString("trUnit");
             col_quantity.Header = AppSettings.resourcemanager.GetString("trQTR");

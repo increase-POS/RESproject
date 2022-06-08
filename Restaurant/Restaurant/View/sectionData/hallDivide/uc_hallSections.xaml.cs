@@ -120,7 +120,8 @@ namespace Restaurant.View.sectionData.hallDivide
                 }
                 translate();
 
-                await FillCombo.fillComboBranchesAllWithoutMain(cb_branchId);
+                await FillCombo.fillComboOnlyBranch(cb_branchId);
+
                 section = new HallSection();
                 section.branchId = MainWindow.branchLogin.branchId;
                 if (HelpClass.isAdminPermision())
@@ -153,7 +154,7 @@ namespace Restaurant.View.sectionData.hallDivide
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchId, AppSettings.resourcemanager.GetString("trBranch/StoreHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchId, AppSettings.resourcemanager.GetString("trBranchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
             btn_tables.Content = AppSettings.resourcemanager.GetString("trTables");
@@ -161,7 +162,7 @@ namespace Restaurant.View.sectionData.hallDivide
 
             dg_section.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
             dg_section.Columns[1].Header = AppSettings.resourcemanager.GetString("trDetails");
-            dg_section.Columns[2].Header = AppSettings.resourcemanager.GetString("trBranch/Store");
+            dg_section.Columns[2].Header = AppSettings.resourcemanager.GetString("trBranch");
             dg_section.Columns[3].Header = AppSettings.resourcemanager.GetString("trNote");
 
             txt_title.Text = AppSettings.resourcemanager.GetString("trSection");
