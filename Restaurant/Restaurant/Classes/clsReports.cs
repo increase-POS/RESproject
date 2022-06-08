@@ -576,7 +576,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trPersonsCount", AppSettings.resourcemanagerreport.GetString("trPersonsCount")));
             paramarr.Add(new ReportParameter("trSection", AppSettings.resourcemanagerreport.GetString("trSection")));
             paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
-            paramarr.Add(new ReportParameter("trBranchStore", AppSettings.resourcemanagerreport.GetString("trBranch/Store")));
+            paramarr.Add(new ReportParameter("trBranchStore", AppSettings.resourcemanagerreport.GetString("trBranch")));
 
              
         }
@@ -660,7 +660,7 @@ namespace Restaurant.Classes
             //table columns
             paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
-            paramarr.Add(new ReportParameter("trBranchStore", AppSettings.resourcemanagerreport.GetString("trBranch/Store")));
+            paramarr.Add(new ReportParameter("trBranchStore", AppSettings.resourcemanagerreport.GetString("trBranch")));
             paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
 
         }
@@ -2692,7 +2692,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
 
             paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
-            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch/Store")));
             paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
             paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
             paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
@@ -3477,7 +3477,9 @@ namespace Restaurant.Classes
                             rs.rep.SetParameters(paramarr);
 
                             rs.rep.Refresh();
-                          //  int pcont = rs.rep.GetTotalPages();
+                            //  int pcont = rs.rep.GetTotalPages();
+                           // int pcont = rs.rep.GetTotalPages(PageCountMode.Actual);
+
                             #endregion
                             /////////////////////////////////////////////////////////
                             if (buttonSrc != "directprint")
