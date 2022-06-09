@@ -4147,4 +4147,13 @@ Please add Email in setting</value>
   <data name="trSpendingRequestDraft" xml:space="preserve">
     <value>Spending request draft</value>
   </data>
+  <data name="trExpireDays" xml:space="preserve">
+    <value>days</value>
+  </data>
+  <data name="trExpireNote1" xml:space="preserve">
+    <value>The Application will be expired in</value>
+  </data>
+  <data name="trExpireNote2" xml:space="preserve">
+    <value>The Application will be expired in less than 24 hours</value>
+  </data>
 </root>

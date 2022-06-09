@@ -16,8 +16,16 @@ using Restaurant.ApiClasses;
 namespace Restaurant.Classes
 {
 
+    public class daysremain
+    {
+        public Nullable<int> days { get; set; }
+        public Nullable<int> hours { get; set; }
+        public Nullable<int> minute { get; set; }
+        public string expirestate { get; set; }
+    }
     public class ProgramDetails
     {
+
         public int id { get; set; }
         public string programName { get; set; }
         public int branchCount { get; set; }

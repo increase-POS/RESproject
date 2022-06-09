@@ -1393,7 +1393,51 @@ namespace Restaurant
                     md_deliveryWaitConfirmUser.Visibility = Visibility.Collapsed;
                 #endregion
 
+                #region expire date
+                daysremain daysr = await userLogin.getRemainDayes();
+                if (daysr.expirestate == "e" && daysr.days <= 10)
+                {
 
+                    wd_messageBoxWithIcon w = new wd_messageBoxWithIcon();
+                    if (daysr.days >= 1)
+                    {
+                        w.contentText1 = AppSettings.resourcemanager.GetString("trExpireNote1") + " " + daysr.days.ToString() + " " + AppSettings. resourcemanager.GetString("trExpireDays");
+                        w.Show();
+                    }
+                    else if (daysr.days == 0)
+                    {
+
+
+                        if (daysr.hours >= 0 && daysr.hours <= 24)
+                        {
+                            if (daysr.hours == 0)
+                            {
+                                if (daysr.minute >= 0)
+                                {
+                                    w.contentText1 = AppSettings.resourcemanager.GetString("trExpireNote2");
+                                    w.Show();
+                                }
+
+
+                            }
+                            else
+                            {
+                                w.contentText1 = AppSettings.resourcemanager.GetString("trExpireNote2");
+                                w.Show();
+                            }
+
+
+
+                        }
+                        //else 
+                        //{
+                        //    w.contentText1 = resourcemanager.GetString("trExpireNote3")+" " + (daysr.days* -1 ).ToString() + " " + resourcemanager.GetString("trAgo");
+                        //}
+                    }
+
+                }
+
+                #endregion
                 //SelectAllText
                 EventManager.RegisterClassHandler(typeof(System.Windows.Controls.TextBox), System.Windows.Controls.TextBox.GotKeyboardFocusEvent, new RoutedEventHandler(SelectAllText));
                 txt_rightReserved.Text = DateTime.Now.Date.Year + " © All Right Reserved for Increase";

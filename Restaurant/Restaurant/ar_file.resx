@@ -4132,4 +4132,13 @@
   <data name="trSpendingRequestDraft" xml:space="preserve">
     <value>مسودة طلب صرف</value>
   </data>
+  <data name="trExpireDays" xml:space="preserve">
+    <value>ايام</value>
+  </data>
+  <data name="trExpireNote1" xml:space="preserve">
+    <value>سوف تنتهي صلاحية البرنامج خلال</value>
+  </data>
+  <data name="trExpireNote2" xml:space="preserve">
+    <value>سوف تنتهي صلاحية البرنامج خلال اقل من 24 ساعة</value>
+  </data>
 </root>
