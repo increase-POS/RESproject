@@ -141,6 +141,22 @@ namespace Restaurant.converters
                 case "fbc":
                     value = AppSettings.resourcemanager.GetString("consumptionInvoice");
                     break;
+              // مسودة طلب صرف
+                case "srd":
+                    value = AppSettings.resourcemanager.GetString("trSpendingRequestDraft");
+                    break; 
+                //  طلب صرف
+                case "sr":
+                    value = AppSettings.resourcemanager.GetString("trSpendingRequest");
+                    break;
+                // مرتجع طلب صرف 
+                case "srb":
+                    value = AppSettings.resourcemanager.GetString("trSpendingRequestReturn");
+                    break;
+               //  طلب صرف في الانتظار 
+                case "srw":
+                    value = AppSettings.resourcemanager.GetString("trSpendingOrderWait");
+                    break;
                 default: break;
             }
             return value;

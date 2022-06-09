@@ -4141,4 +4141,10 @@ Please add Email in setting</value>
   <data name="packageBookSettings" xml:space="preserve">
     <value>Package book settings</value>
   </data>
+  <data name="trSpendingOrderWait" xml:space="preserve">
+    <value>Spending Order waiting for confirm</value>
+  </data>
+  <data name="trSpendingRequestDraft" xml:space="preserve">
+    <value>Spending request draft</value>
+  </data>
 </root>

@@ -281,6 +281,7 @@ namespace Restaurant.View.storage.movementsOperations
                 index++;
                 clear();
                 invoice = FillCombo.invoices[index];
+                _InvoiceType = invoice.invType;
                 _invoiceId = invoice.invoiceId;
                 navigateBtnActivate();
                 await fillInvoiceInputs(invoice);
@@ -305,6 +306,7 @@ namespace Restaurant.View.storage.movementsOperations
                 index--;
                 clear();
                 invoice = FillCombo.invoices[index];
+                _InvoiceType = invoice.invType;
                 _invoiceId = invoice.invoiceId;
                 navigateBtnActivate();
                 await fillInvoiceInputs(invoice);
@@ -1436,11 +1438,19 @@ namespace Restaurant.View.storage.movementsOperations
                 var defaultPurUnit = itemUnits.ToList().Find(c => c.defaultPurchase == 1);
                 if (defaultPurUnit != null)
                 {
-                    // create new row in bill details data grid
-                    addRowToBill(item.name, itemId, defaultPurUnit.mainUnit, defaultPurUnit.itemUnitId, 1);
+                    int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == defaultPurUnit.itemUnitId).FirstOrDefault());
+                    if (index == -1)
+                    {
+                        // create new row in bill details data grid
+                        addRowToBill(item.name, itemId, defaultPurUnit.mainUnit, defaultPurUnit.itemUnitId, 1);
+                    }
+                    else // item exist prevoiusly in list
+                    {
+                        billDetails[index].Count++;
+                    }
 
-                    //_Count++;
-                    //refrishBillDetails();
+                        //_Count++;
+                        //refrishBillDetails();
                 }
                 else
                 {
@@ -1515,7 +1525,7 @@ namespace Restaurant.View.storage.movementsOperations
         }
         private void inputEditable()
         {
-            if (_InvoiceType == "srw") // spending order waiting
+            if (_InvoiceType == "srw" || _InvoiceType == "srd") // spending order waiting
             {
                 btn_items.IsEnabled = true;
                 btn_deleteInvoice.Visibility = Visibility.Visible;

@@ -4126,4 +4126,10 @@
   <data name="packageBookSettings" xml:space="preserve">
     <value>إعدادات حجز الحزمة</value>
   </data>
+  <data name="trSpendingOrderWait" xml:space="preserve">
+    <value>أمر صرف في الانتظار</value>
+  </data>
+  <data name="trSpendingRequestDraft" xml:space="preserve">
+    <value>مسودة طلب صرف</value>
+  </data>
 </root>
