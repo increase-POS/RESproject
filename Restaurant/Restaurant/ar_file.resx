@@ -4141,4 +4141,7 @@
   <data name="trExpireNote2" xml:space="preserve">
     <value>سوف تنتهي صلاحية البرنامج خلال اقل من 24 ساعة</value>
   </data>
+  <data name="LoggedOutBecauseDidNotDoneAnyProcess" xml:space="preserve">
+    <value>لقد تم تسجيل خروجك لأنك لم تنفذ أي عملية لمدة 15 دقيقة</value>
+  </data>
 </root>

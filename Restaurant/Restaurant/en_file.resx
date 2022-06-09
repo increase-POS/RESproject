@@ -4156,4 +4156,7 @@ Please add Email in setting</value>
   <data name="trExpireNote2" xml:space="preserve">
     <value>The Application will be expired in less than 24 hours</value>
   </data>
+  <data name="LoggedOutBecauseDidNotDoneAnyProcess" xml:space="preserve">
+    <value>You are logged out because you haven't done any process for 15 minutes</value>
+  </data>
 </root>

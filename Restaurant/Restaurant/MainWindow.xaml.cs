@@ -70,7 +70,7 @@ namespace Restaurant
         internal static Branch branchLogin;
         internal static UsersLogs userLog;
         bool isHome = false;
-        public static int Idletime = 5;
+        public static int Idletime = 14;//14
         public static int threadtime = 5;
         public static string menuIsOpen = "close";
         
@@ -1620,7 +1620,8 @@ namespace Restaurant
                 if (IdleClass.IdleTime.Minutes >= Idletime)
                 {
                     go_out_didNotAnyProcess = true;
-                    BTN_logOut_Click(BTN_logOut, null);
+                 //   BTN_logOut_Click(BTN_logOut, null);
+                    BTN_Close_Click(null, null);
                     idletimer.Stop();
                 }
             }
@@ -1749,35 +1750,35 @@ namespace Restaurant
             {
                 
                     HelpClass.StartAwait(grid_mainWindow);
-                //if (go_out)
-                //{
-                //    await close();
-                //    this.Visibility = Visibility.Hidden;
-                //    #region
-                //    Window.GetWindow(this).Opacity = 0.2;
-                //    wd_messageBox w = new wd_messageBox();
-                //    w.contentText2 = AppSettings.resourcemanager.GetString("trUserLoginFromOtherPos");
-                //    w.ShowDialog();
-                //    Window.GetWindow(this).Opacity = 1;
-                //    #endregion
+                if (go_out)
+                {
+                    await close();
+                    this.Visibility = Visibility.Hidden;
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_messageBox w = new wd_messageBox();
+                    w.contentText2 = AppSettings.resourcemanager.GetString("trUserLoginFromOtherPos");
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
 
-                //    Application.Current.Shutdown();
-                //}
-                //else if (go_out_didNotAnyProcess)
-                //{
-                //    await close();
-                //    this.Visibility = Visibility.Hidden;
-                //    #region
-                //    Window.GetWindow(this).Opacity = 0.2;
-                //    wd_messageBoxWithIcon w = new wd_messageBoxWithIcon();
-                //    w.contentText1 = AppSettings.resourcemanager.GetString("trLoggedOutBecauseDidNotDoneAnyProcess");
-                //    w.ShowDialog();
-                //    Window.GetWindow(this).Opacity = 1;
-                //    #endregion
+                    Application.Current.Shutdown();
+                }
+                else if (go_out_didNotAnyProcess)
+                {
+                    await close();
+                    this.Visibility = Visibility.Hidden;
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_messageBoxWithIcon w = new wd_messageBoxWithIcon();
+                    w.contentText1 = AppSettings.resourcemanager.GetString("LoggedOutBecauseDidNotDoneAnyProcess");
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
 
-                //    Application.Current.Shutdown();
-                //}
-                //else
+                    Application.Current.Shutdown();
+                }
+                else
                 {
                     await close();
                     Application.Current.Shutdown();
