@@ -460,7 +460,7 @@ namespace Restaurant.View.sales
             //search
             try
             {
-                HelpClass.StartAwait(grid_main);
+                //HelpClass.StartAwait(grid_main);
 
                 if (items is null)
                     await refreshItemsList();
@@ -487,11 +487,11 @@ namespace Restaurant.View.sales
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
-                HelpClass.EndAwait(grid_main);
+                //HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                //HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
