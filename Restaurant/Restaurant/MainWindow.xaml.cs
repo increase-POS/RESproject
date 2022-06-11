@@ -1449,8 +1449,8 @@ namespace Restaurant
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_mainWindow);
+
+                HelpClass.EndAwait(grid_mainWindow, "mainWindow_loaded");
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
