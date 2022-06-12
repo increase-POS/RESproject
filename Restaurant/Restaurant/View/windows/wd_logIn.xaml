@@ -50,6 +50,7 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
                 <Image FlowDirection="LeftToRight" Source="/pic/increase-logo100.png"   Margin="0,0,0,0" Width="110" Height="110"/>
@@ -157,6 +158,11 @@
                     </Button>
 
                 </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5" >
+                    <TextBlock Height="40" FontSize="16"
+                 FontWeight="SemiBold" Foreground="{StaticResource MainColorRed}"
+                Text="" Name="tb_msg"  />
+                </StackPanel>
             </Grid>
 
             <!--Main-->
