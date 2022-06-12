@@ -4144,4 +4144,19 @@
   <data name="LoggedOutBecauseDidNotDoneAnyProcess" xml:space="preserve">
     <value>لقد تم تسجيل خروجك لأنك لم تنفذ أي عملية لمدة 15 دقيقة</value>
   </data>
+  <data name="trDateNotCompatible" xml:space="preserve">
+    <value>التاريخ غير متوافق مع السيرفر</value>
+  </data>
+  <data name="trPackageIsExpired" xml:space="preserve">
+    <value>النسخة منتهية الصلاحية</value>
+  </data>
+  <data name="trPackageIsNotActive" xml:space="preserve">
+    <value>النسخة غير فعالة</value>
+  </data>
+  <data name="trPreventLogIn" xml:space="preserve">
+    <value>لا يمكنك تسجيل الدخول</value>
+  </data>
+  <data name="trServerNotCompatible" xml:space="preserve">
+    <value>السيرفر غير متوافق</value>
+  </data>
 </root>

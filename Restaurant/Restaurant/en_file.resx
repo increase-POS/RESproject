@@ -4159,4 +4159,19 @@ Please add Email in setting</value>
   <data name="LoggedOutBecauseDidNotDoneAnyProcess" xml:space="preserve">
     <value>You are logged out because you haven't done any process for 15 minutes</value>
   </data>
+  <data name="trDateNotCompatible" xml:space="preserve">
+    <value>Date is not compitable with server</value>
+  </data>
+  <data name="trPackageIsExpired" xml:space="preserve">
+    <value>Package is expired</value>
+  </data>
+  <data name="trPackageIsNotActive" xml:space="preserve">
+    <value>Package is not active</value>
+  </data>
+  <data name="trPreventLogIn" xml:space="preserve">
+    <value>You can't log in</value>
+  </data>
+  <data name="trServerNotCompatible" xml:space="preserve">
+    <value>The server is not compatible</value>
+  </data>
 </root>
