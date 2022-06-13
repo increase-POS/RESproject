@@ -2854,6 +2854,20 @@ namespace Restaurant.Classes
 
             rs = reportclass.GetKitchenRdlcpath(AppSettings.kitchenPaperSize, reportOrderList.Count(), rs.rep);
             rs.rep.DataSources.Add(new ReportDataSource("DataSet", reportOrderList));
+          //  rs.height = rs.height;
+            if (rs.height > 0)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(rs.rep.ReportPath);
+
+                //   XmlNodeList nlist=   doc.GetElementsByTagName("PageHeight"); 
+                decimal h = (decimal)((decimal)rs.height / (decimal)40.0);// +(decimal)0.4;
+             
+                doc.GetElementsByTagName("PageHeight")[0].InnerXml = (h).ToString() + "cm";
+         
+                //InteractiveHeight
+                doc.Save(rs.rep.ReportPath);
+            }
             return rs;
 
         }

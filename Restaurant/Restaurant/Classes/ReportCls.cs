@@ -1135,30 +1135,38 @@ namespace Restaurant.Classes
             bool isArabic = checkLang();
             reportsize rs = new reportsize();
             rs.rep = rep;
+            if (itemscount>3)
+            {
+                itemscount = itemscount - 3;
+            }
+            else
+            {
+                itemscount = 1;
+            }
             if (isArabic)
             {
                     if (PaperSize == "10cm"  )
                     {
                         addpath = @"\Reports\Sale\Kitchen\Ar\LargeReport.rdlc";
                         rs.width = 400;//400 =10cm
-                        rs.height = GetpageHeight(itemscount, 400);
+                    rs.height = GetpageHeight(itemscount, 290, 25);
 
-                    }
+                }
                     else if (PaperSize == "8cm"  )
                     {
                         addpath = @"\Reports\Sale\Kitchen\Ar\MediumReport.rdlc";
                         rs.width = 315;//315 =8cm
-                        rs.height = GetpageHeight(itemscount, 400);
+                    rs.height = GetpageHeight(itemscount, 270, 19);
 
 
-                    }
+                }
                     else if (PaperSize == "5.7cm"  )
                     {
                         addpath = @"\Reports\Sale\Kitchen\Ar\SmallReport.rdlc";
                         rs.width = 224;//224 =5.7cm
-                        rs.height = GetpageHeight(itemscount, 300);
+                    rs.height = GetpageHeight(itemscount, 250, 19);
 
-                    }
+                }
                     else //MainWindow.salePaperSize == "A4"
                     {
 
@@ -1174,21 +1182,21 @@ namespace Restaurant.Classes
                     {
                         addpath = @"\Reports\Sale\Kitchen\En\LargeReport.rdlc";
                         rs.width = 400;//400 =10cm
-                        rs.height = GetpageHeight(itemscount, 400);
+                        rs.height = GetpageHeight(itemscount, 290,25);
 
                     }
                     else if (PaperSize == "8cm"  )
                     {
                         addpath = @"\Reports\Sale\Kitchen\En\MediumReport.rdlc";
                         rs.width = 315;//315 =8cm
-                        rs.height = GetpageHeight(itemscount, 400);
+                        rs.height = GetpageHeight(itemscount,270,19);
 
                     }
                     else if (PaperSize == "5.7cm" )
                     {
                         addpath = @"\Reports\Sale\Kitchen\En\SmallReport.rdlc";
                         rs.width = 224;//224 =5.7cm
-                        rs.height = GetpageHeight(itemscount, 300);
+                        rs.height = GetpageHeight(itemscount,250,19);
 
                     }
                     else //MainWindow.salePaperSize == "A4"

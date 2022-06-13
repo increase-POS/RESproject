@@ -185,7 +185,7 @@
                   <TextRun>
                     <Value>COPY</Value>
                     <Style>
-                      <FontSize>35pt</FontSize>
+                      <FontSize>28pt</FontSize>
                       <FontWeight>Light</FontWeight>
                       <Color>Gainsboro</Color>
                     </Style>
@@ -197,9 +197,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox30</rd:DefaultName>
-            <Top>3.27859cm</Top>
+            <Top>2.64359cm</Top>
             <Left>0.58185cm</Left>
-            <Height>1.33751cm</Height>
+            <Height>1.04712cm</Height>
             <Width>7.09245cm</Width>
             <Visibility>
               <Hidden>=iif(Parameters!isOrginal.Value = "False" Or Parameters!isOrginal.Value = "false" Or  Parameters!isOrginal.Value = "0" And Parameters!watermark.Value="0" And Parameters!isSaved.Value="y" ,False,True)</Hidden>
@@ -223,19 +223,21 @@
                   <TextRun>
                     <Value>DRAFT</Value>
                     <Style>
-                      <FontSize>35pt</FontSize>
+                      <FontSize>28pt</FontSize>
                       <FontWeight>Light</FontWeight>
                       <Color>Gainsboro</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox30</rd:DefaultName>
-            <Top>3.23976cm</Top>
+            <Top>2.60476cm</Top>
             <Left>0.7898cm</Left>
-            <Height>1.5518cm</Height>
+            <Height>1.08595cm</Height>
             <Width>6.77495cm</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
@@ -252,7 +254,7 @@
             </Style>
           </Textbox>
           <Line Name="Line8">
-            <Top>3.86004cm</Top>
+            <Top>3.25679cm</Top>
             <Left>0.23121cm</Left>
             <Height>0cm</Height>
             <Width>7.64887cm</Width>
@@ -293,7 +295,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>1.90322in</Top>
+            <Top>1.60322in</Top>
             <Left>0.07317in</Left>
             <Height>0.57cm</Height>
             <Width>0.69587in</Width>
@@ -331,7 +333,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox7</rd:DefaultName>
-            <Top>1.90322in</Top>
+            <Top>1.60322in</Top>
             <Left>0.76607in</Left>
             <Height>0.57cm</Height>
             <Width>2.33633in</Width>
@@ -374,9 +376,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>2.42148in</Top>
+            <Top>2.06337in</Top>
             <Left>0.07316in</Left>
-            <Height>0.57cm</Height>
+            <Height>0.55662cm</Height>
             <Width>3.02923in</Width>
             <ZIndex>5</ZIndex>
             <Style>
@@ -418,10 +420,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>4.09993cm</Top>
+            <Top>3.36968cm</Top>
             <Left>0.18583cm</Left>
             <Height>0.57cm</Height>
-            <Width>0.99in</Width>
+            <Width>1.00645in</Width>
             <ZIndex>6</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss" OR Parameters!invType.Value="sd",false,true)</Hidden>
@@ -456,10 +458,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>4.09993cm</Top>
-            <Left>2.70043cm</Left>
+            <Top>3.36968cm</Top>
+            <Left>2.74221cm</Left>
             <Height>0.57cm</Height>
-            <Width>5.17965cm</Width>
+            <Width>5.13787cm</Width>
             <ZIndex>7</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss" OR Parameters!invType.Value="sd",false,true)</Hidden>
@@ -493,9 +495,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>5.47474cm</Top>
+            <Top>4.71274cm</Top>
             <Left>0.18584cm</Left>
-            <Height>0.57cm</Height>
+            <Height>0.52822cm</Height>
             <Width>7.69425cm</Width>
             <ZIndex>8</ZIndex>
             <Style>
@@ -527,7 +529,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.85721cm</Top>
+            <Top>1.50796cm</Top>
             <Left>0.18584cm</Left>
             <Height>0.57cm</Height>
             <Width>1.76752cm</Width>
@@ -561,7 +563,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.85721cm</Top>
+            <Top>1.50796cm</Top>
             <Left>1.95336cm</Left>
             <Height>0.57cm</Height>
             <Width>2.69546cm</Width>
@@ -596,7 +598,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>ExecutionTime</rd:DefaultName>
-            <Top>1.85721cm</Top>
+            <Top>1.50796cm</Top>
             <Left>5.05804cm</Left>
             <Height>0.57cm</Height>
             <Width>2.82204cm</Width>
@@ -631,7 +633,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>agentTitle</rd:DefaultName>
-            <Top>1.00668cm</Top>
+            <Top>0.75268cm</Top>
             <Left>0.18584cm</Left>
             <Height>0.65171cm</Height>
             <Width>7.69424cm</Width>
@@ -666,7 +668,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox3</rd:DefaultName>
-            <Top>0.10166in</Top>
+            <Top>0.03916in</Top>
             <Left>0.07317in</Left>
             <Height>0.21147in</Height>
             <Width>3.02923in</Width>
@@ -700,7 +702,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>ExecutionTime</rd:DefaultName>
-            <Top>2.42721cm</Top>
+            <Top>2.07796cm</Top>
             <Left>5.05804cm</Left>
             <Height>0.57cm</Height>
             <Width>2.82204cm</Width>
@@ -877,7 +879,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet</DataSetName>
-            <Top>3.20226cm</Top>
+            <Top>2.72601cm</Top>
             <Left>0.29532cm</Left>
             <Height>0.44125cm</Height>
             <Width>7.58477cm</Width>
@@ -889,7 +891,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>6.92514cm</Height>
+        <Height>5.90877cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
