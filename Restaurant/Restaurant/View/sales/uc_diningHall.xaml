@@ -595,10 +595,17 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
                         <TextBlock x:Name="txt_orders" Text="Orders"  Foreground="{StaticResource MainColor}" 
-                                                FontWeight="Bold" FontSize="16"  Margin="15,10,5,5"
+                                            Grid.Column="0" 
+                                   FontWeight="Bold" FontSize="16"  Margin="15,10,5,5"
                                        HorizontalAlignment="Left" />
-                        <TextBlock x:Name="txt_tableName"  Foreground="{StaticResource SecondColor}" 
+                        <TextBlock x:Name="txt_tableName" 
+                                  Grid.Column="1" 
+                                   Foreground="{StaticResource SecondColor}" 
                                                 FontWeight="Bold" FontSize="16"  Margin="15,10,15,5"
                                        HorizontalAlignment="Right" />
                     </Grid>
