@@ -75,49 +75,7 @@ namespace Restaurant.View.settings
                 translate();
                 #endregion
 
-                progDetails = await progDetailsModel.getCurrentInfo();
-
-                #region unlimited
-                if (progDetails.branchCount == -1)
-                { dpnl_branch.Visibility = Visibility.Collapsed; txt_branchUnlimited.Visibility = Visibility.Visible; }
-                else
-                { dpnl_branch.Visibility = Visibility.Visible; txt_branchUnlimited.Visibility = Visibility.Collapsed; }
-
-                if (progDetails.storeCount == -1)
-                { dpnl_store.Visibility = Visibility.Collapsed; txt_storeUnlimited.Visibility = Visibility.Visible; }
-                else
-                { dpnl_store.Visibility = Visibility.Visible; txt_storeUnlimited.Visibility = Visibility.Collapsed; }
-
-                if (progDetails.vendorCount == -1)
-                { dpnl_vendor.Visibility = Visibility.Collapsed; txt_vendorUnlimited.Visibility = Visibility.Visible; }
-                else
-                { dpnl_vendor.Visibility = Visibility.Visible; txt_vendorUnlimited.Visibility = Visibility.Collapsed; }
-
-                if (progDetails.userCount == -1)
-                { dpnl_user.Visibility = Visibility.Collapsed; txt_userUnlimited.Visibility = Visibility.Visible; }
-                else
-                { dpnl_user.Visibility = Visibility.Visible; txt_userUnlimited.Visibility = Visibility.Collapsed; }
-
-                if (progDetails.customerCount == -1)
-                { dpnl_customer.Visibility = Visibility.Collapsed; txt_customerUnlimited.Visibility = Visibility.Visible; }
-                else
-                { dpnl_customer.Visibility = Visibility.Visible; txt_customerUnlimited.Visibility = Visibility.Collapsed; }
-
-                if (progDetails.posCount == -1)
-                { dpnl_pos.Visibility = Visibility.Collapsed; txt_posUnlimited.Visibility = Visibility.Visible; }
-                else
-                { dpnl_pos.Visibility = Visibility.Visible; txt_posUnlimited.Visibility = Visibility.Collapsed; }
-
-                if (progDetails.saleinvCount == -1)
-                { dpnl_salesInv.Visibility = Visibility.Collapsed; txt_salesInvUnlimited.Visibility = Visibility.Visible; }
-                else
-                { dpnl_salesInv.Visibility = Visibility.Visible; txt_salesInvUnlimited.Visibility = Visibility.Collapsed; }
-
-                if (progDetails.itemCount == -1)
-                { dpnl_item.Visibility = Visibility.Collapsed; txt_itemUnlimited.Visibility = Visibility.Visible; }
-                else
-                { dpnl_item.Visibility = Visibility.Visible; txt_itemUnlimited.Visibility = Visibility.Collapsed; }
-                #endregion
+                await RefreshDetailsList();
 
                 if (HelpClass.isSupportPermision())
                 {
@@ -128,7 +86,6 @@ namespace Restaurant.View.settings
                     col_upgrade.Width = new GridLength(0);
                 }
 
-                this.DataContext = progDetails;
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -137,6 +94,55 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
 
+        }
+
+        async Task RefreshDetailsList()
+        {
+            progDetails = await progDetailsModel.getCurrentInfo();
+
+            #region unlimited
+            if (progDetails.branchCount == -1)
+            { dpnl_branch.Visibility = Visibility.Collapsed; txt_branchUnlimited.Visibility = Visibility.Visible; }
+            else
+            { dpnl_branch.Visibility = Visibility.Visible; txt_branchUnlimited.Visibility = Visibility.Collapsed; }
+
+            if (progDetails.storeCount == -1)
+            { dpnl_store.Visibility = Visibility.Collapsed; txt_storeUnlimited.Visibility = Visibility.Visible; }
+            else
+            { dpnl_store.Visibility = Visibility.Visible; txt_storeUnlimited.Visibility = Visibility.Collapsed; }
+
+            if (progDetails.vendorCount == -1)
+            { dpnl_vendor.Visibility = Visibility.Collapsed; txt_vendorUnlimited.Visibility = Visibility.Visible; }
+            else
+            { dpnl_vendor.Visibility = Visibility.Visible; txt_vendorUnlimited.Visibility = Visibility.Collapsed; }
+
+            if (progDetails.userCount == -1)
+            { dpnl_user.Visibility = Visibility.Collapsed; txt_userUnlimited.Visibility = Visibility.Visible; }
+            else
+            { dpnl_user.Visibility = Visibility.Visible; txt_userUnlimited.Visibility = Visibility.Collapsed; }
+
+            if (progDetails.customerCount == -1)
+            { dpnl_customer.Visibility = Visibility.Collapsed; txt_customerUnlimited.Visibility = Visibility.Visible; }
+            else
+            { dpnl_customer.Visibility = Visibility.Visible; txt_customerUnlimited.Visibility = Visibility.Collapsed; }
+
+            if (progDetails.posCount == -1)
+            { dpnl_pos.Visibility = Visibility.Collapsed; txt_posUnlimited.Visibility = Visibility.Visible; }
+            else
+            { dpnl_pos.Visibility = Visibility.Visible; txt_posUnlimited.Visibility = Visibility.Collapsed; }
+
+            if (progDetails.saleinvCount == -1)
+            { dpnl_salesInv.Visibility = Visibility.Collapsed; txt_salesInvUnlimited.Visibility = Visibility.Visible; }
+            else
+            { dpnl_salesInv.Visibility = Visibility.Visible; txt_salesInvUnlimited.Visibility = Visibility.Collapsed; }
+
+            if (progDetails.itemCount == -1)
+            { dpnl_item.Visibility = Visibility.Collapsed; txt_itemUnlimited.Visibility = Visibility.Visible; }
+            else
+            { dpnl_item.Visibility = Visibility.Visible; txt_itemUnlimited.Visibility = Visibility.Collapsed; }
+            #endregion
+
+            this.DataContext = progDetails;
         }
 
         private void translate()
@@ -331,6 +337,8 @@ namespace Restaurant.View.settings
                 }
                 //end activate
             }
+
+            await RefreshDetailsList();
         }
 
         private async void Btn_extend_Click(object sender, RoutedEventArgs e)
@@ -457,6 +465,7 @@ namespace Restaurant.View.settings
 
             }
 
+            await RefreshDetailsList();
         }
 
         private async void Btn_serials_Click(object sender, RoutedEventArgs e)
@@ -471,7 +480,7 @@ namespace Restaurant.View.settings
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
 
-                progDetails = await progDetailsModel.getCurrentInfo();
+                await RefreshDetailsList();
 
                 HelpClass.EndAwait(grid_main);
             }
