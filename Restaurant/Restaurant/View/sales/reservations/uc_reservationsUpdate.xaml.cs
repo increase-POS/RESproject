@@ -428,7 +428,7 @@ namespace Restaurant.View.sales.reservations
             #region invoice object
             FillCombo.invoice = new Invoice();
 
-            FillCombo.invoice.invNumber = await FillCombo.invoice.generateInvNumber("si", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+            FillCombo.invoice.invNumber = await FillCombo.invoice.generateDialyInvNumber("s,sd,ssd,ss,tsd,ts", MainWindow.branchLogin.branchId);
             FillCombo.invoice.invType = "sd";
             FillCombo.invoice.agentId = reservation.customerId;
             FillCombo.invoice.reservationId = reservation.reservationId;
