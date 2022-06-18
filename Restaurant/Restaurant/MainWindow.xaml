@@ -375,9 +375,9 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>-->
-                    <Button x:Name="BTN_menu" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="auto" Margin="0,0,7,0" Height="50" Click="BTN_Menu_Click" >
+                    <Button x:Name="BTN_menu" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="auto" Margin="0,0,10,0" Height="50" Click="BTN_Menu_Click" >
                         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Rectangle x:Name="rectangle" Width="30" Height="4" Margin="0 0 0 0" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="-0,0.5">
+                            <Rectangle x:Name="rectangle" Width="22.5" Height="3" Margin="0 0 0 0" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="-0,0.5">
                                 <Rectangle.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
@@ -387,7 +387,7 @@
                                     </TransformGroup>
                                 </Rectangle.RenderTransform>
                             </Rectangle>
-                            <Rectangle x:Name="rectangle1" Width="30" Height="4" Margin="0 20 0 0 " Fill="White" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="-0,0.5">
+                            <Rectangle x:Name="rectangle1" Width="22.5" Height="3" Margin="0 14 0 0 " Fill="White" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="-0,0.5">
                                 <Rectangle.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
@@ -397,7 +397,7 @@
                                     </TransformGroup>
                                 </Rectangle.RenderTransform>
                             </Rectangle>
-                            <Rectangle x:Name="rectangle2" Width="30" Height="4" Margin="0 10 0 0" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Rectangle x:Name="rectangle2" Width="22.5" Height="3" Margin="0 7 0 0" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         </Grid>
                         <Button.ToolTip>
                             <ToolTip Content="Menu"  Visibility="Visible" x:Name="tt_menu"/>
