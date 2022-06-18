@@ -93,6 +93,8 @@ namespace Restaurant.View.settings
         IEnumerable<Group> groups;
         byte tgl_groupState;
         string searchText = "";
+        bool isFirstLoad = true;
+
         public static List<string> requiredControlList;
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -120,6 +122,14 @@ namespace Restaurant.View.settings
                 await Search();
                 Clear();
 
+                btn_tabs_Click(btn_home, null);
+                bdrMain.Opacity = 1;
+                await Task.Delay(0100);
+                Button buttonDashboard = new Button();
+                buttonDashboard.Tag = "dashboard";
+                btn_secondLevelClick(buttonDashboard, null);
+
+                isFirstLoad = false;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -834,7 +844,7 @@ namespace Restaurant.View.settings
                 foreach (Path path in tabsPathsList)
                 {
                     // do something with tb here
-                    if (path.Tag ==  button.Tag )
+                    if (path.Tag ==  button.Tag || isFirstLoad )
                         path.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
                     else
                         path.Fill = Application.Current.Resources["Grey"] as SolidColorBrush;
@@ -844,7 +854,7 @@ namespace Restaurant.View.settings
                 .Where(x => x.Name.Contains("object") && x.Tag != null).ToList();
                 foreach (TextBlock textBlock in tabsTextBlocksList)
                 {
-                    if (textBlock.Tag ==  button.Tag  )
+                    if (textBlock.Tag ==  button.Tag || isFirstLoad)
                         textBlock.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                     else
                         textBlock.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
@@ -884,7 +894,7 @@ namespace Restaurant.View.settings
             try
             {
 
-                HelpClass.StartAwait(grid_main);
+                //HelpClass.StartAwait(grid_main);
                 if (groupObjects is null)
                     await RefreshGroupObjectList();
                 groupObjectsQuery = groupObjects.Where(s => s.groupId == group.groupId
@@ -892,12 +902,12 @@ namespace Restaurant.View.settings
                 && s.parentObjectName == _parentObjectName);
                 dg_permissions.ItemsSource = groupObjectsQuery;
 
-                HelpClass.EndAwait(grid_main);
+                //HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
 
-                HelpClass.EndAwait(grid_main);
+                //HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -969,10 +979,16 @@ namespace Restaurant.View.settings
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") )
                 {
                     int s = 0;
+                    if (groupObjectsQuery.Count() == 0)
+                    {
+                    HelpClass.EndAwait(grid_main);
+                        return;
+                    }
                     foreach (var item in groupObjectsQuery)
                     {
                         s = await groupObject.Save(item);
                     }
+                    
                     if (!s.Equals(0))
                     {
                         //addObjects(int.Parse(s));
