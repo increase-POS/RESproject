@@ -2386,7 +2386,6 @@ namespace Restaurant.View.purchase
         }
         private async void Btn_addVendor_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
                 HelpClass.StartAwait(grid_main);
@@ -2395,13 +2394,13 @@ namespace Restaurant.View.purchase
                 // pass agent id to update windows
                 w.agent.agentId = 0;
                 w.type = "v";
-                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
                 if (w.isOk == true)
                 {
                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                     await FillCombo.RefreshVendors();
+                    await FillCombo.FillComboVendors(cb_vendor);
                 }
 
                 HelpClass.EndAwait(grid_main);
@@ -2412,31 +2411,30 @@ namespace Restaurant.View.purchase
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_updateVendor_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
-
-                HelpClass.StartAwait(grid_main);
-
                 if (cb_vendor.SelectedIndex != -1)
                 {
-
+                    HelpClass.StartAwait(grid_main);
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_updateVendor w = new wd_updateVendor();
                     // pass agent id to update windows
                     w.agent.agentId = (int)cb_vendor.SelectedValue;
-                    // w.ShowInTaskbar = false;
+                    w.type = "v";
                     w.ShowDialog();
-                    await FillCombo.RefreshVendors();
-
                     Window.GetWindow(this).Opacity = 1;
-                }
+                    if (w.isOk == true)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        await FillCombo.RefreshVendors();
+                        //await FillCombo.FillComboVendors(cb_vendor);
+                    }
 
-                HelpClass.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
+                }
             }
             catch (Exception ex)
             {
@@ -2444,7 +2442,6 @@ namespace Restaurant.View.purchase
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
