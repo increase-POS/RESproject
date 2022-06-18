@@ -245,7 +245,7 @@ namespace Restaurant.View.windows
                   
 
                     int canLogin = await userModel.checkLoginAvalability(posId, userName, password);
-                    if (canLogin == 1)
+                    //if (canLogin == 1)
                     {
 
 
@@ -327,16 +327,16 @@ namespace Restaurant.View.windows
                     }
 
                     }
-                    else if (canLogin == -1) //program is expired
-                        tb_msg.Text = AppSettings.resourcemanager.GetString("trPackageIsExpired");
-                    else if (canLogin == -2) //device code is not correct 
-                        tb_msg.Text = AppSettings.resourcemanager.GetString("trPreventLogIn");
-                    else if (canLogin == -3) //serial is not active
-                        tb_msg.Text = AppSettings.resourcemanager.GetString("trPackageIsNotActive");
-                    else if (canLogin == -4) //serial is not active
-                        tb_msg.Text = AppSettings.resourcemanager.GetString("trServerNotCompatible");
-                    else if (canLogin == -5) //login date is before last login date
-                        tb_msg.Text = AppSettings.resourcemanager.GetString("trDateNotCompatible");
+                    //else if (canLogin == -1) //program is expired
+                    //    tb_msg.Text = AppSettings.resourcemanager.GetString("trPackageIsExpired");
+                    //else if (canLogin == -2) //device code is not correct 
+                    //    tb_msg.Text = AppSettings.resourcemanager.GetString("trPreventLogIn");
+                    //else if (canLogin == -3) //serial is not active
+                    //    tb_msg.Text = AppSettings.resourcemanager.GetString("trPackageIsNotActive");
+                    //else if (canLogin == -4) //serial is not active
+                    //    tb_msg.Text = AppSettings.resourcemanager.GetString("trServerNotCompatible");
+                    //else if (canLogin == -5) //login date is before last login date
+                    //    tb_msg.Text = AppSettings.resourcemanager.GetString("trDateNotCompatible");
 
                     HelpClass.EndAwait(grid_main);
                     logInProcessing = false;
