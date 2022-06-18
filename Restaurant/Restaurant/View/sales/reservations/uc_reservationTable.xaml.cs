@@ -495,7 +495,6 @@ namespace Restaurant.View.sales.reservations
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                         await FillCombo.RefreshCustomers();
-                        //await FillCombo.FillComboCustomers(cb_customerId);
                     }
 
                     HelpClass.EndAwait(grid_main);
