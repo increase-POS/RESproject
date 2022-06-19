@@ -4660,10 +4660,10 @@ namespace Restaurant.View.sales
                         if (toAgent == null || toAgent.agentId == 0)
                         {
                             //edit warning message to customer
-                            this.Dispatcher.Invoke(() =>
-                            {
-                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trTheCustomerHasNoEmail"), animation: ToasterAnimation.FadeIn);
-                            });
+                            //this.Dispatcher.Invoke(() =>
+                            //{
+                            //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trTheCustomerHasNoEmail"), animation: ToasterAnimation.FadeIn);
+                            //});
 
                         }
                         else
