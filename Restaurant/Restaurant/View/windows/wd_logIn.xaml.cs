@@ -58,8 +58,7 @@ namespace Restaurant.View.windows
                 }
                 catch { }
                 Global.APIUri = Properties.Settings.Default.APIUri;
-                //Global.APIUri = "http://192.168.1.5:4437/api/";
-                Global.APIUri = "http://192.168.1.10:4747/api/";
+                Global.APIUri = "http://192.168.1.5:4437/api/";
                 posId = 1;
 
                 #region properties
