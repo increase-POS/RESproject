@@ -58,7 +58,8 @@ namespace Restaurant.View.windows
                 }
                 catch { }
                 Global.APIUri = Properties.Settings.Default.APIUri;
-                //Global.APIUri = "http://localhost:107/api/";
+                //Global.APIUri = "http://192.168.1.5:4437/api/";
+                Global.APIUri = "http://192.168.1.10:4747/api/";
                 posId = 1;
 
                 #region properties
@@ -240,19 +241,22 @@ namespace Restaurant.View.windows
                     HelpClass.clearValidate(p_errorUserName);
                     HelpClass.clearValidate(p_errorPassword);
 
+                    
+
+                    MainWindow.userLogin = new User();
+                    MainWindow.posLogin = new Pos();
+                    MainWindow.branchLogin = new Branch();
+                    MainWindow.userLog = null;
+
                     string password = Md5Encription.MD5Hash("Inc-m" + txtPassword.Password);
                     string userName = txtUserName.Text;
-                  
 
                     int canLogin = await userModel.checkLoginAvalability(posId, userName, password);
                     //if (canLogin == 1)
                     {
 
 
-                        MainWindow.userLogin = new User();
-                    MainWindow.posLogin = new Pos();
-                    MainWindow.branchLogin = new Branch();
-                    MainWindow.userLog = null;
+                        
 
                     //MainWindow.userLog;
                     user = await userModel.Getloginuser(userName, password);
