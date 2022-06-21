@@ -93,9 +93,15 @@ namespace Restaurant.View
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             if(threadtimer10 != null)
-            threadtimer10.Stop();
-            if(threadtimer30 != null)
-            threadtimer30.Stop();
+            {
+                threadtimer10.Stop();
+                threadtimer10.IsEnabled = false;
+            }
+            if (threadtimer30 != null)
+            {
+                threadtimer30.Stop();
+                threadtimer30.IsEnabled = false;
+            }
             Instance = null;
             GC.Collect();
         }
@@ -106,6 +112,14 @@ namespace Restaurant.View
                 // 
                 //    SectionData.StartAwait(grid_main);
 
+                {
+                    threadtimer10.Start();
+                    threadtimer10.IsEnabled = true;
+                }
+                {
+                    threadtimer30.Start();
+                    threadtimer30.IsEnabled = true;
+                }
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                     grid_main.FlowDirection = FlowDirection.LeftToRight; 
@@ -159,9 +173,9 @@ namespace Restaurant.View
 
                 rdb_times.IsChecked = true;
 
-
+               
                 //txt_rightReserved.Text =DateTime.Now.Date.Year + " © All Right Reserved for Increase";
-            starTimerAfter10();
+                starTimerAfter10();
             starTimerAfter30();
                 // 
                 //    SectionData.EndAwait(grid_main);
@@ -177,22 +191,29 @@ namespace Restaurant.View
         async void starTimerAfter10()
         {
             await Task.Delay(10000);
-            // thread 10
-            //threadtimer10 = new DispatcherTimer();
-            threadtimer10.Interval = TimeSpan.FromSeconds(secondTimer10);
-            threadtimer10.Tick += timer_Thread10;
-            threadtimer10.Start();
-            ////////////////////
+            if (threadtimer10.IsEnabled)
+            {
+                // thread 10
+                //threadtimer10 = new DispatcherTimer();
+                threadtimer10.Interval = TimeSpan.FromSeconds(secondTimer10);
+                threadtimer10.Tick += timer_Thread10;
+                threadtimer10.Start();
+                ////////////////////
+            }
         }
         async void starTimerAfter30()
         {
             await Task.Delay(30000);
-            //thread 30
-            //threadtimer30 = new DispatcherTimer();
-            threadtimer30.Interval = TimeSpan.FromSeconds(secondTimer30);
-            threadtimer30.Tick += timer_Thread30;
-            threadtimer30.Start();
-            ////////////////////
+            if (threadtimer30.IsEnabled)
+            {
+                //thread 30
+                //threadtimer30 = new DispatcherTimer();
+                threadtimer30.Interval = TimeSpan.FromSeconds(secondTimer30);
+                threadtimer30.Tick += timer_Thread30;
+                threadtimer30.Start();
+                ////////////////////
+                ///
+            }
         }
         private void translate()
         {
