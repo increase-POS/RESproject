@@ -424,7 +424,7 @@ namespace Restaurant.View.delivery
 
                             if (chk_drivers.IsChecked == true)
                                 ordersCount = driverOrder.Count();
-
+                            tb_driverOrdersCount.Text = ordersCount.ToString();
                         }
                     }
                     else if (chk_shippingCompanies.IsChecked.Value)
@@ -446,9 +446,9 @@ namespace Restaurant.View.delivery
                             if (chk_shippingCompanies.IsChecked == true)
                                 ordersCount = driverOrder.Count();
 
+                            tb_companyOrdersCount.Text = ordersCount.ToString();
                         }
                     }
-                    tb_driverOrdersCount.Text = ordersCount.ToString();
 
                 }
                 HelpClass.EndAwait(grid_main);
