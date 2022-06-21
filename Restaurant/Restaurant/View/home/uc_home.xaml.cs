@@ -300,6 +300,8 @@ namespace Restaurant.View
         List<keyValueBool> loadingList;
          List<string> catchError = new List<string>();
         int catchErrorCount = 0;
+
+        int reloadingCount_getDailySalPur = 0;
         async void loading_getDailySalPur()
         {
             try
@@ -309,7 +311,9 @@ namespace Restaurant.View
             }
             catch
             {
-                loading_getDailySalPur();
+                if (reloadingCount_getDailySalPur < 2)
+                    loading_getDailySalPur();
+                reloadingCount_getDailySalPur++;
                 catchError.Add("loading_getDailySalPur");
                 catchErrorCount++;
             }
@@ -391,6 +395,7 @@ namespace Restaurant.View
             {}
         }
 
+        int reloadingCount_IUStorageRefresh = 0;
         async void IUStorageRefresh()
         {
             try
@@ -402,7 +407,10 @@ namespace Restaurant.View
             }
             catch (Exception)
             {
-                IUStorageRefresh();
+                if (reloadingCount_IUStorageRefresh < 2)
+                    IUStorageRefresh();
+                reloadingCount_IUStorageRefresh++;
+
                 catchError.Add("IUStorageRefresh");
                 catchErrorCount++;
             }
@@ -415,6 +423,7 @@ namespace Restaurant.View
                 }
             }
         }
+        int reloadingCount_BestSellerRefresh = 0;
         async void BestSellerRefresh()
         {
             try
@@ -426,7 +435,9 @@ namespace Restaurant.View
             }
             catch (Exception)
             {
-                BestSellerRefresh();
+                if (reloadingCount_BestSellerRefresh < 2)
+                    BestSellerRefresh();
+                reloadingCount_BestSellerRefresh++;
                 catchError.Add("BestSellerRefresh");
                 catchErrorCount++;
             }
@@ -609,6 +620,7 @@ namespace Restaurant.View
         //    }
         //}
 
+        int reloadingCount_getBestOf = 0;
         async Task getBestOf()
         {
 
@@ -623,7 +635,9 @@ namespace Restaurant.View
             }
             catch
             {
-                getBestOf();
+                if (reloadingCount_getBestOf < 2)
+                    getBestOf();
+                reloadingCount_getBestOf++;
                 catchError.Add("getBestOf");
                 catchErrorCount++;
             }
@@ -693,6 +707,7 @@ namespace Restaurant.View
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        int reloadingCount_getCountByInvType = 0;
         async Task getCountByInvType()
         {
             
@@ -730,7 +745,9 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
-                getCountByInvType();
+                if (reloadingCount_getCountByInvType < 2)
+                    getCountByInvType();
+                reloadingCount_getCountByInvType++;
                 catchError.Add("getCountByInvType");
                 catchErrorCount++;
             }
@@ -743,6 +760,7 @@ namespace Restaurant.View
                 }
             }
         }
+        int reloadingCount_getBranchBalance = 0;
         async Task getBranchBalance()
         {
 
@@ -770,7 +788,9 @@ namespace Restaurant.View
             {
                 //SectionData.ExceptionMessage(ex, this);
 
-                getBranchBalance();
+                if (reloadingCount_getBranchBalance < 2)
+                    getBranchBalance();
+                reloadingCount_getBranchBalance++;
                 catchError.Add("getBranchBalance");
                 catchErrorCount++;
             }
@@ -783,6 +803,7 @@ namespace Restaurant.View
                 }
             }
         }
+        int reloadingCount_getTableCount = 0;
         async Task getTableCount()
         {
 
@@ -813,7 +834,9 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
-                getTableCount();
+                if (reloadingCount_getTableCount < 2)
+                    getTableCount();
+                reloadingCount_getTableCount++;
                 catchError.Add("getTableCount");
                 catchErrorCount++;
             }
@@ -826,6 +849,7 @@ namespace Restaurant.View
                 }
             }
         }
+        int reloadingCount_UserOnline = 0;
         async Task UserOnline()
         {
             try
@@ -855,7 +879,9 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
-                UserOnline();
+                if (reloadingCount_UserOnline < 2)
+                    UserOnline();
+                reloadingCount_UserOnline++;
                 catchError.Add("UserOnline");
                 catchErrorCount++;
             }
@@ -868,6 +894,7 @@ namespace Restaurant.View
                 }
             }
         }
+        int reloadingCount_UserOnlinePic = 0;
         async Task UserOnlinePic()
         {
             try
@@ -895,7 +922,9 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
-                UserOnlinePic();
+                if (reloadingCount_UserOnlinePic < 2)
+                    UserOnlinePic();
+                reloadingCount_UserOnlinePic++;
                 catchError.Add("UserOnlinePic");
                 catchErrorCount++;
             }
@@ -1006,6 +1035,7 @@ namespace Restaurant.View
             #endregion
             grid_userImages.Children.Add(grid);
         }
+        int reloadingCount_BranchOnline = 0;
         async Task BranchOnline()
         {
             try
@@ -1026,7 +1056,9 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
-                BranchOnline();
+                if (reloadingCount_BranchOnline < 2)
+                    BranchOnline();
+                reloadingCount_BranchOnline++;
                 catchError.Add("BranchOnline");
                 catchErrorCount++;
 
@@ -1423,6 +1455,7 @@ namespace Restaurant.View
             grid_IUStorage.Children.Add(countItem);
         }
         #endregion
+        int reloadingCount_AmountMonthlySalPur = 0;
         async Task AmountMonthlySalPur()
         {
             try
@@ -1500,7 +1533,9 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
-                AmountMonthlySalPur();
+                if (reloadingCount_AmountMonthlySalPur < 2)
+                    AmountMonthlySalPur();
+                reloadingCount_AmountMonthlySalPur++;
                 catchError.Add("AmountMonthlySalPur");
                 catchErrorCount++;
             }
