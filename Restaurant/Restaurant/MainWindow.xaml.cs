@@ -114,6 +114,8 @@ namespace Restaurant
         List<keyValueBool> loadingList;
         List<string> catchError = new List<string>();
         int catchErrorCount = 0;
+
+        int reloadingCount_listObjects = 0;
         async void loading_listObjects()
         {
             //get tax
@@ -123,7 +125,9 @@ namespace Restaurant
             }
             catch
             {
+                if(reloadingCount_listObjects < 2)
                 loading_listObjects();
+                reloadingCount_listObjects++;
                 catchError.Add("loading_listObjects");
                 catchErrorCount++;
             }
@@ -136,6 +140,8 @@ namespace Restaurant
                 }
             }
         }
+
+        int reloadingCount_getGroupObjects = 0;
         async void loading_getGroupObjects()
         {
             try
@@ -144,7 +150,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_getGroupObjects();
+                if(reloadingCount_getGroupObjects < 2)
+                    loading_getGroupObjects();
+                reloadingCount_getGroupObjects++;
                 catchError.Add("loading_getGroupObjects");
                 catchErrorCount++;
             }
@@ -157,6 +165,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_globalItemUnitsList = 0;
         async void loading_globalItemUnitsList()
         {
             try
@@ -165,7 +174,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_globalItemUnitsList();
+                if(reloadingCount_globalItemUnitsList < 2)
+                    loading_globalItemUnitsList();
+                reloadingCount_globalItemUnitsList++;
                 catchError.Add("loading_globalItemUnitsList");
                 catchErrorCount++;
             }
@@ -178,6 +189,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_itemUnitsUsersList = 0;
         async void loading_itemUnitsUsersList()
         {
             try
@@ -186,7 +198,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_itemUnitsUsersList();
+                if(reloadingCount_itemUnitsUsersList < 2)
+                    loading_itemUnitsUsersList();
+                reloadingCount_itemUnitsUsersList++;
                 catchError.Add("loading_itemUnitsUsersList");
                 catchErrorCount++;
             }
@@ -199,6 +213,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_getUserPersonalInfo = 0;
         async void loading_getUserPersonalInfo()
         {
             #region user personal info
@@ -231,7 +246,9 @@ namespace Restaurant
             catch
             {
                 //clearImg();
-                loading_getUserPersonalInfo();
+                if(reloadingCount_getUserPersonalInfo < 2)
+                    loading_getUserPersonalInfo();
+                reloadingCount_getUserPersonalInfo++;
                 catchError.Add("loading_getUserPersonalInfo");
                 catchErrorCount++;
             }
@@ -246,6 +263,7 @@ namespace Restaurant
             #endregion
         }
         #region FillCombo
+        int reloadingCount_RefreshBranches = 0;
         async void loading_RefreshBranches()
         {
             try
@@ -254,7 +272,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_RefreshBranches();
+                if(reloadingCount_RefreshBranches < 2)
+                    loading_RefreshBranches();
+                reloadingCount_RefreshBranches++;
                 catchError.Add("loading_RefreshBranches");
                 catchErrorCount++;
             }
@@ -267,6 +287,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_RefreshBranchesAllWithoutMain = 0;
         async void loading_RefreshBranchesAllWithoutMain()
         {
             try
@@ -275,7 +296,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_RefreshBranchesAllWithoutMain();
+                if(reloadingCount_RefreshBranchesAllWithoutMain < 2)
+                    loading_RefreshBranchesAllWithoutMain();
+                reloadingCount_RefreshBranchesAllWithoutMain++;
                 catchError.Add("loading_RefreshBranchesAllWithoutMain");
                 catchErrorCount++;
             }
@@ -288,6 +311,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_RefreshByBranchandUser = 0;
         async void loading_RefreshByBranchandUser()
         {
             try
@@ -296,7 +320,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_RefreshByBranchandUser();
+                if(reloadingCount_RefreshByBranchandUser < 2)
+                    loading_RefreshByBranchandUser();
+                reloadingCount_RefreshByBranchandUser++;
                 catchError.Add("loading_RefreshByBranchandUser");
                 catchErrorCount++;
             }
@@ -309,6 +335,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_RefreshCategory = 0;
         async void loading_RefreshCategory()
         {
             try
@@ -317,7 +344,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_RefreshCategory();
+                if(reloadingCount_RefreshCategory < 2)
+                    loading_RefreshCategory();
+                reloadingCount_RefreshCategory++;
                 catchError.Add("loading_RefreshCategory");
                 catchErrorCount++;
             }
@@ -330,6 +359,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_RefreshUnit = 0;
         async void loading_RefreshUnit()
         {
             try
@@ -338,7 +368,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_RefreshUnit();
+                if(reloadingCount_RefreshUnit < 2)
+                    loading_RefreshUnit();
+                reloadingCount_RefreshUnit++;
                 catchError.Add("loading_RefreshUnit");
                 catchErrorCount++;
             }
@@ -351,6 +383,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_RefreshVendors = 0;
         async void loading_RefreshVendors()
         {
             try
@@ -359,7 +392,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_RefreshVendors();
+                if(reloadingCount_RefreshVendors < 2)
+                    loading_RefreshVendors();
+                reloadingCount_RefreshVendors++;
                 catchError.Add("loading_RefreshVendors");
                 catchErrorCount++;
             }
@@ -372,6 +407,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_RefreshCards = 0;
         async void loading_RefreshCards()
         {
             try
@@ -380,7 +416,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_RefreshCards();
+                if(reloadingCount_RefreshCards < 2)
+                    loading_RefreshCards();
+                reloadingCount_RefreshCards++;
                 catchError.Add("loading_RefreshCards");
                 catchErrorCount++;
             }
@@ -394,6 +432,7 @@ namespace Restaurant
             }
         }
         #endregion
+        int reloadingCount_getUserPath = 0;
         async void loading_getUserPath()
         {
             #region get user path
@@ -418,7 +457,9 @@ namespace Restaurant
             catch
             {
                 //AppSettings.defaultPath = "";
-                loading_getUserPath();
+                if(reloadingCount_getUserPath < 2)
+                    loading_getUserPath();
+                reloadingCount_getUserPath++;
                 catchError.Add("loading_getUserPath");
                 catchErrorCount++;
             }
@@ -434,6 +475,7 @@ namespace Restaurant
         }
 
 
+        int reloadingCount_getDefaultInvoiceType = 0;
         async void loading_getDefaultInvoiceType()
         {
             try
@@ -464,7 +506,9 @@ namespace Restaurant
             catch
             {
                 //AppSettings.invType = "diningHall";
-                loading_getDefaultInvoiceType();
+                if(reloadingCount_getDefaultInvoiceType < 2)
+                    loading_getDefaultInvoiceType();
+                reloadingCount_getDefaultInvoiceType++;
                 catchError.Add("loading_getDefaultInvoiceType");
                 catchErrorCount++;
             }
@@ -478,6 +522,7 @@ namespace Restaurant
             }
         }
 
+        int reloadingCount_getStatusesOfPreparingOrder = 0;
         async void loading_getStatusesOfPreparingOrder()
         {
             try
@@ -493,7 +538,9 @@ namespace Restaurant
             catch
             {
                 //AppSettings.statusesOfPreparingOrder = "directlyPrint";
-                loading_getStatusesOfPreparingOrder();
+                if(reloadingCount_getStatusesOfPreparingOrder < 2)
+                    loading_getStatusesOfPreparingOrder();
+                reloadingCount_getStatusesOfPreparingOrder++;
                 catchError.Add("loading_getStatusesOfPreparingOrder");
                 catchErrorCount++;
             }
@@ -506,6 +553,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_typesOfService = 0;
         async void loading_typesOfService()
         {
             try
@@ -583,11 +631,13 @@ namespace Restaurant
             }
             catch
             {
-                loading_typesOfService();
+                if(reloadingCount_typesOfService < 2)
+                    loading_typesOfService();
                 //    // don't move this debug
                 //AppSettings.typesOfService_diningHall = "1";
                 //AppSettings.typesOfService_takeAway = "1";
                 //AppSettings.typesOfService_selfService = "1";
+                reloadingCount_typesOfService++;
                 catchError.Add("loading_typesOfService");
                 catchErrorCount++;
             }
@@ -600,6 +650,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_maxDiscount = 0;
         async void loading_maxDiscount()
         {
             try
@@ -612,7 +663,9 @@ namespace Restaurant
             catch
             {
                 //AppSettings.maxDiscount = 0;
-                loading_maxDiscount();
+                if(reloadingCount_maxDiscount < 2)
+                    loading_maxDiscount();
+                reloadingCount_maxDiscount++;
                 catchError.Add("loading_maxDiscount");
                 catchErrorCount++;
             }
@@ -625,6 +678,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_getItemCost = 0;
         async void loading_getItemCost()
         {
             //get item cost
@@ -635,7 +689,9 @@ namespace Restaurant
             catch
             {
                 //AppSettings.itemCost = 0;
-                loading_getItemCost();
+                if(reloadingCount_getItemCost < 2)
+                    loading_getItemCost();
+                reloadingCount_getItemCost++;
                 catchError.Add("loading_getItemCost");
                 catchErrorCount++;
             }
@@ -668,6 +724,7 @@ namespace Restaurant
         //        }
         //    }
         //}
+        int reloadingCount_getTaxDetails = 0;
         async void loading_getTaxDetails()
         {
             try
@@ -727,11 +784,13 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_getTaxDetails();
+                if(reloadingCount_getTaxDetails < 2)
+                    loading_getTaxDetails();
                 //AppSettings.invoiceTax_bool = false;
                 //AppSettings.invoiceTax_decimal = 0;
                 //AppSettings.itemsTax_bool = false;
                 //AppSettings.itemsTax_decimal = 0;
+                reloadingCount_getTaxDetails++;
                 catchError.Add("loading_getTaxDetails");
                 catchErrorCount++;
             }
@@ -745,6 +804,7 @@ namespace Restaurant
             }
 
         }
+        int reloadingCount_getDefaultSystemInfo = 0;
         public async void loading_getDefaultSystemInfo()
         {
             try
@@ -874,7 +934,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_getDefaultSystemInfo();
+                if(reloadingCount_getDefaultSystemInfo < 2)
+                    loading_getDefaultSystemInfo();
+                reloadingCount_getDefaultSystemInfo++;
                 catchError.Add("loading_getDefaultSystemInfo");
                 catchErrorCount++;
             }
@@ -888,6 +950,7 @@ namespace Restaurant
             }
 
         }
+        int reloadingCount_getDateForm = 0;
         async void loading_getDateForm()
         {
             //get dateform
@@ -898,7 +961,9 @@ namespace Restaurant
             catch
             {
                 //AppSettings.dateFormat = "ShortDatePattern";
-                loading_getDateForm();
+                if(reloadingCount_getDateForm < 2)
+                    loading_getDateForm();
+                reloadingCount_getDateForm++;
                 catchError.Add("loading_getDateForm");
                 catchErrorCount++;
             }
@@ -911,6 +976,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_getRegionAndCurrency = 0;
         async void loading_getRegionAndCurrency()
         {
             //get region and currency
@@ -925,7 +991,9 @@ namespace Restaurant
             }
             catch
             {
-                loading_getRegionAndCurrency();
+                if(reloadingCount_getRegionAndCurrency < 2)
+                    loading_getRegionAndCurrency();
+                reloadingCount_getRegionAndCurrency++;
                 catchError.Add("loading_getRegionAndCurrency");
                 catchErrorCount++;
             }
@@ -938,6 +1006,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_getStorageCost = 0;
         async void loading_getStorageCost()
         {
             //get storage cost
@@ -948,7 +1017,9 @@ namespace Restaurant
             catch
             {
                 //AppSettings.StorageCost = 0;
-                loading_getStorageCost();
+                if(reloadingCount_getStorageCost < 2)
+                    loading_getStorageCost();
+                reloadingCount_getStorageCost++;
                 catchError.Add("loading_getStorageCost");
                 catchErrorCount++;
             }
@@ -961,6 +1032,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_getAccurac = 0;
         async void loading_getAccurac()
         {
             //get accuracy
@@ -971,7 +1043,9 @@ namespace Restaurant
             catch
             {
                 //AppSettings.accuracy = "1";
-                loading_getAccurac();
+                if(reloadingCount_getAccurac < 2)
+                    loading_getAccurac();
+                reloadingCount_getAccurac++;
                 catchError.Add("loading_getAccurac");
                 catchErrorCount++;
             }
@@ -986,6 +1060,7 @@ namespace Restaurant
         }
 
 
+        int reloadingCount_getprintSitting = 0;
         async void loading_getprintSitting()
         {
             try
@@ -994,7 +1069,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_getprintSitting();
+                if(reloadingCount_getprintSitting < 2)
+                    loading_getprintSitting();
+                reloadingCount_getprintSitting++;
                 catchError.Add("loading_getprintSitting");
                 catchErrorCount++;
             }
@@ -1007,6 +1084,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_POSList = 0;
         async void loading_POSList()
         {
             try
@@ -1015,7 +1093,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_POSList();
+                if(reloadingCount_POSList < 2)
+                    loading_POSList();
+                reloadingCount_POSList++;
                 catchError.Add("loading_POSList");
                 catchErrorCount++;
             }
@@ -1028,6 +1108,7 @@ namespace Restaurant
                 }
             }
         }
+        int reloadingCount_getTableTimes = 0;
         async void loading_getTableTimes()
         {
             try
@@ -1067,7 +1148,9 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                loading_getTableTimes();
+                if(reloadingCount_getTableTimes < 2)
+                    loading_getTableTimes();
+                reloadingCount_getTableTimes++;
                 catchError.Add("loading_getTableTimes");
                 catchErrorCount++;
                 //AppSettings.time_staying = 0;
@@ -1394,46 +1477,49 @@ namespace Restaurant
                 #endregion
 
                 #region expire date
-                daysremain daysr = await userLogin.getRemainDayes();
-                if (daysr.expirestate == "e" && daysr.days <= 10)
+                try
                 {
-
-                    wd_messageBoxWithIcon w = new wd_messageBoxWithIcon();
-                    if (daysr.days >= 1)
-                    {
-                        w.contentText1 = AppSettings.resourcemanager.GetString("trExpireNote1") + " " + daysr.days.ToString() + " " + AppSettings. resourcemanager.GetString("trExpireDays");
-                        w.Show();
-                    }
-                    else if (daysr.days == 0)
+                    daysremain daysr = await userLogin.getRemainDayes();
+                    if (daysr.expirestate == "e" && daysr.days <= 10)
                     {
 
-
-                        if (daysr.hours >= 0 && daysr.hours <= 24)
+                        wd_messageBoxWithIcon w = new wd_messageBoxWithIcon();
+                        if (daysr.days >= 1)
                         {
-                            if (daysr.hours == 0)
+                            w.contentText1 = AppSettings.resourcemanager.GetString("trExpireNote1") + " " + daysr.days.ToString() + " " + AppSettings.resourcemanager.GetString("trExpireDays");
+                            w.Show();
+                        }
+                        else if (daysr.days == 0)
+                        {
+
+
+                            if (daysr.hours >= 0 && daysr.hours <= 24)
                             {
-                                if (daysr.minute >= 0)
+                                if (daysr.hours == 0)
+                                {
+                                    if (daysr.minute >= 0)
+                                    {
+                                        w.contentText1 = AppSettings.resourcemanager.GetString("trExpireNote2");
+                                        w.Show();
+                                    }
+
+
+                                }
+                                else
                                 {
                                     w.contentText1 = AppSettings.resourcemanager.GetString("trExpireNote2");
                                     w.Show();
                                 }
 
 
+
                             }
-                            else
-                            {
-                                w.contentText1 = AppSettings.resourcemanager.GetString("trExpireNote2");
-                                w.Show();
-                            }
-
-
-
                         }
-                        //else 
-                        //{
-                        //    w.contentText1 = resourcemanager.GetString("trExpireNote3")+" " + (daysr.days* -1 ).ToString() + " " + resourcemanager.GetString("trAgo");
-                        //}
+
                     }
+                }
+               catch(Exception ex)
+                {
 
                 }
 
