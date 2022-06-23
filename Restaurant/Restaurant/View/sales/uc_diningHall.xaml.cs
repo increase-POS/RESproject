@@ -869,7 +869,7 @@ namespace Restaurant.View.sales
             Grid gridContainer = new Grid();
             gridContainer.Margin = new Thickness(5);
             //int rowCount = billDetailsList.Count();
-            int rowCount = 8;
+            int rowCount = billDetailsList.Count;
             RowDefinition[] rd = new RowDefinition[rowCount];
             for (int i = 0; i < rowCount; i++)
             {
@@ -881,7 +881,7 @@ namespace Restaurant.View.sales
                 gridContainer.RowDefinitions.Add(rd[i]);
             }
             /////////////////////////////////////////////////////
-            int colCount = 7;
+            int colCount = 8;
             ColumnDefinition[] cd = new ColumnDefinition[colCount];
             for (int i = 0; i < colCount; i++)
             {
@@ -889,11 +889,12 @@ namespace Restaurant.View.sales
             }
             cd[0].Width = new GridLength(1, GridUnitType.Auto);
             cd[1].Width = new GridLength(1, GridUnitType.Auto);
-            cd[2].Width = new GridLength(1, GridUnitType.Star);
-            cd[3].Width = new GridLength(1, GridUnitType.Auto);
+            cd[2].Width = new GridLength(1, GridUnitType.Auto);
+            cd[3].Width = new GridLength(1, GridUnitType.Star);
             cd[4].Width = new GridLength(1, GridUnitType.Auto);
             cd[5].Width = new GridLength(1, GridUnitType.Auto);
-            cd[6].Width = new GridLength(1, GridUnitType.Star);
+            cd[6].Width = new GridLength(1, GridUnitType.Auto);
+            cd[7].Width = new GridLength(1, GridUnitType.Star);
             for (int i = 0; i < colCount; i++)
             {
                 gridContainer.ColumnDefinitions.Add(cd[i]);
@@ -958,6 +959,21 @@ namespace Restaurant.View.sales
                 /////////////////////////////////
 
                 #endregion
+                #region IsExtra
+                var itemIsExtraPath = new Path();
+                itemIsExtraPath.Tag = "isExtra-" + item.index;
+                itemIsExtraPath.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                itemIsExtraPath.Data = App.Current.Resources["StarIconGeometry"] as Geometry;
+                itemIsExtraPath.Stretch = Stretch.Fill;
+                itemIsExtraPath.FlowDirection = FlowDirection.LeftToRight;
+                itemIsExtraPath.Margin = new Thickness(1);
+                itemIsExtraPath.Width = 10;
+                itemIsExtraPath.Height = 10;
+                Grid.SetRow(itemIsExtraPath, item.index);
+                Grid.SetColumn(itemIsExtraPath, 2);
+                gridContainer.Children.Add(itemIsExtraPath);
+
+                #endregion
                 #region   name
                 var itemNameText = new TextBlock();
                 itemNameText.Text = item.itemName;
@@ -971,7 +987,7 @@ namespace Restaurant.View.sales
                 itemNameText.FontWeight = FontWeights.Bold;
 
                 Grid.SetRow(itemNameText, item.index);
-                Grid.SetColumn(itemNameText, 2);
+                Grid.SetColumn(itemNameText, 3);
                 gridContainer.Children.Add(itemNameText);
                 #endregion
                 #region   count
@@ -987,7 +1003,7 @@ namespace Restaurant.View.sales
                 countText.HorizontalAlignment = HorizontalAlignment.Center;
 
                 Grid.SetRow(countText, item.index);
-                Grid.SetColumn(countText, 4);
+                Grid.SetColumn(countText, 5);
                 gridContainer.Children.Add(countText);
                 /////////////////////////////////
 
@@ -1003,7 +1019,7 @@ namespace Restaurant.View.sales
                 totalText.HorizontalAlignment = HorizontalAlignment.Right;
 
                 Grid.SetRow(totalText, item.index);
-                Grid.SetColumn(totalText, 6);
+                Grid.SetColumn(totalText, 7);
                 gridContainer.Children.Add(totalText);
                 /////////////////////////////////
 
@@ -1045,7 +1061,7 @@ namespace Restaurant.View.sales
                 buttonMinus.Click += buttonMinus_Click;
 
                 Grid.SetRow(buttonMinus, item.index);
-                Grid.SetColumn(buttonMinus, 3);
+                Grid.SetColumn(buttonMinus, 4);
                 gridContainer.Children.Add(buttonMinus);
                 /////////////////////////////////
 
@@ -1072,7 +1088,7 @@ namespace Restaurant.View.sales
                 buttonPlus.Content = PlusPackIcon;
                 buttonPlus.Click += buttonPlus_Click;
                 Grid.SetRow(buttonPlus, item.index);
-                Grid.SetColumn(buttonPlus, 5);
+                Grid.SetColumn(buttonPlus, 6);
                 gridContainer.Children.Add(buttonPlus);
                 /////////////////////////////////
                 #endregion

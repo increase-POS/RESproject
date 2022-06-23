@@ -629,8 +629,9 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -641,31 +642,31 @@
                                   Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
                                            FontWeight="Bold" Margin="5"
                                             HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <Image   Tag="ssssssss"  Grid.Column="1" Source="/pic/90408.jpg"
+                            <Image   Tag="ssssssss"  Grid.Column="1" Source="/pic/no-image-icon-125x125.png"
                                 Margin="5" Height="25"   Width="25" Stretch="UniformToFill"
                           HorizontalAlignment="Center" VerticalAlignment="Center"  />
-                                   
-                                <TextBlock Tag="ssssssss" Grid.Column="2" Text="Chees Burger" FontSize="12"  
+                          
+                            <TextBlock Tag="ssssssss" Grid.Column="3" Text="Chees Burger" FontSize="12"  
                                    Foreground="{StaticResource SecondColor}" 
                                            Margin="5"
                                             HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                <Button Tag="ssssssss" Grid.Column="3"    Margin="2.5"
+                            <Button Tag="ssssssss" Grid.Column="4"    Margin="2.5"
                                     Height="25" Width="25"  Padding="0"
                                         Background="{StaticResource MainColor}"   BorderThickness="0">
                                     <materialDesign:PackIcon   Foreground="{StaticResource White}"
                                          Width="25" Height="25" Kind="Delete" />
                                 </Button>
-                                <TextBlock  Grid.Column="4" Text="17" FontSize="14"  
+                                <TextBlock  Grid.Column="5" Text="17" FontSize="14"  
                                   Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
                                            Margin="5"
                                             HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Button Tag="ssssssss" Grid.Column="5"    Margin="2.5"
+                                <Button Tag="ssssssss" Grid.Column="6"    Margin="2.5"
                                     Height="25" Width="25"  Padding="0"
                                         Background="#DFDFDF"   BorderThickness="0">
                                     <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
                                          Width="25" Height="25" Kind="Plus" />
                                 </Button>
-                                <TextBlock Tag="ssssssss" Grid.Column="6" Text="12.05" FontSize="12"  
+                                <TextBlock Tag="ssssssss" Grid.Column="7" Text="12.05" FontSize="12"  
                                    Foreground="{StaticResource Grey}"   Margin="5"
                                             HorizontalAlignment="Right" VerticalAlignment="Center" />
                                 --><!--#endregion-->
@@ -678,31 +679,31 @@
                                 Margin="5" Height="25"   Width="25"
                           HorizontalAlignment="Center" VerticalAlignment="Center"  >
                                     <Ellipse.Fill >
-                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/90408.jpg"   />
+                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/no-image-icon-125x125.png"   />
                                     </Ellipse.Fill>
                                 </Ellipse>
-                                <TextBlock Tag="ssssssss"  Grid.Row="1" Grid.Column="2" Text="Chees Burger" FontSize="12"  
+                                
+                                <TextBlock Tag="ssssssss"  Grid.Row="1" Grid.Column="3" Text="Chees Burger" FontSize="12"  
                                    Foreground="{StaticResource SecondColor}" 
                                            Margin="5"
                                             HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                <Button Tag="ssssssss"  Grid.Row="1" Grid.Column="3"    Margin="2.5"
+                                <Button Tag="ssssssss"  Grid.Row="1" Grid.Column="4"    Margin="2.5"
                                     Height="25" Width="25"  Padding="0" materialDesign:ButtonAssist.CornerRadius="5"
                                         Background="#DFDFDF"   BorderThickness="0">
                                     <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
                                          Width="25" Height="25" Kind="Minus" />
                                 </Button>
-                                <TextBlock Tag="ssssssss"   Grid.Row="1" Grid.Column="4" Text="12" FontSize="14"  
+                                <TextBlock Tag="ssssssss"   Grid.Row="1" Grid.Column="5" Text="12" FontSize="14"  
                                   Foreground="{StaticResource SecondColor}" 
                                            Margin="5"
                                             HorizontalAlignment="Center" VerticalAlignment="Center" />
-
-                                <Button Tag="ssssssss" Grid.Row="1" Grid.Column="5"    Margin="2.5"
+                                <Button Tag="ssssssss" Grid.Row="1" Grid.Column="6"    Margin="2.5"
                                     Height="25" Width="25"  Padding="0"
                                         Background="#DFDFDF"   BorderThickness="0">
                                     <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
                                          Width="25" Height="25" Kind="Plus" />
                                 </Button>
-                                <TextBlock Tag="ssssssss" Grid.Row="1" Grid.Column="6" Text="1200.02" FontSize="12"  
+                                <TextBlock Tag="ssssssss" Grid.Row="1" Grid.Column="7" Text="1200.02" FontSize="12"  
                                    Foreground="{StaticResource Grey}"   Margin="5"
                                             HorizontalAlignment="Right" VerticalAlignment="Center" />
                                 --><!--#endregion-->
@@ -716,7 +717,7 @@
                                 Margin="5" Height="25"   Width="25"
                           HorizontalAlignment="Center" VerticalAlignment="Center"  >
                                     <Ellipse.Fill >
-                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/90408.jpg"   />
+                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/no-image-icon-125x125.png"   />
                                     </Ellipse.Fill>
                                 </Ellipse>
                                 <TextBlock Tag="ssssssss" Grid.Row="2" Grid.Column="2" Text="Chees Burger" FontSize="12"  
@@ -753,43 +754,7 @@
                                 Margin="5" Height="25"   Width="25"
                           HorizontalAlignment="Center" VerticalAlignment="Center"  >
                                     <Ellipse.Fill >
-                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/90408.jpg"   />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock  Grid.Row="3" Tag="ssssssss" Grid.Column="2" Text="Chees Burger" FontSize="12"  
-                                   Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                <Button  Grid.Row="3" Tag="ssssssss" Grid.Column="3"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Minus" />
-                                </Button>
-                                <TextBlock  Grid.Row="3" Grid.Column="4" Text="17" FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Button  Grid.Row="3" Tag="ssssssss" Grid.Column="5"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Plus" />
-                                </Button>
-                                <TextBlock  Grid.Row="3" Tag="ssssssss" Grid.Column="6" Text="12.05" FontSize="12"  
-                                   Foreground="{StaticResource Grey}"   Margin="5"
-                                            HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                --><!--#endregion-->
-                                <!--#region  3--><!--
-                                <TextBlock Grid.Row="3"  Grid.Column="0" Text="1." FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           FontWeight="Bold" Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Ellipse  Grid.Row="3" Tag="ssssssss"  Grid.Column="1"
-                                Margin="5" Height="25"   Width="25"
-                          HorizontalAlignment="Center" VerticalAlignment="Center"  >
-                                    <Ellipse.Fill >
-                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/90408.jpg"   />
+                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/no-image-icon-125x125.png"   />
                                     </Ellipse.Fill>
                                 </Ellipse>
                                 <TextBlock  Grid.Row="3" Tag="ssssssss" Grid.Column="2" Text="Chees Burger" FontSize="12"  
@@ -825,7 +790,7 @@
                                 Margin="5" Height="25"   Width="25"
                           HorizontalAlignment="Center" VerticalAlignment="Center"  >
                                     <Ellipse.Fill >
-                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/90408.jpg"   />
+                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/no-image-icon-125x125.png"   />
                                     </Ellipse.Fill>
                                 </Ellipse>
                                 <TextBlock  Grid.Row="4" Tag="ssssssss" Grid.Column="2" Text="Chees Burger" FontSize="12"  
@@ -852,189 +817,9 @@
                                    Foreground="{StaticResource Grey}"   Margin="5"
                                             HorizontalAlignment="Right" VerticalAlignment="Center" />
                                 --><!--#endregion-->
-                                <!--#region  3--><!--
-                                <TextBlock Grid.Row="5"  Grid.Column="0" Text="1." FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           FontWeight="Bold" Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Ellipse  Grid.Row="5" Tag="ssssssss"  Grid.Column="1"
-                                Margin="5" Height="25"   Width="25"
-                          HorizontalAlignment="Center" VerticalAlignment="Center"  >
-                                    <Ellipse.Fill >
-                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/90408.jpg"   />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock  Grid.Row="5" Tag="ssssssss" Grid.Column="2" Text="Chees Burger" FontSize="12"  
-                                   Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                <Button  Grid.Row="5" Tag="ssssssss" Grid.Column="3"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Minus" />
-                                </Button>
-                                <TextBlock  Grid.Row="5" Grid.Column="4" Text="17" FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Button  Grid.Row="5" Tag="ssssssss" Grid.Column="5"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Plus" />
-                                </Button>
-                                <TextBlock  Grid.Row="5" Tag="ssssssss" Grid.Column="6" Text="12.05" FontSize="12"  
-                                   Foreground="{StaticResource Grey}"   Margin="5"
-                                            HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                --><!--#endregion-->
-                                <!--#region  3--><!--
-                                <TextBlock Grid.Row="6"  Grid.Column="0" Text="1." FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           FontWeight="Bold" Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Ellipse  Grid.Row="6" Tag="ssssssss"  Grid.Column="1"
-                                Margin="5" Height="25"   Width="25"
-                          HorizontalAlignment="Center" VerticalAlignment="Center"  >
-                                    <Ellipse.Fill >
-                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/90408.jpg"   />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock  Grid.Row="6" Tag="ssssssss" Grid.Column="2" Text="Chees Burger" FontSize="12"  
-                                   Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                <Button  Grid.Row="6" Tag="ssssssss" Grid.Column="3"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Minus" />
-                                </Button>
-                                <TextBlock  Grid.Row="6" Grid.Column="4" Text="17" FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Button  Grid.Row="6" Tag="ssssssss" Grid.Column="5"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Plus" />
-                                </Button>
-                                <TextBlock  Grid.Row="6" Tag="ssssssss" Grid.Column="6" Text="12.05" FontSize="12"  
-                                   Foreground="{StaticResource Grey}"   Margin="5"
-                                            HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                --><!--#endregion-->
-                                <!--#region  3--><!--
-                                <TextBlock Grid.Row="7"  Grid.Column="0" Text="1." FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           FontWeight="Bold" Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Ellipse  Grid.Row="7" Tag="ssssssss"  Grid.Column="1"
-                                Margin="5" Height="25"   Width="25"
-                          HorizontalAlignment="Center" VerticalAlignment="Center"  >
-                                    <Ellipse.Fill >
-                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/90408.jpg"   />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock  Grid.Row="7" Tag="ssssssss" Grid.Column="2" Text="Chees Burger" FontSize="12"  
-                                   Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                <Button  Grid.Row="7" Tag="ssssssss" Grid.Column="3"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Minus" />
-                                </Button>
-                                <TextBlock  Grid.Row="7" Grid.Column="4" Text="17" FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Button  Grid.Row="7" Tag="ssssssss" Grid.Column="5"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Plus" />
-                                </Button>
-                                <TextBlock  Grid.Row="7" Tag="ssssssss" Grid.Column="6" Text="12.05" FontSize="12"  
-                                   Foreground="{StaticResource Grey}"   Margin="5"
-                                            HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                --><!--#endregion-->
-                                <!--#region  3--><!--
-                                <TextBlock Grid.Row="8"  Grid.Column="0" Text="1." FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           FontWeight="Bold" Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Ellipse  Grid.Row="8" Tag="ssssssss"  Grid.Column="1"
-                                Margin="5" Height="25"   Width="25"
-                          HorizontalAlignment="Center" VerticalAlignment="Center"  >
-                                    <Ellipse.Fill >
-                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/90408.jpg"   />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock  Grid.Row="8" Tag="ssssssss" Grid.Column="2" Text="Chees Burger" FontSize="12"  
-                                   Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                <Button  Grid.Row="8" Tag="ssssssss" Grid.Column="3"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Minus" />
-                                </Button>
-                                <TextBlock  Grid.Row="8" Grid.Column="4" Text="17" FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Button  Grid.Row="8" Tag="ssssssss" Grid.Column="5"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Plus" />
-                                </Button>
-                                <TextBlock  Grid.Row="8" Tag="ssssssss" Grid.Column="6" Text="12.05" FontSize="12"  
-                                   Foreground="{StaticResource Grey}"   Margin="5"
-                                            HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                --><!--#endregion-->
-                                <!--#region  11--><!--
-                                <TextBlock Grid.Row="9"  Grid.Column="0" Text="11." FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           FontWeight="Bold" Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Ellipse  Grid.Row="9" Tag="ssssssss"  Grid.Column="1"
-                                Margin="5" Height="25"   Width="25"
-                          HorizontalAlignment="Center" VerticalAlignment="Center"  >
-                                    <Ellipse.Fill >
-                                        <ImageBrush Stretch="UniformToFill"    ImageSource="/pic/90408.jpg"   />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock  Grid.Row="9" Tag="ssssssss" Grid.Column="2" Text="Chees Burger" FontSize="12"  
-                                   Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                <Button  Grid.Row="9" Tag="ssssssss" Grid.Column="3"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Minus" />
-                                </Button>
-                                <TextBlock  Grid.Row="9" Grid.Column="4" Text="17" FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Button  Grid.Row="9" Tag="ssssssss" Grid.Column="5"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Plus" />
-                                </Button>
-                                <TextBlock  Grid.Row="9" Tag="ssssssss" Grid.Column="6" Text="12.05" FontSize="12"  
-                                   Foreground="{StaticResource Grey}"   Margin="5"
-                                            HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                --><!--#endregion--><!--
                                 
 
-                            </Grid>-->
+                            <!--</Grid>-->
                     </ScrollViewer>
                     <Border Grid.Row="3"     Margin="5,2.5"     Height="2" BorderThickness="0" Background="{StaticResource LightGrey}" />
                     <Grid Grid.Row="4" Margin="15 5" >
