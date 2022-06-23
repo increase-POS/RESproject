@@ -27,6 +27,7 @@
                     <ColumnDefinition  Width="*"/>
                     <ColumnDefinition  Width="*"/>
                     <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
                 </Grid.ColumnDefinitions>
                 <!--#region allMenu-->
                 <Border x:Name="bdr_allMenu" Grid.Column="0" Tag="allMenu" Background="{StaticResource MainColor}"
@@ -194,6 +195,32 @@
                          VerticalAlignment="Center"   Width="{Binding ElementName=path_desserts ,Path=ActualHeight}"
                               Data="M147.78,203.9H371.72c0,3.91.45,7.42-.09,10.78-1.14,7.06-7.87,12.28-15.47,12.28q-96.17,0-192.31,0c-8.79,0-13.47-5.31-16.07-13.06Zm0-15H372c0-5.41,0-10.21,0-15,0-1.3-.14-2.6-.22-4-16.68,4.91-17,4.85-32.32-5.23-4.14-2.72-8.47-2.71-11.89.76-9.8,9.91-26.32,9.91-36,.17-4.14-4.18-8.84-3.67-13.45.13-11.94,9.86-23.08,9.89-35.12.1-4.9-4-9.15-4-13.89-.06-11.81,9.8-23.13,9.81-35.12,0-4.84-3.95-8.93-3.68-14-.08a45.32,45.32,0,0,1-12.11,6.59c-7,2.27-13.67-.57-20.09-3.42Zm0-41c2.55,2.34,5.07,4.71,7.66,7,4.38,3.88,9.05,4,13.54.46,13.07-10.31,22.48-10.33,35.87,0,4.34,3.34,8.72,3.44,12.82.31,14.06-10.73,22.29-10.78,36.23-.25,4.52,3.42,8.84,3.37,13.19-.14,12.52-10.13,22.9-10.16,35.48-.12,4.67,3.73,9.33,4.06,13.5,0,9.85-9.61,26-9.57,35.63,0,4.33,4.3,9,3.33,13.9-.22,7.68-5.61,6.92-13,5.88-20.84-1-.09-1.61-.19-2.26-.19l-221.44.05Zm184-73.44c-4.05,20.07-15.38,32.26-35.58,32.88-17.4.53-28.85-9.3-35.07-25.56l-110.33,36.1.27.69H372.56ZM285.53,49.65c-3.08,5.28-7,10.21-9.17,15.84-4.24,11,2.56,23.06,13.93,26.2,11,3,23-4.09,25.45-15,3.31-14.87-7.95-36.5-21.46-42.29C291.21,39.72,288.4,44.7,285.53,49.65Z"/>
                             <TextBlock  Grid.Row="1" x:Name="txt_desserts" Tag="desserts" Text="desserts" HorizontalAlignment="Center"
+                        Margin="1 0 1 15" Foreground="{StaticResource MainColor}" FontWeight="SemiBold"  FontSize="14"></TextBlock>
+                        </Grid>
+                    </Button>
+                </Border>
+                <!--#endregion-->
+                <!--#region extraOrders-->
+                <Border Grid.Column="6" x:Name="bdr_extraOrders" Tag="extraOrders" Background="White" CornerRadius="7.5" Height="100"      Margin="5" >
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
+                    <Button  x:Name="btn_extraOrders" Tag="extraOrders" Click="catalogMenu_Click" Height="100" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Path x:Name="path_extraOrders" Tag="extraOrders" Grid.Row="0"  Fill="{StaticResource MainColor}" Stretch="Fill" Margin="10" 
+                              HorizontalAlignment="Center" Grid.Column="1"   FlowDirection="LeftToRight"
+                         VerticalAlignment="Center"   Width="{Binding ElementName=path_extraOrders ,Path=ActualHeight}"
+                              Data="{StaticResource extra}"/>
+                            <TextBlock  Grid.Row="1" x:Name="txt_extraOrders" Tag="extraOrders" Text="extraOrders" HorizontalAlignment="Center"
                         Margin="1 0 1 15" Foreground="{StaticResource MainColor}" FontWeight="SemiBold"  FontSize="14"></TextBlock>
                         </Grid>
                     </Button>

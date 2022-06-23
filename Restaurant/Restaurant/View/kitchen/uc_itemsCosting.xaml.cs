@@ -144,6 +144,7 @@ namespace Restaurant.View.kitchen
             txt_fastFood.Text = AppSettings.resourcemanager.GetString("trFastFood");
             txt_mainCourses.Text = AppSettings.resourcemanager.GetString("trMainCourses");
             txt_desserts.Text = AppSettings.resourcemanager.GetString("trDesserts");
+            txt_extraOrders.Text = AppSettings.resourcemanager.GetString("extra");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchTags, AppSettings.resourcemanager.GetString("trTagsHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));

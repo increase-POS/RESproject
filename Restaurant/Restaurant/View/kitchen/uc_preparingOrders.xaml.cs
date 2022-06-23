@@ -157,9 +157,11 @@ namespace Restaurant.View.kitchen
 
             //txt_title.Text = AppSettings.resourcemanager.GetString("trOrder");
             txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
-            txt_items.Text = AppSettings.resourcemanager.GetString("trItems");
+            txt_items.Text = AppSettings.resourcemanager.GetString("trItem");
             txt_minute.Text = AppSettings.resourcemanager.GetString("trMinute");
             txt_tablesTitle.Text = AppSettings.resourcemanager.GetString("trTables");
+            txt_dishIngredients.Text = AppSettings.resourcemanager.GetString("dishIngredients");
+            txt_extraOrders.Text = AppSettings.resourcemanager.GetString("extraOrders");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_preparingTime, AppSettings.resourcemanager.GetString("trPreparingTime") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
@@ -1307,6 +1309,7 @@ namespace Restaurant.View.kitchen
                 }
                 /////////////////////////////////////////////////////
                 #region   sequence
+                /*
                 var itemSequenceText = new TextBlock();
                 itemSequenceText.Text = item.sequence + ".";
                 itemSequenceText.Margin = new Thickness(5);
@@ -1317,6 +1320,7 @@ namespace Restaurant.View.kitchen
                 Grid.SetColumn(itemSequenceText, 0);
 
                 gridContainer.Children.Add(itemSequenceText);
+                */
                 #endregion
                 #region   name
                 var itemNameText = new TextBlock();
@@ -1325,7 +1329,7 @@ namespace Restaurant.View.kitchen
                 itemNameText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
                 //itemNameText.FontWeight = FontWeights.SemiBold;
                 itemNameText.VerticalAlignment = VerticalAlignment.Center;
-                itemNameText.HorizontalAlignment = HorizontalAlignment.Left;
+                itemNameText.HorizontalAlignment = HorizontalAlignment.Right;
                 Grid.SetColumn(itemNameText, 1);
 
                 gridContainer.Children.Add(itemNameText);

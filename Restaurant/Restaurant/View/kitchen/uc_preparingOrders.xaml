@@ -492,59 +492,61 @@
 
                 </Grid>
             </Border>
-
-            <Grid  Background="White"  Grid.Row="1">
+                <ScrollViewer Background="White"  Grid.Row="1" Grid.Column="1"
+                                  Margin="0 0 -5 0" VerticalScrollBarVisibility="Auto" >
+                    <Grid  Background="White"  Grid.Row="1">
                         <Grid.RowDefinitions >
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                    <DockPanel Margin="10 0" LastChildFill="True"  >
-                        <TextBlock x:Name="txt_details" Text="details" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
-                        <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
-                    </DockPanel>
-
-                <Grid Grid.Row="1" Name="gd_preparingTime">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Border Grid.Row="1"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" 
+                        <DockPanel Margin="10 0" LastChildFill="True"  >
+                            <TextBlock x:Name="txt_details" Text="details" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                            <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
+                        </DockPanel>
+                        <Grid Grid.Row="1" Name="gd_preparingTime">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="1"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" 
                          BorderBrush="{StaticResource LightGrey}">
-                        <Grid   >
-                            <TextBox Margin="4,0" x:Name="tb_preparingTime"  
+                                <Grid   >
+                                    <TextBox Margin="4,0" x:Name="tb_preparingTime"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                                          Text="{Binding preparingTime, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="preparing time..."   Foreground="#4E4E4E"
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
                                         Tag="decimal" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                           LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                                <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_preparingTime" 
+                                    <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_preparingTime" 
                                       HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
                                       Width="15"  Height="15" Margin="5,5,15,5" 
                                       Data="{StaticResource infoCircle}">
-                            </Path>
-                        </Grid>
-                    </Border>
-                <TextBlock  Text="minutes" Grid.Column="1" Name="txt_minute"
+                                    </Path>
+                                </Grid>
+                            </Border>
+                            <TextBlock  Text="minutes" Grid.Column="1" Name="txt_minute"
                             Foreground="{StaticResource ThickGrey}" FontSize="14"
                                     VerticalAlignment="Center" HorizontalAlignment="Right"
                             Margin="5,5,15,5"/>
-                        <Button Grid.Column="2"  Padding="0"    
+                            <Button Grid.Column="2"  Padding="0"    
                                     Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
                                     x:Name="btn_updatePreparingTime" Click="Btn_updatePreparingTime_Click"  
                                     Margin="5 5 10 5" IsEnabled="True">
-                            <Path Fill="#4E4E4E" Stretch="Fill"  
+                                <Path Fill="#4E4E4E" Stretch="Fill"  
                                       Width="25.5" Height="27.5" FlowDirection="LeftToRight"
                                       Data="{StaticResource save}" />
-                        </Button>
-                    </Grid>
-            <Border Grid.Row="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                        <Grid   >
-                            <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
+                            </Button>
+                        </Grid>
+                        <Border Grid.Row="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid   >
+                                <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                   Padding="10,0,5,0"  
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
@@ -552,43 +554,276 @@
                                   Foreground="#4E4E4E"
                                  Margin="4,0"  BorderThickness="0"
                             Grid.Column="1"  Height="70" TextWrapping="Wrap"/>
-                        </Grid>
-                    </Border >
-                    <Grid Grid.Row="3" Margin="10 0">
-                        <Grid.RowDefinitions >
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock  Text="tables" 
+                            </Grid>
+                        </Border >
+                        <Grid Grid.Row="3" Margin="10 0">
+                            <Grid.RowDefinitions >
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock  Text="tables" 
                                     Name="txt_tablesTitle"
                                     Foreground="{StaticResource SecondColor}" FontSize="14"
                                     VerticalAlignment="Center" FontWeight="SemiBold"
                                     Margin="5,5,5,5"/>
-                        <TextBlock  Text="{Binding tables, Mode=OneWay}"  Grid.Row="1"
+                            <TextBlock  Text="{Binding tables, Mode=OneWay}"  Grid.Row="1"
                                     Name="txt_tables"
                                     Foreground="{StaticResource SecondColor}" FontSize="14"
                                     VerticalAlignment="Center"  
                                     Margin="5,5,5,5"/>
-                    </Grid>
+                        </Grid>
                         <Grid Grid.Row="4"  Margin="10 0" >
-                        <Grid.RowDefinitions >
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                       
-                        <TextBlock  Text="items" Grid.ColumnSpan="2"
+                            <Grid.RowDefinitions >
+                                <!--<RowDefinition Height="auto"/>-->
+                                <RowDefinition Height="*"/>
+                                <!--<RowDefinition Height="auto"/>-->
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock  Text="items" Grid.Column="0"
                                     Name="txt_items"
                                     Foreground="{StaticResource SecondColor}" FontSize="14"
                                     VerticalAlignment="Center" FontWeight="SemiBold"
                                     Margin="5,5,5,5"/>
-                    <ScrollViewer Background="White"  Grid.Row="1" Margin="0 0 -5 0" VerticalScrollBarVisibility="Auto" >
-                            <StackPanel x:Name="sp_items" Grid.Row="1" Margin=" 5 0 " />
-                    </ScrollViewer>
+                            <ScrollViewer Background="White"  Grid.Row="1" Grid.Column="1"
+                                  Margin="0 0 -5 0" VerticalScrollBarVisibility="Auto" >
+                                <StackPanel x:Name="sp_items" Grid.Row="1" Margin=" 5 0 " />
+                            </ScrollViewer>
+                        </Grid>
+                        <Grid Grid.Row="5"  Margin="10 0" >
+                            <Grid.RowDefinitions >
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock  Text="dishIngredients" Grid.Column="0"
+                                    Name="txt_dishIngredients"
+                                    Foreground="{StaticResource SecondColor}" FontSize="14"
+                                    VerticalAlignment="Center" FontWeight="SemiBold"
+                                    Margin="5,5,5,5"/>
+                            <!--<ScrollViewer Background="White"  Grid.Row="1" Grid.Column="1"
+                                  Margin="0 0 -5 0" VerticalScrollBarVisibility="Auto" >-->
+                            <StackPanel x:Name="sp_dishIngredients" Grid.Row="1" Margin=" 5 0 " >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="1." Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="1"
+                                        Text="Potato" Margin="5" 
+                                            TextDecorations="Strikethrough"
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="2." Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="1"
+                                        Text="Potato" Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="3." Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="1"
+                                        Text="Potato" Margin="5" 
+                                            TextDecorations="Strikethrough"
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="4." Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="1"
+                                        Text="Potato" Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="5." Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="1"
+                                        Text="Potato" Margin="5" 
+                                            TextDecorations="Strikethrough"
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+
+                            </StackPanel>
+                            <!--</ScrollViewer>-->
+                        </Grid>
+                        <Grid Grid.Row="6"  Margin="10 0" >
+                            <Grid.RowDefinitions >
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock  Text="extraOrders" Grid.Column="0"
+                                    Name="txt_extraOrders"
+                                    Foreground="{StaticResource SecondColor}" FontSize="14"
+                                    VerticalAlignment="Center" FontWeight="SemiBold"
+                                    Margin="5,5,5,5"/>
+                            <!--<ScrollViewer Background="White"  Grid.Row="1" Grid.Column="1"
+                                  Margin="0 0 -5 0" VerticalScrollBarVisibility="Auto" >-->
+                            <StackPanel x:Name="sp_extraOrders" Grid.Row="1" Margin=" 5 0 " >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="1." Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="1"
+                                        Text="Potato" Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="2." Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="1"
+                                        Text="Potato" Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="3." Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="1"
+                                        Text="Potato" Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="4." Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="1"
+                                        Text="Potato" Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="5." Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="1"
+                                        Text="Potato" Margin="5" 
+                                            Foreground="{StaticResource ThickGrey}"
+                                            FontWeight="SemiBold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+                            </StackPanel>
+                            <!--</ScrollViewer>-->
+                        </Grid>
                     </Grid>
-                    </Grid>
-              
-            <Border Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
+                </ScrollViewer>
+                <Border Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
                 <Grid  Grid.Row="3" Margin="5,5,5,10" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
