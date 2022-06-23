@@ -154,6 +154,15 @@ namespace Restaurant.View.catalog.foods
                     basicsPermission = "desserts_basics";
                     dishIngredientsPermission = "desserts_dishIngredients";
                 }
+                else if(categoryName == "extraOrders")
+                {
+                    basicsPermission = "extraOrders_basics";
+                    dishIngredientsPermission = "extraOrders_dishIngredients";
+
+                    brd_tagId.Visibility = Visibility.Collapsed;
+                    brd_dishIngredients.Visibility = Visibility.Collapsed;
+
+                }
 
 
 
