@@ -4159,4 +4159,10 @@
   <data name="trServerNotCompatible" xml:space="preserve">
     <value>السيرفر غير متوافق</value>
   </data>
+  <data name="extra" xml:space="preserve">
+    <value>إضافي</value>
+  </data>
+  <data name="extraOrders" xml:space="preserve">
+    <value>طلبات اضافية</value>
+  </data>
 </root>

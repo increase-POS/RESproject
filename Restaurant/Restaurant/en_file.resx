@@ -4174,4 +4174,10 @@ Please add Email in setting</value>
   <data name="trServerNotCompatible" xml:space="preserve">
     <value>The server is not compatible</value>
   </data>
+  <data name="extra" xml:space="preserve">
+    <value>Extra</value>
+  </data>
+  <data name="extraOrders" xml:space="preserve">
+    <value>Extra orders</value>
+  </data>
 </root>
