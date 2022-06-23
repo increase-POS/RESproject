@@ -295,6 +295,7 @@ namespace Restaurant.View.windows
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                     await FillCombo.RefreshItemUnit();
+                                    await FillCombo.RefreshPurchaseItems();
                                     Clear();
                                     await RefreshItemUnitsList();
                                     await Search();
@@ -353,17 +354,7 @@ namespace Restaurant.View.windows
                                 short defaultBurchase = 0;
                                 if (tbtn_isDefaultPurchases.IsChecked == true)
                                     defaultBurchase = 1;
-                                //defaultSale
-                                //short defaultSale = 0;
-                                //if (tbtn_isDefaultSales.IsChecked == true)
-                                //    defaultSale = 1;
-                                //price
-                                //decimal price = 0;
-                                //try
-                                //{
-                                //   price = decimal.Parse(tb_price.Text);
-                                //}
-                                //catch { }
+
                                 //barcode
                                 string barcode = tb_barcode.Text;
                                 /////////////////////////////////////
@@ -372,8 +363,7 @@ namespace Restaurant.View.windows
                                 itemUnit.unitValue = unitValue;
                                 itemUnit.subUnitId = smallUnitId;
                                 itemUnit.defaultPurchase = defaultBurchase;
-                                //itemUnit.defaultSale = defaultSale;
-                                //itemUnit.price = price;
+   
                                 itemUnit.barcode = barcode;
                                 itemUnit.updateUserId = MainWindow.userLogin.userId;
                                 int res = await itemUnit.saveItemUnit(itemUnit);
@@ -383,6 +373,7 @@ namespace Restaurant.View.windows
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                     await FillCombo.RefreshItemUnit();
+                                    await FillCombo.RefreshPurchaseItems();
                                     Clear();
                                     await RefreshItemUnitsList();
                                     await Search();
@@ -446,7 +437,8 @@ namespace Restaurant.View.windows
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshItemUnitsList();
-                                    await Search();
+                                await FillCombo.RefreshPurchaseItems();
+                                await Search();
                                     Clear();
                                 }
                             }
