@@ -905,7 +905,9 @@ namespace Restaurant.View.catalog.rawMaterials
         IEnumerable<Category> categoriesQuery;
         async Task<IEnumerable<Category>> RefreshCategorysList()
         {
-            categories = await categorie.Get("p");
+            await FillCombo.RefreshCategory();
+            categories = FillCombo.categoriesList.Where(x => x.type == "p");
+            //categories = await categorie.Get("p");
             return categories;
         }
         void RefrishCategorysCard(IEnumerable<Category> _categories)
