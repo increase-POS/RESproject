@@ -11,6 +11,7 @@ namespace Restaurant.Classes.ApiClasses
         public long itemsTransIngredId { get; set; }
         public Nullable<int> itemsTransId { get; set; }
         public Nullable<int> dishIngredId { get; set; }
+        public string DishIngredientName { get; set; }
         public byte isActive { get; set; }
         public string notes { get; set; }
     }
