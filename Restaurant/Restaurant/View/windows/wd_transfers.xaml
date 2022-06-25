@@ -9,7 +9,7 @@
         WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0" 
         Height="400" Width="700"   Background="Transparent"
-        Title="Increase POS"
+        Title="Increase Restaurant"
         AllowsTransparency="True"
         Loaded="Window_Loaded" MouseDown="Window_MouseDown">
     <Grid Grid.Column="1" Grid.Row="1"   x:Name="grid_main" >
