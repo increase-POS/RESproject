@@ -91,6 +91,7 @@ namespace Restaurant.View.kitchen
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                Btn_clear_Click(btn_clear, null);
                 #region loading
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
@@ -431,8 +432,21 @@ namespace Restaurant.View.kitchen
                 preparingOrder = new OrderPreparing();
                 this.DataContext = preparingOrder;
                 dg_orders.SelectedIndex = -1;
+
+                if (!string.IsNullOrWhiteSpace( preparingOrder.tables))
+                    grid_tables.Visibility = Visibility.Visible;
+                else
+                    grid_tables.Visibility = Visibility.Collapsed;
+                ///////
                 itemsList = new List<ItemOrderPreparing>();
                 BuildOrderItemsDesign();
+                ///////
+                dishIngredientsList = new List<DishIngredients>();
+                BuildDishIngredientsDesign();
+                ///////
+                extraOrdersList = new List<ItemTransfer>();
+                BuildExtraOrdersDesign();
+                
                 btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
                 btn_save.IsEnabled = false;
             }
@@ -713,6 +727,7 @@ namespace Restaurant.View.kitchen
                         CheckBox checkboxColumn = (dg_orders.Columns[0].GetCellContent(dg_orders.SelectedItem) as CheckBox);
                         checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
                         */
+
                         if (chk_allForDelivery.IsChecked.Value)
                         {
                             preparingOrder.IsChecked = false;
@@ -732,8 +747,26 @@ namespace Restaurant.View.kitchen
                         //        requiredControlList = new List<string> { "userId" };
                         //}
 
+                        if (preparingOrder.tables != "")
+                            grid_tables.Visibility = Visibility.Visible;
+                        else
+                            grid_tables.Visibility = Visibility.Collapsed;
+                        ///////
                         itemsList = preparingOrder.items;
                         BuildOrderItemsDesign();
+                        ///////
+                        dishIngredientsList = new List<DishIngredients>();
+                        dishIngredientsList.Add(new DishIngredients { name = "Potato", isActive = 1 });
+                        dishIngredientsList.Add(new DishIngredients { name = "Sauce", isActive = 0 });
+                        dishIngredientsList.Add(new DishIngredients { name = "Sauce", isActive = 1 });
+                        dishIngredientsList.Add(new DishIngredients { name = "Potato", isActive = 0 });
+                        BuildDishIngredientsDesign();
+                        ///////
+                        extraOrdersList = new List<ItemTransfer>();
+                        extraOrdersList.Add(new ItemTransfer { itemName = "Potato", quantity = 2 });
+                        extraOrdersList.Add(new ItemTransfer { itemName = "Sauce", quantity = 1 });
+                        extraOrdersList.Add(new ItemTransfer { itemName = "Potato", quantity = 4 });
+                        BuildExtraOrdersDesign();
 
                         inputEditable(preparingOrder.status);
 
@@ -1285,11 +1318,16 @@ namespace Restaurant.View.kitchen
         */
         #endregion
         #region items
-
         List<ItemOrderPreparing> itemsList = new List<ItemOrderPreparing>();
         void BuildOrderItemsDesign()
         {
             sp_items.Children.Clear();
+
+            if (itemsList.Count > 0)
+                grid_items.Visibility = Visibility.Visible;
+            else
+                grid_items.Visibility = Visibility.Collapsed;
+
             foreach (var item in itemsList)
             {
                 #region Grid Container
@@ -1325,11 +1363,168 @@ namespace Restaurant.View.kitchen
                 #region   name
                 var itemNameText = new TextBlock();
                 itemNameText.Text = item.itemName;
+                itemNameText.FontSize = 14;
+                itemNameText.Margin = new Thickness(5);
+                //itemNameText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
+                itemNameText.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                itemNameText.FontWeight = FontWeights.SemiBold;
+                itemNameText.VerticalAlignment = VerticalAlignment.Center;
+                itemNameText.HorizontalAlignment = HorizontalAlignment.Right;
+                Grid.SetColumn(itemNameText, 1);
+
+                gridContainer.Children.Add(itemNameText);
+                #endregion
+                #region   count
+                var itemCountText = new TextBlock();
+                itemCountText.Text = item.quantity.ToString();
+                itemCountText.FontSize = 14;
+                itemCountText.Margin = new Thickness(5, 5, 10, 5);
+                itemCountText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
+                //itemCountText.FontWeight = FontWeights.SemiBold;
+                itemCountText.VerticalAlignment = VerticalAlignment.Center;
+                itemCountText.HorizontalAlignment = HorizontalAlignment.Left;
+                Grid.SetColumn(itemCountText, 2);
+
+                gridContainer.Children.Add(itemCountText);
+                #endregion
+                #endregion
+                sp_items.Children.Add(gridContainer);
+            }
+        }
+        #endregion
+
+        #region dishIngredients
+        List<DishIngredients> dishIngredientsList = new List<DishIngredients>();
+        void BuildDishIngredientsDesign()
+        {
+            sp_dishIngredients.Children.Clear();
+
+            if (dishIngredientsList.Count > 0)
+                grid_dishIngredients.Visibility = Visibility.Visible;
+            else
+                grid_dishIngredients.Visibility = Visibility.Collapsed;
+
+            int sequence = 0;
+            foreach (var item in dishIngredientsList)
+            {
+                sequence++;
+                #region Grid Container
+                Grid gridContainer = new Grid();
+                int colCount = 3;
+                ColumnDefinition[] cd = new ColumnDefinition[colCount];
+                for (int i = 0; i < colCount; i++)
+                {
+                    cd[i] = new ColumnDefinition();
+                }
+                cd[0].Width = new GridLength(1, GridUnitType.Auto);
+                cd[1].Width = new GridLength(1, GridUnitType.Star);
+                cd[2].Width = new GridLength(1, GridUnitType.Auto);
+                for (int i = 0; i < colCount; i++)
+                {
+                    gridContainer.ColumnDefinitions.Add(cd[i]);
+                }
+                /////////////////////////////////////////////////////
+                #region   sequence
+
+                var itemSequenceText = new TextBlock();
+                itemSequenceText.Text = sequence + ".";
+                itemSequenceText.Margin = new Thickness(5);
+                itemSequenceText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
+                itemSequenceText.FontWeight = FontWeights.SemiBold;
+                itemSequenceText.VerticalAlignment = VerticalAlignment.Center;
+                itemSequenceText.HorizontalAlignment = HorizontalAlignment.Left;
+                Grid.SetColumn(itemSequenceText, 0);
+
+                gridContainer.Children.Add(itemSequenceText);
+
+                #endregion
+                #region   name
+                var itemNameText = new TextBlock();
+                itemNameText.Text = item.name;
                 itemNameText.Margin = new Thickness(5);
                 itemNameText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
                 //itemNameText.FontWeight = FontWeights.SemiBold;
                 itemNameText.VerticalAlignment = VerticalAlignment.Center;
-                itemNameText.HorizontalAlignment = HorizontalAlignment.Right;
+                itemNameText.HorizontalAlignment = HorizontalAlignment.Left;
+                if(item.isActive == 0)
+                    itemNameText.TextDecorations = TextDecorations.Strikethrough;
+
+                Grid.SetColumn(itemNameText, 1);
+
+                gridContainer.Children.Add(itemNameText);
+                #endregion
+                #region   count
+                /*
+                var itemCountText = new TextBlock();
+                itemCountText.Text = item.quantity.ToString();
+                itemCountText.Margin = new Thickness(5, 5, 10, 5);
+                itemCountText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
+                //itemCountText.FontWeight = FontWeights.SemiBold;
+                itemCountText.VerticalAlignment = VerticalAlignment.Center;
+                itemCountText.HorizontalAlignment = HorizontalAlignment.Left;
+                Grid.SetColumn(itemCountText, 2);
+
+                gridContainer.Children.Add(itemCountText);
+                */
+                #endregion
+                #endregion
+                sp_dishIngredients.Children.Add(gridContainer);
+            }
+        }
+        #endregion
+        #region extraOrders
+        List<ItemTransfer> extraOrdersList = new List<ItemTransfer>();
+        void BuildExtraOrdersDesign()
+        {
+            sp_extraOrders.Children.Clear();
+
+            if (extraOrdersList.Count > 0)
+                grid_extraOrders.Visibility = Visibility.Visible;
+            else
+                grid_extraOrders.Visibility = Visibility.Collapsed;
+
+            int sequence = 0;
+            foreach (var item in extraOrdersList)
+            {
+                sequence++;
+                #region Grid Container
+                Grid gridContainer = new Grid();
+                int colCount = 3;
+                ColumnDefinition[] cd = new ColumnDefinition[colCount];
+                for (int i = 0; i < colCount; i++)
+                {
+                    cd[i] = new ColumnDefinition();
+                }
+                cd[0].Width = new GridLength(1, GridUnitType.Auto);
+                cd[1].Width = new GridLength(1, GridUnitType.Star);
+                cd[2].Width = new GridLength(1, GridUnitType.Auto);
+                for (int i = 0; i < colCount; i++)
+                {
+                    gridContainer.ColumnDefinitions.Add(cd[i]);
+                }
+                /////////////////////////////////////////////////////
+                #region   sequence
+
+                var itemSequenceText = new TextBlock();
+                itemSequenceText.Text = sequence + ".";
+                itemSequenceText.Margin = new Thickness(5);
+                itemSequenceText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
+                itemSequenceText.FontWeight = FontWeights.SemiBold;
+                itemSequenceText.VerticalAlignment = VerticalAlignment.Center;
+                itemSequenceText.HorizontalAlignment = HorizontalAlignment.Left;
+                Grid.SetColumn(itemSequenceText, 0);
+
+                gridContainer.Children.Add(itemSequenceText);
+
+                #endregion
+                #region   name
+                var itemNameText = new TextBlock();
+                itemNameText.Text = item.itemName;
+                itemNameText.Margin = new Thickness(5);
+                itemNameText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
+                //itemNameText.FontWeight = FontWeights.SemiBold;
+                itemNameText.VerticalAlignment = VerticalAlignment.Center;
+                itemNameText.HorizontalAlignment = HorizontalAlignment.Left;
                 Grid.SetColumn(itemNameText, 1);
 
                 gridContainer.Children.Add(itemNameText);
@@ -1347,12 +1542,9 @@ namespace Restaurant.View.kitchen
                 gridContainer.Children.Add(itemCountText);
                 #endregion
                 #endregion
-                sp_items.Children.Add(gridContainer);
+                sp_extraOrders.Children.Add(gridContainer);
             }
         }
-
-
-
         #endregion
 
         #region inputEditable
