@@ -22,6 +22,8 @@ namespace Restaurant.Classes
         public decimal OfferValue { get; set; }
         public string OfferType { get; set; }
         public string forAgents { get; set; }
+        public int itemsTransId { get; set; }
+
 
     }
 

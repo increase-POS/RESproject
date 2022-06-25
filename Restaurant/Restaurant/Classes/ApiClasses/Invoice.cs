@@ -62,8 +62,9 @@ namespace Restaurant.Classes
         public string itemType { get; set; }
 
 
+        //public int sequence { get; set; }
 
-      
+
         public Nullable<int> locationIdNew { get; set; }
         public Nullable<int> locationIdOld { get; set; }
         public bool isActive { get; set; }
@@ -71,6 +72,8 @@ namespace Restaurant.Classes
         public Nullable<decimal> subTotal { get; set; }
 
         public Nullable<decimal> finalDiscount { get; set; }
+
+        public Nullable<int> mainCourseId { get; set; }
     }
     public class invoiceTables
     {
