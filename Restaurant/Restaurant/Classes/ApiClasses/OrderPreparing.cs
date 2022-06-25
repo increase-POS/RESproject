@@ -41,7 +41,7 @@ namespace Restaurant.Classes.ApiClasses
         public string notes { get; set; }
         public byte isActive { get; set; }
     }
-        public class OrderPreparing
+    public class OrderPreparing
     {
         public int orderPreparingId { get; set; }
         public string orderNum { get; set; }
