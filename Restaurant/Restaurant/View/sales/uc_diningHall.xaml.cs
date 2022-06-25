@@ -942,7 +942,7 @@ namespace Restaurant.View.sales
                 buttonImage.Padding = new Thickness(0);
                 buttonImage.FlowDirection = FlowDirection.LeftToRight;
                 MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(buttonImage, (new CornerRadius(10)));
-                buttonImage.Cursor = Cursors.Arrow;
+                //buttonImage.Cursor = Cursors.Arrow;
                 //MaterialDesignThemes.Wpf.ShadowAssist.SetDarken(buttonImage, false);
                 MaterialDesignThemes.Wpf.ShadowAssist.SetShadowDepth(buttonImage, ShadowDepth.Depth0);
                 //MaterialDesignThemes.Wpf.ShadowAssist.SetShadowEdges(buttonImage,ShadowEdges.None);
@@ -953,6 +953,7 @@ namespace Restaurant.View.sales
                 else
                     HelpClass.getLocalImg("Item", item.image, buttonImage);
 
+                buttonImage.Click += buttonItemImage_Click;
                 Grid.SetRow(buttonImage, item.index);
                 Grid.SetColumn(buttonImage, 1);
                 gridContainer.Children.Add(buttonImage);
@@ -1097,6 +1098,36 @@ namespace Restaurant.View.sales
             sv_billDetail.Content = gridContainer;
 
         }
+        void buttonItemImage_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            int index = int.Parse(button.Tag.ToString().Replace("image-", ""));
+
+            
+
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_invoiceItemIngredients w = new wd_invoiceItemIngredients();
+               
+                /*
+                billDetailsList[index].Count++;
+                */
+                w.itemTransferId = 1;
+                w.ShowDialog();
+              
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
         void buttonPlus_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
