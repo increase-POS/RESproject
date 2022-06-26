@@ -483,9 +483,9 @@ namespace Restaurant.View.delivery
                     if (HelpClass.validate(requiredControlList, this))
                     {
                         foreach(Invoice i in selectedOrders)
-                        { 
-                            int? driverID = i.shipUserId;
-                            int comID = i.shippingCompanyId.Value;
+                        {
+                            long? driverID = i.shipUserId;
+                            long comID = i.shippingCompanyId.Value;
 
                             orderPreparingStatus ops = new orderPreparingStatus();
 
@@ -592,8 +592,8 @@ namespace Restaurant.View.delivery
                     {
                         foreach (Invoice i in selectedOrders)
                         {
-                            int? driverID = i.shipUserId;
-                            int comID = i.shippingCompanyId.Value;
+                            long? driverID = i.shipUserId;
+                            long comID = i.shippingCompanyId.Value;
 
                             if (i.shipUserName != null)
                             {

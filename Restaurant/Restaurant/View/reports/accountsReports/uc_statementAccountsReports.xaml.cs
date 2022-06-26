@@ -766,7 +766,7 @@ namespace Restaurant.View.reports.accountsReports
                         break;
                     case 2:
                         var objct2 = cb_vendors.SelectedItem as VendorCombo;
-                        int userId = (int)objct2.UserId;
+                        long userId = (int)objct2.UserId;
                         toUser = await toUser.getUserById(userId);
                         emailto = toUser.email;
 

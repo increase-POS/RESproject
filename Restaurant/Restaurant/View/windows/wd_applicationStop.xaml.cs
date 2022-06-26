@@ -40,7 +40,7 @@ namespace Restaurant.View.windows
         bool isAdmin;
         public string status = "";
         public int settingsPoSId = 0;
-        public int userId;
+        public long userId;
         bool flag = false;
 
         private void Btn_colse_Click(object sender, RoutedEventArgs e)

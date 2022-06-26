@@ -21,7 +21,7 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_membershipList : Window
     {
-        public int membershipID = 0;
+        public long membershipID = 0;
         public string membershipType = "";
         string _title = "";
 

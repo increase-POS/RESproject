@@ -24,7 +24,7 @@ namespace Restaurant.View.windows
     public partial class wd_returnInvoice : Window
     {
         public Invoice invoice;
-        public int userId;      
+        public long userId;      
         public string page = "";
         public string invoiceType;
         bool _IsFocused = false;

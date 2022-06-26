@@ -22,9 +22,9 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_selectDelivery : Window
     {
-        public int? shippingCompanyId { get; set; }
-        public int? shippingUserId { get; set; }
-        public int? customerId { get; set; }
+        public long? shippingCompanyId { get; set; }
+        public long? shippingUserId { get; set; }
+        public long? customerId { get; set; }
         public wd_selectDelivery()
         {
             try

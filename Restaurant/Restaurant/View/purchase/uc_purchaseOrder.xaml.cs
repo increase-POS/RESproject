@@ -97,7 +97,7 @@ namespace Restaurant.View.purchase
         #endregion      
         //for bill details
         static private int _SequenceNum = 0;
-        static private int _invoiceId;
+        static private long _invoiceId;
         static private decimal _Sum = 0;
         static public string _InvoiceType = "pod"; // purchase order draft
         static private decimal _Count = 0;
@@ -378,7 +378,7 @@ namespace Restaurant.View.purchase
             catch { }
         }
         */
-        private async void refreshDocCount(int invoiceId)
+        private async void refreshDocCount(long invoiceId)
         {
             try
             {
@@ -438,7 +438,7 @@ namespace Restaurant.View.purchase
         #endregion
         #region save invoice
 
-        private async Task<int> addInvoice(string invType)
+        private async Task<long> addInvoice(string invType)
         {
             if ((invType == "po" || invType == "pos") && (invoice.invType == "pod" || invoice.invoiceId == 0))
                 invoice.invNumber = await invoice.generateInvNumber("po", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
@@ -467,7 +467,7 @@ namespace Restaurant.View.purchase
                 isApproved = 0;
             invoice.isApproved = isApproved;
             // save invoice in DB
-            int invoiceId = await FillCombo.invoice.saveInvoice(invoice);
+            long invoiceId = await FillCombo.invoice.saveInvoice(invoice);
             invoice.invoiceId = invoiceId;
             if (invoiceId > 0)
             {
@@ -715,7 +715,7 @@ namespace Restaurant.View.purchase
         }
         private async Task<bool> saveBeforeExit()
         {
-            int invioceId = 0;
+            long invioceId = 0;
             bool succssess = false;
             if (billDetails.Count > 0 && _InvoiceType == "pod")
             {
@@ -757,7 +757,7 @@ namespace Restaurant.View.purchase
         #endregion
 
         #region billdetails
-        public async Task ChangeItemIdEvent(int itemId)
+        public async Task ChangeItemIdEvent(long itemId)
         {
             item = FillCombo.purchaseItems.ToList().Find(c => c.itemId == itemId);
 
@@ -986,7 +986,7 @@ namespace Restaurant.View.purchase
                         // get item matches the barcode
                         if (unit1 != null)
                         {
-                            int itemId = (int)unit1.itemId;
+                            long itemId = (int)unit1.itemId;
                             if (unit1.itemId != 0)
                             {
                                 int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId && p.OrderId == 0).FirstOrDefault());
@@ -1046,7 +1046,7 @@ namespace Restaurant.View.purchase
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void addRowToBill(string itemName, int itemId, string unitName, int itemUnitId, int count, decimal price, decimal total)
+        private void addRowToBill(string itemName, long itemId, string unitName, long itemUnitId, int count, decimal price, decimal total)
         {
             // increase sequence for each read
             _SequenceNum++;
@@ -2181,7 +2181,7 @@ namespace Restaurant.View.purchase
                 {
                     for (int i = 0; i < w.selectedItems.Count; i++)
                     {
-                        int itemId = w.selectedItems[i];
+                        long itemId = w.selectedItems[i];
                         await ChangeItemIdEvent(itemId);
                     }
                     refreshTotalValue();

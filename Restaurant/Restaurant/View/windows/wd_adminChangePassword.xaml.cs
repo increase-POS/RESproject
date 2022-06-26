@@ -35,7 +35,7 @@ namespace Restaurant.View.windows
             }
         }
         BrushConverter bc = new BrushConverter();
-        public int userID = 0;
+        public long userId = 0;
         User userModel = new User();
         User user = new User();
 
@@ -169,7 +169,7 @@ namespace Restaurant.View.windows
                             await Task.Delay(2000);
                             this.Close();
 
-                            userID =s;
+                            userId = s;
                        
                         }
                         else

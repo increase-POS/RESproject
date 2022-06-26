@@ -65,7 +65,7 @@ namespace Restaurant.View.windows
             }
         }
 
-        public int itemId;
+        public long itemId;
         public bool isOpend = false;
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -93,7 +93,7 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public int itemUnitId;
+        public long itemUnitId;
 
        DishIngredients dishIngredient = new DishIngredients();
         IEnumerable<DishIngredients> dishIngredientsQuery;

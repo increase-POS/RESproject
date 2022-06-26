@@ -618,7 +618,7 @@ namespace Restaurant.View.reports.accountsReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        int cashTransID = 0, openCashTransID = 0;
+        long cashTransID = 0, openCashTransID = 0;
         IEnumerable<OpenClosOperatinModel> opquery;
         POSOpenCloseModel openclosrow = new POSOpenCloseModel();
         public async Task<IEnumerable<OpenClosOperatinModel>> getopquery(POSOpenCloseModel ocrow)

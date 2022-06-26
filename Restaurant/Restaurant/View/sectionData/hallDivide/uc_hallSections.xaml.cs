@@ -284,7 +284,7 @@ namespace Restaurant.View.sectionData.hallDivide
         }
 
 
-        private async Task<bool> chkNameValidate(string name, int branch, int id)
+        private async Task<bool> chkNameValidate(string name, long branch, long id)
         {
             bool isValid = true;
             if (sections == null)

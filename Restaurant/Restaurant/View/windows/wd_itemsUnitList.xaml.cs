@@ -22,7 +22,7 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_itemsUnitList : Window
     {
-        public int itemId = 0 , itemUnitId = 0, storageCostId = 0;
+        public long itemId = 0 , itemUnitId = 0, storageCostId = 0;
         public bool isActive;
         public string CallerName;//"IUList"
 

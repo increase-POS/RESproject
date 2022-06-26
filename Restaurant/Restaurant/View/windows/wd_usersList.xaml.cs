@@ -45,7 +45,7 @@ namespace Restaurant.View.windows
         List<User> allUsers = new List<User>();
         List<User> selectedUsers = new List<User>();
 
-        public int groupId = 0;
+        public long groupId = 0;
 
         User userModel = new User();
         User user = new User();
@@ -160,7 +160,7 @@ namespace Restaurant.View.windows
                 
                     HelpClass.StartAwait(grid_main);
                 //get selcted ids
-                List<int> userIds = new List<int>();
+                List<long> userIds = new List<long>();
                 foreach (var u in selectedUsers)
                     userIds.Add(u.userId);
 

@@ -84,7 +84,7 @@ namespace Restaurant.View.accounts
         //IEnumerable<CashTransfer> cashes;
         IEnumerable<Invoice> invoices;
         IEnumerable<Branch> branches;
-        int agentId, userId;
+        long agentId, userId;
         string searchText = "";
 
         static private int _SelectedCard = -1;
@@ -784,7 +784,7 @@ namespace Restaurant.View.accounts
         }
 
         OrderPreparing orderModel = new OrderPreparing();
-        private async Task saveOrderStatus(int orderPreparingId, string status)
+        private async Task saveOrderStatus(long orderPreparingId, string status)
         {
             //invoiceStatus st = new invoiceStatus();
             //st.status = status;

@@ -323,7 +323,7 @@ namespace Restaurant.View.windows
         #region table
         List<Tables> tablesList = new List<Tables>();
         List<Tables> tablesQuery = new List<Tables>();
-        int tableId = 0;
+        long tableId = 0;
         IEnumerable<TablesReservation> reservationsList;
         TablesReservation reservation = new TablesReservation();
         void BuildTablesDesign()
@@ -905,7 +905,7 @@ namespace Restaurant.View.windows
 
                 if (w.isOk == true)
                 {
-                    int newTableId = w.table.tableId;
+                    long newTableId = w.table.tableId;
 
                     #region validate table availability 
                     List<Tables> newTables = new List<Tables>();
@@ -1002,7 +1002,7 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        async Task<Boolean> validateReservationTime(DateTime date, DateTime startTime, DateTime endTime,List<Tables> tables,int invoiceId =0)
+        async Task<Boolean> validateReservationTime(DateTime date, DateTime startTime, DateTime endTime,List<Tables> tables,long invoiceId =0)
         {
             bool valid = true;
             string message = "";

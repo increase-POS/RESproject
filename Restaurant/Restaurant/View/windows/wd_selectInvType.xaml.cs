@@ -68,8 +68,8 @@ namespace Restaurant.View.windows
         UserSetValues userSetValuesModel = new UserSetValues();
         SetValues invSet;
         UserSetValues defaultInvTypeSetValue;
-        int defaulInvType;
-        int settingId;
+        long defaulInvType;
+        long settingId;
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try

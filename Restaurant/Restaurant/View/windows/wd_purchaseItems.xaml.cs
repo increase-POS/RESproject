@@ -35,7 +35,7 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public List<int> selectedItems { get; set; }
+        public List<long> selectedItems { get; set; }
         List<Item> items;
         List<Item> itemsQuery;
         //Category category = new Category();
@@ -159,8 +159,8 @@ namespace Restaurant.View.windows
     
         async Task<IEnumerable<Item>> RefrishItems()
         {
-            selectedItems = new List<int>();
-            // int branchId = MainWindow.branchLogin.branchId;
+            selectedItems = new List<long>();
+            // long branchId = MainWindow.branchLogin.branchId;
             if (CardType == "consumption")
             {
                 items = await FillCombo.item.GetKitchenItems(category.categoryId, MainWindow.branchLogin.branchId);
@@ -225,7 +225,7 @@ namespace Restaurant.View.windows
             lst_items.Children.Remove(currentChip);
             selectedItems.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
         }
-        public void ChangeItemIdEvent(int itemId)
+        public void ChangeItemIdEvent(long itemId)
         {
             int isExist = -1;
             if (selectedItems != null)
@@ -611,7 +611,7 @@ namespace Restaurant.View.windows
             #endregion
 
         }
-        public  void ChangeCategoryIdEvent(int categoryId)
+        public  void ChangeCategoryIdEvent(long categoryId)
         {
             category = categories.ToList().Find(c => c.categoryId == categoryId);
             categoryIdSearch = categoryId.ToString();

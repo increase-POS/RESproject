@@ -582,7 +582,7 @@ namespace Restaurant.View.sectionData
         #endregion
 
 
-        private async Task<bool> chkNameValidate(string name , int id)
+        private async Task<bool> chkNameValidate(string name , long id)
         {
             bool isValid = true;
             if (residentials == null)

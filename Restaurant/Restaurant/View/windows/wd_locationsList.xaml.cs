@@ -38,7 +38,7 @@ namespace Restaurant.View.windows
        
         public bool isActive;
 
-        public int sectionId { get; set; }
+        public long sectionId { get; set; }
         Classes.Section section = new Classes.Section();
         Classes.Section sectionModel = new Classes.Section();
 

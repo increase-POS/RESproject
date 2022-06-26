@@ -35,10 +35,10 @@ namespace Restaurant.View.windows
     public partial class wd_uploadImage : Window
     {
         public string tableName { get; set; }
-        public int tableId { get; set; }
+        public long tableId { get; set; }
         public string docNum { get; set; }
 
-        private int docId = 0;
+        private long docId = 0;
         string imagepath;
         DocImage docImgModel = new DocImage();
         List<DocImage> imageList;

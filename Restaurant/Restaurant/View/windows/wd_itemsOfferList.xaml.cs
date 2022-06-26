@@ -44,7 +44,7 @@ namespace Restaurant.View.windows
 
         IEnumerable<ItemUnit> itemUnitQuery;
 
-        public int offerId { get; set; }
+        public long offerId { get; set; }
         public wd_itemsOfferList()
         {
             try

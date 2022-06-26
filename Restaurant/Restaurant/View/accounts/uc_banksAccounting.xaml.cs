@@ -838,7 +838,7 @@ namespace Restaurant.View.accounts
                 Window.GetWindow(this).Opacity = 0.2;
 
                 w.tb_userName.Text = cb_user.Text;
-                w.userID = Convert.ToInt32(cb_user.SelectedValue);
+                w.userId = Convert.ToInt32(cb_user.SelectedValue);
                     // w.ShowInTaskbar = false;
                 w.ShowDialog();
 

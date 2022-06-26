@@ -75,7 +75,7 @@ namespace Restaurant.View.storage.storageOperations
         List<ItemTransfer> mainInvoiceItems;
         Invoice invoiceModel = new Invoice();
 
-        int prInvoiceId;
+        long prInvoiceId;
         // for barcode
         DateTime _lastKeystroke = new DateTime(0);
         static private string _BarcodeStr = "";
@@ -83,7 +83,7 @@ namespace Restaurant.View.storage.storageOperations
         bool _IsFocused = false;
         //for invoice details
         static private int _SequenceNum = 0;
-        static private int _invoiceId;
+        static private long _invoiceId;
         static public string _InvoiceType = "isd"; // immidiatlly in storage draft
         static private decimal _Sum = 0;
         static private decimal _Count = 0;
@@ -591,7 +591,7 @@ namespace Restaurant.View.storage.storageOperations
             }
             #endregion
             // save invoice and items in DB
-            int invoiceId = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
+            long invoiceId = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
             prInvoiceId = invoiceId;
             invoice.invoiceId = invoiceId;
             if (invoiceId != 0)
@@ -659,7 +659,7 @@ namespace Restaurant.View.storage.storageOperations
                     invoice.paid = 0;
                     invoice.deserved = invoice.totalNet;
 
-                    int invoiceId = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
+                    long invoiceId = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
                     if (invoiceId != 0)
                     {
                         await invoice.recordPosCashTransfer(invoice, "pb");
@@ -680,7 +680,7 @@ namespace Restaurant.View.storage.storageOperations
                         #endregion
                         for (int i = 0; i < readyItemsLoc.Count; i++)
                         {
-                            int itemLocId = readyItemsLoc[i].itemsLocId;
+                            long itemLocId = readyItemsLoc[i].itemsLocId;
                             int quantity = (int)readyItemsLoc[i].quantity;
                             await FillCombo.itemLocation.decreaseItemLocationQuantity(itemLocId, quantity, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
                         }
@@ -850,7 +850,7 @@ namespace Restaurant.View.storage.storageOperations
             refreshTotalValue();
             inputEditable();
         }
-        private async Task buildInvoiceDetails(int invoiceId)
+        private async Task buildInvoiceDetails(long invoiceId)
         {
             invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
             // build invoice details grid
@@ -981,7 +981,7 @@ namespace Restaurant.View.storage.storageOperations
                 btn_previous.Visibility = Visibility.Visible;
             }
         }
-        public async Task ChangeItemIdEvent(int itemId)
+        public async Task ChangeItemIdEvent(long itemId)
         {
             item = FillCombo.purchaseItems.ToList().Find(c => c.itemId == itemId);
             if (item != null)
@@ -1013,7 +1013,7 @@ namespace Restaurant.View.storage.storageOperations
 
             }
         }
-        private void addRowToBill(string itemName, int itemId, string unitName, int itemUnitId, int count, decimal price, decimal total)
+        private void addRowToBill(string itemName, long itemId, string unitName, long itemUnitId, int count, decimal price, decimal total)
         {
             // increase sequence for each read
             _SequenceNum++;
@@ -1430,7 +1430,7 @@ namespace Restaurant.View.storage.storageOperations
                 {
                     for (int i = 0; i < w.selectedItems.Count; i++)
                     {
-                        int itemId = w.selectedItems[i];
+                        long itemId = w.selectedItems[i];
                         await ChangeItemIdEvent(itemId);
                     }
                     refreshTotalValue();
@@ -1751,7 +1751,7 @@ namespace Restaurant.View.storage.storageOperations
                         // get item matches the barcode
                         if (unit1 != null)
                         {
-                            int itemId = (int)unit1.itemId;
+                            long itemId = (int)unit1.itemId;
                             if (unit1.itemId != 0)
                             {
                                 int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId && p.OrderId == 0).FirstOrDefault());
@@ -2309,7 +2309,7 @@ namespace Restaurant.View.storage.storageOperations
 
         }
 
-        public async void printPurInvoice(int prInvoiceId)
+        public async void printPurInvoice(long prInvoiceId)
         {
             try
             {
@@ -2344,7 +2344,7 @@ namespace Restaurant.View.storage.storageOperations
                                 {
                                     Agent agentinv = new Agent();
                                     //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-                                    agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                                    agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                                     prInvoice.agentCode = agentinv.code;
                                     //new lines
                                     prInvoice.agentName = agentinv.name;
@@ -2359,12 +2359,12 @@ namespace Restaurant.View.storage.storageOperations
                                     prInvoice.agentCompany = "-";
                                 }
                                 User employ = new User();
-                                employ = await employ.getUserById((int)prInvoice.updateUserId);
+                                employ = await employ.getUserById((long)prInvoice.updateUserId);
                                 prInvoice.uuserName = employ.name;
                                 prInvoice.uuserLast = employ.lastname;
 
                                 Branch branch = new Branch();
-                                branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                                branch = await branchModel.getBranchById((long)prInvoice.branchCreatorId);
                                 if (branch.branchId > 0)
                                 {
                                     prInvoice.branchCreatorName = branch.name;
@@ -2374,7 +2374,7 @@ namespace Restaurant.View.storage.storageOperations
                                 {
                                     if (prInvoice.branchId > 0)
                                     {
-                                        branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                        branch = await branchModel.getBranchById((long)prInvoice.branchId);
                                         prInvoice.branchName = branch.name;
                                     }
                                     else

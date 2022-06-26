@@ -356,7 +356,7 @@ namespace Restaurant.View.windows
         /*
         List<UserSetValues> usValues = new List<UserSetValues>();
         UserSetValues usLanguage = new UserSetValues();
-        private async Task<string> getUserLanguage(int userId)
+        private async Task<string> getUserLanguage(long userId)
         {
             SettingCls setModel = new SettingCls();
             SettingCls set = new SettingCls();
@@ -408,7 +408,7 @@ namespace Restaurant.View.windows
         #region get language from database
         /*
         List<UserSetValues> usValues = new List<UserSetValues>();
-        private async Task<string> getUserLanguage(int userId)
+        private async Task<string> getUserLanguage(long userId)
         {
             SettingCls setModel = new SettingCls();
             SettingCls set = new SettingCls();

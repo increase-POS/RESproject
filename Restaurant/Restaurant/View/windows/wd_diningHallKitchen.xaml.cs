@@ -34,7 +34,7 @@ namespace Restaurant.View.windows
         string kitchenPermission = "saleInvoice_invoice";
         public static List<string> requiredControlList;
         public List<BillDetailsSales> invoiceItemsList = new List<BillDetailsSales>();
-        public int invoiceId;
+        public long invoiceId;
 
 
         OrderPreparing preparingOrder = new OrderPreparing();
@@ -499,7 +499,7 @@ namespace Restaurant.View.windows
         List<OrderPreparing> OrderListBeforesave = new List<OrderPreparing>();
         List<OrderPreparing> OrderListAftersave = new List<OrderPreparing>();
         clsReports clsreport = new clsReports();
-        public void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
+        public void printInvoiceInkitchen(long invoiceId, List<OrderPreparing> OrderPreparingList)
         {
             try
             {

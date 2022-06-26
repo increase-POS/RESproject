@@ -372,8 +372,8 @@ namespace Restaurant.View.kitchen
                         if (AppSettings.print_kitchen_on_preparing == "1")
                         {
 
-                            List<int> invoiceIds = selectedOrders.GroupBy(X => X.invoiceId).Select(X => (int)X.FirstOrDefault().invoiceId).ToList();
-                            List<int> orderIds = selectedOrders.Select(X => X.orderPreparingId).ToList();
+                            List<long> invoiceIds = selectedOrders.GroupBy(X => X.invoiceId).Select(X => (long)X.FirstOrDefault().invoiceId).ToList();
+                            List<long> orderIds = selectedOrders.Select(X => X.orderPreparingId).ToList();
                             Thread t2 = new Thread(async () =>
                             {
                                 List<OrderPreparing> OrderList = new List<OrderPreparing>();
@@ -1033,7 +1033,7 @@ namespace Restaurant.View.kitchen
         #endregion
         #region report
         ReportCls reportclass = new ReportCls();
-        public void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
+        public void printInvoiceInkitchen(long invoiceId, List<OrderPreparing> OrderPreparingList)
         {
             try
             {

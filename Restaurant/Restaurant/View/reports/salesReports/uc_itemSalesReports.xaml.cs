@@ -89,9 +89,9 @@ namespace Restaurant.View.reports.salesReports
         Item itemModel = new Item();
         /*************************/
 
-        List<int> selectedBranchId = new List<int>();
+        List<long> selectedBranchId = new List<long>();
 
-        List<int> selectedItemId = new List<int>();
+        List<long> selectedItemId = new List<long>();
 
         // report
         ReportCls reportclass = new ReportCls();

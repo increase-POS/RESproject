@@ -154,9 +154,9 @@ namespace Restaurant.View.storage.stocktakingOperations
                 {
                     if(HelpClass.validate(requiredControlList, this))
                     {
-                        int itemUnitId = 0;
-                        int itemId = 0;
-                        int invoiceId = 0;
+                        long itemUnitId = 0;
+                        long itemId = 0;
+                        long invoiceId = 0;
                         string serialNum = "";
                         if (invItemLoc.id != 0)
                         {
@@ -282,7 +282,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                                     {
                                         for (int i = 0; i < readyItemsLoc.Count; i++)
                                         {
-                                            int itemLocId = readyItemsLoc[i].itemsLocId;
+                                            long itemLocId = readyItemsLoc[i].itemsLocId;
                                             int quantity = (int)readyItemsLoc[i].quantity;
                                             await FillCombo.itemLocation.decreaseItemLocationQuantity(itemLocId, quantity, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
                                         }

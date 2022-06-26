@@ -36,7 +36,7 @@ namespace Restaurant.View.windows
         }
 
         BrushConverter bc = new BrushConverter();
-        public int userID = 0;
+        public long userId = 0;
         User userModel = new User();
         User newUser = new User();
 
@@ -222,13 +222,13 @@ namespace Restaurant.View.windows
 
                             if (s>0)
                             {
-                                userID = s;
+                                userId = s;
                                 if (!Properties.Settings.Default.password.Equals(""))
                                 {
                                     Properties.Settings.Default.password = pb_newPassword.Password;
                                     Properties.Settings.Default.Save();
                                 }
-                                MainWindow.userLogin = await FillCombo.user.getUserById(userID);
+                                MainWindow.userLogin = await FillCombo.user.getUserById(userId);
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopPasswordChanged"), animation: ToasterAnimation.FadeIn);
                                 this.Close();
                             }

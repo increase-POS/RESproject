@@ -46,7 +46,7 @@ namespace Restaurant.View.kitchen
         string updatePermission = "itemsCosting_update";
         List<Item> itemsQuery = new List<Item>();
         string searchText = "";
-        int categoryId = 0;
+        long categoryId = 0;
         public uc_itemsCosting()
         {
             InitializeComponent();

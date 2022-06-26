@@ -825,7 +825,7 @@ namespace Restaurant.View.storage.storageOperations
                     w.ShowDialog();
                     if (w.DialogResult == true)
                     {
-                        List<int> itemsUnitsIds = new List<int>();
+                        List<long> itemsUnitsIds = new List<long>();
                         foreach (ItemUnit u in w.selectedItemUnits)
                             itemsUnitsIds.Add(u.itemUnitId);
                        await storageCost.setCostToUnits( itemsUnitsIds, storageCost.storageCostId, MainWindow.userLogin.userId);

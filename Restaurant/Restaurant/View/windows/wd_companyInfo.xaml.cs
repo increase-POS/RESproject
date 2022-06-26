@@ -49,7 +49,7 @@ namespace Restaurant.View.windows
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         ImageBrush brush = new ImageBrush();
         BrushConverter bc = new BrushConverter();
-        int nameId = 0, addressId = 0, emailId = 0, mobileId = 0, phoneId = 0, faxId = 0, logoId = 0;
+        long nameId = 0, addressId = 0, emailId = 0, mobileId = 0, phoneId = 0, faxId = 0, logoId = 0;
         SettingCls set = new SettingCls();
         SetValues setVName = new SetValues(); SetValues setVAddress = new SetValues(); SetValues setVEmail = new SetValues();
         SetValues setVMobile = new SetValues();

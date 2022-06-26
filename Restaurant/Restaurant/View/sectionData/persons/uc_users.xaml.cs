@@ -260,7 +260,7 @@ namespace Restaurant.View.sectionData.persons
 
                             if (isImgPressed)
                             {
-                                int userId = s;
+                                long userId = s;
                                 string b = await user.uploadImage(imgFileName,
                                     Md5Encription.MD5Hash("Inc-m" + userId.ToString()), userId);
                                 user.image = b;
@@ -336,7 +336,7 @@ namespace Restaurant.View.sectionData.persons
                                     MainWindow.userLogin =  user;
                                 if (isImgPressed)
                                 {
-                                    int userId = s;
+                                    long userId = s;
                                     string b = await user.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + userId.ToString()), userId);
                                     user.image = b;
                                     isImgPressed = false;
@@ -906,7 +906,7 @@ namespace Restaurant.View.sectionData.persons
 
         }
         */
-        private async Task<bool> chkIfUserNameIsExists(string username, int uId)
+        private async Task<bool> chkIfUserNameIsExists(string username, long uId)
         {
             bool isValid = true;
             if (users == null)
@@ -917,7 +917,7 @@ namespace Restaurant.View.sectionData.persons
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorDuplicateUserNameToolTip"), animation: ToasterAnimation.FadeIn);
             return isValid;
         }
-        private async Task<bool> chkIfUserFullNameIsExists(string name , string lastName, int uId)
+        private async Task<bool> chkIfUserFullNameIsExists(string name , string lastName, long uId)
         {
             bool isValid = true;
             if (users == null)

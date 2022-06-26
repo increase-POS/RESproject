@@ -41,7 +41,7 @@ namespace Restaurant.View.sales
         string addTablePermission = "addTable_invoice";
 
         #region for report
-        int prinvoiceId = 0;
+        long prinvoiceId = 0;
         #endregion
         decimal _DeliveryCost = 0;
 
@@ -420,8 +420,8 @@ namespace Restaurant.View.sales
         Item item = new Item();
         List<Item> items;
         IEnumerable<Item> itemsQuery;
-        int categoryId = 0;
-        int tagId = 0;
+        long categoryId = 0;
+        long tagId = 0;
         public string _InvoiceType = "sd";
         void RefrishItemsCard(IEnumerable<Item> _items)
         {
@@ -432,7 +432,7 @@ namespace Restaurant.View.sales
         #endregion
         #region Get Id By Click  Y
 
-        public void ChangeItemIdEvent(int itemId)
+        public void ChangeItemIdEvent(long itemId)
         {
             try
             {
@@ -1147,7 +1147,7 @@ namespace Restaurant.View.sales
         {
             var button = sender as Button;
             int index = int.Parse(button.Tag.ToString().Replace("minus-", ""));
-            int itemUnitId = billDetailsList[index].itemUnitId;
+            long itemUnitId = billDetailsList[index].itemUnitId;
             int sentToKitchenCount = sentInvoiceItems.Where(x => x.itemUnitId == itemUnitId).Select(x => x.Count).Sum();
             // index--;
             if (billDetailsList[index].Count <= sentToKitchenCount)
@@ -2652,8 +2652,8 @@ namespace Restaurant.View.sales
                 w.ShowDialog();
                 if (w.isOk)
                 {
-                    int? shippingCompanyId = null;
-                    int? shipUserId = null;
+                    long? shippingCompanyId = null;
+                    long? shipUserId = null;
                     decimal realDeliveryCost = 0;
                     if (w.shippingCompanyId > 0)
                     {
@@ -3237,7 +3237,7 @@ namespace Restaurant.View.sales
                             });
                         }
          * */
-        public async Task<string> SaveSalepdf(int invoiceId)
+        public async Task<string> SaveSalepdf(long invoiceId)
         {
             //for email
             string pdfpath = "";
@@ -3447,7 +3447,7 @@ namespace Restaurant.View.sales
             }
         }
 
-        public async Task pdfPurInvoice(int invoiceId)
+        public async Task pdfPurInvoice(long invoiceId)
         {
             try
             {
@@ -3805,7 +3805,7 @@ namespace Restaurant.View.sales
 
             }
         }
-        public async Task printInvoice(int invoiceId)
+        public async Task printInvoice(long invoiceId)
         {
             try
             {
@@ -3940,7 +3940,7 @@ namespace Restaurant.View.sales
 
 
         }
-        public  void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
+        public  void printInvoiceInkitchen(long invoiceId, List<OrderPreparing> OrderPreparingList)
         {
             try
             {
@@ -4659,7 +4659,7 @@ namespace Restaurant.View.sales
         }
 
 
-        public async void sendsaleEmail(int invoiceId)
+        public async void sendsaleEmail(long invoiceId)
         {
             try
             {

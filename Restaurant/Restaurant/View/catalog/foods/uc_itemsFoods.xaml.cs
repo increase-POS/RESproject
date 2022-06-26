@@ -88,7 +88,7 @@ namespace Restaurant.View.catalog.foods
             }
         }
         public static string categoryName;
-        int categoryId;
+        long categoryId;
         string basicsPermission = "basics";
         string dishIngredientsPermission = "dishIngredients";
         byte tgl_itemState;
@@ -526,7 +526,7 @@ namespace Restaurant.View.catalog.foods
                         var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr && c.categoryId == categoryId);
                         if (ob != null)
                         {
-                            int itemId = (int)ob.itemId;
+                            long itemId = (int)ob.itemId;
                             ChangeItemIdEvent(itemId);
                         }
                         else
@@ -1089,7 +1089,7 @@ namespace Restaurant.View.catalog.foods
         #endregion
         #region Get Id By Click  Y
 
-        public async void ChangeItemIdEvent(int itemId)
+        public async void ChangeItemIdEvent(long itemId)
         {
             try
             {
@@ -1372,7 +1372,7 @@ namespace Restaurant.View.catalog.foods
                 #endregion
             }
         }
-        int tagId = 0;
+        long tagId = 0;
         async void buttonCatalogTags_Click(object sender, RoutedEventArgs e)
         {
             try

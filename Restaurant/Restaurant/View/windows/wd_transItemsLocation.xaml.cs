@@ -223,8 +223,8 @@ namespace Restaurant.View.windows
                long oldCount = (long) row.quantity;
                 long newCount = 0;
                 long totalQuantity = 0;
-                
-                int itemUnitId = row.itemUnitId.Value;
+
+                    long itemUnitId = row.itemUnitId.Value;
                 long basicCount = (long) orderList.ToList().Find(x => x.itemUnitId == itemUnitId).quantity;
                     // ItemTransfer Item = orderList.ToList().Find(i => i.itemUnitId == row.itemUnitId);
                     var Item = orderList.ToList().Where(x => x.itemUnitId == row.itemUnitId).Select(x => x.quantity).Sum();

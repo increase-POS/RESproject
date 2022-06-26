@@ -41,7 +41,7 @@ namespace Restaurant.View.setup
 
 
         public int posId { get; set; }
-        public int branchId { get; set; }
+        public long branchId { get; set; }
         BrushConverter bc = new BrushConverter();
         Branch branchModel = new Branch();
         Pos posModel = new Pos();
@@ -51,7 +51,7 @@ namespace Restaurant.View.setup
         SetValues valueModel = new SetValues();
         SettingCls setModel = new SettingCls();
         public int settingsPoSId = 0;
-        public int userId;
+        public long userId;
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             AppSettings.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());

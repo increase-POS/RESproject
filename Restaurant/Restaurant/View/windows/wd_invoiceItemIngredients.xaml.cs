@@ -96,7 +96,7 @@ namespace Restaurant.View.windows
 
 
         public string categoryName;
-        int categoryId;
+        long categoryId;
 
         Tag tag = new Tag();
         IEnumerable<Tag> tagsQuery;

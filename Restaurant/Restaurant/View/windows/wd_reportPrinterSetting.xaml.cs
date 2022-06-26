@@ -142,7 +142,7 @@ namespace Restaurant.View.windows
           
             if (oldsetting.saleInvPapersizeId == null)
             {
-                int salsizeid = papersizeList.Where(x => x.printfor.Contains("sal") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
+                long salsizeid = papersizeList.Where(x => x.printfor.Contains("sal") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
                 defpossetting.saleInvPapersizeId = salsizeid;
                 defpossetting.saleSizeValue = "5.7cm";
             
@@ -150,7 +150,7 @@ namespace Restaurant.View.windows
             }
             if (oldsetting.kitchenPapersizeId == null)
             {
-                int kitchenPapersizeId = papersizeList.Where(x => x.printfor.Contains("kitchen") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
+                long kitchenPapersizeId = papersizeList.Where(x => x.printfor.Contains("kitchen") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
                 defpossetting.kitchenPapersizeId = kitchenPapersizeId;
                 defpossetting.kitchenPapersize = "5.7cm";
 
@@ -159,7 +159,7 @@ namespace Restaurant.View.windows
 
             if (oldsetting.docPapersizeId == null)
             {
-                int docsizeid = papersizeList.Where(x => x.printfor.Contains("doc") && x.sizeValue == "A5").FirstOrDefault().sizeId;
+                long docsizeid = papersizeList.Where(x => x.printfor.Contains("doc") && x.sizeValue == "A5").FirstOrDefault().sizeId;
                 defpossetting.docPapersizeId = docsizeid;
                 defpossetting.docPapersize = "A5";
 
@@ -385,10 +385,10 @@ namespace Restaurant.View.windows
             possettingModel.saleInvPrinterId = saleInvPrinterId;
             possettingModel.kitchenPrinterId = kitchenPrinterId;
             ////
-            int salsizeid = papersizeList.Where(x => x.printfor.Contains("sal") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
-            int docsizeid = papersizeList.Where(x => x.printfor.Contains("doc") && x.sizeValue == "A5").FirstOrDefault().sizeId;
+            long salsizeid = papersizeList.Where(x => x.printfor.Contains("sal") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
+            long docsizeid = papersizeList.Where(x => x.printfor.Contains("doc") && x.sizeValue == "A5").FirstOrDefault().sizeId;
 
-            int kitchensizeid = papersizeList.Where(x => x.printfor.Contains("kitchen") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
+            long kitchensizeid = papersizeList.Where(x => x.printfor.Contains("kitchen") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
             //sale
             string psize = "";
             if (cb_saleInvPaperSize.SelectedIndex != -1)

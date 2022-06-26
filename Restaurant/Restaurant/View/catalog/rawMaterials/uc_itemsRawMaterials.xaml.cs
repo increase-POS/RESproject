@@ -245,7 +245,7 @@ namespace Restaurant.View.catalog.rawMaterials
                                 item.itemId = res;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                                int itemId = res;
+                                long itemId = res;
 
                                 if (openFileDialog.FileName != "")
                                     await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + itemId.ToString()), itemId);
@@ -534,7 +534,7 @@ namespace Restaurant.View.catalog.rawMaterials
                          var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr && FillCombo.purchaseTypes.Contains(c.type));
                         if (ob != null)
                         {
-                            int itemId = (int) ob.itemId;
+                            long itemId = (int) ob.itemId;
                             ChangeItemIdEvent(itemId);
                         }
                         else
@@ -1040,7 +1040,7 @@ namespace Restaurant.View.catalog.rawMaterials
         #endregion
         #region Get Id By Click  Y
 
-        public async void ChangeItemIdEvent(int itemId)
+        public async void ChangeItemIdEvent(long itemId)
         {
             try
             {
@@ -1368,7 +1368,7 @@ namespace Restaurant.View.catalog.rawMaterials
             #endregion
 
         }
-        public async void ChangeCategoryIdEvent(int categoryId)
+        public async void ChangeCategoryIdEvent(long categoryId)
         {
             //category = categories.ToList().Find(c => c.categoryId == categoryId);
             categoryIdSearch = categoryId.ToString();

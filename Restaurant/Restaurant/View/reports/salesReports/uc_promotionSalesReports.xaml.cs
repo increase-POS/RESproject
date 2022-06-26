@@ -94,9 +94,9 @@ namespace Restaurant.View.reports.salesReports
 
         /*************************/
 
-        List<int> selectedcouponId = new List<int>();
-        List<int> selectedOfferId = new List<int>();
-        List<int> selectedInvoiceId = new List<int>();
+        List<long> selectedcouponId = new List<long>();
+        List<long> selectedOfferId = new List<long>();
+        List<long> selectedInvoiceId = new List<long>();
 
         Coupon couponModel = new Coupon();
         Offer offerModel = new Offer();
@@ -174,7 +174,7 @@ namespace Restaurant.View.reports.salesReports
         }
         void RefreshView()
         {
-            List<int> selected = new List<int>();
+            List<long> selected = new List<long>();
             if (selectedTab == 0)
             {
                 selected = selectedcouponId;
@@ -456,7 +456,7 @@ namespace Restaurant.View.reports.salesReports
         #endregion
 
         #region charts
-        private void fillPieChart(List<int> stackedButton)
+        private void fillPieChart(List<long> stackedButton)
         {
             List<string> titles = new List<string>();
             IEnumerable<int> x = null;
@@ -539,7 +539,7 @@ namespace Restaurant.View.reports.salesReports
             chart1.Series = piechartData;
         }
 
-        private void fillColumnChart(List<int> stackedButton)
+        private void fillColumnChart(List<long> stackedButton)
         {
             axcolumn.Labels = new List<string>();
             List<string> names = new List<string>();
@@ -682,7 +682,7 @@ namespace Restaurant.View.reports.salesReports
             cartesianChart.Series = columnChartData;
         }
 
-        private void fillRowChart(List<int> stackedButton)
+        private void fillRowChart(List<long> stackedButton)
         {
             MyAxis.Labels = new List<string>();
             List<string> names = new List<string>();

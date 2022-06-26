@@ -40,10 +40,10 @@ namespace Restaurant.View.windows
         /// </summary>
         public Invoice invoice = new Invoice();
         IEnumerable<Invoice> invoices;
-        public int posId { get; set; }
-        public int branchId { get; set; }
-        public int branchCreatorId { get; set; }
-        public int userId { get; set; }
+        public long posId { get; set; }
+        public long branchId { get; set; }
+        public long branchCreatorId { get; set; }
+        public long userId { get; set; }
         /// <summary>
         /// for filtering invoice type
         /// </summary>

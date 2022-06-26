@@ -23,7 +23,7 @@ namespace Restaurant.View.windows
     public partial class wd_branchesList : Window
     {
         public bool isActive;
-        public int Id { get; set; }
+        public long Id { get; set; }
         public char userOrBranch { get; set; }
 
         Branch branchModel = new Branch();

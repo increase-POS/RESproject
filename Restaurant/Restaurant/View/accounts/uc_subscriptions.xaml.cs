@@ -941,7 +941,8 @@ namespace Restaurant.View.accounts
         }
         SubscriptionFees subFee = new SubscriptionFees();
         IEnumerable<SubscriptionFees> subFees ;
-        int _monthCount = 0 , _subscriptionFeesId;
+        int _monthCount = 0;
+            long _subscriptionFeesId;
 
      
 

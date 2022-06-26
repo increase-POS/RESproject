@@ -35,7 +35,7 @@ namespace Restaurant.View.windows
         }
         BrushConverter bc = new BrushConverter();
         public bool isOk { get; set; }
-        public int userID = 0;
+        public long userId = 0;
         User userModel = new User();
 
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
@@ -124,7 +124,7 @@ namespace Restaurant.View.windows
         {
             string password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password);
 
-            User user = await userModel.getUserById(userID);
+            User user = await userModel.getUserById(userId);
 
             if ((tb_userName.Text.Trim().Equals(user.username)) && (password.Trim().Equals(user.password)))
             {

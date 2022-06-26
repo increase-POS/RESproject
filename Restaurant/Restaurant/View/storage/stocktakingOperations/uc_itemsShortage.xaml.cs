@@ -153,9 +153,9 @@ namespace Restaurant.View.storage.stocktakingOperations
                 {
                     if (HelpClass.validate(requiredControlList, this))
                     {
-                        int itemUnitId = 0;
-                        int itemId = 0;
-                        int invoiceId = 0;
+                        long itemUnitId = 0;
+                        long itemId = 0;
+                        long invoiceId = 0;
                         string serialNum = "";
 
                         itemUnitId = invItemLoc.itemUnitId;

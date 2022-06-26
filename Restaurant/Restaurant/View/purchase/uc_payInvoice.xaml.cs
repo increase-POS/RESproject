@@ -104,7 +104,7 @@ namespace Restaurant.View.purchase
         #endregion
         //for bill details
         static private int _SequenceNum = 0;
-        static private int _invoiceId;
+        static private long _invoiceId;
         static private decimal _Sum = 0;
         static public string _InvoiceType = "pd"; // purchase draft
        
@@ -511,7 +511,7 @@ namespace Restaurant.View.purchase
             catch { }
         }
         */
-        private async void refreshDocCount(int invoiceId)
+        private async void refreshDocCount(long invoiceId)
         {
             try
             {
@@ -522,7 +522,7 @@ namespace Restaurant.View.purchase
             }
             catch { }
         }
-        private async void refreshPaymentsNotification(int invoiceId)
+        private async void refreshPaymentsNotification(long invoiceId)
         {
             try
             {
@@ -624,7 +624,7 @@ namespace Restaurant.View.purchase
             }
             #endregion
             // save invoice in DB
-            int invoiceId = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
+            long invoiceId = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
             prInvoiceId = invoiceId;
             invoice.invoiceId = invoiceId;
             if (invoiceId != 0)
@@ -1537,7 +1537,7 @@ namespace Restaurant.View.purchase
         }
         #endregion
         #region calculate quantity
-        private async Task<int> getAmountInBill(int itemId, int itemUnitId, int ID)
+        private async Task<int> getAmountInBill(long itemId, long itemUnitId, long ID)
         {
             int quantity = 0;
             var itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == itemId).ToList();
@@ -1610,7 +1610,7 @@ namespace Restaurant.View.purchase
 
                     int _datagridSelectedIndex = dg_billDetails.SelectedIndex;
                     int itemUnitId = (int)cmb.SelectedValue;
-                    int itemId = billDetails[_datagridSelectedIndex].itemId;
+                    long itemId = billDetails[_datagridSelectedIndex].itemId;
                     billDetails[_datagridSelectedIndex].itemUnitId = (int)cmb.SelectedValue;
                     #region Dina
 
@@ -1910,7 +1910,7 @@ namespace Restaurant.View.purchase
         }
         #endregion
         #region billdetails
-        public async Task ChangeItemIdEvent(int itemId)
+        public async Task ChangeItemIdEvent(long itemId)
         {
             item = FillCombo.purchaseItems.ToList().Find(c => c.itemId == itemId);
 
@@ -2178,7 +2178,7 @@ namespace Restaurant.View.purchase
                         // get item matches the barcode
                         if (unit1 != null)
                         {
-                            int itemId = (int)unit1.itemId;
+                            long itemId = (int)unit1.itemId;
                             if (unit1.itemId != 0)
                             {
                                 int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId && p.OrderId == 0).FirstOrDefault());
@@ -2240,7 +2240,7 @@ namespace Restaurant.View.purchase
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void addRowToBill(string itemName, int itemId, string unitName, int itemUnitId, int count, decimal price, decimal total)
+        private void addRowToBill(string itemName, long itemId, string unitName, long itemUnitId, int count, decimal price, decimal total)
         {
             // increase sequence for each read
             _SequenceNum++;
@@ -2725,7 +2725,7 @@ namespace Restaurant.View.purchase
                 {
                     for (int i = 0; i < w.selectedItems.Count; i++)
                     {
-                        int itemId = w.selectedItems[i];
+                        long itemId = w.selectedItems[i];
                         await ChangeItemIdEvent(itemId);
                     }
                     refreshTotalValue();
@@ -3154,7 +3154,7 @@ namespace Restaurant.View.purchase
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-        int prInvoiceId;
+        long prInvoiceId;
         Invoice prInvoice = new Invoice();
         List<PayedInvclass> mailpayedList = new List<PayedInvclass>();
         //print

@@ -78,7 +78,7 @@ namespace Restaurant.View.storage.movementsOperations
 
         static private int _SequenceNum = 0;
         static private int _Count = 0;
-        static private int _invoiceId;
+        static private long _invoiceId;
         #region for barcode
         DateTime _lastKeystroke = new DateTime(0);
         static private string _BarcodeStr = "";
@@ -630,7 +630,7 @@ namespace Restaurant.View.storage.movementsOperations
                 // get item matches the barcode
                 if (unit1 != null)
                 {
-                    int itemId = (int)unit1.itemId;
+                    long itemId = (int)unit1.itemId;
                     if (unit1.itemId != 0)
                     {
                         int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId).FirstOrDefault());
@@ -692,7 +692,7 @@ namespace Restaurant.View.storage.movementsOperations
         #region save
         private async Task save()
         {
-            int invoiceId;
+            long invoiceId;
             invoiceItems = new List<ItemTransfer>();
             ItemTransfer itemT;
             for (int i = 0; i < billDetails.Count; i++)
@@ -873,7 +873,7 @@ namespace Restaurant.View.storage.movementsOperations
                                         Window.GetWindow(this).Opacity = 0.2;
                                         w = new wd_transItemsLocation();
                                         List<ItemTransfer> orderList = new List<ItemTransfer>();
-                                        List<int> ordersIds = new List<int>();
+                                        List<long> ordersIds = new List<long>();
                                         foreach (BillDetailsPurchase d in billDetails)
                                         {
                                             if (d.Count == 0)
@@ -951,7 +951,7 @@ namespace Restaurant.View.storage.movementsOperations
         }
         private async Task saveDraft()
         {
-            int invoiceId;
+            long invoiceId;
             invoiceItems = new List<ItemTransfer>();
             ItemTransfer itemT;
             for (int i = 0; i < billDetails.Count; i++)
@@ -1057,7 +1057,7 @@ namespace Restaurant.View.storage.movementsOperations
                     break;
             }
         }
-        private async Task<int> getAvailableAmount(int itemId, int itemUnitId, int branchId, int ID)
+        private async Task<int> getAvailableAmount(long itemId, long itemUnitId, long branchId, int ID)
         {
             // var itemUnits = await itemUnitModel.GetItemUnits(itemId);
             if (FillCombo.itemUnitList == null)
@@ -1790,7 +1790,7 @@ namespace Restaurant.View.storage.movementsOperations
                 {
                     for (int i = 0; i < w.selectedItems.Count; i++)
                     {
-                        int itemId = w.selectedItems[i];
+                        long itemId = w.selectedItems[i];
                         await ChangeItemIdEvent(itemId);
                     }
                     refrishBillDetails();
@@ -2136,7 +2136,7 @@ namespace Restaurant.View.storage.movementsOperations
         }
         #endregion
         #region billdetails
-        private void addRowToBill(string itemName, int itemId, string unitName, int itemUnitId, int count)
+        private void addRowToBill(string itemName, long itemId, string unitName, long itemUnitId, int count)
         {
             // increase sequence for each read
             _SequenceNum++;
@@ -2178,7 +2178,7 @@ namespace Restaurant.View.storage.movementsOperations
             DataGrid_CollectionChanged(dg_billDetails, null);
 
         }
-        public async Task ChangeItemIdEvent(int itemId)
+        public async Task ChangeItemIdEvent(long itemId)
         {
             item = FillCombo.purchaseItems.Find(c => c.itemId == itemId);
 

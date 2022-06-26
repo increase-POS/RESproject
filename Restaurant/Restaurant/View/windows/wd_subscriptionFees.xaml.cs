@@ -24,7 +24,7 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_subscriptionFees : Window
     {
-        public int memberShipID = 0;
+        public long memberShipID = 0;
         public string memberShipType = "";
         public static List<string> requiredControlList;
         SubscriptionFees subscription = new SubscriptionFees();

@@ -47,7 +47,7 @@ namespace Restaurant.View.windows
         SetValues setValuesModel = new SetValues();
         List<SetValues> pathLst = new List<SetValues>();
         //int firstId = 0, secondId = 0;
-        int defaulPathId;
+        long defaulPathId;
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             try

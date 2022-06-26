@@ -23,7 +23,7 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_tablesList : Window
     {
-        public int sectionId = 0 ;
+        public long sectionId = 0 ;
         public bool isActive;
         public string page;
         

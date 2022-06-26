@@ -72,7 +72,7 @@ namespace Restaurant.View.kitchen
 
         static private int _SequenceNum = 0;
         static private int _Count = 0;
-        static public int _invoiceId;
+        static public long _invoiceId;
         #region for barcode
         DateTime _lastKeystroke = new DateTime(0);
         static private string _BarcodeStr = "";
@@ -417,7 +417,7 @@ namespace Restaurant.View.kitchen
                 // get item matches the barcode
                 if (unit1 != null)
                 {
-                    int itemId = (int)unit1.itemId;
+                    long itemId = (int)unit1.itemId;
                     if (unit1.itemId != 0)
                     {
                         int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId).FirstOrDefault());
@@ -572,7 +572,7 @@ namespace Restaurant.View.kitchen
                 invoiceItems.Add(itemT);
             }
             #endregion
-            int invoiceId = await FillCombo.invoice.saveInvoiceWithItems(invoice,invoiceItems);
+            long invoiceId = await FillCombo.invoice.saveInvoiceWithItems(invoice,invoiceItems);
             if (invoiceId > 0)
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
@@ -993,7 +993,7 @@ namespace Restaurant.View.kitchen
                 {
                     for (int i = 0; i < w.selectedItems.Count; i++)
                     {
-                        int itemId = w.selectedItems[i];
+                        long itemId = w.selectedItems[i];
                         await ChangeItemIdEvent(itemId);
                     }
                     refrishBillDetails();
@@ -1140,7 +1140,7 @@ namespace Restaurant.View.kitchen
         }
 
         #region calculate quantity
-        private async Task<int> getAmountInBill(int itemId, int itemUnitId, int ID)
+        private async Task<int> getAmountInBill(long itemId, long itemUnitId, long ID)
         {
             int quantity = 0;
             var itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == itemId).ToList();
@@ -1180,7 +1180,7 @@ namespace Restaurant.View.kitchen
             return quantity;
         }
         #endregion
-        //private async Task<int> getAvailableAmount(int itemId, int itemUnitId, int branchId, int ID)
+        //private async Task<int> getAvailableAmount(long itemId, int itemUnitId, long branchId, int ID)
         //{
         //    var itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == itemId).ToList();
         //    int availableAmount = await FillCombo.itemLocation.getAmountInBranch(itemUnitId, branchId,1);
@@ -1375,7 +1375,7 @@ namespace Restaurant.View.kitchen
         }
         #endregion
         #region billdetails
-        private void addRowToBill(string itemName, int itemId, string unitName, int itemUnitId, int count)
+        private void addRowToBill(string itemName, long itemId, string unitName, long itemUnitId, int count)
         {
             // increase sequence for each read
             _SequenceNum++;
@@ -1417,7 +1417,7 @@ namespace Restaurant.View.kitchen
             DataGrid_CollectionChanged(dg_billDetails, null);
 
         }
-        public async Task ChangeItemIdEvent(int itemId)
+        public async Task ChangeItemIdEvent(long itemId)
         {
             item = FillCombo.purchaseItems.ToList().Find(c => c.itemId == itemId);
 

@@ -94,7 +94,7 @@ namespace Restaurant.View.catalog.foods
         byte tgl_itemState;
         string searchText = "";
         public static List<string> requiredControlList;
-        int itemUnitId = 0;
+        long itemUnitId = 0;
         //Unit unit = new Unit();
         Package package = new Package();
         #region for barcode
@@ -494,7 +494,7 @@ namespace Restaurant.View.catalog.foods
                         var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr && c.type == "packageItems");
                         if (ob != null)
                         {
-                            int itemId = (int)ob.itemId;
+                            long itemId = (int)ob.itemId;
                             ChangeItemIdEvent(itemId);
                         }
                         else
@@ -1060,7 +1060,7 @@ namespace Restaurant.View.catalog.foods
         #endregion
         #region Get Id By Click  Y
 
-        public async void ChangeItemIdEvent(int itemId)
+        public async void ChangeItemIdEvent(long itemId)
         {
             try
             {

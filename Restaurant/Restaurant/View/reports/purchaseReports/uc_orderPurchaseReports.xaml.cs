@@ -105,10 +105,10 @@ namespace Restaurant.View.reports.purchaseReports
 
         /*************************/
 
-        ObservableCollection<int> selectedBranchId = new ObservableCollection<int>();
-        ObservableCollection<int> selectedPosId = new ObservableCollection<int>();
-        ObservableCollection<int> selectedVendorsId = new ObservableCollection<int>();
-        ObservableCollection<int> selectedUserId = new ObservableCollection<int>();
+        ObservableCollection<long> selectedBranchId = new ObservableCollection<long>();
+        ObservableCollection<long> selectedPosId = new ObservableCollection<long>();
+        ObservableCollection<long> selectedVendorsId = new ObservableCollection<long>();
+        ObservableCollection<long> selectedUserId = new ObservableCollection<long>();
 
         private List<ItemTransferInvoice> converter(List<ItemTransferInvoice> query)
         {
@@ -301,7 +301,7 @@ namespace Restaurant.View.reports.purchaseReports
             }
             return xx;
         }
-        private void fillPieChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillPieChart(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             List<string> titles = new List<string>();
             IEnumerable<int> x = null;
@@ -385,7 +385,7 @@ namespace Restaurant.View.reports.purchaseReports
             chart1.Series = piechartData;
         }
 
-        private void fillColumnChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillColumnChart(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             axcolumn.Labels = new List<string>();
             List<string> names = new List<string>();
@@ -491,7 +491,7 @@ namespace Restaurant.View.reports.purchaseReports
 
         }
 
-        private void fillRowChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillRowChart(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             #region
             //  MyAxis.Labels = new List<string>();
@@ -639,7 +639,7 @@ namespace Restaurant.View.reports.purchaseReports
             #endregion
         }
 
-        private List<ItemTransferInvoice> fillPdfList(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private List<ItemTransferInvoice> fillPdfList(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
 
@@ -677,7 +677,7 @@ namespace Restaurant.View.reports.purchaseReports
             dgInvoice.ItemsSource = filltoprint();
             txt_count.Text = dgInvoice.Items.Count.ToString();
 
-            ObservableCollection<int> selected = new ObservableCollection<int>();
+            ObservableCollection<long> selected = new ObservableCollection<long>();
             if (selectedTab == 0)
                 selected = selectedBranchId;
             if (selectedTab == 1)

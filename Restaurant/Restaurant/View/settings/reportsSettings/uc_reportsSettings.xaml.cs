@@ -56,7 +56,7 @@ namespace Restaurant.View.settings.reportsSettings
         
         public class Replang
         {
-            public int langId { get; set; }
+            public long langId { get; set; }
             public string lang { get; set; }
             public string trlang { get; set; }
             public Nullable<int> isDefault { get; set; }
@@ -73,7 +73,7 @@ namespace Restaurant.View.settings.reportsSettings
         static SettingCls set = new SettingCls();
         static SetValues valueModel = new SetValues();
         static SetValues printCount = new SetValues();
-        static int printCountId = 0;
+        static long printCountId = 0;
        
         List<SetValues> printList = new List<SetValues>();
 

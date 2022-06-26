@@ -30,7 +30,7 @@ namespace Restaurant.View.windows
         ResidentialSectorsUsers residentialSectorsUserModel = new ResidentialSectorsUsers();
         ResidentialSectorsUsers residentialSectorsUser = new ResidentialSectorsUsers();
         List<ResidentialSectorsUsers> selectedSectors = new List<ResidentialSectorsUsers>();
-        public int driverId = 0;
+        public long driverId = 0;
 
         public wd_residentialSectorsList()
         {

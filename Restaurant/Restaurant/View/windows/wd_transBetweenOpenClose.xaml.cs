@@ -23,7 +23,7 @@ namespace Restaurant.View.windows
 
         Statistics statisticsModel = new Statistics();
         IEnumerable<OpenClosOperatinModel> cashesQuery;
-        public int openCashTransID = 0 , closeCashTransID = 0;
+        public long openCashTransID = 0 , closeCashTransID = 0;
 
         public wd_transBetweenOpenClose()
         {

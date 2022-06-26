@@ -680,7 +680,7 @@ namespace Restaurant.View.accounts
             s = await pos.save(pos);
         }
 
-        private async Task calcUserBalance(decimal value, int userId)
+        private async Task calcUserBalance(decimal value, long userId)
         {//balance for user
             User user = await userModel.getUserById(userId);
 

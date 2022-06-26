@@ -58,8 +58,8 @@ namespace Restaurant.View.kitchen
         string updatePermission = "menuSettings_update";
         byte tgl_itemState;
         string searchText = "";
-        int categoryId = 0;
-        int tagId = 0;
+        long categoryId = 0;
+        long tagId = 0;
         List<string> weekDays = new List<string>() { "sat","sun", "mon","tues","wed","thur","fri" };
         List<string> selectedDays = new List<string>();
         public static List<string> requiredControlList;
@@ -354,7 +354,7 @@ namespace Restaurant.View.kitchen
                         var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr && FillCombo.purchaseTypes.Contains(c.type));
                         if (ob != null)
                         {
-                            int itemId = (int)ob.itemId;
+                            long itemId = (int)ob.itemId;
                             ChangeItemIdEvent(itemId);
                         }
                         else
@@ -858,7 +858,7 @@ namespace Restaurant.View.kitchen
         #endregion
         #region Get Id By Click  Y
 
-        public async void ChangeItemIdEvent(int itemId)
+        public async void ChangeItemIdEvent(long itemId)
         {
             try
             {

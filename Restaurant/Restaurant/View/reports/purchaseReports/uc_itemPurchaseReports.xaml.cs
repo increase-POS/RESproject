@@ -94,9 +94,9 @@ namespace Restaurant.View.reports.purchaseReports
 
         IEnumerable<ItemTransferInvoice> RepQuery;
 
-        ObservableCollection<int> selectedBranchId = new ObservableCollection<int>();
+        ObservableCollection<long> selectedBranchId = new ObservableCollection<long>();
 
-        ObservableCollection<int> selectedItemId = new ObservableCollection<int>();
+        ObservableCollection<long> selectedItemId = new ObservableCollection<long>();
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -1051,7 +1051,7 @@ namespace Restaurant.View.reports.purchaseReports
         }
         #endregion
 
-        private void fillPieChartCollect(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillPieChartCollect(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             List<string> titles = new List<string>();
             List<long> x = new List<long>();
@@ -1104,7 +1104,7 @@ namespace Restaurant.View.reports.purchaseReports
             chart1.Series = piechartData;
         }
 
-        private void fillColumnChartCollect(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillColumnChartCollect(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             axcolumn.Labels = new List<string>();
             List<string> names = new List<string>();
@@ -1160,7 +1160,7 @@ namespace Restaurant.View.reports.purchaseReports
             cartesianChart.Series = columnChartData;
         }
 
-        private void fillRowChartCollect(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillRowChartCollect(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             int endYear = DateTime.Now.Year;
             int startYear = endYear - 1;
@@ -1241,7 +1241,7 @@ namespace Restaurant.View.reports.purchaseReports
         }
 
         #region Charts
-        private void fillPieChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillPieChart(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             List<string> titles = new List<string>();
             List<int> x = new List<int>();
@@ -1300,7 +1300,7 @@ namespace Restaurant.View.reports.purchaseReports
             chart1.Series = piechartData;
         }
 
-        private void fillColumnChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillColumnChart(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             axcolumn.Labels = new List<string>();
             List<string> names = new List<string>();
@@ -1372,7 +1372,7 @@ namespace Restaurant.View.reports.purchaseReports
             cartesianChart.Series = columnChartData;
         }
 
-        private void fillRowChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillRowChart(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             MyAxis.Labels = new List<string>();
             List<string> names = new List<string>();

@@ -193,7 +193,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             }
         }
         
-        private async Task refreshDocCount(int inventoryId)
+        private async Task refreshDocCount(long inventoryId)
         {        
             try
             {

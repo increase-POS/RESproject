@@ -34,7 +34,7 @@ namespace Restaurant.View.windows
             }
         }
 
-        public int invId;
+        public long invId;
         public decimal invPaid;
         public decimal invTotal;
         public string title;

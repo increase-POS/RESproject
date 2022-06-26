@@ -61,7 +61,7 @@ namespace Restaurant.View.windows
             }
         }
         public string userJob;
-        public int userId;
+        public long userId;
         public bool isOk { get; set; }
         public static List<string> requiredControlList = new List<string>();
         private async void Window_Loaded(object sender, RoutedEventArgs e)

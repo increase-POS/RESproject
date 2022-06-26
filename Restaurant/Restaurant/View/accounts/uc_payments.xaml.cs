@@ -664,7 +664,7 @@ namespace Restaurant.View.accounts
             s = await pos.save(pos);
         }
 
-        private async Task calcUserBalance(decimal value, int userId)
+        private async Task calcUserBalance(decimal value, long userId)
         {//balance for user
             User user = await userModel.getUserById(userId);
 
@@ -687,7 +687,7 @@ namespace Restaurant.View.accounts
             await userModel.save(user);
         }
 
-        private async Task calcShippingComBalance(decimal value, int shippingcompanyId)
+        private async Task calcShippingComBalance(decimal value, long shippingcompanyId)
         {//balance for shipping company
             ShippingCompanies shCom = await shCompanyModel.GetByID(shippingcompanyId);
 

@@ -729,8 +729,8 @@ namespace Restaurant.View.reports.accountsReports
         {
             MyAxis.Labels = new List<string>();
             List<string> names = new List<string>();
-            List<int> ids = new List<int>();
-            List<int> otherIds = new List<int>();
+            List<long> ids = new List<long>();
+            List<long> otherIds = new List<long>();
 
             List<ItemUnitInvoiceProfit> resultList = new List<ItemUnitInvoiceProfit>();
             SeriesCollection rowChartData = new SeriesCollection();
@@ -774,7 +774,7 @@ namespace Restaurant.View.reports.accountsReports
             rowChart.Series = rowChartData;
         }
 
-        private void drawPoints(string name, int id, SeriesCollection rowChartData, char ch, List<int> otherIds)
+        private void drawPoints(string name, long id, SeriesCollection rowChartData, char ch, List<long> otherIds)
         {
             int endYear = DateTime.Now.Year;
             int startYear = endYear - 1;

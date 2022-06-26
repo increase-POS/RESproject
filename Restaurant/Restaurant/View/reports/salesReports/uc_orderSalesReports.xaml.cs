@@ -106,10 +106,10 @@ namespace Restaurant.View.reports.salesReports
         User userModel = new User();
         /*************************/
 
-        ObservableCollection<int> selectedBranchId = new ObservableCollection<int>();
-        ObservableCollection<int> selectedPosId = new ObservableCollection<int>();
-        ObservableCollection<int> selectedVendorsId = new ObservableCollection<int>();
-        ObservableCollection<int> selectedUserId = new ObservableCollection<int>();
+        ObservableCollection<long> selectedBranchId = new ObservableCollection<long>();
+        ObservableCollection<long> selectedPosId = new ObservableCollection<long>();
+        ObservableCollection<long> selectedVendorsId = new ObservableCollection<long>();
+        ObservableCollection<long> selectedUserId = new ObservableCollection<long>();
 
         public string[] Labels { get; set; }
 
@@ -261,7 +261,7 @@ namespace Restaurant.View.reports.salesReports
             return result;
         }
 
-        private void fillPieChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillPieChart(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             List<string> titles = new List<string>();
             IEnumerable<int> x = null;
@@ -343,7 +343,7 @@ namespace Restaurant.View.reports.salesReports
             chart1.Series = piechartData;
         }
 
-        private void fillColumnChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillColumnChart(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             axcolumn.Labels = new List<string>();
             List<string> names = new List<string>();
@@ -485,7 +485,7 @@ namespace Restaurant.View.reports.salesReports
             cartesianChart.Series = columnChartData;
         }
 
-        private void fillRowChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillRowChart(ComboBox comboBox, ObservableCollection<long> stackedButton)
         {
             MyAxis.Labels = new List<string>();
             List<string> names = new List<string>();
@@ -664,7 +664,7 @@ namespace Restaurant.View.reports.salesReports
             dgInvoice.ItemsSource = itemTransfers;
             txt_count.Text = dgInvoice.Items.Count.ToString();
 
-            ObservableCollection<int> selected = new ObservableCollection<int>();
+            ObservableCollection<long> selected = new ObservableCollection<long>();
             if (selectedTab == 0)
                 selected = selectedBranchId;
             if (selectedTab == 1)
