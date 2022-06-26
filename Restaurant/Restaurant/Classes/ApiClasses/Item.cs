@@ -23,30 +23,30 @@ namespace Restaurant.Classes
     public class Item
     {
 
-        public int itemId { get; set; }
+        public long itemId { get; set; }
         public string code { get; set; }
         public string name { get; set; }
         public string details { get; set; }
         public string image { get; set; }
         public Nullable<decimal> taxes { get; set; }
         public byte isActive { get; set; }
-        public Nullable<int> categoryId { get; set; }
+        public Nullable<long> categoryId { get; set; }
         public string categoryName { get; set; }
 
 
         public int min { get; set; }
         public int max { get; set; }
-        public Nullable<int> minUnitId { get; set; }
-        public Nullable<int> maxUnitId { get; set; }
+        public Nullable<long> minUnitId { get; set; }
+        public Nullable<long> maxUnitId { get; set; }
 
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public Boolean canDelete { get; set; }
 
         public decimal avgPurchasePrice { get; set; }
-        public Nullable<int> tagId { get; set; }
+        public Nullable<long> tagId { get; set; }
 
         //new
         public string notes { get; set; }
@@ -56,13 +56,13 @@ namespace Restaurant.Classes
 
 
         public string type { get; set; }
-        public Nullable<int> parentId { get; set; }
+        public Nullable<long> parentId { get; set; }
         public Nullable<int> itemCount { get; set; }
 
 
         // new units and offers an is new
         //units
-        public Nullable<int> unitId { get; set; }
+        public Nullable<long> unitId { get; set; }
         public string unitName { get; set; }
         public Nullable<decimal> price { get; set; }
         public Nullable<decimal> basicPrice { get; set; }
@@ -75,8 +75,8 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> startDate { get; set; }
         public Nullable<System.DateTime> endDate { get; set; }
         public byte? isActiveOffer { get; set; }
-        public Nullable<int> itemUnitId { get; set; }
-        public Nullable<int> offerId { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
+        public Nullable<long> offerId { get; set; }
         public string forAgent { get; set; }
 
         public Nullable<decimal> priceTax { get; set; }
@@ -122,7 +122,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
         
-        public async Task<List<Item>> GetKitchenItemsWithUnits(int branchId,int categoryId)
+        public async Task<List<Item>> GetKitchenItemsWithUnits(long branchId, long categoryId)
         {
             List<Item> items = new List<Item>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -168,7 +168,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Item>> GetAllSalesItemsInv(int branchId,string day,string invType, int membershipId =0)
+        public async Task<List<Item>> GetAllSalesItemsInv(long branchId,string day,string invType, long membershipId =0)
         {
             List<Item> items = new List<Item>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -206,7 +206,7 @@ namespace Restaurant.Classes
             return items;
         }
       
-        public async Task<List<Item>> GetKitchenItems(int categoryId, int branchId)
+        public async Task<List<Item>> GetKitchenItems(long categoryId, long branchId)
         {
             List<Item> items = new List<Item>() ;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -224,7 +224,7 @@ namespace Restaurant.Classes
             }
             return items;            
         }
-        public async Task<int> delete(int itemId, int userId,Boolean final)
+        public async Task<int> delete(long itemId, long userId,Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());
@@ -235,7 +235,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);         
         }                 
 
-        public async Task<Item> GetItemByID(int itemId)
+        public async Task<Item> GetItemByID(long itemId)
         {
             Item item = new Item();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -253,7 +253,7 @@ namespace Restaurant.Classes
             }
             return item;
         }
-        public async Task<List<Item>> GetItemsHasQuant(int branchId)
+        public async Task<List<Item>> GetItemsHasQuant(long branchId)
         {
             List<Item> list = new List<Item>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -275,7 +275,7 @@ namespace Restaurant.Classes
       
         #region image
         // update image field in DB
-        public async Task<int> updateImage(int itemId, string imageName)
+        public async Task<int> updateImage(long itemId, string imageName)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());
@@ -284,7 +284,7 @@ namespace Restaurant.Classes
             string method = "Items/UpdateImage";
            return await APIResult.post(method, parameters); 
         }
-        public async Task<Boolean> uploadImage(string imagePath, string imageName, int itemId)
+        public async Task<Boolean> uploadImage(string imagePath, string imageName, long itemId)
         {
             if (imagePath != "")
             {

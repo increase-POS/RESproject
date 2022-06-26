@@ -18,7 +18,7 @@ namespace Restaurant.Classes
 {
     public class User
     {
-        public int userId { get; set; }
+        public long userId { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public string name { get; set; }
@@ -30,8 +30,8 @@ namespace Restaurant.Classes
         public string workHours { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public string phone { get; set; }
         public string mobile { get; set; }
         public string email { get; set; }
@@ -41,7 +41,7 @@ namespace Restaurant.Classes
         public byte isOnline { get; set; }
 
         public string image { get; set; }
-        public Nullable<int> groupId { get; set; }
+        public Nullable<long> groupId { get; set; }
         public decimal balance { get; set; }
         public byte balanceType { get; set; }
         public bool isAdmin { get; set; }
@@ -98,7 +98,7 @@ namespace Restaurant.Classes
             return items;
         }
 
-        public async Task<List<User>> getUsersForDelivery(string job, int customerId)
+        public async Task<List<User>> getUsersForDelivery(string job, long customerId)
         {
             List<User> items = new List<User>();
             //  to pass parameters (optional)
@@ -137,7 +137,7 @@ namespace Restaurant.Classes
             }
             return user;
         }
-        public async Task<User> getUserById(int userId)
+        public async Task<User> getUserById(long userId)
         {
             User user = new User();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -165,7 +165,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> delete(int delUserId, int userId, bool final)
+        public async Task<int> delete(long delUserId, long userId, bool final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("delUserId", delUserId.ToString());
@@ -184,8 +184,8 @@ namespace Restaurant.Classes
             string method = "Users/UpdateImage";
            return await APIResult.post(method, parameters);
         }
-        public async Task<string> uploadImage(string imagePath, string imageName, int userId)
-        //public async Task<Boolean> uploadImage(string imagePath, int userId)
+        public async Task<string> uploadImage(string imagePath, string imageName, long userId)
+        //public async Task<Boolean> uploadImage(string imagePath, long userId)
         {
             if (imagePath != "")
             {

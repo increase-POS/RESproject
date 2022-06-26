@@ -16,15 +16,15 @@ namespace Restaurant.Classes
 {
     public class Unit
     {
-        public int unitId { get; set; }
+        public long unitId { get; set; }
         public string name { get; set; }
         public short isSmallest { get; set; }
-        public Nullable<int> smallestId { get; set; }
+        public Nullable<long> smallestId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> parentid { get; set; }
+        public Nullable<long> parentid { get; set; }
         public byte isActive { get; set; }
         public string notes { get; set; }
 
@@ -62,7 +62,7 @@ namespace Restaurant.Classes
    
 
       
-        public async Task<List<Unit>> getSmallUnits(int itemId, int unitId)
+        public async Task<List<Unit>> getSmallUnits(long itemId, long unitId)
         {
             List<Unit> items = new List<Unit>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -88,7 +88,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(int unitId, int userId, Boolean final)
+        public async Task<int> delete(long unitId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", unitId.ToString());

@@ -12,18 +12,18 @@ namespace Restaurant.Classes.ApiClasses
 {
     public class Tables
     {
-        public int tableId { get; set; }
+        public long tableId { get; set; }
         public string name { get; set; }
         public int personsCount { get; set; }
-        public Nullable<int> sectionId { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> sectionId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string notes { get; set; }
         public string status { get; set; }
         public byte isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
 
         public Boolean canDelete { get; set; }
         public string sectionName { get; set; }
@@ -38,7 +38,7 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        internal async Task<int> delete(int tableId, int userId, bool final)
+        internal async Task<int> delete(long tableId, long userId, bool final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("tableId", tableId.ToString());
@@ -48,7 +48,7 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        internal async Task<IEnumerable<Tables>> Get(int branchId = 0, int sectionId = 0)
+        internal async Task<IEnumerable<Tables>> Get(long branchId = 0, long sectionId = 0)
         {
             List<Tables> items = new List<Tables>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -64,7 +64,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        internal async Task<Invoice> GetTableInvoice(int tableId)
+        internal async Task<Invoice> GetTableInvoice(long tableId)
         {
             Invoice items = new Invoice();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -79,7 +79,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        internal async Task<List<Tables>> getInvoiceTables(int invoiceId)
+        internal async Task<List<Tables>> getInvoiceTables(long invoiceId)
         {
             List<Tables> items = new List<Tables>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -95,7 +95,7 @@ namespace Restaurant.Classes.ApiClasses
             return items;
         }
 
-        internal async Task<List<Tables>> GetTablesStatusInfo(int branchId, string dateSearch, string startTimeSearch, string endTimeSearch)
+        internal async Task<List<Tables>> GetTablesStatusInfo(long branchId, string dateSearch, string startTimeSearch, string endTimeSearch)
         {
             List<Tables> items = new List<Tables>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -113,7 +113,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        internal async Task<List<Tables>> GetTablesForDinning(int branchId, string dateSearch)
+        internal async Task<List<Tables>> GetTablesForDinning(long branchId, string dateSearch)
         {
             List<Tables> items = new List<Tables>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -131,7 +131,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        internal async Task<List<TablesStatistics>> GetTablesStatistics(string dateSearch, int mainBranchId, int userId)
+        internal async Task<List<TablesStatistics>> GetTablesStatistics(string dateSearch, long mainBranchId, long userId)
         {
             List<TablesStatistics> items = new List<TablesStatistics>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -150,7 +150,7 @@ namespace Restaurant.Classes.ApiClasses
             return items;
         }
 
-        public async Task<int> AddTablesToSection(List<Tables> tablesList, int sectionId, int userId)
+        public async Task<int> AddTablesToSection(List<Tables> tablesList, long sectionId, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Tables/AddTablesToSection";
@@ -161,7 +161,7 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> checkTableAvailabiltiy(int tableId, int branchId, string reservationDate, string startTime, string endTime, long reservationId = 0, int invoiceId = 0)
+        public async Task<int> checkTableAvailabiltiy(long tableId, long branchId, string reservationDate, string startTime, string endTime, long reservationId = 0, long invoiceId = 0)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Tables/checkTableAvailabiltiy";
@@ -174,7 +174,7 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("endTime", endTime);
             return await APIResult.post(method, parameters);
         }
-        public async Task<int> checkOpenedTable(int tableId, int branchId)
+        public async Task<int> checkOpenedTable(long tableId, long branchId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Tables/checkOpenedTable";

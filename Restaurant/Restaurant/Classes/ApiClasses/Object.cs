@@ -18,9 +18,9 @@ namespace Restaurant.Classes
     public class Object
     {
 
-        public int objectId { get; set; }
+        public long objectId { get; set; }
         public string name { get; set; }
-        public Nullable<int> parentObjectId { get; set; }
+        public Nullable<long> parentObjectId { get; set; }
         public string objectType { get; set; }
         public string translate { get; set; }
         public string translateHint { get; set; }
@@ -30,8 +30,8 @@ namespace Restaurant.Classes
         public string note { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public byte isActive { get; set; }
         public Boolean canDelete { get; set; }
 
@@ -66,7 +66,7 @@ namespace Restaurant.Classes
             tempob = all.Where(o => o.name == objName).FirstOrDefault();
             if (tempob != null)
             {
-                int? firstpid = tempob.parentObjectId;
+                long? firstpid = tempob.parentObjectId;
                 plist.Add(tempob);
 
                 list = findparentslist(firstpid, all);
@@ -79,7 +79,7 @@ namespace Restaurant.Classes
 
         }
 
-        private List<Object> findparentslist(int? parentid, List<Object> all)
+        private List<Object> findparentslist(long? parentid, List<Object> all)
         {
 
 
@@ -99,7 +99,7 @@ namespace Restaurant.Classes
 
         }
 
-        private Object findparents(int? parentid, List<Object> all)
+        private Object findparents(long? parentid, List<Object> all)
         {
             Object ptempob = null;
             ptempob = all.Where(o => o.objectId == parentid).FirstOrDefault();
@@ -110,7 +110,7 @@ namespace Restaurant.Classes
         {
             try
             {
-                int objectId = FillCombo.objectsList.Where(x => x.name == objectName.ToString()).FirstOrDefault().objectId;
+                long objectId = FillCombo.objectsList.Where(x => x.name == objectName.ToString()).FirstOrDefault().objectId;
                 return all.Where(x => x.parentObjectId == objectId).ToList();
             }
            catch

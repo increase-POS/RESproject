@@ -14,8 +14,8 @@ namespace Restaurant.Classes
     {
         #region basic attributes
         public Nullable<long> menuSettingId { get; set; }
-        public Nullable<int> itemUnitId { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public bool sat { get; set; }
         public bool sun { get; set; }
         public bool mon { get; set; }
@@ -27,17 +27,17 @@ namespace Restaurant.Classes
         public Nullable<byte> isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
         #endregion
 
         #region item attribute
-        public int itemId { get; set; }
+        public long itemId { get; set; }
         public string name { get; set; }
         public string code { get; set; }
         public string details { get; set; }
-        public Nullable<int> categoryId { get; set; }
-        public Nullable<int> tagId { get; set; }
+        public Nullable<long> categoryId { get; set; }
+        public Nullable<long> tagId { get; set; }
         public string image { get; set; }
         public string type { get; set; }
         public decimal price { get; set; }
@@ -55,7 +55,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
             return await APIResult.post(method, parameters);
         }
-        public async Task<List<MenuSetting>> Get(int branchId)
+        public async Task<List<MenuSetting>> Get(long branchId)
         {
             List<MenuSetting> items = new List<MenuSetting>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();

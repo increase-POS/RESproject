@@ -16,14 +16,14 @@ namespace Restaurant.Classes
 {
     public class MembershipsOffers
     {
-        public int membershipOfferId { get; set; }
-        public Nullable<int> membershipId { get; set; }
-        public Nullable<int> offerId { get; set; }
+        public long membershipOfferId { get; set; }
+        public Nullable<long> membershipId { get; set; }
+        public Nullable<long> offerId { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
 
 
         public async Task<List<MembershipsOffers>> GetAll()
@@ -40,7 +40,7 @@ namespace Restaurant.Classes
             return items;
         }
 
-        public async Task<MembershipsOffers> GetById(int itemId)
+        public async Task<MembershipsOffers> GetById(long itemId)
         {
             MembershipsOffers item = new MembershipsOffers();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -59,7 +59,7 @@ namespace Restaurant.Classes
             return item;
         }
 
-        public async Task<int> UpdateOffersByMembershipId(List<MembershipsOffers> newList, int membershipId, int updateUserId)
+        public async Task<int> UpdateOffersByMembershipId(List<MembershipsOffers> newList, long membershipId, long updateUserId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "membershipsOffers/UpdateOffersByMembershipId";

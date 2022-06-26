@@ -19,28 +19,28 @@ namespace Restaurant.Classes
 {
     public class OpenClosOperatinModel
     {
-        public int cashTransId { get; set; }
+        public long cashTransId { get; set; }
         public string transType { get; set; }
-        public Nullable<int> posId { get; set; }
-        public Nullable<int> userId { get; set; }
-        public Nullable<int> agentId { get; set; }
-        public Nullable<int> invId { get; set; }
+        public Nullable<long> posId { get; set; }
+        public Nullable<long> userId { get; set; }
+        public Nullable<long> agentId { get; set; }
+        public Nullable<long> invId { get; set; }
         public string transNum { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<decimal> cash { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
         public string notes { get; set; }
-        public Nullable<int> posIdCreator { get; set; }
+        public Nullable<long> posIdCreator { get; set; }
         public Nullable<byte> isConfirm { get; set; }
-        public Nullable<int> cashTransIdSource { get; set; }
+        public Nullable<long> cashTransIdSource { get; set; }
         public string side { get; set; }
         public string opSideNum { get; set; }
         public string docName { get; set; }
         public string docNum { get; set; }
         public string docImage { get; set; }
-        public Nullable<int> bankId { get; set; }
+        public Nullable<long> bankId { get; set; }
         public string bankName { get; set; }
         public string agentName { get; set; }
         public string usersName { get; set; }
@@ -48,13 +48,13 @@ namespace Restaurant.Classes
         public string posName { get; set; }
         public string posCreatorName { get; set; }
         public Nullable<byte> isConfirm2 { get; set; }
-        public int cashTrans2Id { get; set; }
-        public Nullable<int> pos2Id { get; set; }
+        public long cashTrans2Id { get; set; }
+        public Nullable<long> pos2Id { get; set; }
 
         public string pos2Name { get; set; }
         public string processType { get; set; }
-        public Nullable<int> cardId { get; set; }
-        public Nullable<int> bondId { get; set; }
+        public Nullable<long> cardId { get; set; }
+        public Nullable<long> bondId { get; set; }
         public string createUserName { get; set; }
         public string updateUserName { get; set; }
         public string updateUserJob { get; set; }
@@ -66,15 +66,15 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> bondDeserveDate { get; set; }
         public Nullable<byte> bondIsRecieved { get; set; }
         public string agentCompany { get; set; }
-        public Nullable<int> shippingCompanyId { get; set; }
+        public Nullable<long> shippingCompanyId { get; set; }
         public string shippingCompanyName { get; set; }
         public string userAcc { get; set; }
 
-        public Nullable<int> branchCreatorId { get; set; }
+        public Nullable<long> branchCreatorId { get; set; }
         public string branchCreatorname { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string branchName { get; set; }
-        public Nullable<int> branch2Id { get; set; }
+        public Nullable<long> branch2Id { get; set; }
         public string branch2Name { get; set; }
 
 
@@ -83,9 +83,9 @@ namespace Restaurant.Classes
     }
     public class POSOpenCloseModel
     {
-        public int cashTransId { get; set; }
+        public long cashTransId { get; set; }
         public string transType { get; set; }
-        public Nullable<int> posId { get; set; }
+        public Nullable<long> posId { get; set; }
 
         public string transNum { get; set; }
 
@@ -94,7 +94,7 @@ namespace Restaurant.Classes
         public string notes { get; set; }
 
         public Nullable<byte> isConfirm { get; set; }
-        public Nullable<int> cashTransIdSource { get; set; }
+        public Nullable<long> cashTransIdSource { get; set; }
         public string side { get; set; }
 
         public string posName { get; set; }
@@ -104,13 +104,13 @@ namespace Restaurant.Classes
         public string processType { get; set; }
 
 
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string branchName { get; set; }
 
         public Nullable<System.DateTime> updateDate { get; set; }//close
         public Nullable<System.DateTime> openDate { get; set; }
         public Nullable<decimal> openCash { get; set; }
-        public Nullable<int> openCashTransId { get; set; }
+        public Nullable<long> openCashTransId { get; set; }
 
 
 
@@ -128,11 +128,11 @@ namespace Restaurant.Classes
 
 
         // ItemTransfer
-        public int ITitemsTransId { get; set; }
-        public Nullable<int> ITitemUnitId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> ITitemId { get; set; }
-        public Nullable<int> ITunitId { get; set; }
+        public long ITitemsTransId { get; set; }
+        public Nullable<long> ITitemUnitId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> ITitemId { get; set; }
+        public Nullable<long> ITunitId { get; set; }
         public string ITitemName { get; set; }
         public string ITunitName { get; set; }
 
@@ -147,10 +147,10 @@ namespace Restaurant.Classes
         public string ITbarcode { get; set; }
 
         //invoice
-        public int invoiceId { get; set; }
+        public long invoiceId { get; set; }
         public string invNumber { get; set; }
         public string invBarcode { get; set; }
-        public Nullable<int> agentId { get; set; }
+        public Nullable<long> agentId { get; set; }
 
         public string invType { get; set; }
         public string discountType { get; set; }
@@ -163,7 +163,7 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> deservedDate { get; set; }
         public Nullable<System.DateTime> invDate { get; set; }
         public Nullable<System.DateTime> IupdateDate { get; set; }
-        public Nullable<int> IupdateUserId { get; set; }
+        public Nullable<long> IupdateUserId { get; set; }
 
         public string invCase { get; set; }
 
@@ -173,11 +173,11 @@ namespace Restaurant.Classes
         public string branchName { get; set; }
         public string posName { get; set; }
         public Nullable<System.DateTime> vendorInvDate { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
 
         public Nullable<decimal> tax { get; set; }
         public Nullable<int> taxtype { get; set; }
-        public Nullable<int> posId { get; set; }
+        public Nullable<long> posId { get; set; }
 
         public string ITtype { get; set; }
 
@@ -223,10 +223,10 @@ namespace Restaurant.Classes
         public string ITitemName { get; set; }
         public string ITunitName { get; set; }
         //public int ITitemsTransId { get; set; }*
-        public Nullable<int> ITitemUnitId { get; set; }
+        public Nullable<long> ITitemUnitId { get; set; }
 
-        public Nullable<int> ITitemId { get; set; }
-        public Nullable<int> ITunitId { get; set; }
+        public Nullable<long> ITitemId { get; set; }
+        public Nullable<long> ITunitId { get; set; }
         public Nullable<long> ITquantity { get; set; }
 
         //public Nullable<System.DateTime> ITupdateDate { get; set; }*
@@ -239,11 +239,11 @@ namespace Restaurant.Classes
         //public string ITUpdateuserNam { get; set; }*
         //public string ITUpdateuserLNam { get; set; }*
         //public string ITUpdateuserAccNam { get; set; }*
-        public int invoiceId { get; set; }
+        public long invoiceId { get; set; }
         public string invNumber { get; set; }
         public string invBarcode { get; set; }
         //public Nullable<int> agentId { get; set; }*
-        public Nullable<int> posId { get; set; }
+        public Nullable<long> posId { get; set; }
         public string invType { get; set; }
         public Nullable<decimal> total { get; set; }
         public Nullable<decimal> totalNet { get; set; }
@@ -259,7 +259,7 @@ namespace Restaurant.Classes
         //  isApproved { get; set; }
 
 
-        public Nullable<int> branchCreatorId { get; set; }
+        public Nullable<long> branchCreatorId { get; set; }
         public string branchCreatorName { get; set; }
 
 
@@ -285,12 +285,12 @@ namespace Restaurant.Classes
     public class BalanceSTS
     {
 
-        public int posId { get; set; }
+        public long posId { get; set; }
         public string posName { get; set; }
         public Nullable<byte> posIsActive { get; set; }
         public Nullable<decimal> balance { get; set; }
         public string posCode { get; set; }
-        public int branchId { get; set; }
+        public long branchId { get; set; }
         public string branchName { get; set; }
         public string branchCode { get; set; }
 
@@ -300,9 +300,9 @@ namespace Restaurant.Classes
     }
     public class CashTransferSts
     {
-        public Nullable<int> invShippingCompanyId { get; set; }
-        public Nullable<int> shipUserId { get; set; }
-        public Nullable<int> invAgentId { get; set; }
+        public Nullable<long> invShippingCompanyId { get; set; }
+        public Nullable<long> shipUserId { get; set; }
+        public Nullable<long> invAgentId { get; set; }
         public Nullable<decimal> agentBalance { get; set; }
         public Nullable<byte> agentBType { get; set; }
         public Nullable<decimal> userBalance { get; set; }
@@ -314,20 +314,20 @@ namespace Restaurant.Classes
         private string description3;
         private string bIsReceived;
         public string bondNumber { get; set; }
-        public Nullable<int> fromposId { get; set; }
+        public Nullable<long> fromposId { get; set; }
         public string fromposName { get; set; }
-        public Nullable<int> frombranchId { get; set; }
+        public Nullable<long> frombranchId { get; set; }
         public string frombranchName { get; set; }
-        public Nullable<int> toposId { get; set; }
+        public Nullable<long> toposId { get; set; }
         public string toposName { get; set; }
-        public Nullable<int> tobranchId { get; set; }
+        public Nullable<long> tobranchId { get; set; }
         public string tobranchName { get; set; }
 
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string branchName { get; set; }
-        public Nullable<int> branch2Id { get; set; }
+        public Nullable<long> branch2Id { get; set; }
         public string branch2Name { get; set; }
-        public Nullable<int> branchCreatorId { get; set; }
+        public Nullable<long> branchCreatorId { get; set; }
         public string branchCreator { get; set; }
         public int depositCount { get; set; }
         public decimal depositSum { get; set; }
@@ -335,20 +335,20 @@ namespace Restaurant.Classes
         public decimal pullSum { get; set; }
 
 
-        public Nullable<int> posId { get; set; }//
-        public Nullable<int> userId { get; set; }
-        public Nullable<int> agentId { get; set; }//
+        public Nullable<long> posId { get; set; }//
+        public Nullable<long> userId { get; set; }
+        public Nullable<long> agentId { get; set; }//
 
         public string transNum { get; set; }//
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }//
 
-        public Nullable<int> updateUserId { get; set; }//
-        public Nullable<int> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }//
+        public Nullable<long> createUserId { get; set; }
         public string notes { get; set; }
-        public Nullable<int> posIdCreator { get; set; }
+        public Nullable<long> posIdCreator { get; set; }
         public Nullable<byte> isConfirm { get; set; }
-        public Nullable<int> cashTransIdSource { get; set; }
+        public Nullable<long> cashTransIdSource { get; set; }
 
         public string opSideNum { get; set; }
         public string docName { get; set; }
@@ -362,8 +362,8 @@ namespace Restaurant.Classes
         public string posName { get; set; }
         public string posCreatorName { get; set; }
         public Nullable<byte> isConfirm2 { get; set; }
-        public int cashTrans2Id { get; set; }
-        public Nullable<int> pos2Id { get; set; }
+        public long cashTrans2Id { get; set; }
+        public Nullable<long> pos2Id { get; set; }
 
         public string pos2Name { get; set; }
 
@@ -386,7 +386,7 @@ namespace Restaurant.Classes
         public Nullable<byte> bondIsRecieved { get; set; }
         public string agentCompany { get; set; }//
 
-        public Nullable<int> shippingCompanyId { get; set; }//
+        public Nullable<long> shippingCompanyId { get; set; }//
         public string shippingCompanyName { get; set; }//
         public string invAgentName { get; set; }
         public string invShippingCompanyName { get; set; }
@@ -400,19 +400,19 @@ namespace Restaurant.Classes
         public Nullable<decimal> deserved { get; set; }
         public Nullable<System.DateTime> deservedDate { get; set; }
 
-        public int cashTransId { get; set; }
+        public long cashTransId { get; set; }
         public string transType { get; set; }//
         public string desc { get; set; }//
-        public Nullable<int> invId { get; set; }//
+        public Nullable<long> invId { get; set; }//
         public Nullable<decimal> cash { get; set; }//
         public decimal cashTotal { get; set; }//
         public string side { get; set; }//
         public string docNum { get; set; }//
-        public Nullable<int> bankId { get; set; }//
+        public Nullable<long> bankId { get; set; }//
         public string processType { get; set; }//
         public string paymentreport { get; set; }//
-        public Nullable<int> cardId { get; set; }//
-        public Nullable<int> bondId { get; set; }//
+        public Nullable<long> cardId { get; set; }//
+        public Nullable<long> bondId { get; set; }//
         public string invNumber { get; set; }//
         public string invBarcode { get; set; }
         public string invType { get; set; }//
@@ -461,7 +461,7 @@ namespace Restaurant.Classes
     {
         public string itemType { get; set; }
         //storagecost
-        public Nullable<int> storageCostId { get; set; }
+        public Nullable<long> storageCostId { get; set; }
         public string storageCostName { get; set; }
         public decimal storageCostValue { get; set; }
 
@@ -470,8 +470,8 @@ namespace Restaurant.Classes
         public int min { get; set; }
         public int max { get; set; }
 
-        public Nullable<int> minUnitId { get; set; }
-        public Nullable<int> maxUnitId { get; set; }
+        public Nullable<long> minUnitId { get; set; }
+        public Nullable<long> maxUnitId { get; set; }
         public string minUnitName { get; set; }
         public string maxUnitName { get; set; }
         private string minAll;
@@ -481,10 +481,10 @@ namespace Restaurant.Classes
         // item unit
         public string itemName { get; set; }
         public string unitName { get; set; }
-        public int itemUnitId { get; set; }
+        public long itemUnitId { get; set; }
 
-        public int itemId { get; set; }
-        public int unitId { get; set; }
+        public long itemId { get; set; }
+        public long unitId { get; set; }
 
         public string barcode { get; set; }
         //item location
@@ -501,8 +501,8 @@ namespace Restaurant.Classes
         public string branchType { get; set; }
         //itemslocations
 
-        public int itemsLocId { get; set; }
-        public int locationId { get; set; }
+        public long itemsLocId { get; set; }
+        public long locationId { get; set; }
         public Nullable<decimal> quantity { get; set; }
 
         public Nullable<System.DateTime> startDate { get; set; }
@@ -524,9 +524,9 @@ namespace Restaurant.Classes
         private string sectionLoactionName;
 
         public Nullable<byte> LocisActive { get; set; }
-        public int sectionId { get; set; }
+        public long sectionId { get; set; }
         public string Locnote { get; set; }
-        public int branchId { get; set; }
+        public long branchId { get; set; }
         public Nullable<byte> LocisFreeZone { get; set; }
 
 
@@ -552,27 +552,27 @@ namespace Restaurant.Classes
         private string itemUnits;
         public string ItemUnits { get => itemUnits = itemName + " - " + unitName; set => itemUnits = value; }
         public int shortfalls { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string branchName { get; set; }
-        public int inventoryILId { get; set; }
+        public long inventoryILId { get; set; }
         public Nullable<bool> isDestroyed { get; set; }
         public Nullable<int> amount { get; set; }
         public Nullable<int> amountDestroyed { get; set; }
         public Nullable<int> realAmount { get; set; }
-        public Nullable<int> itemLocationId { get; set; }
+        public Nullable<long> itemLocationId { get; set; }
         public Nullable<byte> isActive { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public int itemId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public long itemId { get; set; }
         public string itemName { get; set; }
 
-        public int unitId { get; set; }
-        public int itemUnitId { get; set; }
+        public long unitId { get; set; }
+        public long itemUnitId { get; set; }
         public string unitName { get; set; }
-        public int sectionId { get; set; }
+        public long sectionId { get; set; }
         public string Secname { get; set; }
 
         public string x { get; set; }
@@ -582,7 +582,7 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> inventoryDate { get; set; }
         public string inventoryNum { get; set; }
         public string inventoryType { get; set; }
-        public int inventoryId { get; set; }
+        public long inventoryId { get; set; }
         public decimal diffPercentage { get; set; }
         public int nCount { get; set; }
         public int dCount { get; set; }
@@ -594,28 +594,28 @@ namespace Restaurant.Classes
     public class ItemUnitCombo
     {
 
-        public int itemUnitId { get; set; }
+        public long itemUnitId { get; set; }
         public string itemUnitName { get; set; }
 
     }
     public class CouponCombo
     {
 
-        public int Copcid { get; set; }
+        public long Copcid { get; set; }
         public string Copname { get; set; }
     }
 
     public class OfferCombo
     {
 
-        public int OofferId { get; set; }
+        public long OofferId { get; set; }
         public string Oname { get; set; }
     }
 
     public class InvoiceClassCombo
     {
 
-        public int invoiceId { get; set; }
+        public long invoiceId { get; set; }
         public string invNumber { get; set; }
         public string invBarcode { get; set; }
     }
@@ -626,7 +626,7 @@ namespace Restaurant.Classes
         public string shipUserName { get; set; }
         public string shipUserLastName { get; set; }
         public string categoryName { get; set; }
-        public Nullable<int> categoryId { get; set; }
+        public Nullable<long> categoryId { get; set; }
         public int archived { get; set; }
         public double? itemAvg { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
@@ -634,7 +634,7 @@ namespace Restaurant.Classes
         public string causeDestroy { get; set; }
         public string userdestroy { get; set; }
         public string userFalls { get; set; }
-        public Nullable<int> userId { get; set; }
+        public Nullable<long> userId { get; set; }
         public string inventoryNum { get; set; }
         public string inventoryType { get; set; }
         public Nullable<DateTime> inventoryDate { get; set; }
@@ -643,20 +643,20 @@ namespace Restaurant.Classes
         public string agentCompany { get; set; }
         public string itemName { get; set; }
         public string unitName { get; set; }
-        public int itemsTransId { get; set; }
-        public Nullable<int> itemUnitId { get; set; }
-        public Nullable<int> itemId { get; set; }
-        public Nullable<int> unitId { get; set; }
+        public long itemsTransId { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
+        public Nullable<long> itemId { get; set; }
+        public Nullable<long> unitId { get; set; }
         public Nullable<long> quantity { get; set; }
         public Nullable<decimal> price { get; set; }
         public string barcode { get; set; }
 
         // ItemTransfer
-        public int ITitemsTransId { get; set; }
-        public Nullable<int> ITitemUnitId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> ITitemId { get; set; }
-        public Nullable<int> ITunitId { get; set; }
+        public long ITitemsTransId { get; set; }
+        public Nullable<long> ITitemUnitId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> ITitemId { get; set; }
+        public Nullable<long> ITunitId { get; set; }
         public string ITitemName { get; set; }
         public string ITunitName { get; set; }
         private string ITitemUnitName;
@@ -666,8 +666,8 @@ namespace Restaurant.Classes
 
         public Nullable<System.DateTime> ITcreateDate { get; set; }
         public Nullable<System.DateTime> ITupdateDate { get; set; }
-        public Nullable<int> ITcreateUserId { get; set; }
-        public Nullable<int> ITupdateUserId { get; set; }
+        public Nullable<long> ITcreateUserId { get; set; }
+        public Nullable<long> ITupdateUserId { get; set; }
         public string ITnotes { get; set; }
 
         public string ITbarcode { get; set; }
@@ -679,11 +679,11 @@ namespace Restaurant.Classes
         public string ITUpdateuserLName { get; set; }
         public string ITUpdateuserAccName { get; set; }
         //invoice
-        public int invoiceId { get; set; }
+        public long invoiceId { get; set; }
         public string invNumber { get; set; }
         public string invBarcode { get; set; }
-        public Nullable<int> agentId { get; set; }
-        public Nullable<int> createUserId { get; set; }
+        public Nullable<long> agentId { get; set; }
+        public Nullable<long> createUserId { get; set; }
         public string invType { get; set; }
         public string discountType { get; set; }
         public Nullable<decimal> ITdiscountValue { get; set; }
@@ -695,8 +695,8 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> deservedDate { get; set; }
         public Nullable<System.DateTime> invDate { get; set; }
         public Nullable<System.DateTime> IupdateDate { get; set; }
-        public Nullable<int> IupdateUserId { get; set; }
-        public Nullable<int> invoiceMainId { get; set; }
+        public Nullable<long> IupdateUserId { get; set; }
+        public Nullable<long> invoiceMainId { get; set; }
         public string invCase { get; set; }
         public Nullable<System.TimeSpan> invTime { get; set; }
         public string Inotes { get; set; }
@@ -704,13 +704,13 @@ namespace Restaurant.Classes
         public string name { get; set; }
         public string branchName { get; set; }
         public Nullable<System.DateTime> vendorInvDate { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public Nullable<int> itemsCount { get; set; }
         public Nullable<decimal> tax { get; set; }
         public Nullable<int> taxtype { get; set; }
-        public Nullable<int> posId { get; set; }
+        public Nullable<long> posId { get; set; }
         public Nullable<byte> isApproved { get; set; }
-        public Nullable<int> branchCreatorId { get; set; }
+        public Nullable<long> branchCreatorId { get; set; }
         public string branchCreatorName { get; set; }
         public string ITtype { get; set; }
         private string invTypeNumber;//number
@@ -826,13 +826,13 @@ namespace Restaurant.Classes
         public Nullable<decimal> CopinvMax { get; set; }
         public Nullable<System.DateTime> CopcreateDate { get; set; }
         public Nullable<System.DateTime> CopupdateDate { get; set; }
-        public Nullable<int> CopcreateUserId { get; set; }
-        public Nullable<int> CopupdateUserId { get; set; }
+        public Nullable<long> CopcreateUserId { get; set; }
+        public Nullable<long> CopupdateUserId { get; set; }
         public string Copbarcode { get; set; }
         public Nullable<decimal> couponTotalValue { get; set; }
         // offer
 
-        public int OofferId { get; set; }
+        public long OofferId { get; set; }
         public string Oname { get; set; }
         public string Ocode { get; set; }
         public Nullable<byte> OisActive { get; set; }
@@ -842,21 +842,21 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> OendDate { get; set; }
         public Nullable<System.DateTime> OcreateDate { get; set; }
         public Nullable<System.DateTime> OupdateDate { get; set; }
-        public Nullable<int> OcreateUserId { get; set; }
-        public Nullable<int> OupdateUserId { get; set; }
+        public Nullable<long> OcreateUserId { get; set; }
+        public Nullable<long> OupdateUserId { get; set; }
         public string Onotes { get; set; }
         public Nullable<int> Oquantity { get; set; }
-        public int Oitemofferid { get; set; }
+        public long Oitemofferid { get; set; }
         public Nullable<decimal> offerTotalValue { get; set; }
 
         //external
-        public int movbranchid { get; set; }
+        public long movbranchid { get; set; }
         public string movbranchname { get; set; }
         // internal
         public string exportBranch { get; set; }
         public string importBranch { get; set; }
-        public int exportBranchId { get; set; }
-        public int importBranchId { get; set; }
+        public long exportBranchId { get; set; }
+        public long importBranchId { get; set; }
         private string itemUnits;
         private int cusCount;
         private int venCount;
@@ -884,21 +884,21 @@ namespace Restaurant.Classes
 
     public class OrderPreparingSTS
     {
-        public int orderPreparingId { get; set; }
+        public long orderPreparingId { get; set; }
         public string orderNum { get; set; }
         public Nullable<System.DateTime> orderTime { get; set; }
-        public Nullable<int> invoiceId { get; set; }
+        public Nullable<long> invoiceId { get; set; }
         public string notes { get; set; }
         public Nullable<decimal> preparingTime { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
 
 
         // item
         public string itemName { get; set; }
-        public Nullable<int> itemUnitId { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
         public int quantity { get; set; }
         //order
         public string status { get; set; }
@@ -909,27 +909,27 @@ namespace Restaurant.Classes
         //invoice
 
         public string invType { get; set; }
-        public Nullable<int> shippingCompanyId { get; set; }
+        public Nullable<long> shippingCompanyId { get; set; }
         public string branchName { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
 
       //  public List<itemOrderPreparingModel> items { get; set; }
         //
-        public Nullable<int> categoryId { get; set; }
+        public Nullable<long> categoryId { get; set; }
         public string categoryName { get; set; }
         public Nullable<decimal> realDuration { get; set; }
         public string invNumber { get; set; }
         public string invBarcode { get; set; }
-        public Nullable<int> tagId { get; set; }
+        public Nullable<long> tagId { get; set; }
         public string tagName { get; set; }
         public Nullable<System.DateTime> listedDate { get; set; }
 
         public string shipUserName { get; set; }
         public string shipUserLastName { get; set; }
         public string shippingCompanyName { get; set; }
-        public Nullable<int> shipUserId { get; set; }
+        public Nullable<long> shipUserId { get; set; }
      
-        public Nullable<int> agentId { get; set; }
+        public Nullable<long> agentId { get; set; }
         public string agentName { get; set; }
         public string agentCompany { get; set; }
         public string agentType { get; set; }
@@ -947,7 +947,7 @@ namespace Restaurant.Classes
     { 
         
         //invoice
-        public int invoiceId { get; set; }
+        public long invoiceId { get; set; }
         public string invNumber { get; set; }
         public string invBarcode { get; set; }
         public string invType { get; set; }
@@ -960,7 +960,7 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> deservedDate { get; set; }
         public Nullable<System.DateTime> invDate { get; set; }
    
-        public Nullable<int> invoiceMainId { get; set; }
+        public Nullable<long> invoiceMainId { get; set; }
         public string invCase { get; set; }
         public Nullable<System.TimeSpan> invTime { get; set; }
         public string notes { get; set; }
@@ -975,20 +975,20 @@ namespace Restaurant.Classes
        
 
         //pos
-        public Nullable<int> posId { get; set; }
+        public Nullable<long> posId { get; set; }
         public string posName { get; set; }
         public string posCode { get; set; }
         //branch
 
-        public Nullable<int> branchCreatorId { get; set; }
+        public Nullable<long> branchCreatorId { get; set; }
         public string branchCreatorName { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string branchName { get; set; }
         public string branchType { get; set; }
 
 
         //agent
-        public Nullable<int> agentId { get; set; }
+        public Nullable<long> agentId { get; set; }
         public string agentCompany { get; set; }
         public string agentName { get; set; }
 
@@ -999,17 +999,17 @@ namespace Restaurant.Classes
 
         public Nullable<System.DateTime> vendorInvDate { get; set; }
         //user
-        public Nullable<int> createUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
         public string cuserName { get; set; }
         public string cuserLast { get; set; }
         public string cUserAccName { get; set; }
         public string uuserName { get; set; }
         public string uuserLast { get; set; }
         public string uUserAccName { get; set; }
-        public Nullable<int> userId { get; set; }
+        public Nullable<long> userId { get; set; }
         //membership
 
-        public Nullable<int> membershipId { get; set; }
+        public Nullable<long> membershipId { get; set; }
         public string membershipsCode { get; set; }
         public string membershipsName { get; set; }
 
@@ -1026,9 +1026,9 @@ namespace Restaurant.Classes
         public string subscriptionType { get; set; }
         //invClass
         public string invoicesClassName { get; set; }
-        public Nullable<int> invClassDiscountId { get; set; }
+        public Nullable<long> invClassDiscountId { get; set; }
 
-        public Nullable<int> invClassId { get; set; }
+        public Nullable<long> invClassId { get; set; }
         public byte invClassdiscountType { get; set; }
         public decimal invClassdiscountValue { get; set; }
         public decimal finalDiscount { get; set; }
@@ -1039,7 +1039,7 @@ namespace Restaurant.Classes
     {
 
         //****************************************************
-        public async Task<List<ItemUnitInvoiceProfit>> GetInvoiceProfit(int mainBranchId, int userId)
+        public async Task<List<ItemUnitInvoiceProfit>> GetInvoiceProfit(long mainBranchId, long userId)
         {
 
             List<ItemUnitInvoiceProfit> list = new List<ItemUnitInvoiceProfit>();
@@ -1060,7 +1060,7 @@ namespace Restaurant.Classes
             return list;
         }
 
-        public async Task<List<ItemUnitInvoiceProfit>> GetItemProfit(int mainBranchId, int userId)
+        public async Task<List<ItemUnitInvoiceProfit>> GetItemProfit(long mainBranchId, long userId)
         {
             List<ItemUnitInvoiceProfit> list = new List<ItemUnitInvoiceProfit>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -1088,7 +1088,7 @@ namespace Restaurant.Classes
 
         // الاصناف في الفواتير
 
-        public async Task<List<ItemTransferInvoice>> GetPuritem(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetPuritem(long mainBranchId, long userId)
         {
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -1111,7 +1111,7 @@ namespace Restaurant.Classes
         }
 
         // عدد الاصناف في الفواتير
-        public async Task<List<ItemTransferInvoice>> GetPuritemcount(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetPuritemcount(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -1134,7 +1134,7 @@ namespace Restaurant.Classes
           
         }
         //    الشراء عدد العناصر في فواتير طلبات
-        public async Task<List<ItemTransferInvoice>> GetPurorderitemcount(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetPurorderitemcount(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -1161,7 +1161,7 @@ namespace Restaurant.Classes
         // مبيعات
         #region Sales 
         // الفواتير مع العناصر
-        public async Task<List<ItemTransferInvoice>> GetSaleitem(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetSaleitem(long mainBranchId, long userId)
         {
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -1184,7 +1184,7 @@ namespace Restaurant.Classes
 
 
         //  للمبيعات عدد العناصر في فواتير الطلبات
-        public async Task<List<ItemTransferInvoice>> Getorderitemcount(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> Getorderitemcount(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -1209,7 +1209,7 @@ namespace Restaurant.Classes
 
 
       
-        public async Task<List<ItemTransferInvoice>> GetSaleitemcount(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetSaleitemcount(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -1231,7 +1231,7 @@ namespace Restaurant.Classes
  
         }
         // الفواتير  مع الكوبون
-        public async Task<List<ItemTransferInvoice>> GetSalecoupon(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetSalecoupon(long mainBranchId, long userId)
         {
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -1291,7 +1291,7 @@ namespace Restaurant.Classes
 
        
         // الفواتير مع العناصر التي لديها اوفر
-        public async Task<List<ItemTransferInvoice>> GetPromoOffer(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetPromoOffer(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -1315,7 +1315,7 @@ namespace Restaurant.Classes
 
         // الاشتراكات
        
-        public async Task<List<SalesMembership>> GetSaleMembership(int mainBranchId, int userId)
+        public async Task<List<SalesMembership>> GetSaleMembership(long mainBranchId, long userId)
         {
 
             List<SalesMembership> list = new List<SalesMembership>();
@@ -1337,7 +1337,7 @@ namespace Restaurant.Classes
 
         }
         //Inv class
-        public async Task<List<SalesMembership>> GetInvoiceClass(int mainBranchId, int userId)
+        public async Task<List<SalesMembership>> GetInvoiceClass(long mainBranchId, long userId)
         {
 
             List<SalesMembership> list = new List<SalesMembership>();
@@ -1367,7 +1367,7 @@ namespace Restaurant.Classes
             List<ItemUnitCombo> iulist = new List<ItemUnitCombo>();
 
             iulist = ITInvoice.GroupBy(x => x.ITitemUnitId)
-                   .Select(g => new ItemUnitCombo { itemUnitId = (int)g.FirstOrDefault().ITitemUnitId, itemUnitName = g.FirstOrDefault().ITitemName + " - " + g.FirstOrDefault().ITunitName }).ToList();
+                   .Select(g => new ItemUnitCombo { itemUnitId = (long)g.FirstOrDefault().ITitemUnitId, itemUnitName = g.FirstOrDefault().ITitemName + " - " + g.FirstOrDefault().ITunitName }).ToList();
             return iulist;
 
         }
@@ -1408,7 +1408,7 @@ namespace Restaurant.Classes
         // المخزون 
         #region Storage
 
-        public async Task<List<Storage>> GetStorage(int mainBranchId, int userId)
+        public async Task<List<Storage>> GetStorage(long mainBranchId, long userId)
         {
 
             List<Storage> list = new List<Storage>();
@@ -1513,7 +1513,7 @@ namespace Restaurant.Classes
         //}
         #endregion
         // حركة الاصناف الخارجية (مع الزبائن والموردين)
-        public async Task<List<ItemTransferInvoice>> GetExternalMov(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetExternalMov(long mainBranchId, long userId)
         {
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -1573,7 +1573,7 @@ namespace Restaurant.Classes
             #endregion
         }
         //حركة الإدخال المباشر
-        public async Task<List<ItemTransferInvoice>> GetDirectInMov(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetDirectInMov(long mainBranchId, long userId)
         {
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -1592,7 +1592,7 @@ namespace Restaurant.Classes
             return list;
         }
         //حركة الاصناف الداخلية بين الفروع
-        public async Task<List<ItemTransferInvoice>> GetInternalMov(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetInternalMov(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -1617,7 +1617,7 @@ namespace Restaurant.Classes
 
         //GetSpendingStorage
         //فواتير الصرف المنفذة من المخزن الى المطبخ 
-        public async Task<List<ItemTransferInvoice>> GetSpendingStorage(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetSpendingStorage(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -1646,7 +1646,7 @@ namespace Restaurant.Classes
         #region
         // عناصر الجرد
 
-        public async Task<List<InventoryClass>> GetInventory(int mainBranchId, int userId)
+        public async Task<List<InventoryClass>> GetInventory(long mainBranchId, long userId)
         {
 
             List<InventoryClass> list = new List<InventoryClass>();
@@ -1672,7 +1672,7 @@ namespace Restaurant.Classes
       
 
         // العناصر التالفة
-        public async Task<List<ItemTransferInvoice>> GetDesItems(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetDesItems(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -1695,7 +1695,7 @@ namespace Restaurant.Classes
         }
 
         // العناصر الناقصة
-        public async Task<List<ItemTransferInvoice>> GetFallsItems(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetFallsItems(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -1790,7 +1790,7 @@ namespace Restaurant.Classes
 
         // رصيد نقاط البيع والفروع
 
-        public async Task<List<BalanceSTS>> GetBalance(int mainBranchId, int userId)
+        public async Task<List<BalanceSTS>> GetBalance(long mainBranchId, long userId)
         {
 
             List<BalanceSTS> list = new List<BalanceSTS>();
@@ -1814,7 +1814,7 @@ namespace Restaurant.Classes
 
       
         // الضرائب
-        public async Task<List<ItemTransferInvoiceTax>> GetInvItemTax(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoiceTax>> GetInvItemTax(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoiceTax> list = new List<ItemTransferInvoiceTax>();
@@ -1861,7 +1861,7 @@ namespace Restaurant.Classes
         }
 
         // الفتح والاغلاق
-        public async Task<List<POSOpenCloseModel>> GetPosCashOpenClose(int mainBranchId, int userId)
+        public async Task<List<POSOpenCloseModel>> GetPosCashOpenClose(long mainBranchId, long userId)
         {
 
             List<POSOpenCloseModel> list = new List<POSOpenCloseModel>();
@@ -1886,7 +1886,7 @@ namespace Restaurant.Classes
 
 
         //العمليات المنفذة بين تاريخ الفتح والاغلاق
-        public async Task<List<OpenClosOperatinModel>> GetTransBetweenOpenClose(int openCashTransId, int closeCashTransId)
+        public async Task<List<OpenClosOperatinModel>> GetTransBetweenOpenClose(long openCashTransId, long closeCashTransId)
         {
 
             List<OpenClosOperatinModel> list = new List<OpenClosOperatinModel>();
@@ -1914,13 +1914,13 @@ namespace Restaurant.Classes
         #region
         public class VendorCombo
         {
-            private int? vendorId;
+            private long? vendorId;
             private string vendorName;
             private string side;
             private string userAcc;
-            private int? userId;
+            private long? userId;
 
-            public int? VendorId { get => vendorId; set => vendorId = value; }
+            public long? VendorId { get => vendorId; set => vendorId = value; }
             //public string VendorName { get => vendorName; set => vendorName = value; }
             public string VendorName
             {
@@ -1931,7 +1931,7 @@ namespace Restaurant.Classes
             }
             public string Side { get => side; set => side = value; }
             public string UserAcc { get => userAcc; set => userAcc = value; }
-            public int? UserId { get => userId; set => userId = value; }
+            public long? UserId { get => userId; set => userId = value; }
         }
         public List<VendorCombo> getVendorCombo(List<CashTransferSts> ITInvoice, string x)
         {
@@ -2013,10 +2013,10 @@ namespace Restaurant.Classes
         public class ShippingCombo
         {
             private string shippingName;
-            private int? shippingId;
+            private long? shippingId;
 
             public string ShippingName { get => shippingName; set => shippingName = value; }
-            public int? ShippingId { get => shippingId; set => shippingId = value; }
+            public long? ShippingId { get => shippingId; set => shippingId = value; }
         }
         public List<ShippingCombo> getShippingCombo(List<CashTransferSts> ITInvoice)
         {
@@ -2037,10 +2037,10 @@ namespace Restaurant.Classes
         public class branchFromCombo
         {
             private string branchFromName;
-            private int? branchFromId;
+            private long? branchFromId;
 
             public string BranchFromName { get => branchFromName; set => branchFromName = value; }
-            public int? BranchFromId { get => branchFromId; set => branchFromId = value; }
+            public long? BranchFromId { get => branchFromId; set => branchFromId = value; }
         }
         //public List<branchFromCombo> getFromCombo(List<CashTransferSts> ITInvoice)
         //{
@@ -2063,10 +2063,10 @@ namespace Restaurant.Classes
         public class branchToCombo
         {
             private string branchToName;
-            private int? branchToId;
+            private long? branchToId;
 
             public string BranchToName { get => branchToName; set => branchToName = value; }
-            public int? BranchToId { get => branchToId; set => branchToId = value; }
+            public long? BranchToId { get => branchToId; set => branchToId = value; }
         }
         //public List<branchToCombo> getToCombo(List<CashTransferSts> ITInvoice)
         //{
@@ -2087,12 +2087,12 @@ namespace Restaurant.Classes
         public class posFromCombo
         {
             private string posFromName;
-            private int? posFromId;
-            private int? branchId;
+            private long? posFromId;
+            private long? branchId;
 
             public string PosFromName { get => posFromName; set => posFromName = value; }
-            public int? PosFromId { get => posFromId; set => posFromId = value; }
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? PosFromId { get => posFromId; set => posFromId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
         }
         //public List<posFromCombo> getFromPosCombo(List<CashTransferSts> ITInvoice)
         //{
@@ -2113,12 +2113,12 @@ namespace Restaurant.Classes
         public class posToCombo
         {
             private string posToName;
-            private int? posToId;
-            private int? branchId;
+            private long? posToId;
+            private long? branchId;
 
             public string PosToName { get => posToName; set => posToName = value; }
-            public int? PosToId { get => posToId; set => posToId = value; }
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? PosToId { get => posToId; set => posToId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
         }
         public List<posToCombo> getToPosCombo(List<CashTransfer> ITInvoice)
         {
@@ -2136,7 +2136,7 @@ namespace Restaurant.Classes
         #region Daily
 
         // فواتير اليومية العامة في قسم التقارير
-        public async Task<List<ItemTransferInvoice>> Getdailyinvoice(int mainBranchId, int userId, string date)
+        public async Task<List<ItemTransferInvoice>> Getdailyinvoice(long mainBranchId, long userId, string date)
         {
 
 
@@ -2161,7 +2161,7 @@ namespace Restaurant.Classes
         }
        
         // فواتير اليوميةالخاصة بمستخدم
-        public async Task<List<ItemTransferInvoice>> GetUserdailyinvoice(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetUserdailyinvoice(long mainBranchId, long userId)
         {
 
 
@@ -2191,7 +2191,7 @@ namespace Restaurant.Classes
 
         #region Kitchen //المطبخ
         // preparing order
-        public async Task<List<OrderPreparingSTS>> GetPreparingOrders(int mainBranchId, int userId)
+        public async Task<List<OrderPreparingSTS>> GetPreparingOrders(long mainBranchId, long userId)
         {
             List<OrderPreparingSTS> items = new List<OrderPreparingSTS>();
           
@@ -2210,7 +2210,7 @@ namespace Restaurant.Classes
         }
 
         // فواتير الصرف 
-        public async Task<List<ItemTransferInvoice>> GetSpendingRequest(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetSpendingRequest(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -2232,7 +2232,7 @@ namespace Restaurant.Classes
 
         }
         // فواتير الصرف عناصر  
-        public async Task<List<ItemTransferInvoice>> GetSpendingItems(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetSpendingItems(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -2256,7 +2256,7 @@ namespace Restaurant.Classes
 
         // الاستهلاك
         //فواتير الاستهلاك 
-        public async Task<List<ItemTransferInvoice>> GetConsumption(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetConsumption(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -2278,7 +2278,7 @@ namespace Restaurant.Classes
 
         }
         //عناصر فواتير الاستهلاك
-        public async Task<List<ItemTransferInvoice>> GetConsumptionItems(int mainBranchId, int userId)
+        public async Task<List<ItemTransferInvoice>> GetConsumptionItems(long mainBranchId, long userId)
         {
 
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
@@ -2303,7 +2303,7 @@ namespace Restaurant.Classes
 
         //التوصيل
         #region Delivery
-        public async Task<List<OrderPreparingSTS>> GetDelivery(int mainBranchId, int userId)
+        public async Task<List<OrderPreparingSTS>> GetDelivery(long mainBranchId, long userId)
         {
             List<OrderPreparingSTS> items = new List<OrderPreparingSTS>();
 
@@ -2326,22 +2326,22 @@ namespace Restaurant.Classes
 
         public class itemCombo
         {
-            private int itemId;
+            private long itemId;
             private string itemName;
-            private int branchId;
-            public int ItemId { get => itemId; set => itemId = value; }
+            private long branchId;
+            public long ItemId { get => itemId; set => itemId = value; }
             public string ItemName { get => itemName; set => itemName = value; }
-            public int BranchId { get => branchId; set => branchId = value; }
+            public long BranchId { get => branchId; set => branchId = value; }
         }
         public class ExternalitemCombo
         {
-            private int? itemId;
+            private long? itemId;
             private string itemName;
-            private int? branchId;
+            private long? branchId;
 
-            public int? ItemId { get => itemId; set => itemId = value; }
+            public long? ItemId { get => itemId; set => itemId = value; }
             public string ItemName { get => itemName; set => itemName = value; }
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
         }
         public List<itemCombo> getItemCombo(List<Storage> ITInvoice)
         {
@@ -2363,26 +2363,26 @@ namespace Restaurant.Classes
 
         public class unitCombo
         {
-            private int unitId;
+            private long unitId;
             private string unitName;
-            private int itemId;
-            private int branchId;
-            public int UnitId { get => unitId; set => unitId = value; }
+            private long itemId;
+            private long branchId;
+            public long UnitId { get => unitId; set => unitId = value; }
             public string UnitName { get => unitName; set => unitName = value; }
-            public int ItemId { get => itemId; set => itemId = value; }
-            public int BranchId { get => branchId; set => branchId = value; }
+            public long ItemId { get => itemId; set => itemId = value; }
+            public long BranchId { get => branchId; set => branchId = value; }
         }
         public class ExternalUnitCombo
         {
-            private int? branchId;
-            private int? unitId;
+            private long? branchId;
+            private long? unitId;
             private string unitName;
-            private int? itemId;
+            private long? itemId;
 
-            public int? UnitId { get => unitId; set => unitId = value; }
+            public long? UnitId { get => unitId; set => unitId = value; }
             public string UnitName { get => unitName; set => unitName = value; }
-            public int? ItemId { get => itemId; set => itemId = value; }
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? ItemId { get => itemId; set => itemId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
         }
 
 
@@ -2401,33 +2401,33 @@ namespace Restaurant.Classes
         }
         public class sectionCombo
         {
-            private int sectionId;
+            private long sectionId;
             private string sectionName;
-            private int branchId;
-            public int SectionId { get => sectionId; set => sectionId = value; }
+            private long branchId;
+            public long SectionId { get => sectionId; set => sectionId = value; }
             public string SectionName { get => sectionName; set => sectionName = value; }
-            public int BranchId { get => branchId; set => branchId = value; }
+            public long BranchId { get => branchId; set => branchId = value; }
         }
 
         public List<sectionCombo> getSectionCombo(List<Storage> ITInvoice)
         {
             List<sectionCombo> iulist = new List<sectionCombo>();
 
-            iulist = ITInvoice.Select(g => new sectionCombo { SectionId = (int)g.sectionId, SectionName = g.Secname, BranchId = g.branchId }).ToList();
+            iulist = ITInvoice.Select(g => new sectionCombo { SectionId = (long)g.sectionId, SectionName = g.Secname, BranchId = g.branchId }).ToList();
             return iulist;
 
         }
 
         public class locationCombo
         {
-            private int locationId;
+            private long locationId;
             private string locationName;
-            private int sectionId;
-            private int branchId;
-            public int LocationId { get => locationId; set => locationId = value; }
+            private long sectionId;
+            private long branchId;
+            public long LocationId { get => locationId; set => locationId = value; }
             public string LocationName { get => locationName; set => locationName = value; }
-            public int SectionId { get => sectionId; set => sectionId = value; }
-            public int BranchId { get => branchId; set => branchId = value; }
+            public long SectionId { get => sectionId; set => sectionId = value; }
+            public long BranchId { get => branchId; set => branchId = value; }
         }
 
         public List<locationCombo> getLocationCombo(List<Storage> ITInvoice)
@@ -2443,9 +2443,9 @@ namespace Restaurant.Classes
         public class AgentTypeCombo
         {
             private string agentType;
-            private int? branchId;
+            private long? branchId;
 
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
             public string AgentType { get => agentType; set => agentType = value; }
         }
 
@@ -2460,13 +2460,13 @@ namespace Restaurant.Classes
 
         public class AgentCombo
         {
-            private int? agentId;
+            private long? agentId;
             private string agentName;
-            private int? branchId;
+            private long? branchId;
             private string agentType;
 
-            public int? AgentId { get => agentId; set => agentId = value; }
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? AgentId { get => agentId; set => agentId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
             public string AgentName { get => agentName; set => agentName = value; }
             public string AgentType { get => agentType; set => agentType = value; }
         }
@@ -2483,10 +2483,10 @@ namespace Restaurant.Classes
         public class InvTypeCombo
         {
             private string invoiceType;
-            private int? branchId;
+            private long? branchId;
 
             public string InvoiceType { get => invoiceType; set => invoiceType = value; }
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
         }
 
         public List<InvTypeCombo> GetExternalInvoiceTypeCombos(List<ItemTransferInvoice> ITInvoice)
@@ -2499,14 +2499,14 @@ namespace Restaurant.Classes
         }
         public class InvCombo
         {
-            private int invoiceId;
+            private long invoiceId;
             private string invoiceNumber;
-            private int? branchId;
+            private long? branchId;
             private string invoiceType;
 
-            public int InvoiceId { get => invoiceId; set => invoiceId = value; }
+            public long InvoiceId { get => invoiceId; set => invoiceId = value; }
             public string InvoiceNumber { get => invoiceNumber; set => invoiceNumber = value; }
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
             public string InvoiceType { get => invoiceType; set => invoiceType = value; }
         }
 
@@ -2520,10 +2520,10 @@ namespace Restaurant.Classes
         }
         public class internalTypeCombo
         {//type
-            private int? branchId;
+            private long? branchId;
             private string invType;
 
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
             //  public string InvType { get => invType; set => invType = value; }
             public string InvType { get => invType; set => invType = value; }
             public string trInvType { get; set; }
@@ -2546,10 +2546,10 @@ namespace Restaurant.Classes
         }
         public class internalOperatorCombo
         {
-            private int? branchId;
+            private long? branchId;
             private string invNum;
 
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
             public string InvNum { get => invNum; set => invNum = value; }
         }
 
@@ -2562,11 +2562,11 @@ namespace Restaurant.Classes
         }
         public class StocktakingArchivesTypeCombo
         {//stocktype
-            private int? branchId;
+            private long? branchId;
             private string inventoryType;
             private string inventoryTypeText;
 
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
             public string InventoryType { get => inventoryType; set => inventoryType = value; }
             public string InventoryTypeText
             {
@@ -2588,13 +2588,13 @@ namespace Restaurant.Classes
         }
         public class DestroiedCombo
         {
-            private int? branchId;
+            private long? branchId;
             private string itemsUnits;
-            private int? itemsUnitsId;
+            private long? itemsUnitsId;
 
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
             public string ItemsUnits { get => itemsUnits; set => itemsUnits = value; }
-            public int? ItemsUnitsId { get => itemsUnitsId; set => itemsUnitsId = value; }
+            public long? ItemsUnitsId { get => itemsUnitsId; set => itemsUnitsId = value; }
         }
 
 
@@ -2606,13 +2606,13 @@ namespace Restaurant.Classes
         }
         public class ShortFalls
         {
-            private int? branchId;
+            private long? branchId;
             private string itemsUnits;
-            private int? itemsUnitsId;
+            private long? itemsUnitsId;
 
-            public int? BranchId { get => branchId; set => branchId = value; }
+            public long? BranchId { get => branchId; set => branchId = value; }
             public string ItemsUnits { get => itemsUnits; set => itemsUnits = value; }
-            public int? ItemsUnitsId { get => itemsUnitsId; set => itemsUnitsId = value; }
+            public long? ItemsUnitsId { get => itemsUnitsId; set => itemsUnitsId = value; }
         }
 
 

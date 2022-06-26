@@ -16,19 +16,19 @@ namespace Restaurant.Classes
 {
     public class DishIngredients
     {
-        public int dishIngredId { get; set; }
+        public long dishIngredId { get; set; }
         public string name { get; set; }
-        public Nullable<int> itemUnitId { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
         public string notes { get; set; }
         public byte isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
 
 
        
-        public async Task<List<DishIngredients>> GetByItemUnitId(int itemUnitId)
+        public async Task<List<DishIngredients>> GetByItemUnitId(long itemUnitId)
         {
             List<DishIngredients> items = new List<DishIngredients>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -53,7 +53,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(int itemId, int userId, Boolean final)
+        public async Task<int> delete(long itemId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());

@@ -17,32 +17,32 @@ namespace Restaurant.Classes
 {
     public class PosSetting
     {
-        public int posSettingId { get; set; }
-        public Nullable<int> posId { get; set; }
-        public Nullable<int> saleInvPrinterId { get; set; }
-        public Nullable<int> reportPrinterId { get; set; }
-        public Nullable<int> saleInvPapersizeId { get; set; }
+        public long posSettingId { get; set; }
+        public Nullable<long> posId { get; set; }
+        public Nullable<long> saleInvPrinterId { get; set; }
+        public Nullable<long> reportPrinterId { get; set; }
+        public Nullable<long> saleInvPapersizeId { get; set; }
 
         public string posSerial { get; set; }
 
-        public Nullable<int> repprinterId { get; set; }
+        public Nullable<long> repprinterId { get; set; }
         public string repname { get; set; }
         public string repprintFor { get; set; }
 
-        public Nullable<int> salprinterId { get; set; }
+        public Nullable<long> salprinterId { get; set; }
         public string salname { get; set; }
         public string salprintFor { get; set; }
 
-        public Nullable<int> sizeId { get; set; }
+        public Nullable<long> sizeId { get; set; }
         public string paperSize1 { get; set; }
-        public Nullable<int> docPapersizeId { get; set; }
+        public Nullable<long> docPapersizeId { get; set; }
         public string docPapersize { get; set; }
         public string saleSizeValue { get; set; }
         public string docSizeValue { get; set; }
         public string kitchenSizeValue { get; set; }
 
-        public Nullable<int> kitchenPrinterId { get; set; }
-        public Nullable<int> kitchenPapersizeId { get; set; }
+        public Nullable<long> kitchenPrinterId { get; set; }
+        public Nullable<long> kitchenPapersizeId { get; set; }
         public string kitchenPrinter { get; set; }
         public string kitchenPapersize { get; set; }
         public string kitchenprintFor { get; set; }
@@ -134,7 +134,7 @@ namespace Restaurant.Classes
         }
  
 
-        public async Task<PosSetting> GetByposId(int posId)
+        public async Task<PosSetting> GetByposId(long posId)
         {
 
             PosSetting item = new PosSetting();
@@ -157,7 +157,7 @@ namespace Restaurant.Classes
       
         }
 
-        public async Task<int> Delete(int posSettingId)
+        public async Task<int> Delete(long posSettingId)
         {
 
 

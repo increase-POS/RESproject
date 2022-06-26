@@ -8,7 +8,7 @@ namespace Restaurant.Classes.ApiClasses
 {
     class TablesStatistics
     {
-        public int branchId { get; set; }
+        public long branchId { get; set; }
         public string branchName { get; set; }
         public int openedCount { get; set; }   // opened tables
         public int emptyCount { get; set; }   // empty and reserved tables

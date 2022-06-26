@@ -16,14 +16,14 @@ namespace Restaurant.Classes
 {
     public class Package
     {
-        public int packageId { get; set; }
-        public Nullable<int> parentIUId { get; set; }
-        public Nullable<int> childIUId { get; set; }
+        public long packageId { get; set; }
+        public Nullable<long> parentIUId { get; set; }
+        public Nullable<long> childIUId { get; set; }
         public int quantity { get; set; }
         public byte isActive { get; set; }
         public string notes { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
 
         public Nullable<System.DateTime> updateDate { get; set; }
@@ -33,7 +33,7 @@ namespace Restaurant.Classes
 
         public string itemName { get; set; }
         // item parent
-        public Nullable<int> pitemId { get; set; }
+        public Nullable<long> pitemId { get; set; }
         public string pcode { get; set; }
         public string pitemName { get; set; }
 
@@ -42,12 +42,12 @@ namespace Restaurant.Classes
 
 
         //units
-        public Nullable<int> punitId { get; set; }
+        public Nullable<long> punitId { get; set; }
         public string punitName { get; set; }
 
         //item chiled
 
-        public Nullable<int> citemId { get; set; }
+        public Nullable<long> citemId { get; set; }
         public string ccode { get; set; }
         public string citemName { get; set; }
 
@@ -56,11 +56,11 @@ namespace Restaurant.Classes
 
 
         //units
-        public Nullable<int> cunitId { get; set; }
+        public Nullable<long> cunitId { get; set; }
         public string cunitName { get; set; }
 
           
-        public async Task<List<Package>> GetChildsByParentId(int parentIUId)
+        public async Task<List<Package>> GetChildsByParentId(long parentIUId)
         {
             List<Package> list = new List<Package>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -111,7 +111,7 @@ namespace Restaurant.Classes
             //}
         }
 
-        public async Task<int> UpdatePackByParentId(int parentIUId, List<Package> newplist, int userId)
+        public async Task<int> UpdatePackByParentId(long parentIUId, List<Package> newplist, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 

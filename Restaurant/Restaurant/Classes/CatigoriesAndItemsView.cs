@@ -38,13 +38,13 @@ namespace Restaurant.Classes
 
         public Grid gridCatigories;
         public Grid gridCatigorieItems;
-        private int _idItem;
-        private int _idCategory;
+        private long _idItem;
+        private long _idCategory;
         //private int _iddiningHall;
         //private int _iditemsRawMaterials;
         //private int _iditemsFoods;
 
-        public int idItem
+        public long idItem
         {
             get => _idItem; set
             {
@@ -52,7 +52,7 @@ namespace Restaurant.Classes
                 INotifyPropertyChangedIdCatigorieItems();
             }
         }
-        public int idCategory
+        public long idCategory
         {
             get => _idCategory; set
             {
@@ -123,7 +123,7 @@ namespace Restaurant.Classes
         #region Catalog category
 
 
-        private int pastCatalogItem_category = -1;
+        private long pastCatalogItem_category = -1;
         double gridCatigorieItems_ActualHeight_category = 0;
         double gridCatigorieItems_ActualWidth_category = 0;
         public void FN_refrishCatalogItem_category(List<Category> items, string cardType, int columnCount)
@@ -218,7 +218,7 @@ namespace Restaurant.Classes
         #region Catalog Items
 
 
-        private int pastCatalogItem = -1;
+        private long pastCatalogItem = -1;
         double gridCatigorieItems_ActualHeight = 0;
         double gridCatigorieItems_ActualWidth = 0;
         public void FN_refrishCatalogItem(List<Item> items, int rowCount, int columnCount, string cardType)

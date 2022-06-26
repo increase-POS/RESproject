@@ -16,15 +16,15 @@ namespace Restaurant.Classes
 {
     public class ErrorClass
     {
-        public int errorId { get; set; }
+        public long errorId { get; set; }
         public string num { get; set; }
         public string msg { get; set; }
         public string stackTrace { get; set; }
         public string targetSite { get; set; }
-        public Nullable<int> posId { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> posId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
 
  
 

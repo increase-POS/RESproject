@@ -16,7 +16,7 @@ namespace Restaurant.Classes
 {
     public class Bank
     {
-        public int bankId { get; set; }
+        public long bankId { get; set; }
         public string name { get; set; }
         public string phone { get; set; }
         public string mobile { get; set; }
@@ -25,8 +25,8 @@ namespace Restaurant.Classes
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public byte isActive { get; set; }
 
 
@@ -56,7 +56,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(int itemId, int userId, Boolean final)
+        public async Task<int> delete(long itemId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());

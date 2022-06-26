@@ -471,8 +471,8 @@ namespace Restaurant.Classes
             try
             {
 
-                int id = AppSettings.CurrencyId;
-                ToWord toWord = new ToWord(Convert.ToDecimal(amount), currencies[id]);
+                long id = AppSettings.CurrencyId;
+                ToWord toWord = new ToWord(Convert.ToDecimal(amount), currencies[int.Parse(id.ToString())]);
 
                 if (isArabic)
                 {
@@ -531,8 +531,8 @@ namespace Restaurant.Classes
             {
 
                 bool isArabic;
-                int id = AppSettings.CurrencyId;
-                ToWord toWord = new ToWord(Convert.ToDecimal(amount), currencies[id]);
+                long id = AppSettings.CurrencyId;
+                ToWord toWord = new ToWord(Convert.ToDecimal(amount), currencies[int.Parse(id.ToString())]);
                 isArabic = checkLang();
                 if (isArabic)
                 {

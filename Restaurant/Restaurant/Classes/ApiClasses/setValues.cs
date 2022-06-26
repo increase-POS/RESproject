@@ -21,12 +21,12 @@ namespace Restaurant.Classes
 {
     public class SetValues
     {
-        public int valId { get; set; }
+        public long valId { get; set; }
         public string value { get; set; }
         public Nullable<int> isDefault { get; set; }
         public Nullable<int> isSystem { get; set; }
         public string notes { get; set; }
-        public Nullable<int> settingId { get; set; }
+        public Nullable<long> settingId { get; set; }
         //setting
         public string name { get; set; }
         public async Task<List<SetValues>> GetAll()
@@ -93,7 +93,7 @@ namespace Restaurant.Classes
             return list;
 
         }
-        public async Task<SetValues> GetBySetNameAndUserId(string name, int userId)
+        public async Task<SetValues> GetBySetNameAndUserId(string name, long userId)
         {
 
             SetValues list = new SetValues();
@@ -141,7 +141,7 @@ namespace Restaurant.Classes
         }
 
 
-        public async Task<SetValues> GetByID(int valId)
+        public async Task<SetValues> GetByID(long valId)
         {
 
             SetValues item = new SetValues();
@@ -164,7 +164,7 @@ namespace Restaurant.Classes
 
      
 
-        public async Task<int> Delete(int Id, int userId)
+        public async Task<int> Delete(long Id, long userId)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -212,7 +212,7 @@ namespace Restaurant.Classes
 
 
         public async Task<string> uploadImage(string imagePath, string imageName, int valId)
-        //public async Task<Boolean> uploadImage(string imagePath, int userId)
+        //public async Task<Boolean> uploadImage(string imagePath, long userId)
         {
             if (imagePath != "")
             {

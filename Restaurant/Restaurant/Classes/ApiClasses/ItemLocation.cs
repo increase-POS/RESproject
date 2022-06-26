@@ -17,22 +17,22 @@ namespace Restaurant.Classes
     public class ItemLocation
     {
 
-        public int itemsLocId { get; set; }
-        public Nullable<int> locationId { get; set; }
+        public long itemsLocId { get; set; }
+        public Nullable<long> locationId { get; set; }
         public long quantity { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public Nullable<System.DateTime> startDate { get; set; }
         public Nullable<System.DateTime> endDate { get; set; }
-        public Nullable<int> itemUnitId { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
         public string notes { get; set; }
-        public Nullable<int> invoiceId { get; set; }
+        public Nullable<long> invoiceId { get; set; }
 
         public int sequence { get; set; }
 
-        public Nullable<int> sectionId { get; set; }
+        public Nullable<long> sectionId { get; set; }
 
 
         public string itemName { get; set; }
@@ -49,7 +49,7 @@ namespace Restaurant.Classes
         public Nullable<bool> isSelected { get; set; }
 
         //****************************************************
-        public async Task<List<ItemLocation>> get(int branchId)
+        public async Task<List<ItemLocation>> get(long branchId)
         {
             List<ItemLocation> list = new List<ItemLocation>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -67,7 +67,7 @@ namespace Restaurant.Classes
             }
             return list;          
         }
-        public async Task<List<ItemLocation>> getAll(int branchId)
+        public async Task<List<ItemLocation>> getAll(long branchId)
         {
 
             List<ItemLocation> list = new List<ItemLocation>();
@@ -88,7 +88,7 @@ namespace Restaurant.Classes
           
         }
     
-        public async Task<List<ItemLocation>> GetFreeZoneItems(int branchId)
+        public async Task<List<ItemLocation>> GetFreeZoneItems(long branchId)
         {
             List<ItemLocation> list = new List<ItemLocation>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -108,7 +108,7 @@ namespace Restaurant.Classes
             
         }
              
-        public async Task<int> decreaseAmountsInKitchen(List<ItemTransfer> invoiceItems, int branchId, int userId)
+        public async Task<int> decreaseAmountsInKitchen(List<ItemTransfer> invoiceItems, long branchId, long userId)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -122,7 +122,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
        
-        public async Task<int> unitsConversion(int branchId,int fromItemUnit , int toItemUnt, int fromQuantity,int toQuantity, int userId, ItemUnit smallUnit)
+        public async Task<int> unitsConversion(long branchId,int fromItemUnit , int toItemUnt, int fromQuantity,int toQuantity, long userId, ItemUnit smallUnit)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemsLocations/unitsConversion";
@@ -172,7 +172,7 @@ namespace Restaurant.Classes
             //    return false;
             //}
         }
-        public async Task<int> decreaseItemLocationQuantity(int itemLocId ,int quantity, int userId, string objectName, Notification notification)
+        public async Task<int> decreaseItemLocationQuantity(long itemLocId ,int quantity, long userId, string objectName, Notification notification)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -190,7 +190,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
 
         }
-        public async Task<int> trasnferItem( int itemLocId ,ItemLocation itemLocation)
+        public async Task<int> trasnferItem(long itemLocId ,ItemLocation itemLocation)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -206,7 +206,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
       
-        public async Task<int> getAmountInBranch(int itemUnitId, int branchId,int isKitchen = 0)
+        public async Task<int> getAmountInBranch(long itemUnitId, long branchId,int isKitchen = 0)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemsLocations/getAmountInBranch";
@@ -217,7 +217,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
         
-        public async Task<int> getUnitAmount(int itemUnitId, int branchId)
+        public async Task<int> getUnitAmount(long itemUnitId, long branchId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemsLocations/getUnitAmount";
@@ -230,7 +230,7 @@ namespace Restaurant.Classes
 
         }
       
-        public async Task recieptInvoice(List<ItemTransfer> invoiceItems, int branchId,int userId, string objectName, Notification notificationObj)
+        public async Task recieptInvoice(List<ItemTransfer> invoiceItems, long branchId, long userId, string objectName, Notification notificationObj)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemsLocations/receiptInvoice";
@@ -250,7 +250,7 @@ namespace Restaurant.Classes
 
         }
        
-        public async Task<int> recieptOrder(List<ItemLocation> invoiceItems,List<ItemTransfer> orderList,int toBranch,int userId, string objectName, Notification notificationObj)
+        public async Task<int> recieptOrder(List<ItemLocation> invoiceItems,List<ItemTransfer> orderList, long toBranch, long userId, string objectName, Notification notificationObj)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -272,7 +272,7 @@ namespace Restaurant.Classes
 
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> transferToKitchen(List<ItemLocation> invoiceItems,List<ItemTransfer> orderList,int branchId,int userId)
+        public async Task<int> transferToKitchen(List<ItemLocation> invoiceItems,List<ItemTransfer> orderList, long branchId, long userId)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -291,7 +291,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
         
-        public async Task<int> returnSpendingOrder(List<ItemTransfer> invoiceItems, int branchId, int userId)
+        public async Task<int> returnSpendingOrder(List<ItemTransfer> invoiceItems, long branchId, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemsLocations/returnSpendingOrder";
@@ -303,7 +303,7 @@ namespace Restaurant.Classes
           
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> transferAmountbetweenUnits(int locationId,int itemLocId,int toItemUnitId,int fromQuantity, int toQuantity, int userId)
+        public async Task<int> transferAmountbetweenUnits(long locationId, long itemLocId, long toItemUnitId,int fromQuantity, int toQuantity, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemsLocations/transferAmountbetweenUnits";        
@@ -318,7 +318,7 @@ namespace Restaurant.Classes
 
            return await APIResult.post(method, parameters);
         }
-        public async Task<List<ItemLocation>> getSpecificItemLocation(string itemUnitsIds, int branchId)
+        public async Task<List<ItemLocation>> getSpecificItemLocation(string itemUnitsIds, long branchId)
         {
 
             List<ItemLocation> list = new List<ItemLocation>();

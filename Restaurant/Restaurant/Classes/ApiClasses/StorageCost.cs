@@ -16,13 +16,13 @@ namespace Restaurant.Classes
 {
     public class StorageCost
     {
-        public int storageCostId { get; set; }
+        public long storageCostId { get; set; }
         public string name { get; set; }
         public decimal cost { get; set; }
         public string notes { get; set; }
         public byte isActive { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
 
@@ -52,7 +52,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(int storageCostId, int userId, Boolean final)
+        public async Task<int> delete(long storageCostId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", storageCostId.ToString());
@@ -61,7 +61,7 @@ namespace Restaurant.Classes
             string method = "StorageCost/Delete";
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> setCostToUnits(List<int> itemUnitsIds, int storageCostId,int userId)
+        public async Task<int> setCostToUnits(List<long> itemUnitsIds, long storageCostId, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "StorageCost/setCostToUnits";
@@ -71,7 +71,7 @@ namespace Restaurant.Classes
             parameters.Add("userId", userId.ToString());
             return await APIResult.post(method, parameters);
         }
-        public async Task<List<ItemUnit>> GetStorageCostUnits(int storageCostId)
+        public async Task<List<ItemUnit>> GetStorageCostUnits(long storageCostId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("storageCostId", storageCostId.ToString());

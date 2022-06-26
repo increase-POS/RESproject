@@ -21,8 +21,8 @@ namespace Restaurant.Classes
 {
     public class Agent
     {
-        public int agentId { get; set; }
-        public Nullable<int> pointId { get; set; }
+        public long agentId { get; set; }
+        public Nullable<long> pointId { get; set; }
         public string name { get; set; }
         public string code { get; set; }
         public string company { get; set; }
@@ -37,8 +37,8 @@ namespace Restaurant.Classes
         public byte balanceType { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public string notes { get; set; }
         public byte isActive { get; set; }
         public string fax { get; set; }
@@ -47,17 +47,17 @@ namespace Restaurant.Classes
         public string payType { get; set; }
         public bool canReserve { get; set; }
         public string disallowReason { get; set; }
-        public Nullable<int> residentSecId { get; set; }
+        public Nullable<long> residentSecId { get; set; }
         public string GPSAddress { get; set; }
 
         public Boolean canDelete { get; set; }
 
         //
 
-        public int agentMembershipsId { get; set; }
-        public Nullable<int> subscriptionFeesId { get; set; }
-        public Nullable<int> cashTransId { get; set; }
-        public Nullable<int> membershipId { get; set; }
+        public long agentMembershipsId { get; set; }
+        public Nullable<long> subscriptionFeesId { get; set; }
+        public Nullable<long> cashTransId { get; set; }
+        public Nullable<long> membershipId { get; set; }
 
         public Nullable<System.DateTime> startDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
@@ -129,7 +129,7 @@ namespace Restaurant.Classes
             return items;
         }
 
-        public async Task<Agent> getAgentById(int agentId)
+        public async Task<Agent> getAgentById(long agentId)
         {
             Agent agent = new Agent();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -194,7 +194,7 @@ namespace Restaurant.Classes
                 });
         }
         // delete agent
-        public async Task<int> delete(int agentId, int userId, Boolean final)
+        public async Task<int> delete(long agentId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", agentId.ToString());
@@ -207,7 +207,7 @@ namespace Restaurant.Classes
 
          
         //public async Task<Boolean> uploadImage(string imagePath, int agentId)
-        public async Task<string> uploadImage(string imagePath, string imageName, int agentId)
+        public async Task<string> uploadImage(string imagePath, string imageName, long agentId)
         {
             if (imagePath != "")
             {
@@ -380,7 +380,7 @@ namespace Restaurant.Classes
             return value;
         }
 
-        public async Task<List<Agent>> GetAgentsByMembershipId(int membershipId)
+        public async Task<List<Agent>> GetAgentsByMembershipId(long membershipId)
         {
             List<Agent> items = new List<Agent>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();

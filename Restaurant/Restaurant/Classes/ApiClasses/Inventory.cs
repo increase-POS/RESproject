@@ -17,18 +17,18 @@ namespace Restaurant.Classes
 {
     public class Inventory
     {
-        public int inventoryId { get; set; }
+        public long inventoryId { get; set; }
         public string num { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public byte isActive { get; set; }
         public string notes { get; set; }
         public string inventoryType { get; set; }
-        public Nullable<int> branchId { get; set; }
-        public Nullable<int> posId { get; set; }
-        public Nullable<int> mainInventoryId { get; set; }
+        public Nullable<long> branchId { get; set; }
+        public Nullable<long> posId { get; set; }
+        public Nullable<long> mainInventoryId { get; set; }
 
 
 
@@ -36,7 +36,7 @@ namespace Restaurant.Classes
        
         //*******************************************************
        
-        public async Task<Inventory> getByBranch(string inventoryType, int branchId)
+        public async Task<Inventory> getByBranch(string inventoryType, long branchId)
         {
             Inventory item = new Inventory();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -57,7 +57,7 @@ namespace Restaurant.Classes
                 item = new Inventory();
             return item;
         }
-        public async Task<int> GetLastNumOfInv(string invCode, int branchId)
+        public async Task<int> GetLastNumOfInv(string invCode, long branchId)
         {
             int LastNumOfInv = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -76,7 +76,7 @@ namespace Restaurant.Classes
             }
             return LastNumOfInv;
         }
-        public async Task<bool> shortageIsManipulated(int inventoryId)
+        public async Task<bool> shortageIsManipulated(long inventoryId)
         {
             bool IsManipulated = false;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -103,7 +103,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
        
-        public async Task<int> delete(int itemId, int userId, Boolean final)
+        public async Task<int> delete(long itemId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());
@@ -112,7 +112,7 @@ namespace Restaurant.Classes
             string method = "Inventory/Delete";
            return await APIResult.post(method, parameters);
         }
-        public async Task<string> generateInvNumber(string invCode, int branchId)
+        public async Task<string> generateInvNumber(string invCode, long branchId)
         {         
             int sequence = await GetLastNumOfInv(invCode, branchId); // in : inventory
             sequence++;

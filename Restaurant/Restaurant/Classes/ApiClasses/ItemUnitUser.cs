@@ -19,16 +19,16 @@ namespace Restaurant.Classes
     public class ItemUnitUser
     {
 
-        public int id { get; set; }
-        public Nullable<int> itemUnitId { get; set; }
-        public Nullable<int> itemId { get; set; }
-        public Nullable<int> unitId { get; set; }
-        public Nullable<int> userId { get; set; }
+        public long id { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
+        public Nullable<long> itemId { get; set; }
+        public Nullable<long> unitId { get; set; }
+        public Nullable<long> userId { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public Nullable<byte> isActive { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
@@ -73,7 +73,7 @@ namespace Restaurant.Classes
 
         //}
 
-        public async Task<List<ItemUnitUser>> GetByUserId(int userId)
+        public async Task<List<ItemUnitUser>> GetByUserId(long userId)
         {
             List<ItemUnitUser> list = new List<ItemUnitUser>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -93,7 +93,7 @@ namespace Restaurant.Classes
 
         }
      
-        public async Task<int> UpdateList(List<ItemUnitUser> newlist, int userId)
+        public async Task<int> UpdateList(List<ItemUnitUser> newlist, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemUnitUser/UpdateList";

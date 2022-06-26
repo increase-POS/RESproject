@@ -26,15 +26,15 @@ namespace Restaurant.Classes
         public int isActive { get; set; }
         public string posName { get; set; }
         public string branchName { get; set; }
-        public Nullable<int> posSettingId { get; set; }
-        public Nullable<int> posId { get; set; }
+        public Nullable<long> posSettingId { get; set; }
+        public Nullable<long> posId { get; set; }
         public bool unLimited { get; set; }
     }
 
 
     public class packagesSend
     {
-        public Nullable<int> packageUserId { get; set; }
+        public Nullable<long> packageUserId { get; set; }
 
         public string packageName { get; set; }
 
@@ -82,8 +82,8 @@ namespace Restaurant.Classes
 
 
 
-        public Nullable<int> pId { get; set; }
-        public Nullable<int> pcdId { get; set; }
+        public Nullable<long> pId { get; set; }
+        public Nullable<long> pcdId { get; set; }
 
         public string activeState { get; set; }
         public string activeres { get; set; }
@@ -95,7 +95,7 @@ namespace Restaurant.Classes
         public string agentLastName { get; set; }//5- Agent LastName
 
         public Nullable<System.DateTime> pocrDate { get; set; }
-        public Nullable<int> poId { get; set; }
+        public Nullable<long> poId { get; set; }
         public string notes { get; set; }
         public string upnum { get; set; }
         public string activeApp { get; set; }

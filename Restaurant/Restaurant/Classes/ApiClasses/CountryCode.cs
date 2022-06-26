@@ -16,14 +16,14 @@ namespace Restaurant.Classes
 {
     public class CountryCode
     {
-        public int countryId { get; set; }
+        public long countryId { get; set; }
         public string code { get; set; }
 
 
         public string currency { get; set; }
         public string name { get; set; }
         public byte isDefault { get; set; }
-         public int currencyId { get; set; }
+         public long currencyId { get; set; }
 
         public async Task<List<CountryCode>> GetAllCountries()
         {
@@ -100,7 +100,7 @@ namespace Restaurant.Classes
         }
 
 
-        public async Task<int> UpdateIsdefault(int countryId)
+        public async Task<int> UpdateIsdefault(long countryId)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();

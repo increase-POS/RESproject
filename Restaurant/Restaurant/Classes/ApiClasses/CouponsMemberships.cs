@@ -16,14 +16,14 @@ namespace Restaurant.Classes
 {
     public class CouponsMemberships
     {
-        public int couponMembershipId { get; set; }
-        public Nullable<int> cId { get; set; }
-        public Nullable<int> membershipId { get; set; }
+        public long couponMembershipId { get; set; }
+        public Nullable<long> cId { get; set; }
+        public Nullable<long> membershipId { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
 
 
         public async Task<List<CouponsMemberships>> GetAll()
@@ -40,7 +40,7 @@ namespace Restaurant.Classes
             return items;
         }
 
-        public async Task<CouponsMemberships> GetById(int itemId)
+        public async Task<CouponsMemberships> GetById(long itemId)
         {
             CouponsMemberships item = new CouponsMemberships();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -59,7 +59,7 @@ namespace Restaurant.Classes
             return item;
         }        
 
-        public async Task<int> UpdateCouponsByMembershipId(List<CouponsMemberships> newList, int membershipId, int updateUserId)
+        public async Task<int> UpdateCouponsByMembershipId(List<CouponsMemberships> newList, long membershipId, long updateUserId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "couponsMemberships/UpdateCouponsByMembershipId";

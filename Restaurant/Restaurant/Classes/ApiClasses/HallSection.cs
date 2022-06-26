@@ -12,13 +12,13 @@ namespace Restaurant.Classes.ApiClasses
 {
     public class HallSection
     {
-        public int sectionId { get; set; }
+        public long sectionId { get; set; }
         public string name { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public byte isActive { get; set; }
         public string notes { get; set; }
         public string details { get; set; }
@@ -41,7 +41,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        public async Task<List<HallSection>> getBranchSections(int branchId)
+        public async Task<List<HallSection>> getBranchSections(long branchId)
         {
             List<HallSection> items = new List<HallSection>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -67,7 +67,7 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> delete(int sectionId, int userId, Boolean final)
+        public async Task<int> delete(long sectionId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("sectionId", sectionId.ToString());
@@ -77,7 +77,7 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<HallSection> GetById(int itemId)
+        public async Task<HallSection> GetById(long itemId)
         {
             HallSection item = new HallSection();
             Dictionary<string, string> parameters = new Dictionary<string, string>();

@@ -18,13 +18,13 @@ namespace Restaurant.Classes
 {
     public class Group
     {
-        public int groupId { get; set; }
+        public long groupId { get; set; }
         public string name { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public int isActive { get; set; }
         public Boolean canDelete { get; set; }
 
@@ -50,7 +50,7 @@ namespace Restaurant.Classes
         }
 
         // get users by groupId
-        public async Task<List<User>> GetUsersByGroupId(int groupId)
+        public async Task<List<User>> GetUsersByGroupId(long groupId)
         {
 
             List<User> list = new List<User>();
@@ -118,7 +118,7 @@ namespace Restaurant.Classes
            
         }
      
-        public async Task<int> Delete(int groupId, int userId, bool final)
+        public async Task<int> Delete(long groupId, long userId, bool final)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -132,7 +132,7 @@ namespace Restaurant.Classes
         }
 
 
-        public async Task<int> UpdateGroupIdInUsers(int groupId, List<int> newList, int userId)
+        public async Task<int> UpdateGroupIdInUsers(long groupId, List<long> newList, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 

@@ -16,9 +16,9 @@ namespace Restaurant.Classes
 {
     public class ItemUnit
     {
-        public int itemUnitId { get; set; }
-        public Nullable<int> itemId { get; set; }
-        public Nullable<int> unitId { get; set; }
+        public long itemUnitId { get; set; }
+        public Nullable<long> itemId { get; set; }
+        public Nullable<long> unitId { get; set; }
         public Nullable<int> unitValue { get; set; }
         public short defaultSale { get; set; }
         public short defaultPurchase { get; set; }
@@ -27,11 +27,11 @@ namespace Restaurant.Classes
         public string barcode { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> subUnitId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> subUnitId { get; set; }
         public decimal purchasePrice { get; set; }
-        public Nullable<int> storageCostId { get; set; }
+        public Nullable<long> storageCostId { get; set; }
         public byte isActive { get; set; }
 
 
@@ -49,10 +49,10 @@ namespace Restaurant.Classes
         public Nullable<decimal> priceTax { get; set; }
 
         public string type { get; set; }
-        public Nullable<int> categoryId { get; set; }
+        public Nullable<long> categoryId { get; set; }
         //**************************************************
         //*************** item unit methods *********************     
-        public async Task<ItemUnit> GetById(int itemUnitId)
+        public async Task<ItemUnit> GetById(long itemUnitId)
         {
             ItemUnit item = new ItemUnit();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -70,7 +70,7 @@ namespace Restaurant.Classes
             }
             return item;
         }
-        public async Task<List<ItemUnit>> GetItemUnits(int itemId = 0)
+        public async Task<List<ItemUnit>> GetItemUnits(long itemId = 0)
         {
 
             List<ItemUnit> list = new List<ItemUnit>();
@@ -90,7 +90,7 @@ namespace Restaurant.Classes
             return list;         
         }
 
-        public List<ItemUnit> GetIUbyItem(int itemId, List<ItemUnit>AllIU,List<Unit>AllUnits)
+        public List<ItemUnit> GetIUbyItem(long itemId, List<ItemUnit>AllIU,List<Unit>AllUnits)
         {
 
             if (AllIU is null)
@@ -155,7 +155,7 @@ namespace Restaurant.Classes
         //***************************************
         // delete item unit (barcode)
         //***************************************
-        public async Task<int> Delete(int ItemUnitId, int userId, bool final)
+        public async Task<int> Delete(long ItemUnitId, long userId, bool final)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -198,7 +198,7 @@ namespace Restaurant.Classes
             return list;
         }
            
-        public async Task<List<ItemUnit>> getSmallItemUnits(int itemId, int itemUnitId)
+        public async Task<List<ItemUnit>> getSmallItemUnits(long itemId, long itemUnitId)
         {
 
             List<ItemUnit> list = new List<ItemUnit>();
@@ -219,7 +219,7 @@ namespace Restaurant.Classes
             return list;
            
         }
-        public async Task<int> largeToSmallUnitQuan(int fromItemUnit, int toItemUnit)
+        public async Task<int> largeToSmallUnitQuan(long fromItemUnit, long toItemUnit)
         {
             int AvailableAmount = 0;
            
@@ -240,7 +240,7 @@ namespace Restaurant.Classes
             return AvailableAmount;
 
         }
-        public async Task<int> smallToLargeUnit(int fromItemUnit, int toItemUnit)
+        public async Task<int> smallToLargeUnit(long fromItemUnit, long toItemUnit)
         {
             int AvailableAmount = 0;
 
@@ -261,7 +261,7 @@ namespace Restaurant.Classes
             return AvailableAmount;
 
         }
-        public async Task<int> fromUnitToUnitQuantity(int quantity, int itemId, int fromItemUnitId, int toItemUnitId)
+        public async Task<int> fromUnitToUnitQuantity(int quantity, long itemId, long fromItemUnitId, long toItemUnitId)
         {
             int remain = 0;
             int _ConversionQuantity;

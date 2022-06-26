@@ -16,22 +16,22 @@ namespace Restaurant.Classes
 {
     public class ItemUnitOffer
     {
-        public int ioId { get; set; }
-        public Nullable<int> iuId { get; set; }
-        public Nullable<int> offerId { get; set; }
+        public long ioId { get; set; }
+        public Nullable<long> iuId { get; set; }
+        public Nullable<long> offerId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public Nullable<int> quantity { get; set; }
         public string offerName { get; set; }
         public string unitName { get; set; }
         public string itemName { get; set; }
         public string code { get; set; }
-        public Nullable<int> itemId { get; set; }
-        public Nullable<int> unitId { get; set; }
+        public Nullable<long> itemId { get; set; }
+        public Nullable<long> unitId { get; set; }
 
-        public async Task<int> updategroup(int offerId, List<ItemUnitOffer> newitoflist, int userId)
+        public async Task<int> updategroup(long offerId, List<ItemUnitOffer> newitoflist, long userId)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -49,7 +49,7 @@ namespace Restaurant.Classes
         }
      
 
-        public async Task<List<ItemUnitOffer>> GetItemsByOfferId(int offerId)
+        public async Task<List<ItemUnitOffer>> GetItemsByOfferId(long offerId)
         {
             List<ItemUnitOffer> list = new List<ItemUnitOffer>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();

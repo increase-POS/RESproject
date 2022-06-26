@@ -322,7 +322,7 @@ namespace Restaurant.Classes
         #region Category
         static public Category category = new Category();
         static public List<Category> categoriesList;
-        static public int GetCategoryId(string categoryName)
+        static public long GetCategoryId(string categoryName)
         {
             return categoriesList.Where(x => x.name.ToLower() == categoryName.ToLower()).FirstOrDefault().categoryId;
         }
@@ -360,7 +360,7 @@ namespace Restaurant.Classes
         #endregion
         #region tags
         public static Tag tag = new Tag();
-        public static async Task<List<Tag>> fillTags(ComboBox cmb, int categoryId)
+        public static async Task<List<Tag>> fillTags(ComboBox cmb, long categoryId)
         {
             List<Tag> tags;
             if (categoryId == -1)
@@ -374,7 +374,7 @@ namespace Restaurant.Classes
             cmb.DisplayMemberPath = "tagName";
             return tags;
         }
-        public static async Task fillTagsWithDefault(ComboBox cmb, int categoryId)
+        public static async Task fillTagsWithDefault(ComboBox cmb, long categoryId)
         {
             List<Tag> tags;
             if (categoryId == -1)
@@ -418,7 +418,7 @@ namespace Restaurant.Classes
             cmb.DisplayMemberPath = "name";
             #endregion
         }
-        static public async Task FillSmallUnits(ComboBox cmb, int mainUnitId, int itemId)
+        static public async Task FillSmallUnits(ComboBox cmb, long mainUnitId, long itemId)
         {
             #region Fill small units
             List<Unit> smallUnits;
@@ -493,7 +493,7 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "countryId";
             cmb.DisplayMemberPath = "code";
         }
-        static public async Task fillCountriesLocal(ComboBox cmb , int countryid,Border border)
+        static public async Task fillCountriesLocal(ComboBox cmb , long countryid,Border border)
         {
             if (citynum is null)
                 await RefreshCity();
@@ -624,7 +624,7 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
-        static public async Task FillComboUsersForDelivery(ComboBox cmb, string job,int customerId)
+        static public async Task FillComboUsersForDelivery(ComboBox cmb, string job, long customerId)
         {
             var users = await user.getUsersForDelivery(job, customerId);
             cmb.ItemsSource = users;
@@ -799,12 +799,12 @@ namespace Restaurant.Classes
         static public Location location = new Location();
         static public List<Location> locationsList;
         static public List<Location> locationsBySectionList;
-        static public async Task<IEnumerable<Location>> RefreshLocationsBySection(int sectionId)
+        static public async Task<IEnumerable<Location>> RefreshLocationsBySection(long sectionId)
         {
             locationsBySectionList = await location.getLocsBySectionId(sectionId);
             return locationsBySectionList;
         }
-        static public async Task FillComboLocationsBySection(ComboBox cmb , int sectionId)
+        static public async Task FillComboLocationsBySection(ComboBox cmb , long sectionId)
         {
             if (sectionId == -1)
                 cmb.ItemsSource = new List<Location>();

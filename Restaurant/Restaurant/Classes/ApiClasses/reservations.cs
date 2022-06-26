@@ -14,22 +14,22 @@ namespace Restaurant.Classes.ApiClasses
     {
         public long reservationId { get; set; }
         public string code { get; set; }
-        public Nullable<int> customerId { get; set; }
+        public Nullable<long> customerId { get; set; }
         public string customerName { get; set; }
 
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public Nullable<System.DateTime> reservationDate { get; set; }
         public Nullable<System.DateTime> reservationTime { get; set; }
         public Nullable<System.DateTime> endTime { get; set; }
         public Nullable<int> personsCount { get; set; }
         public string status { get; set; }
-        public Nullable<int> tableId { get; set; }
+        public Nullable<long> tableId { get; set; }
         public string notes { get; set; }
         public byte isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
 
 
         public string isExceed { get; set; }
@@ -58,7 +58,7 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("tables", myContent);
             return await APIResult.post(method, parameters);
         }
-        internal async Task<int> updateReservationStatus(long reservationId, string status, int userId)
+        internal async Task<int> updateReservationStatus(long reservationId, string status, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Tables/updateReservationStatus";
@@ -68,7 +68,7 @@ namespace Restaurant.Classes.ApiClasses
 
             return await APIResult.post(method, parameters);
         }
-        internal async Task<IEnumerable<TablesReservation>> Get(int branchId = 0)
+        internal async Task<IEnumerable<TablesReservation>> Get(long branchId = 0)
         {
             List<TablesReservation> items = new List<TablesReservation>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -83,7 +83,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        public async Task<string> generateReserveCode(string reservCode, string branchCode, int branchId)
+        public async Task<string> generateReserveCode(string reservCode, string branchCode, long branchId)
         {
             int sequence = await GetLastNumOfReserv(reservCode, branchId);
             sequence++;
@@ -93,7 +93,7 @@ namespace Restaurant.Classes.ApiClasses
             string invoiceNum = reservCode + "-" + branchCode + "-" + strSeq;
             return invoiceNum;
         }
-        public async Task<int> GetLastNumOfReserv(string reservCode, int branchId)
+        public async Task<int> GetLastNumOfReserv(string reservCode, long branchId)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();

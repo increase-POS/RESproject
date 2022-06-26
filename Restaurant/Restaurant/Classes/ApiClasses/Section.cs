@@ -16,14 +16,14 @@ namespace Restaurant.Classes
 {
     public class Section
     {
-        public int sectionId { get; set; }
+        public long sectionId { get; set; }
         public string name { get; set; }
         public string details { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public byte isActive { get; set; }
         public string notes { get; set; }
         public byte isFreeZone { get; set; }
@@ -48,7 +48,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<Section> getById(int itemId)
+        public async Task<Section> getById(long itemId)
         {
             Section item = new Section();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -66,7 +66,7 @@ namespace Restaurant.Classes
             }
             return item;
         }
-        public async Task<List<Section>> getBranchSections(int branchId)
+        public async Task<List<Section>> getBranchSections(long branchId)
         {
             List<Section> items = new List<Section>();
             Section item = new Section();
@@ -91,7 +91,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(int sectionId, int userId, Boolean final)
+        public async Task<int> delete(long sectionId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", sectionId.ToString());

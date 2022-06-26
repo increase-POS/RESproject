@@ -135,7 +135,7 @@ namespace Restaurant.Classes
         {
             p_error.Visibility = Visibility.Collapsed;
         }
-        public static async Task<bool> isCodeExist(string randomNum, string type, string _class, int id)
+        public static async Task<bool> isCodeExist(string randomNum, string type, string _class, long id)
         {
             iscodeExist = false;
             try

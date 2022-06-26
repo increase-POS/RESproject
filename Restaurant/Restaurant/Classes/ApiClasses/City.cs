@@ -18,9 +18,9 @@ namespace Restaurant.Classes
     public class City
 
     {
-        public int cityId { get; set; }
+        public long cityId { get; set; }
         public string cityCode { get; set; }
-        public Nullable<int> countryId { get; set; }
+        public Nullable<long> countryId { get; set; }
 
 
 

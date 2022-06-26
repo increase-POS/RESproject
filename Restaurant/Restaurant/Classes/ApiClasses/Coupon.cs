@@ -17,7 +17,7 @@ namespace Restaurant.Classes
 {
     public class Coupon
     {
-        public int cId { get; set; }
+        public long cId { get; set; }
         public string name { get; set; }
         public string code { get; set; }
         public byte isActive { get; set; }
@@ -32,14 +32,14 @@ namespace Restaurant.Classes
         public decimal invMax { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public string barcode { get; set; }
-        public Nullable<int> membershipId { get; set; }
+        public Nullable<long> membershipId { get; set; }
         public Boolean canDelete { get; set; }
         public string state { get; set; }
         public string forAgents { get; set; }
-        public int couponMembershipId { get; set; }
+        public long couponMembershipId { get; set; }
      
 
         public async Task<List<Coupon>> Get()
@@ -72,7 +72,7 @@ namespace Restaurant.Classes
         }
 
 
-        public async Task<List<Coupon>> GetEffictiveByMemberShipID(int memberShipId)
+        public async Task<List<Coupon>> GetEffictiveByMemberShipID(long memberShipId)
         {
             List<Coupon> items = new List<Coupon>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -90,7 +90,7 @@ namespace Restaurant.Classes
         }
 
 
-        public async Task<Coupon> getById(int itemId)
+        public async Task<Coupon> getById(long itemId)
         {
             Coupon item = new Coupon();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -138,7 +138,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(int itemId, int userId, Boolean final)
+        public async Task<int> delete(long itemId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());
@@ -148,7 +148,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
        
-        public async Task<List<Coupon>> GetCouponsByMembershipId(int membershipId)
+        public async Task<List<Coupon>> GetCouponsByMembershipId(long membershipId)
         {
             List<Coupon> items = new List<Coupon>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();

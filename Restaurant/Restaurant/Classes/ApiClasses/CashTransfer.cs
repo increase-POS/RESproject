@@ -32,57 +32,57 @@ namespace Restaurant.Classes
     public class CashTransfer
     {
 
-        public int cashTransId { get; set; }
+        public long cashTransId { get; set; }
         public string transType { get; set; }
-        public Nullable<int> posId { get; set; }
-        public Nullable<int> userId { get; set; }
-        public Nullable<int> agentId { get; set; }
-        public Nullable<int> invId { get; set; }
+        public Nullable<long> posId { get; set; }
+        public Nullable<long> userId { get; set; }
+        public Nullable<long> agentId { get; set; }
+        public Nullable<long> invId { get; set; }
         public string transNum { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public decimal cash { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
         public string notes { get; set; }
-        public Nullable<int> posIdCreator { get; set; }
+        public Nullable<long> posIdCreator { get; set; }
         public byte isConfirm { get; set; }
-        public Nullable<int> cashTransIdSource { get; set; }
+        public Nullable<long> cashTransIdSource { get; set; }
         public string side { get; set; }
         public string docName { get; set; }
         public string docNum { get; set; }
         public string docImage { get; set; }
-        public Nullable<int> bankId { get; set; }
+        public Nullable<long> bankId { get; set; }
         public string bankName { get; set; }
         public string agentName { get; set; }
         public string usersName { get; set; }// side=u
         public string posName { get; set; }
         public string pos2Name { get; set; }
-        public Nullable<int> pos2Id { get; set; }
+        public Nullable<long> pos2Id { get; set; }
         public string posCreatorName { get; set; }
-        public int cashTrans2Id { get; set; }
+        public long cashTrans2Id { get; set; }
         public Nullable<byte> isConfirm2 { get; set; }
         public string processType { get; set; }
-        public Nullable<int> cardId { get; set; }
+        public Nullable<long> cardId { get; set; }
         public string createUserName { get; set; }
         public string createUserJob { get; set; }
         public string createUserLName { get; set; }
         public string usersLName { get; set; } // side=u
         public string cardName { get; set; }// processType=card
         public string reciveName { get; set; }
-        public Nullable<int> bondId { get; set; }
+        public Nullable<long> bondId { get; set; }
         public Nullable<System.DateTime> bondDeserveDate { get; set; }
         public Nullable<byte> bondIsRecieved { get; set; }
-        public Nullable<int> shippingCompanyId { get; set; }
+        public Nullable<long> shippingCompanyId { get; set; }
         public string shippingCompanyName { get; set; }
         public string userAcc { get; set; }
 
         //for reports
-        public Nullable<int> branchCreatorId { get; set; }
+        public Nullable<long> branchCreatorId { get; set; }
         public string branchCreatorname { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string branchName { get; set; }
-        public Nullable<int> branch2Id { get; set; }
+        public Nullable<long> branch2Id { get; set; }
         public string branch2Name { get; set; }
         public string updateUserAcc { get; set; }
 
@@ -109,7 +109,7 @@ namespace Restaurant.Classes
         }
 
         
-        public async Task<List<CashTransfer>> GetCashTransferForPosById(string type, string side, int posId)
+        public async Task<List<CashTransfer>> GetCashTransferForPosById(string type, string side, long posId)
         {
             // string type, string side
             List<CashTransfer> list = new List<CashTransfer>();
@@ -154,7 +154,7 @@ namespace Restaurant.Classes
         }    
 
         //GetListByInvId
-        public async Task<List<CashTransfer>> GetListByInvId(int invId)
+        public async Task<List<CashTransfer>> GetListByInvId(long invId)
         {
             List<CashTransfer> list = new List<CashTransfer>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -187,7 +187,7 @@ namespace Restaurant.Classes
         }
 
 
-        public async Task<List<PayedInvclass>> GetPayedByInvId(int invId)
+        public async Task<List<PayedInvclass>> GetPayedByInvId(long invId)
         {
 
             List<PayedInvclass> list = new List<PayedInvclass>();
@@ -209,7 +209,7 @@ namespace Restaurant.Classes
         }
 
 
-        public async Task<List<CashTransfer>> GetbySourcId(string side, int sourceId)
+        public async Task<List<CashTransfer>> GetbySourcId(string side, long sourceId)
         {
 
             List<CashTransfer> list = new List<CashTransfer>();
@@ -231,7 +231,7 @@ namespace Restaurant.Classes
          
         }
 
-        public async Task<int> deletePosTrans(int cashTransId)
+        public async Task<int> deletePosTrans(long cashTransId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("cashTransId", cashTransId.ToString());
@@ -241,7 +241,7 @@ namespace Restaurant.Classes
           
         }
 
-        public async Task<int> PayByAmmount(int agentId, decimal ammount, string payType, CashTransfer cashTr)
+        public async Task<int> PayByAmmount(long agentId, decimal ammount, string payType, CashTransfer cashTr)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -259,7 +259,7 @@ namespace Restaurant.Classes
         
         }
 
-        public async Task<int> PayUserByAmmount(int userId, decimal ammount, string payType, CashTransfer cashTr)
+        public async Task<int> PayUserByAmmount(long userId, decimal ammount, string payType, CashTransfer cashTr)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -276,7 +276,7 @@ namespace Restaurant.Classes
 
         }
 
-        public async Task<int> payShippingCompanyByAmount(int shippingCompanyId, decimal ammount, string payType, CashTransfer cashTr)
+        public async Task<int> payShippingCompanyByAmount(long shippingCompanyId, decimal ammount, string payType, CashTransfer cashTr)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -330,7 +330,7 @@ namespace Restaurant.Classes
             #endregion
         }
 
-        public async Task<int> PayListOfInvoices(int agentId, List<Invoice> invoicelst, string payType, CashTransfer cashTr)
+        public async Task<int> PayListOfInvoices(long agentId, List<Invoice> invoicelst, string payType, CashTransfer cashTr)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -348,7 +348,7 @@ namespace Restaurant.Classes
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> PayUserListOfInvoices(int userId, List<Invoice> invoicelst, string payType, CashTransfer cashTr)
+        public async Task<int> PayUserListOfInvoices(long userId, List<Invoice> invoicelst, string payType, CashTransfer cashTr)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -365,7 +365,7 @@ namespace Restaurant.Classes
 
         }
 
-        public async Task<int> PayShippingCompanyListOfInvoices(int shippingCompanyId, List<Invoice> invoicelst, string payType, CashTransfer cashTr)
+        public async Task<int> PayShippingCompanyListOfInvoices(long shippingCompanyId, List<Invoice> invoicelst, string payType, CashTransfer cashTr)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -412,7 +412,7 @@ namespace Restaurant.Classes
             }
             return message;
         }
-        public async Task<string> getLastOpenTransNum(int posId)
+        public async Task<string> getLastOpenTransNum(long posId)
         {
             string message = "";
 
@@ -490,7 +490,7 @@ namespace Restaurant.Classes
             #endregion
         }
 
-        public async Task<int> GetCashCount(int invoiceId)
+        public async Task<int> GetCashCount(long invoiceId)
         {
             int message = 0;
 

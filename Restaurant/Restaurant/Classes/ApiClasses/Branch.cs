@@ -17,7 +17,7 @@ namespace Restaurant.Classes
 
     public class Branch
     {
-        public int branchId { get; set; }
+        public long branchId { get; set; }
         public string code { get; set; }
         public string name { get; set; }
         public string address { get; set; }
@@ -26,10 +26,10 @@ namespace Restaurant.Classes
         public string mobile { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public string notes { get; set; }
-        public Nullable<int> parentId { get; set; }
+        public Nullable<long> parentId { get; set; }
         public byte isActive { get; set; }
         public string type { get; set; }
         public Boolean canDelete { get; set; }
@@ -50,7 +50,7 @@ namespace Restaurant.Classes
 
         public string posName { get; set; }
         public string posCode { get; set; }
-        public Nullable<int> invoiceId { get; set; }
+        public Nullable<long> invoiceId { get; set; }
 
         public async Task<List<Branch>> GetAll()
         {
@@ -85,7 +85,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<Branch> getBranchById(int itemId)
+        public async Task<Branch> getBranchById(long itemId)
         {
             Branch item = new Branch();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -146,7 +146,7 @@ namespace Restaurant.Classes
             return items;
         }
         
-        //public async Task<Branch> GetJoinBrdByBranchId(int itemId)
+        //public async Task<Branch> GetJoinBrdByBranchId(long itemId)
         //{
         //    Branch items = new Branch();
         //    Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -165,7 +165,7 @@ namespace Restaurant.Classes
         //    return items;
         //}
         // ارجاع كل الفروع التي يرتبط بها المستخدم او الفرع 
-        public async Task<List<Branch>> BranchesByBranchandUser(int mainBranchId, int userId)
+        public async Task<List<Branch>> BranchesByBranchandUser(long mainBranchId, long userId)
         {
             List<Branch> items = new List<Branch>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -184,7 +184,7 @@ namespace Restaurant.Classes
             return items;
         }
         //// ارجاع كل الفروع المرتبطة بهذا الفرع
-        //public async Task<Branch> GetByBranchStor(int mainBranchId)
+        //public async Task<Branch> GetByBranchStor(long mainBranchId)
         //{
         //    Branch items = new Branch();
         //    Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -203,7 +203,7 @@ namespace Restaurant.Classes
         //    return items;
         //}
         //ارجا ع كل الفروع التي يرتبط بها هذا المستخدم
-        //public async Task<Branch> GetByBranchUser(int userId)
+        //public async Task<Branch> GetByBranchUser(long userId)
         //{
         //    Branch items = new Branch();
         //    Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -230,7 +230,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(int branchId, int userId, Boolean final)
+        public async Task<int> delete(long branchId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", branchId.ToString());

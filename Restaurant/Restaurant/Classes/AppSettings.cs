@@ -20,10 +20,10 @@ namespace Restaurant.Classes
         internal static int? itemCost;
         public static CountryCode Region;
         public static string Currency;
-        public static int CurrencyId;
+        public static long CurrencyId;
 
         public static string logoImage;
-        static public int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
+        static public long nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
         public static string companyName;
         public static string Email;
         public static string Fax;

@@ -26,7 +26,7 @@ namespace Restaurant.Classes
     public class ProgramDetails
     {
 
-        public int id { get; set; }
+        public long id { get; set; }
         public string programName { get; set; }
         public int branchCount { get; set; }
         public int posCount { get; set; }

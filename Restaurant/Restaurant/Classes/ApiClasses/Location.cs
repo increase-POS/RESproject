@@ -16,18 +16,18 @@ namespace Restaurant.Classes
 {
     public class Location
     {
-        public int locationId { get; set; }
+        public long locationId { get; set; }
         public string x { get; set; }
         public string y { get; set; }
         public string z { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public byte isActive { get; set; }
-        public Nullable<int> sectionId { get; set; }
+        public Nullable<long> sectionId { get; set; }
         public string notes { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public byte isFreeZone { get; set; }
         public byte isKitchen { get; set; }
 
@@ -67,7 +67,7 @@ namespace Restaurant.Classes
             return items;
         }
           
-        public async Task<List<Location>> getLocsBySectionId(int itemId)
+        public async Task<List<Location>> getLocsBySectionId(long itemId)
         {
             List<Location> items = new List<Location>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -94,7 +94,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> saveLocationsSection(List<Location> locations, int sectionId, int userId)
+        public async Task<int> saveLocationsSection(List<Location> locations, long sectionId, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Locations/AddLocationsToSection";
@@ -104,7 +104,7 @@ namespace Restaurant.Classes
             parameters.Add("userId", userId.ToString());
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(int locationId, int userId, Boolean final)
+        public async Task<int> delete(long locationId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", locationId.ToString());

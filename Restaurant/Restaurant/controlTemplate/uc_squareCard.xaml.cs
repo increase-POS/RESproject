@@ -25,7 +25,7 @@ namespace Restaurant.controlTemplate
         {
             InitializeComponent();
         }
-        public int contentId { get; set; }
+        public long contentId { get; set; }
         public CardViewItems cardViewitem { get; set; }
         double gridCatigorieItems_ActualHeight { get; set; }
         double gridCatigorieItems_ActualWidth { get; set; }

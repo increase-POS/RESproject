@@ -10,19 +10,19 @@ namespace Restaurant.Classes
     {
         public int index { get; set; }
         public string image { get; set; }
-        public int itemId { get; set; }
-        public int itemUnitId { get; set; }
+        public long itemId { get; set; }
+        public long itemUnitId { get; set; }
         public string itemName { get; set; }
         public int Count { get; set; }
         public decimal Price { get; set; }
         public decimal basicPrice { get; set; }
         public decimal Total { get; set; }
         public decimal Tax { get; set; }
-        public int? offerId { get; set; }
+        public long? offerId { get; set; }
         public decimal OfferValue { get; set; }
         public string OfferType { get; set; }
         public string forAgents { get; set; }
-        public int itemsTransId { get; set; }
+        public long itemsTransId { get; set; }
 
 
     }
@@ -31,15 +31,15 @@ namespace Restaurant.Classes
     public class BillDetailsPurchase
     {
         public int ID { get; set; }
-        public int itemId { get; set; }
-        public int itemUnitId { get; set; }
+        public long itemId { get; set; }
+        public long itemUnitId { get; set; }
         public string Product { get; set; }
         public string Unit { get; set; }
         public string UnitName { get; set; }
         public int Count { get; set; }
         public decimal Price { get; set; }
         public decimal Total { get; set; }
-        public int OrderId { get; set; }
+        public long OrderId { get; set; }
         
     }
 }

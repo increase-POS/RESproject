@@ -12,50 +12,50 @@ namespace Restaurant.Classes.ApiClasses
 {
     public class ItemOrderPreparing
     {
-        public int itemOrderId { get; set; }
-        public Nullable<int> itemUnitId { get; set; }
-        public Nullable<int> orderPreparingId { get; set; }
+        public long itemOrderId { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
+        public Nullable<long> orderPreparingId { get; set; }
         public Nullable<int> quantity { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> itemsTransId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> itemsTransId { get; set; }
 
-        public Nullable<int> itemId { get; set; }
+        public Nullable<long> itemId { get; set; }
         public string itemName { get; set; }
-        public Nullable<int> categoryId { get; set; }
+        public Nullable<long> categoryId { get; set; }
         public string categoryName { get; set; }
         public int sequence { get; set; }
     }
     public class orderPreparingStatus
     {
-        public int orderStatusId { get; set; }
-        public Nullable<int> orderPreparingId { get; set; }
+        public long orderStatusId { get; set; }
+        public Nullable<long> orderPreparingId { get; set; }
         public string status { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public string notes { get; set; }
         public byte isActive { get; set; }
     }
     public class OrderPreparing
     {
-        public int orderPreparingId { get; set; }
+        public long orderPreparingId { get; set; }
         public string orderNum { get; set; }
-        public Nullable<int> invoiceId { get; set; }
+        public Nullable<long> invoiceId { get; set; }
         public string notes { get; set; }
         public Nullable<decimal> preparingTime { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
 
 
         public string itemName { get; set; }
-        public Nullable<int> itemUnitId { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
         public int quantity { get; set; }
 
         //order
@@ -69,16 +69,16 @@ namespace Restaurant.Classes.ApiClasses
         //invoice
         public string invNum { get; set; }
         public string invType { get; set; }
-        public Nullable<int> shippingCompanyId { get; set; }
+        public Nullable<long> shippingCompanyId { get; set; }
 
         public List<ItemOrderPreparing> items { get; set; }
 
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string branchName { get; set; }
         public Nullable<System.DateTime> invDate { get; set; }
         public Nullable<System.TimeSpan> invTime { get; set; }
         //category
-        public Nullable<int> categoryId { get; set; }
+        public Nullable<long> categoryId { get; set; }
         public string categoryCode { get; set; }
         public string categoryName { get; set; }
         public string sectionTable { get; set; }
@@ -87,7 +87,7 @@ namespace Restaurant.Classes.ApiClasses
         // for check dataGrid
         public bool IsChecked { get; set; }
 
-        public async Task<List<OrderPreparing>> GetInvoicePreparingOrders( int invoiceId)
+        public async Task<List<OrderPreparing>> GetInvoicePreparingOrders(long invoiceId)
         {
             List<OrderPreparing> items = new List<OrderPreparing>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -102,7 +102,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        public async Task<List<OrderPreparing>> GetKitchenPreparingOrders( int branchId, string status,int duration=0)
+        public async Task<List<OrderPreparing>> GetKitchenPreparingOrders(long branchId, string status, long duration =0)
         {
             List<OrderPreparing> items = new List<OrderPreparing>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -120,7 +120,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        public async Task<List<OrderPreparing>> GetHallOrdersWithStatus( int branchId, string status,int duration=0)
+        public async Task<List<OrderPreparing>> GetHallOrdersWithStatus(long branchId, string status,int duration=0)
         {
             List<OrderPreparing> items = new List<OrderPreparing>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -140,7 +140,7 @@ namespace Restaurant.Classes.ApiClasses
             return items;
         }
 
-        public async Task<List<Invoice>> GetOrdersByTypeWithStatus( int branchId,string type, int duration=0)
+        public async Task<List<Invoice>> GetOrdersByTypeWithStatus(long branchId,string type, int duration=0)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -159,7 +159,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        public async Task<List<Invoice>> GetOrdersWithDelivery( int branchId, string status)
+        public async Task<List<Invoice>> GetOrdersWithDelivery(long branchId, string status)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -191,7 +191,7 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("statusObject", myContent);
             return await APIResult.post(method, parameters);
         }
-        public async Task<int> savePreparingOrders(OrderPreparing order, List<ItemOrderPreparing> orderItems, orderPreparingStatus statusObject,int branchId,string statusesOfPreparingOrder)
+        public async Task<int> savePreparingOrders(OrderPreparing order, List<ItemOrderPreparing> orderItems, orderPreparingStatus statusObject, long branchId,string statusesOfPreparingOrder)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "OrderPreparing/SaveOrdersWithItemsAndStatus";
@@ -205,7 +205,7 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("statusesOfPreparingOrder", statusesOfPreparingOrder);
             return await APIResult.post(method, parameters);
         }
-        public async Task<int> EditPreparingOrdersPrepTime(List<OrderPreparing> orders, decimal preparingTime, int userId)
+        public async Task<int> EditPreparingOrdersPrepTime(List<OrderPreparing> orders, decimal preparingTime, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "OrderPreparing/EditPreparingOrdersPrepTime";
@@ -227,7 +227,7 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> EditInvoiceOrdersStatus(int invoiceId,int? shipUserId,int shippingCompanyId, orderPreparingStatus statusObject)
+        public async Task<int> EditInvoiceOrdersStatus(long invoiceId, long? shipUserId, long shippingCompanyId, orderPreparingStatus statusObject)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "OrderPreparing/EditInvoiceOrdersStatus";
@@ -240,7 +240,7 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> EditInvoiceDelivery(int invoiceId,int? shipUserId,int shippingCompanyId)
+        public async Task<int> EditInvoiceDelivery(long invoiceId, long? shipUserId, long shippingCompanyId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "OrderPreparing/EditInvoiceDelivery";
@@ -251,7 +251,7 @@ namespace Restaurant.Classes.ApiClasses
 
             return await APIResult.post(method, parameters);
         }
-        public async Task<int> finishInvoiceOrders(int invoiceId, int userId)
+        public async Task<int> finishInvoiceOrders(long invoiceId, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "OrderPreparing/finishInvoiceOrders";
@@ -281,7 +281,7 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("statusObject", myContent);
             return await APIResult.post(method, parameters);
         }
-        public async Task<string> generateOrderNumber(string orderCode, string branchCode, int branchId)
+        public async Task<string> generateOrderNumber(string orderCode, string branchCode, long branchId)
         {
             int sequence = await GetLastNumOfInv(orderCode, branchId);
             sequence++;
@@ -291,7 +291,7 @@ namespace Restaurant.Classes.ApiClasses
             string invoiceNum = orderCode + "-" + branchCode + "-" + strSeq;
             return invoiceNum;
         }
-        public async Task<int> GetLastNumOfInv(string orderCode, int branchId)
+        public async Task<int> GetLastNumOfInv(string orderCode, long branchId)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -310,7 +310,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return count;
         }
-        public async Task<int> GetHallOrderCount(string status, int branchId, int duration)
+        public async Task<int> GetHallOrderCount(string status, long branchId, long duration)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -350,7 +350,7 @@ namespace Restaurant.Classes.ApiClasses
 
             return remainingTime;
         }
-        public async Task<List<OrderPreparing>> GetOrdersByInvoiceId(int invoiceId)
+        public async Task<List<OrderPreparing>> GetOrdersByInvoiceId(long invoiceId)
         {
             List<OrderPreparing> items = new List<OrderPreparing>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();

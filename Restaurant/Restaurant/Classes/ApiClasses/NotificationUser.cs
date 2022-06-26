@@ -16,15 +16,15 @@ namespace Restaurant.Classes
 {
     public class Notification
     {
-        public int notUserId { get; set; }
-        public int notId { get; set; }
-        public Nullable<int> userId { get; set; }
+        public long notUserId { get; set; }
+        public long notId { get; set; }
+        public Nullable<long> userId { get; set; }
         public bool isRead { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> posId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> posId { get; set; }
 
 
 
@@ -38,8 +38,8 @@ namespace Restaurant.Classes
         public byte isActive { get; set; }
 
         //***********************************************
-        public async Task<int> save(Notification obj, int branchId, string objectName, string prefix,
-            int userId = 0, int posId = 0)
+        public async Task<int> save(Notification obj, long branchId, string objectName, string prefix,
+            long userId = 0, long posId = 0)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "notification/Save";
@@ -75,7 +75,7 @@ namespace Restaurant.Classes
         public string msgType { get; set; }
         public string path { get; set; }
 
-        public async Task<List<NotificationUser>> GetByUserId(int userId, string type, int posId)
+        public async Task<List<NotificationUser>> GetByUserId(long userId, string type, long posId)
         {
             List<NotificationUser> items = new List<NotificationUser>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -93,7 +93,7 @@ namespace Restaurant.Classes
             return items;
         }
 
-        public async Task<int> GetCountByUserId(int userId, string type, int posId)
+        public async Task<int> GetCountByUserId(long userId, string type, long posId)
         {
             int count =0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -111,7 +111,7 @@ namespace Restaurant.Classes
             return count;
         }
 
-        public async Task<int> setAsRead(int notUserId, int posId, string type)
+        public async Task<int> setAsRead(long notUserId, long posId, string type)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "notificationUser/setAsRead";

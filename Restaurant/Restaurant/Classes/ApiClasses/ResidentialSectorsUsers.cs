@@ -16,19 +16,19 @@ namespace Restaurant.Classes
 {
     public class ResidentialSectorsUsers
     {
-        public int id { get; set; }
-        public Nullable<int> residentSecId { get; set; }
-        public Nullable<int> userId { get; set; }
+        public long id { get; set; }
+        public Nullable<long> residentSecId { get; set; }
+        public Nullable<long> userId { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
 
 
        
 
-        public async Task<int> UpdateResSectorsByUserId(List<ResidentialSectorsUsers> newList, int userId, int updateUserId)
+        public async Task<int> UpdateResSectorsByUserId(List<ResidentialSectorsUsers> newList, long userId, long updateUserId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ResidentialSectorsUsers/UpdateResSectorsByUserId";

@@ -17,13 +17,13 @@ namespace Restaurant.Classes
     public class Printers
     {
 
-        public int printerId { get; set; }
+        public long printerId { get; set; }
         public string name { get; set; }
         public string printFor { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -46,7 +46,7 @@ namespace Restaurant.Classes
              
         }
 
-        public async Task<Printers> GetByID(int printerId)
+        public async Task<Printers> GetByID(long printerId)
         {
 
             Printers item = new Printers();

@@ -18,19 +18,19 @@ namespace Restaurant.Classes
 {
     public class ItemTransfer
     {
-        public int itemsTransId { get; set; }
+        public long itemsTransId { get; set; }
         public long quantity { get; set; }
-        public Nullable<int> invoiceId { get; set; }
+        public Nullable<long> invoiceId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public string notes { get; set; }
         public decimal price { get; set; }
-        public Nullable<int> itemUnitId { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
         public string itemSerial { get; set; }
-        public Nullable<int> inventoryItemLocId { get; set; }
-        public Nullable<int> offerId { get; set; }
+        public Nullable<long> inventoryItemLocId { get; set; }
+        public Nullable<long> offerId { get; set; }
         public Nullable<decimal> offerValue { get; set; }
         public Nullable<decimal> offerType { get; set; }
         public string offerCode { get; set; }
@@ -43,7 +43,7 @@ namespace Restaurant.Classes
         public decimal purchasePrice { get; set; }
         public string cause { get; set; }
 
-        public Nullable<int> itemId { get; set; }
+        public Nullable<long> itemId { get; set; }
         public string itemName { get; set; }
 
         public Nullable<long> lockedQuantity { get; set; }
@@ -56,7 +56,7 @@ namespace Restaurant.Classes
 
 
         public string unitName { get; set; }
-        public Nullable<int> unitId { get; set; }
+        public Nullable<long> unitId { get; set; }
         public string barcode { get; set; }
 
         public string itemType { get; set; }
@@ -65,36 +65,36 @@ namespace Restaurant.Classes
         //public int sequence { get; set; }
 
 
-        public Nullable<int> locationIdNew { get; set; }
-        public Nullable<int> locationIdOld { get; set; }
+        public Nullable<long> locationIdNew { get; set; }
+        public Nullable<long> locationIdOld { get; set; }
         public bool isActive { get; set; }
 
         public Nullable<decimal> subTotal { get; set; }
 
         public Nullable<decimal> finalDiscount { get; set; }
 
-        public Nullable<int> mainCourseId { get; set; }
+        public Nullable<long> mainCourseId { get; set; }
     }
     public class invoiceTables
     {
-        public int invTableId { get; set; }
-        public int invoiceId { get; set; }
-        public int tableId { get; set; }
+        public long invTableId { get; set; }
+        public long invoiceId { get; set; }
+        public long tableId { get; set; }
         public byte isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
     }
     public  class CouponInvoice
     {
-        public int id { get; set; }
-        public Nullable<int> couponId { get; set; }
-        public Nullable<int> InvoiceId { get; set; }
+        public long id { get; set; }
+        public Nullable<long> couponId { get; set; }
+        public Nullable<long> InvoiceId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public Nullable<decimal> discountValue { get; set; }
         public Nullable<byte> discountType { get; set; }
         public string forAgents { get; set; }
@@ -108,25 +108,25 @@ namespace Restaurant.Classes
     }
     public  class invoiceStatus
     {
-        public int invStatusId { get; set; }
-        public Nullable<int> invoiceId { get; set; }
+        public long invStatusId { get; set; }
+        public Nullable<long> invoiceId { get; set; }
         public string status { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public string notes { get; set; }
         public byte isActive { get; set; }
         public Nullable<System.DateTime> date { get; set; }
-        public Nullable<int> userId { get; set; }
+        public Nullable<long> userId { get; set; }
  
     }
     public class Invoice
     {
-        public int invoiceId { get; set; }
+        public long invoiceId { get; set; }
         public string invNumber { get; set; }
-        public Nullable<int> agentId { get; set; }
-        public Nullable<int> createUserId { get; set; }
+        public Nullable<long> agentId { get; set; }
+        public Nullable<long> createUserId { get; set; }
         public string invType { get; set; }
         public string discountType { get; set; }
         public decimal discountValue { get; set; }
@@ -137,24 +137,24 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> deservedDate { get; set; }
         public Nullable<System.DateTime> invDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> invoiceMainId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> invoiceMainId { get; set; }
         public string invCase { get; set; }
         public Nullable<System.TimeSpan> invTime { get; set; }
         public string notes { get; set; }
         public string vendorInvNum { get; set; }
         public Nullable<System.DateTime> vendorInvDate { get; set; }
-        public Nullable<int> branchId { get; set; }
-        public Nullable<int> posId { get; set; }
+        public Nullable<long> branchId { get; set; }
+        public Nullable<long> posId { get; set; }
         public decimal tax { get; set; }
         public int taxtype { get; set; }
         public string name { get; set; }
         public byte isApproved { get; set; }
-        public Nullable<int> shippingCompanyId { get; set; }
-        public Nullable<int> branchCreatorId { get; set; }
-        public Nullable<int> shipUserId { get; set; }
+        public Nullable<long> shippingCompanyId { get; set; }
+        public Nullable<long> branchCreatorId { get; set; }
+        public Nullable<long> shipUserId { get; set; }
         public string prevStatus { get; set; }
-        public Nullable<int> userId { get; set; }
+        public Nullable<long> userId { get; set; }
         public decimal manualDiscountValue { get; set; }
         public string manualDiscountType { get; set; }
         public bool isActive { get; set; }
@@ -167,8 +167,8 @@ namespace Restaurant.Classes
         public decimal shippingCost { get; set; }
         public decimal shippingCostDiscount { get; set; }
         public decimal realShippingCost { get; set; }
-        public Nullable<int> waiterId { get; set; }
-        public Nullable<int> membershipId { get; set; }
+        public Nullable<long> waiterId { get; set; }
+        public Nullable<long> membershipId { get; set; }
 
 
         public string branchName { get; set; }
@@ -229,7 +229,7 @@ namespace Restaurant.Classes
         public string invBarcode { get; set; }
         //*************************************************
         //------------------------------------------------------
-        public async Task<int> GetLastNumOfInv(string invCode, int branchId)
+        public async Task<int> GetLastNumOfInv(string invCode, long branchId)
         {
             int count =0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -249,7 +249,7 @@ namespace Restaurant.Classes
             return count;
         }
 
-        public async Task<int> GetLastDialyNumOfInv(string invType, int branchId)
+        public async Task<int> GetLastDialyNumOfInv(string invType, long branchId)
         {
             int count =0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -269,7 +269,7 @@ namespace Restaurant.Classes
             return count;
         }
         
-        public async Task<List<Invoice>> getOrdersForPay(int branchId)
+        public async Task<List<Invoice>> getOrdersForPay(long branchId)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -284,7 +284,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Invoice>> getExportInvoices(string invType, int branchId)
+        public async Task<List<Invoice>> getExportInvoices(string invType, long branchId)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -300,7 +300,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Invoice>> getExportImportInvoices(string invType, int branchId)
+        public async Task<List<Invoice>> getExportImportInvoices(string invType, long branchId)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -316,7 +316,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Invoice>> GetInvoicesByCreator(string invType, int createUserId, int duration,int hours=0)
+        public async Task<List<Invoice>> GetInvoicesByCreator(string invType, long createUserId, int duration,int hours=0)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -335,7 +335,7 @@ namespace Restaurant.Classes
             return items;
         }
        
-        public async Task<List<Invoice>> getUnHandeldOrders(string invType, int branchCreatorId, int branchId, int duration = 0, int userId = 0)
+        public async Task<List<Invoice>> getUnHandeldOrders(string invType, long branchCreatorId, long branchId, int duration = 0, long userId = 0)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -355,7 +355,7 @@ namespace Restaurant.Classes
             return items;
         }
 
-        public async Task<int> GetCountByCreator(string invType, int createUserId, int duration,int hours=0)
+        public async Task<int> GetCountByCreator(string invType, long createUserId, int duration,int hours=0)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -377,7 +377,7 @@ namespace Restaurant.Classes
             return count;
         }
        
-        public async Task<List<Invoice>> getBranchInvoices(string invType, int branchCreatorId, int branchId=0,int duration = 0 )
+        public async Task<List<Invoice>> getBranchInvoices(string invType, long branchCreatorId, long branchId =0,int duration = 0 )
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -395,7 +395,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Invoice>> getUnHandeldOrders(string invType, int branchCreatorId, int branchId )
+        public async Task<List<Invoice>> getUnHandeldOrders(string invType, long branchCreatorId, long branchId )
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -413,7 +413,7 @@ namespace Restaurant.Classes
             return items;
         }
        
-        public async Task<int> GetCountBranchInvoices(string invType, int branchCreatorId, int branchId = 0, int duration = 0)
+        public async Task<int> GetCountBranchInvoices(string invType, long branchCreatorId, long branchId = 0, int duration = 0)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -434,7 +434,7 @@ namespace Restaurant.Classes
             }
             return count;
         }
-        public async Task<int> GetCountUnHandeledOrders(string invType, int branchCreatorId, int branchId = 0, int userId = 0, int duration = 0)
+        public async Task<int> GetCountUnHandeledOrders(string invType, long branchCreatorId, long branchId = 0, long userId = 0, int duration = 0)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -456,7 +456,7 @@ namespace Restaurant.Classes
             }
             return count;
         }
-        public async Task<int> getDeliverOrdersCount( int userId)
+        public async Task<int> getDeliverOrdersCount(long userId)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -475,7 +475,7 @@ namespace Restaurant.Classes
             return count;
         }
         
-        public async Task<Invoice> GetInvoicesByNum(string invNum, int branchId = 0)
+        public async Task<Invoice> GetInvoicesByNum(string invNum, long branchId = 0)
         {
             Invoice item = new Invoice();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -495,7 +495,7 @@ namespace Restaurant.Classes
             return item;
         }
 
-        public async Task<Invoice> GetByInvoiceId(int itemId)
+        public async Task<Invoice> GetByInvoiceId(long itemId)
         {
             Invoice item = new Invoice();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -515,7 +515,7 @@ namespace Restaurant.Classes
             return item;
         }
         
-        public async Task<Invoice> getgeneratedInvoice(int mainInvoiceId)
+        public async Task<Invoice> getgeneratedInvoice(long mainInvoiceId)
         {
             Invoice item = new Invoice();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -533,7 +533,7 @@ namespace Restaurant.Classes
             }
             return item;
         }
-        public async Task<List<Invoice>> getUserDeliverOrders(int userId)
+        public async Task<List<Invoice>> getUserDeliverOrders(long userId)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -569,7 +569,7 @@ namespace Restaurant.Classes
             return items;
         }
       
-        public async Task<List<Invoice>> getAgentInvoices(int branchId, int agentId, string type)
+        public async Task<List<Invoice>> getAgentInvoices(long branchId, long agentId, string type)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -601,7 +601,7 @@ namespace Restaurant.Classes
         //    }
         //    return items;
         //}
-        public async Task<List<Invoice>> getShipCompanyInvoices(int branchId, int shippingCompanyId, string type)
+        public async Task<List<Invoice>> getShipCompanyInvoices(long branchId, long shippingCompanyId, string type)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -618,7 +618,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Invoice>> getUserInvoices(int branchId, int userId, string type)
+        public async Task<List<Invoice>> getUserInvoices(long branchId, long userId, string type)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -635,7 +635,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<ItemTransfer>> GetInvoicesItems(int invoiceId)
+        public async Task<List<ItemTransfer>> GetInvoicesItems(long invoiceId)
         {
             List<ItemTransfer> items = new List<ItemTransfer>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -651,7 +651,7 @@ namespace Restaurant.Classes
             return items;
         }
        
-        public async Task<List<ItemTransfer>> getShortageItems(int branchId)
+        public async Task<List<ItemTransfer>> getShortageItems(long branchId)
         {
             List<ItemTransfer> items = new List<ItemTransfer>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -666,7 +666,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<string> isThereLack(int branchId)
+        public async Task<string> isThereLack(long branchId)
         {
             string res = "";
             List<ItemTransfer> items = new List<ItemTransfer>();
@@ -683,7 +683,7 @@ namespace Restaurant.Classes
             return res;
         }
 
-        public async Task<List<CouponInvoice>> GetInvoiceCoupons(int invoiceId)
+        public async Task<List<CouponInvoice>> GetInvoiceCoupons(long invoiceId)
         {
             List<CouponInvoice> items = new List<CouponInvoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -740,7 +740,7 @@ namespace Restaurant.Classes
             parameters.Add("tablesObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> updateInvoiceTables(int invoiceId, List<Tables> tables, long? reservationId = null)
+        public async Task<int> updateInvoiceTables(long invoiceId, List<Tables> tables, long? reservationId = null)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Invoices/updateInvoiceTables";
@@ -752,7 +752,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
        
-        public async Task<int> saveInvoiceItems(List<ItemTransfer> invoiceItems, int invoiceId)
+        public async Task<int> saveInvoiceItems(List<ItemTransfer> invoiceItems, long invoiceId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemsTransfer/Save";
@@ -769,7 +769,7 @@ namespace Restaurant.Classes
             parameters.Add("itemTransferObject", myContent);
             await APIResult.post(method, parameters);
         }
-        public async Task<int> saveInvoiceCoupons(List<CouponInvoice> invoiceCoupons, int invoiceId, string invType)
+        public async Task<int> saveInvoiceCoupons(List<CouponInvoice> invoiceCoupons, long invoiceId, string invType)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "couponsInvoices/Save";
@@ -780,7 +780,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> saveMemberShipClassDis(InvoicesClass invoiceClass, int invoiceId)
+        public async Task<int> saveMemberShipClassDis(InvoicesClass invoiceClass, long invoiceId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "invoices/saveMemberShipClassDis";
@@ -790,7 +790,7 @@ namespace Restaurant.Classes
 
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> clearInvoiceCouponsAndClasses( int invoiceId)
+        public async Task<int> clearInvoiceCouponsAndClasses(long invoiceId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Invoices/clearInvoiceCouponsAndClasses";
@@ -798,7 +798,7 @@ namespace Restaurant.Classes
             parameters.Add("invoiceId", invoiceId.ToString());
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> deleteInvoice(int invoiceId)
+        public async Task<int> deleteInvoice(long invoiceId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", invoiceId.ToString());
@@ -806,7 +806,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
 
-        public async Task<string> generateInvNumber(string invoiceCode, string branchCode, int branchId)
+        public async Task<string> generateInvNumber(string invoiceCode, string branchCode, long branchId)
         {
             int sequence = await GetLastNumOfInv(invoiceCode, branchId);
             sequence++;
@@ -816,7 +816,7 @@ namespace Restaurant.Classes
             string invoiceNum = invoiceCode + "-" + branchCode + "-" + strSeq;
             return invoiceNum;
         }
-        public async Task<string> generateDialyInvNumber(string invType,  int branchId)
+        public async Task<string> generateDialyInvNumber(string invType, long branchId)
         {
             int sequence = await GetLastDialyNumOfInv(invType, branchId);
             sequence++;
@@ -1397,7 +1397,7 @@ namespace Restaurant.Classes
             }
             return invoice;
         }
-        public async Task<Invoice> GetInvoicesByBarcodeAndUser(string invNum, int userId, int branchId)
+        public async Task<Invoice> GetInvoicesByBarcodeAndUser(string invNum, long userId, long branchId)
         {
             Invoice item = new Invoice();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -1417,7 +1417,7 @@ namespace Restaurant.Classes
             }
             return item;
         }
-        public async Task<Invoice> getInvoiceByNumAndUser(string invType, string invNum, int userId)
+        public async Task<Invoice> getInvoiceByNumAndUser(string invType, string invNum, long userId)
         {
             Invoice item = new Invoice();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -1442,7 +1442,7 @@ namespace Restaurant.Classes
         {
             return "si-" + branchCode + "-" +DateTime.Now.ToString().Split(' ')[0]+"-"+ invNumber;
         }
-        public async Task<int> updateprintstat(int id, int countstep, bool isOrginal, bool updateOrginalstate)
+        public async Task<int> updateprintstat(long id, int countstep, bool isOrginal, bool updateOrginalstate)
         {
         
             Dictionary<string, string> parameters = new Dictionary<string, string>();

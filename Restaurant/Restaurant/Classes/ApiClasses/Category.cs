@@ -16,7 +16,7 @@ namespace Restaurant.Classes
 {
     public class Category
     {
-        public int categoryId { get; set; }
+        public long categoryId { get; set; }
         public string categoryCode { get; set; }
         public string name { get; set; }
         public string details { get; set; }
@@ -27,8 +27,8 @@ namespace Restaurant.Classes
         //public Nullable<int> parentId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public string notes { get; set; }
 
 
@@ -55,7 +55,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Category>> GetAllCategories( int userId)
+        public async Task<List<Category>> GetAllCategories(long userId)
         {
             List<Category> items = new List<Category>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -84,7 +84,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(int categoryId, int userId, Boolean final)
+        public async Task<int> delete(long categoryId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", categoryId.ToString());
@@ -101,7 +101,7 @@ namespace Restaurant.Classes
             string method = "Categories/UpdateImage";
            return await APIResult.post(method, parameters);
         }
-        public async Task<Boolean> uploadImage(string imagePath, string imageName, int categoryId)
+        public async Task<Boolean> uploadImage(string imagePath, string imageName, long categoryId)
         {
             if (imagePath != "")
             {

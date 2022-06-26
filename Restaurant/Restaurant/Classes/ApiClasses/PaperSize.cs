@@ -17,7 +17,7 @@ namespace Restaurant.Classes
     public class Papersize
     {
 
-        public int sizeId { get; set; }
+        public long sizeId { get; set; }
         public string paperSize1 { get; set; }
         public string printfor { get; set; }
         public string sizeValue { get; set; }

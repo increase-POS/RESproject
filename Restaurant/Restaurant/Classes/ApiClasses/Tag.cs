@@ -18,12 +18,12 @@ namespace Restaurant.Classes
 { 
     public class Tag
     {
-        public int tagId { get; set; }
+        public long tagId { get; set; }
         public string tagName { get; set; }
-        public Nullable<int> categoryId { get; set; }
+        public Nullable<long> categoryId { get; set; }
         public string notes { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public byte isActive { get; set; }
@@ -32,7 +32,7 @@ namespace Restaurant.Classes
         public bool canDelete { get; set; }
          
 
-        public async Task<List<Tag>> Get(int categoryId =0)
+        public async Task<List<Tag>> Get(long categoryId =0)
         {
             List<Tag> items = new List<Tag>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -57,7 +57,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> Delete(int TagId, int userId, Boolean final)
+        public async Task<int> Delete(long TagId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", TagId.ToString());

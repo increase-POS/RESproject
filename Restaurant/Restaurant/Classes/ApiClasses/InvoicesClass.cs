@@ -17,15 +17,15 @@ namespace Restaurant.Classes
 
     public class invoiceClassDiscount
     {
-        public int invClassDiscountId { get; set; }
-        public Nullable<int> invClassId { get; set; }
-        public Nullable<int> invoiceId { get; set; }
+        public long invClassDiscountId { get; set; }
+        public Nullable<long> invClassId { get; set; }
+        public Nullable<long> invoiceId { get; set; }
         public decimal discountValue { get; set; }
         public byte discountType { get; set; }
     }
     public class InvoicesClass
     {
-        public int invClassId { get; set; }
+        public long invClassId { get; set; }
         public string name { get; set; }
         public decimal minInvoiceValue { get; set; }
         public decimal maxInvoiceValue { get; set; }
@@ -33,15 +33,15 @@ namespace Restaurant.Classes
         public byte discountType { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
         public string notes { get; set; }
         public byte isActive { get; set; }
 
         public bool canDelete { get; set; }
 
-        public int invClassMemberId { get; set; }
-        public Nullable<int> membershipId { get; set; }
+        public long invClassMemberId { get; set; }
+        public Nullable<long> membershipId { get; set; }
         public Nullable<decimal> finalDiscount { get; set; }
 
         public async Task<List<InvoicesClass>> GetAll()
@@ -58,7 +58,7 @@ namespace Restaurant.Classes
             return items;
         }
 
-        public async Task<InvoicesClass> GetById(int itemId)
+        public async Task<InvoicesClass> GetById(long itemId)
         {
             InvoicesClass item = new InvoicesClass();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -84,7 +84,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(int itemId, int userId, Boolean final)
+        public async Task<int> delete(long itemId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());
@@ -94,7 +94,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
 
-        public async Task<List<InvoicesClass>> GetInvclassByMembershipId(int invClassId)
+        public async Task<List<InvoicesClass>> GetInvclassByMembershipId(long invClassId)
         {
             List<InvoicesClass> items = new List<InvoicesClass>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();

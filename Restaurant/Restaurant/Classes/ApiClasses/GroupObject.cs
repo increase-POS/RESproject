@@ -18,9 +18,9 @@ namespace Restaurant.Classes
 {
     public class GroupObject
     {
-        public int id { get; set; }
-        public Nullable<int> groupId { get; set; }
-        public Nullable<int> objectId { get; set; }
+        public long id { get; set; }
+        public Nullable<long> groupId { get; set; }
+        public Nullable<long> objectId { get; set; }
         public string notes { get; set; }
         public byte addOb { get; set; }
         public byte updateOb { get; set; }
@@ -30,8 +30,8 @@ namespace Restaurant.Classes
         public byte levelOb { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public int isActive { get; set; }
 
 
@@ -40,7 +40,7 @@ namespace Restaurant.Classes
         public string desc { get; set; }
 
         public Boolean canDelete { get; set; }
-        public Nullable<int> parentObjectId { get; set; }
+        public Nullable<long> parentObjectId { get; set; }
         public string objectType { get; set; }
         public string parentObjectName { get; set; }
          
@@ -78,7 +78,7 @@ namespace Restaurant.Classes
 
          
         //
-        public async Task<List<GroupObject>> GetUserpermission(int userId)
+        public async Task<List<GroupObject>> GetUserpermission(long userId)
         {
 
             List<GroupObject> list = new List<GroupObject>();

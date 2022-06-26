@@ -16,14 +16,14 @@ namespace Restaurant.Classes
 {
     public class InvoicesClassMemberships
     {
-        public int invClassMemberId { get; set; }
-        public Nullable<int> membershipId { get; set; }
-        public Nullable<int> invClassId { get; set; }
+        public long invClassMemberId { get; set; }
+        public Nullable<long> membershipId { get; set; }
+        public Nullable<long> invClassId { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
 
 
         public async Task<List<InvoicesClassMemberships>> GetAll()
@@ -40,7 +40,7 @@ namespace Restaurant.Classes
             return items;
         }
 
-        public async Task<InvoicesClassMemberships> GetById(int itemId)
+        public async Task<InvoicesClassMemberships> GetById(long itemId)
         {
             InvoicesClassMemberships item = new InvoicesClassMemberships();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -60,7 +60,7 @@ namespace Restaurant.Classes
         }
        
       
-        public async Task<int> UpdateInvclassByMembershipId(List<InvoicesClassMemberships> newList, int membershipId, int updateUserId)
+        public async Task<int> UpdateInvclassByMembershipId(List<InvoicesClassMemberships> newList, long membershipId, long updateUserId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "invoicesClassMemberships/UpdateInvclassByMembershipId";

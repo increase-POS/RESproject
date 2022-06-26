@@ -17,7 +17,7 @@ namespace Restaurant.Classes
     public class SysEmails
     {
 
-        public int emailId { get; set; }
+        public long emailId { get; set; }
         public string name { get; set; }
         public string email { get; set; }
         public string password { get; set; }
@@ -26,10 +26,10 @@ namespace Restaurant.Classes
         public string smtpClient { get; set; }
         public string side { get; set; }
         public string notes { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public byte isActive { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public bool isMajor { get; set; }
@@ -78,7 +78,7 @@ namespace Restaurant.Classes
         }
 
       
-        public async Task<SysEmails> GetByBranchIdandSide(int branchId, string side)
+        public async Task<SysEmails> GetByBranchIdandSide(long branchId, string side)
         {
             SysEmails item = new SysEmails();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -100,7 +100,7 @@ namespace Restaurant.Classes
 
         }
 
-        public async Task<int> Delete(int emailId, int userId, bool final)
+        public async Task<int> Delete(long emailId, long userId, bool final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("emailId", emailId.ToString());

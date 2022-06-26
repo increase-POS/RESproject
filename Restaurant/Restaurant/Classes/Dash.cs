@@ -19,7 +19,7 @@ namespace Restaurant.Classes
     public class InvoiceCount
     {
         public string invType { get; set; }
-        public Nullable<int> branchCreatorId { get; set; }
+        public Nullable<long> branchCreatorId { get; set; }
         public string branchCreatorName { get; set; }
         public int purCount { get; set; }
         public int saleCount { get; set; }
@@ -48,7 +48,7 @@ namespace Restaurant.Classes
     public class UserOnlineCount
     {
 
-        public int branchId { get; set; }
+        public long branchId { get; set; }
         public string branchName { get; set; }
         public int userOnlineCount { get; set; }
         public int allPos { get; set; }
@@ -58,13 +58,13 @@ namespace Restaurant.Classes
     }
     public class userOnlineInfo
     { 
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string branchName { get; set; }
         public Nullable<byte> branchisActive { get; set; }
-        public Nullable<int> posId { get; set; }
+        public Nullable<long> posId { get; set; }
         public string posName { get; set; }
         public Nullable<byte> posisActive { get; set; }
-        public Nullable<int> userId { get; set; }
+        public Nullable<long> userId { get; set; }
         public string usernameAccount { get; set; }
         public string userName { get; set; }
         public string lastname { get; set; }
@@ -91,9 +91,9 @@ namespace Restaurant.Classes
     {
         public string itemName { get; set; }
         public string unitName { get; set; }
-        public Nullable<int> itemUnitId { get; set; }
-        public Nullable<int> itemId { get; set; }
-        public Nullable<int> unitId { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
+        public Nullable<long> itemId { get; set; }
+        public Nullable<long> unitId { get; set; }
         public Nullable<long> quantity { get; set; }
         public Nullable<decimal> price { get; set; }
         public Nullable<int> branchCreatorId { get; set; }
@@ -108,11 +108,11 @@ namespace Restaurant.Classes
         public string itemName { get; set; }
         public string unitName { get; set; }
         public Nullable<int> itemUnitId { get; set; }
-        public Nullable<int> itemId { get; set; }
-        public Nullable<int> unitId { get; set; }
+        public Nullable<long> itemId { get; set; }
+        public Nullable<long> unitId { get; set; }
 
         public string branchName { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public Nullable<long> quantity { get; set; }
 
 
@@ -147,7 +147,7 @@ namespace Restaurant.Classes
 
         public DateTime fromDate { get; set; }
         public DateTime toDate { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string branchName { get; set; }
         public int count { get; set; }
         public int dateindex { get; set; }
@@ -162,7 +162,7 @@ namespace Restaurant.Classes
         public List<BranchInvoiceCount> CountinHoursList  { get; set; }
 
 
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string branchName { get; set; }
 
 
@@ -176,7 +176,7 @@ namespace Restaurant.Classes
     {
         public string branchName { get; set; }
         public  decimal   balance { get; set; }
-        public int branchId{ get; set; }
+        public long branchId { get; set; }
         public string branchType{ get; set; }
         public string branchCode{ get; set; }
         public byte banchIsActive{ get; set; }
@@ -187,7 +187,7 @@ namespace Restaurant.Classes
     public class CountByInvType
     {
         public string invType { get; set; }
-        public Nullable<int> branchId { get; set; }
+        public Nullable<long> branchId { get; set; }
         public string branchName { get; set; }
         public int dhallCount { get; set; }
         public int selfCount { get; set; }
@@ -264,7 +264,7 @@ namespace Restaurant.Classes
       
        
         //عدد المستخدمين المتصلين والغير متصلين  حاليا في كل فرع 
-        public async Task<List<UserOnlineCount>> Getuseronline(int mainBranchId, int userId)
+        public async Task<List<UserOnlineCount>> Getuseronline(long mainBranchId, long userId)
         {
 
             List<UserOnlineCount> list = new List<UserOnlineCount>();
@@ -321,7 +321,7 @@ namespace Restaurant.Classes
             //}
         }
         //بيانات المستخدمين المتصلين
-        public async Task<List<userOnlineInfo>> GetuseronlineInfo(int mainBranchId, int userId)
+        public async Task<List<userOnlineInfo>> GetuseronlineInfo(long mainBranchId, long userId)
         {
             List<userOnlineInfo> list = new List<userOnlineInfo>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -378,7 +378,7 @@ namespace Restaurant.Classes
             //}
         }
         // عدد الفروع المتصلة وغير المتصلة
-        public async Task<List<BranchOnlineCount>> GetBrachonline(int mainBranchId, int userId)
+        public async Task<List<BranchOnlineCount>> GetBrachonline(long mainBranchId, long userId)
         {
             List<BranchOnlineCount> list = new List<BranchOnlineCount>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -397,7 +397,7 @@ namespace Restaurant.Classes
 
         }
         // عدد فواتير المبيعات ومرتجع المبيعات والمشتريات ومرتجع المشتريات حسب الفرع في اليوم الحالي
-        public async Task<List<InvoiceCount>> GetdashsalpurDay(int mainBranchId, int userId)
+        public async Task<List<InvoiceCount>> GetdashsalpurDay(long mainBranchId, long userId)
         {
             List<InvoiceCount> list = new List<InvoiceCount>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -417,7 +417,7 @@ namespace Restaurant.Classes
            
         }
         // اكثر 10 اصناف مبيعا
-        public async Task<List<BestSeller>> Getbestseller(int mainBranchId, int userId)
+        public async Task<List<BestSeller>> Getbestseller(long mainBranchId, long userId)
         {
             List<BestSeller> list = new List<BestSeller>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -436,7 +436,7 @@ namespace Restaurant.Classes
          
         }
         //كمية قائمة من 10 اصناف في كل فرع 
-        public async Task<List<IUStorage>> GetIUStorage(List<ItemUnit> IUList, int mainBranchId, int userId)
+        public async Task<List<IUStorage>> GetIUStorage(List<ItemUnit> IUList, long mainBranchId, long userId)
         {
 
             List<IUStorage> list = new List<IUStorage>();
@@ -461,7 +461,7 @@ namespace Restaurant.Classes
             return list;          
         }
         // مجموع مبالغ المشتريات والمبيعات اليومي خلال الشهر الحالي لكل فرع
-        public async Task<List<TotalPurSale>> GetTotalPurSale(int mainBranchId, int userId)
+        public async Task<List<TotalPurSale>> GetTotalPurSale(long mainBranchId, long userId)
         {
             List<TotalPurSale> list = new List<TotalPurSale>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -482,7 +482,7 @@ namespace Restaurant.Classes
         }
 
         // عدد الفواتير في كل فرع وحسب التاريخ BestOf
-        public async Task<List<BestOfCount>> GetBestOf(int mainBranchId, int userId)
+        public async Task<List<BestOfCount>> GetBestOf(long mainBranchId, long userId)
         {
 
             List<BestOfCount> list = new List<BestOfCount>();
@@ -504,7 +504,7 @@ namespace Restaurant.Classes
         }
 
         // الكاش في كل فرع
-        public async Task<List<BranchBalance>> GetCashBalance(int mainBranchId, int userId)
+        public async Task<List<BranchBalance>> GetCashBalance(long mainBranchId, long userId)
         {
 
             List<BranchBalance> list = new List<BranchBalance>();
@@ -526,7 +526,7 @@ namespace Restaurant.Classes
         }
 
         // عدد الفواتير بكل فرع حسب نوع الفاتورة
-        public async Task<List<CountByInvType>> GetCountByInvType(int mainBranchId, int userId)
+        public async Task<List<CountByInvType>> GetCountByInvType(long mainBranchId, long userId)
         {
 
             List<CountByInvType> list = new List<CountByInvType>();

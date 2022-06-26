@@ -18,7 +18,7 @@ namespace Restaurant.Classes
 {
     class DocImage
     {
-        public int id { get; set; }
+        public long id { get; set; }
         public string docName { get; set; }
         public string docnum { get; set; }
         public string image { get; set; }
@@ -26,9 +26,9 @@ namespace Restaurant.Classes
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> tableId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
+        public Nullable<long> tableId { get; set; }
 
         //***********************************************
         public async Task<int> saveDocImage(DocImage docImage)
@@ -42,7 +42,7 @@ namespace Restaurant.Classes
 
         }
         
-        public async Task<Boolean> uploadOrginalImage(string imagePath, string tableName, int docImageId)
+        public async Task<Boolean> uploadOrginalImage(string imagePath, string tableName, long docImageId)
         {
             if (imagePath != "")
             {
@@ -125,7 +125,7 @@ namespace Restaurant.Classes
         }
 
         // get list of document images
-        public async Task<List<DocImage>> GetDocImages(string tableName, int tableId)
+        public async Task<List<DocImage>> GetDocImages(string tableName, long tableId)
         {
             List<DocImage> list = new List<DocImage>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -145,7 +145,7 @@ namespace Restaurant.Classes
             }
             return list;           
         }
-        public async Task<int> GetDocCount(string tableName, int tableId)
+        public async Task<int> GetDocCount(string tableName, long tableId)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -201,7 +201,7 @@ namespace Restaurant.Classes
 
         //**********************************************
         // call api method to delete doc image
-        public async Task<int> delete(int docId)
+        public async Task<int> delete(long docId)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();

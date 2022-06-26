@@ -335,7 +335,7 @@ namespace Restaurant.Classes
             }
             rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
         }
-        public static string AgentUnKnownConvert(int? agentId, string side, string agentName)
+        public static string AgentUnKnownConvert(long? agentId, string side, string agentName)
         {
 
             if (agentId == null)
@@ -352,7 +352,7 @@ namespace Restaurant.Classes
             return agentName;
 
         }
-        public static string AgentCompanyUnKnownConvert(int? agentId, string side, string agentCompany)
+        public static string AgentCompanyUnKnownConvert(long? agentId, string side, string agentCompany)
         {
             if (agentId == null)
             {
@@ -3217,7 +3217,7 @@ namespace Restaurant.Classes
 
         // pdf print
 
-        public async Task<resultmessage> pdfSaleInvoice(int invoiceId, string buttonSrc)
+        public async Task<resultmessage> pdfSaleInvoice(long invoiceId, string buttonSrc)
         {
             resultmessage resmsg = new resultmessage();
             resmsg.pdfpath = "";
@@ -3993,7 +3993,7 @@ namespace Restaurant.Classes
         public List<OrderPreparing> newKitchenorderList(List<OrderPreparing> OrderListbeforesave, List<OrderPreparing> OrderListaftersave)
         {
             List<OrderPreparing> newOrderList = new List<OrderPreparing>();
-            List<int> oldids = OrderListbeforesave.Select(X => (int)X.orderPreparingId).ToList();
+            List<long> oldids = OrderListbeforesave.Select(X => (long)X.orderPreparingId).ToList();
             newOrderList = OrderListaftersave.Where(X => !oldids.Contains(X.orderPreparingId)).ToList().OrderBy(X => X.categoryId).ToList();
             return newOrderList;
         }

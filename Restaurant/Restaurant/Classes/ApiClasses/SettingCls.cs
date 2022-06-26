@@ -18,7 +18,7 @@ namespace Restaurant.Classes
 {
     public class SettingCls
     {
-        public int settingId { get; set; }
+        public long settingId { get; set; }
         public string name { get; set; }
         public string trName { get; set; }
         public string notes { get; set; }

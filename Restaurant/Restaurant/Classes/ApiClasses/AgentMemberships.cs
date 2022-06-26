@@ -16,14 +16,14 @@ namespace Restaurant.Classes
 {
     public class AgentMemberships
     {
-        public int agentMembershipsId { get; set; }
-        public Nullable<int> membershipId { get; set; }
-        public Nullable<int> agentId { get; set; }
+        public long agentMembershipsId { get; set; }
+        public Nullable<long> membershipId { get; set; }
+        public Nullable<long> agentId { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
+        public Nullable<long> createUserId { get; set; }
+        public Nullable<long> updateUserId { get; set; }
         public byte isActive { get; set; }
 
         public decimal Amount { get; set; }
@@ -46,7 +46,7 @@ namespace Restaurant.Classes
         //    return items;
         //}
 
-        //public async Task<AgentMemberships> GetById(int itemId)
+        //public async Task<AgentMemberships> GetById(long itemId)
         //{
         //    AgentMemberships item = new AgentMemberships();
         //    Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -72,7 +72,7 @@ namespace Restaurant.Classes
         //    parameters.Add("itemObject", myContent);
         //   return await APIResult.post(method, parameters);
         //}
-        //public async Task<int> delete(int itemId, int userId, Boolean final)
+        //public async Task<int> delete(long itemId, long userId, Boolean final)
         //{
         //    Dictionary<string, string> parameters = new Dictionary<string, string>();
         //    parameters.Add("itemId", itemId.ToString());
@@ -82,7 +82,7 @@ namespace Restaurant.Classes
         //   return await APIResult.post(method, parameters);
         //}
 
-        public async Task<int> UpdateAgentsByMembershipId(List<AgentMemberships> newList, int membershipId, int updateUserId)
+        public async Task<int> UpdateAgentsByMembershipId(List<AgentMemberships> newList, long membershipId, long updateUserId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "AgentMemberships/UpdateAgentsByMembershipId";
