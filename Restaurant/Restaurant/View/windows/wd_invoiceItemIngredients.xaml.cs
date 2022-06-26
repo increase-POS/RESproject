@@ -121,7 +121,7 @@ namespace Restaurant.View.windows
                 dg_ingredient.ItemsSource = dishIngredientsList;
                 #endregion
 
-                requiredControlList = new List<string> { "tagName" };
+                requiredControlList = new List<string> { "extraItemId", "count" };
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -132,7 +132,7 @@ namespace Restaurant.View.windows
                 }
                 translate();
 
-                Keyboard.Focus(tb_tagName);
+                //Keyboard.Focus(tb_tagName);
                 categoryId = FillCombo.GetCategoryId(categoryName);
 
                 await RefreshTagsList();
@@ -157,9 +157,9 @@ namespace Restaurant.View.windows
         private void translate()
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trTag");
-            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_tagName, AppSettings.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNote") + "...");
+            //txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_tagName, AppSettings.resourcemanager.GetString("trNameHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNote") + "...");
 
             btn_add.Content = AppSettings.resourcemanager.GetString("trAdd");
             btn_update.Content = AppSettings.resourcemanager.GetString("trUpdate");
@@ -179,6 +179,7 @@ namespace Restaurant.View.windows
                 tag = new Tag();
                 if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
+                    /*
                     tag.tagName = tb_tagName.Text;
                     tag.categoryId = categoryId;
                     tag.createUserId = MainWindow.userLogin.userId;
@@ -197,6 +198,7 @@ namespace Restaurant.View.windows
                         await RefreshTagsList();
                         await Search();
                     }
+*/
                 }
                 HelpClass.EndAwait(grid_main);
 
@@ -214,7 +216,7 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_main);
                 if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
-
+                    /*
                     tag.tagName = tb_tagName.Text;
                     //tag.categoryId = categoryId;
                     tag.updateUserId = MainWindow.userLogin.userId;
@@ -229,6 +231,7 @@ namespace Restaurant.View.windows
                         await Search();
 
                     }
+                    */
                 }
                 HelpClass.EndAwait(grid_main);
 
