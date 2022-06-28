@@ -278,7 +278,7 @@ namespace Restaurant.View.sales.promotion
                             //coupon.membershipId = 0;///????????????
                             coupon.createUserId = MainWindow.userLogin.userId;
 
-                            int s = await coupon.save(coupon);
+                            long s = await coupon.save(coupon);
 
                             if (s > 0)
                             {
@@ -383,7 +383,7 @@ namespace Restaurant.View.sales.promotion
                         //coupon.membershipId = 0;///????????????
                         coupon.updateUserId = MainWindow.userLogin.userId;
 
-                        int s = await coupon.save(coupon);
+                                long s = await coupon.save(coupon);
 
                         if (s > 0)
                         {
@@ -454,7 +454,7 @@ namespace Restaurant.View.sales.promotion
                                 if (coupon.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!coupon.canDelete) && (coupon.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await coupon.delete(coupon.cId, MainWindow.userLogin.userId, coupon.canDelete);
+                                long s = await coupon.delete(coupon.cId, MainWindow.userLogin.userId, coupon.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -485,7 +485,7 @@ namespace Restaurant.View.sales.promotion
         private async Task activate()
         {//activate
             coupon.isActive = 1;
-            int s = await coupon.save(coupon);
+            long s = await coupon.save(coupon);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

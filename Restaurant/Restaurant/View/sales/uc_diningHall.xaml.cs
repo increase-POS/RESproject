@@ -796,7 +796,7 @@ namespace Restaurant.View.sales
         decimal _invoiceClassDiscount = 0;
         decimal _DeliveryDiscount = 0;
         string _DiscountType = "";
-        int _MemberShipId = 0;
+        long _MemberShipId = 0;
         List<CouponInvoice> selectedCopouns = new List<CouponInvoice>();
         List<ItemTransfer> invoiceItems = new List<ItemTransfer>();
         List<Tables> selectedTables = new List<Tables>();
@@ -818,12 +818,12 @@ namespace Restaurant.View.sales
                 else
                     price = (decimal)item.price;
 
-                int offerId = 0;
+                long offerId = 0;
                 string offerType = "1";
                 decimal offerValue = 0;
                 if (item.offerId != null)
                 {
-                    offerId = (int)item.offerId;
+                    offerId = (long)item.offerId;
                     offerType = item.discountType;
                     offerValue = (decimal)item.discountValue;
                 }
@@ -835,7 +835,7 @@ namespace Restaurant.View.sales
                     index = _SequenceNum,
                     image = item.image,
                     itemId = item.itemId,
-                    itemUnitId = (int)item.itemUnitId,
+                    itemUnitId = (long)item.itemUnitId,
                     itemName = item.name,
                     Count = (int)count,
                     Price = (decimal)item.price,
@@ -1439,9 +1439,9 @@ namespace Restaurant.View.sales
         }
         #endregion
         #region adddraft - addInvoice - cancleInvoice - clear - table names - fillInvoiceInputs  - refresh items price
-        private async Task<int> addDraft()
+        private async Task<long> addDraft()
         {
-            int res = 0;
+            long res = 0;
             if (AppSettings.invType == "diningHall")
             {
 
@@ -1485,7 +1485,7 @@ namespace Restaurant.View.sales
             return res;
         }
 
-        async Task<int> addInvoice(string invType)
+        async Task<long> addInvoice(string invType)
         {
             try
             {
@@ -1535,7 +1535,7 @@ namespace Restaurant.View.sales
                     invoiceItems.Add(itemT);
                 }
                 #endregion
-                int res = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
+                long res = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                 invoice.invoiceId = res;
                 prinvoiceId = invoice.invoiceId;
@@ -1552,7 +1552,7 @@ namespace Restaurant.View.sales
             {
                 invoice.invType = invType;
 
-                int res = await FillCombo.invoice.saveInvoice(invoice);
+                var res = await FillCombo.invoice.saveInvoice(invoice);
                 if (res > 0)
                 {
                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopCanceled"), animation: ToasterAnimation.FadeIn);
@@ -1681,10 +1681,10 @@ namespace Restaurant.View.sales
                 var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
                 if (customer.membershipId != null)
                 {
-                    _MemberShipId = (int)customer.membershipId;
+                    _MemberShipId = (long)customer.membershipId;
                     Memberships memberships = new Memberships();
                     AgenttoPayCash agentToPayCash = new AgenttoPayCash();
-                    agentToPayCash = await memberships.GetmembershipStateByAgentId((int)invoice.agentId);
+                    agentToPayCash = await memberships.GetmembershipStateByAgentId((long)invoice.agentId);
                     if (agentToPayCash.membershipStatus == "valid")
                     {
                         customerInvClasses = await invoiceMemberShipClass.GetInvclassByMembershipId(_MemberShipId);
@@ -1769,7 +1769,7 @@ namespace Restaurant.View.sales
             {
                 var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
                 if (customer.membershipId != null)
-                    _MemberShipId = (int)customer.membershipId;
+                    _MemberShipId = (long)customer.membershipId;
                 else
                     _MemberShipId = 0;
                 txt_customer.Text = customer.name;
@@ -1852,7 +1852,7 @@ namespace Restaurant.View.sales
             {
                 var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
                 if (customer.membershipId != null)
-                    _MemberShipId = (int)customer.membershipId;
+                    _MemberShipId = (long)customer.membershipId;
                 else
                     _MemberShipId = 0;
                 txt_customer.Text = customer.name;
@@ -1944,7 +1944,7 @@ namespace Restaurant.View.sales
             {
                 var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
                 if (customer.membershipId != null)
-                    _MemberShipId = (int)customer.membershipId;
+                    _MemberShipId = (long)customer.membershipId;
                 else
                     _MemberShipId = 0;
                 txt_customer.Text = customer.name;
@@ -2026,11 +2026,11 @@ namespace Restaurant.View.sales
                 try { itemCountInOrder = kitchenOrders.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.quantity); }
                 catch { }
 
-                //int remainingCount = (int)b.quantity - itemCountInOrder;
+                //int remainingCount = (long)b.quantity - itemCountInOrder;
 
                 BillDetailsSales newBillRow = new BillDetailsSales()
                 {
-                    itemUnitId = (int)b.itemUnitId,
+                    itemUnitId = (long)b.itemUnitId,
                     itemName = b.itemName,
                     index = index,
                     Count = itemCountInOrder,
@@ -2306,7 +2306,7 @@ namespace Restaurant.View.sales
                         #region update invoice
                         List<Tables> tbl = new List<Tables>();
                         tbl.Add(w.table);
-                        int res = await addDraft();
+                        var res = await addDraft();
 
                         if (res > 0)
                         {
@@ -2379,7 +2379,7 @@ namespace Restaurant.View.sales
                 wd_selectUser w = new wd_selectUser();
                 w.userJob = "waiter";
                 if (invoice.waiterId != null)
-                    w.userId = (int)invoice.waiterId;
+                    w.userId = (long)invoice.waiterId;
                 w.ShowDialog();
                 if (w.isOk)
                 {
@@ -2404,7 +2404,7 @@ namespace Restaurant.View.sales
                         txt_waiter.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         path_waiter.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                     }
-                    int res = await FillCombo.invoice.saveInvoice(invoice);
+                    long res = await FillCombo.invoice.saveInvoice(invoice);
                     if (res > 0)
                     {
                         //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
@@ -2440,7 +2440,7 @@ namespace Restaurant.View.sales
 
                 wd_selectCustomer w = new wd_selectCustomer();
                 if (invoice.agentId != null)
-                    w.customerId = (int)invoice.agentId;
+                    w.customerId = (long)invoice.agentId;
                 w.ShowDialog();
                 if (w.isOk)
                 {
@@ -2474,7 +2474,7 @@ namespace Restaurant.View.sales
                             var customer = FillCombo.customersList.Where(x => x.agentId == w.customerId).FirstOrDefault();
                             if (customer.membershipId != null)
                             {
-                                _MemberShipId = (int)customer.membershipId;
+                                _MemberShipId = (long)customer.membershipId;
                                 _DeliveryDiscount = w.deliveryDiscount;
                                 if (w.memberShipStatus == "valid")
                                 {
@@ -2491,7 +2491,7 @@ namespace Restaurant.View.sales
                             invoice.agentId = w.customerId;
                             invoice.membershipId = customer.membershipId;
                             refreshTotal();
-                            int res = await addDraft();
+                            var res = await addDraft();
                             if (res > 0)
                             {
                                 // save invoice memberShip discount class
@@ -2526,7 +2526,7 @@ namespace Restaurant.View.sales
                         invoiceMemberShipClass = new InvoicesClass();
 
                         await FillCombo.invoice.clearInvoiceCouponsAndClasses(invoice.invoiceId);
-                        int res = await addDraft();
+                        var res = await addDraft();
                         #endregion
                         // return button content to default
                         _DeliveryDiscount = 0;
@@ -2614,7 +2614,7 @@ namespace Restaurant.View.sales
                     //    invoice.updateUserId = MainWindow.userLogin.userId;
 
                     //int res = await FillCombo.invoice.saveInvoice(invoice);
-                    int res = await addDraft();
+                    var res = await addDraft();
                     if (res > 0)
                     {
                         //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
@@ -2692,7 +2692,7 @@ namespace Restaurant.View.sales
                     invoice.shippingCost = _DeliveryCost;
                     invoice.realShippingCost = realDeliveryCost;
 
-                    int res = await addDraft();
+                    var res = await addDraft();
 
                     if (res > 0)
                     {
@@ -2736,7 +2736,7 @@ namespace Restaurant.View.sales
                     #region update invoice
                     invoice.orderTime = w.orderTime;
 
-                    int res = await addDraft();
+                    var res = await addDraft();
 
                     if (res > 0)
                     {
@@ -2867,7 +2867,7 @@ namespace Restaurant.View.sales
                             {
                                 await FillCombo.RefreshCustomers();
 
-                                var customer = FillCombo.customersList.ToList().Find(b => b.agentId == (int)invoice.agentId && b.isLimited == true);
+                                var customer = FillCombo.customersList.ToList().Find(b => b.agentId == (long)invoice.agentId && b.isLimited == true);
                                 if (customer != null)
                                 {
                                     if (customer.isLimited)
@@ -3003,7 +3003,7 @@ namespace Restaurant.View.sales
         #region save invoice according to invType
         private async Task saveDiningHallInvoice(string invType)
         {
-            int res = await addInvoice(invType);
+            var res = await addInvoice(invType);
             if (res > 0)
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
@@ -3034,9 +3034,9 @@ namespace Restaurant.View.sales
 
         private async Task saveTakeAwayInvoice(string invType)
         {
-            
 
-            int res = await addInvoice(invType);
+
+            var res = await addInvoice(invType);
             if (res > 0)
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
@@ -3094,7 +3094,7 @@ namespace Restaurant.View.sales
             statusObject.createUserId = MainWindow.userLogin.userId;
             #endregion
 
-            int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId, AppSettings.statusesOfPreparingOrder);
+            long res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId, AppSettings.statusesOfPreparingOrder);
 
           
         }
@@ -3160,7 +3160,7 @@ namespace Restaurant.View.sales
 
                     }
                 }
-                int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId, AppSettings.statusesOfPreparingOrder);
+                var res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId, AppSettings.statusesOfPreparingOrder);
                 
                 //list after  save
                 if (AppSettings.print_kitchen_on_sale == "1")
@@ -3306,7 +3306,7 @@ namespace Restaurant.View.sales
         //            pdfpath = reportclass.PathUp(System.IO.Directory.GetCurrentDirectory(), 2, pdfpath);
 
         //            User employ = new User();
-        //            employ = await userModel.getUserById((int)prInvoice.updateUserId);
+        //            employ = await userModel.getUserById((long)prInvoice.updateUserId);
         //            prInvoice.uuserName = employ.name;
         //            prInvoice.uuserLast = employ.lastname;
 
@@ -3316,7 +3316,7 @@ namespace Restaurant.View.sales
 
         //                //  agentinv = customerInvClasses.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
 
-        //                agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+        //                agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
         //                prInvoice.agentCode = agentinv.code;
         //                //new lines
         //                prInvoice.agentName = agentinv.name;
@@ -3331,7 +3331,7 @@ namespace Restaurant.View.sales
         //            string reppath = reportclass.GetreceiptInvoiceRdlcpath(prInvoice, 0);
         //            ReportCls.checkLang();
         //            Branch branch = new Branch();
-        //            branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+        //            branch = await branchModel.getBranchById((long)prInvoice.branchCreatorId);
         //            if (branch.branchId > 0)
         //            {
         //                prInvoice.branchName = branch.name;
@@ -3512,11 +3512,11 @@ namespace Restaurant.View.sales
                             User employ = new User();
                             if (FillCombo.usersList != null)
                             {
-                                employ = FillCombo.usersList.Where(X => X.userId == (int)prInvoice.updateUserId).FirstOrDefault();
+                                employ = FillCombo.usersList.Where(X => X.userId == (long)prInvoice.updateUserId).FirstOrDefault();
                             }
                             else
                             {
-                                employ = await employ.getUserById((int)prInvoice.updateUserId);
+                                employ = await employ.getUserById((long)prInvoice.updateUserId);
                             }
 
                             prInvoice.uuserName = employ.name;
@@ -3530,11 +3530,11 @@ namespace Restaurant.View.sales
 
                                 if (FillCombo.customersList != null)
                                 {
-                                    agentinv = FillCombo.customersList.Where(X => X.agentId == (int)prInvoice.agentId).FirstOrDefault();
+                                    agentinv = FillCombo.customersList.Where(X => X.agentId == (long)prInvoice.agentId).FirstOrDefault();
                                 }
                                 else
                                 {
-                                    agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                                    agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                                 }
 
                                 prInvoice.agentCode = agentinv.code;
@@ -3553,12 +3553,12 @@ namespace Restaurant.View.sales
                             Branch branch = new Branch();
                             if (FillCombo.branchsList != null)
                             {
-                                branch = FillCombo.branchsList.Where(X => X.branchId == (int)prInvoice.branchCreatorId).FirstOrDefault();
+                                branch = FillCombo.branchsList.Where(X => X.branchId == (long)prInvoice.branchCreatorId).FirstOrDefault();
 
                             }
                             else
                             {
-                                branch = await branch.getBranchById((int)prInvoice.branchCreatorId);
+                                branch = await branch.getBranchById((long)prInvoice.branchCreatorId);
                             }
 
                             if (branch.branchId > 0)
@@ -3574,19 +3574,19 @@ namespace Restaurant.View.sales
                             {
                                 if (FillCombo.shippingCompaniesList != null)
                                 {
-                                    shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (int)prInvoice.shippingCompanyId).FirstOrDefault();
+                                    shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (long)prInvoice.shippingCompanyId).FirstOrDefault();
 
                                 }
                                 else
                                 {
-                                    shippingcom = await shippingcom.GetByID((int)prInvoice.shippingCompanyId);
+                                    shippingcom = await shippingcom.GetByID((long)prInvoice.shippingCompanyId);
                                 }
 
                             }
                             User shipuser = new User();
                             if (prInvoice.shipUserId > 0)
                             {
-                                shipuser = await shipuser.getUserById((int)prInvoice.shipUserId);
+                                shipuser = await shipuser.getUserById((long)prInvoice.shipUserId);
                             }
                             prInvoice.shipUserName = shipuser.name + " " + shipuser.lastname;
                             //end shipping
@@ -4113,11 +4113,11 @@ namespace Restaurant.View.sales
                         User employ = new User();
                         if (FillCombo.usersList != null)
                         {
-                            employ = FillCombo.usersList.Where(X => X.userId == (int)prInvoice.updateUserId).FirstOrDefault();
+                            employ = FillCombo.usersList.Where(X => X.userId == (long)prInvoice.updateUserId).FirstOrDefault();
                         }
                         else
                         {
-                            employ = await userModel.getUserById((int)prInvoice.updateUserId);
+                            employ = await userModel.getUserById((long)prInvoice.updateUserId);
                         }
 
                         prInvoice.uuserName = employ.name;
@@ -4131,11 +4131,11 @@ namespace Restaurant.View.sales
 
                             if (FillCombo.customersList != null)
                             {
-                                agentinv = FillCombo.customersList.Where(X => X.agentId == (int)prInvoice.agentId).FirstOrDefault();
+                                agentinv = FillCombo.customersList.Where(X => X.agentId == (long)prInvoice.agentId).FirstOrDefault();
                             }
                             else
                             {
-                                agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                                agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                             }
 
                             prInvoice.agentCode = agentinv.code;
@@ -4154,12 +4154,12 @@ namespace Restaurant.View.sales
                         Branch branch = new Branch();
                         if (FillCombo.branchsList != null)
                         {
-                            branch = FillCombo.branchsList.Where(X => X.branchId == (int)prInvoice.branchCreatorId).FirstOrDefault();
+                            branch = FillCombo.branchsList.Where(X => X.branchId == (long)prInvoice.branchCreatorId).FirstOrDefault();
 
                         }
                         else
                         {
-                            branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                            branch = await branchModel.getBranchById((long)prInvoice.branchCreatorId);
                         }
 
                         if (branch.branchId > 0)
@@ -4175,19 +4175,19 @@ namespace Restaurant.View.sales
                         {
                             if (FillCombo.shippingCompaniesList != null)
                             {
-                                shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (int)prInvoice.shippingCompanyId).FirstOrDefault();
+                                shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (long)prInvoice.shippingCompanyId).FirstOrDefault();
 
                             }
                             else
                             {
-                                shippingcom = await shippingcom.GetByID((int)prInvoice.shippingCompanyId);
+                                shippingcom = await shippingcom.GetByID((long)prInvoice.shippingCompanyId);
                             }
 
                         }
                         User shipuser = new User();
                         if (prInvoice.shipUserId > 0)
                         {
-                            shipuser = await userModel.getUserById((int)prInvoice.shipUserId);
+                            shipuser = await userModel.getUserById((long)prInvoice.shipUserId);
                         }
                         prInvoice.shipUserName = shipuser.name + " " + shipuser.lastname;
                         //end shipping
@@ -4355,7 +4355,7 @@ namespace Restaurant.View.sales
                     if (txt_customer.Text != null && txt_customer.Text != "")
                     {
 
-                        tmpinvoice.agentId = (int)invoice.agentId;
+                        tmpinvoice.agentId = (long)invoice.agentId;
                     }
 
 
@@ -4471,7 +4471,7 @@ namespace Restaurant.View.sales
                         {
                             Agent agentinv = new Agent();
                             //  agentinv = customers.Where(X => X.agentId == tmpinvoice.agentId).FirstOrDefault();
-                            agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                            agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                             tmpinvoice.agentCode = agentinv.code;
                             //new lines
                             tmpinvoice.agentName = agentinv.name;
@@ -4778,12 +4778,12 @@ namespace Restaurant.View.sales
 
                                             if (prInvoice.shippingCompanyId > 0)
                                             {
-                                                shippingcomp = await shippingcomp.GetByID((int)prInvoice.shippingCompanyId);
+                                                shippingcomp = await shippingcomp.GetByID((long)prInvoice.shippingCompanyId);
                                             }
 
                                             if (prInvoice.shipUserId > 0)
                                             {
-                                                shipinguser = await userModel.getUserById((int)prInvoice.shipUserId);
+                                                shipinguser = await userModel.getUserById((long)prInvoice.shipUserId);
                                             }
                                             prInvoice.shipUserName = shipinguser.name + " " + shipinguser.lastname;
                                             //end shipping
@@ -4813,12 +4813,12 @@ namespace Restaurant.View.sales
                                             {
                                                 if (FillCombo.shippingCompaniesList != null)
                                                 {
-                                                    shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (int)prInvoice.shippingCompanyId).FirstOrDefault();
+                                                    shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (long)prInvoice.shippingCompanyId).FirstOrDefault();
 
                                                 }
                                                 else
                                                 {
-                                                    shippingcom = await shippingcom.GetByID((int)prInvoice.shippingCompanyId);
+                                                    shippingcom = await shippingcom.GetByID((long)prInvoice.shippingCompanyId);
                                                 }
                                                 // prInvoice.shippingCompanyName = shippingcom.name;
                                                 prInvoice.shippingCompanyName = clsReports.shippingCompanyNameConvert(shippingcom.name);
@@ -4827,7 +4827,7 @@ namespace Restaurant.View.sales
                                             User shipuser = new User();
                                             if (prInvoice.shipUserId > 0)
                                             {
-                                                shipuser = await shipuser.getUserById((int)prInvoice.shipUserId);
+                                                shipuser = await shipuser.getUserById((long)prInvoice.shipUserId);
                                             }
                                             prInvoice.shipUserName = shipuser.name + " " + shipuser.lastname;
 

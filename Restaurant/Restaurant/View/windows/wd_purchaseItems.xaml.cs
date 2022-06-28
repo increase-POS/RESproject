@@ -267,7 +267,7 @@ namespace Restaurant.View.windows
                 itemsQuery = items;
                 //if (categoryIds.Count > 0 && all == false)
                 //{
-                //    itemsQuery = itemsQuery.Where(x => x.categoryId != null).ToList().Where(x => categoryIds.Contains((int)x.categoryId)).ToList();
+                //    itemsQuery = itemsQuery.Where(x => x.categoryId != null).ToList().Where(x => categoryIds.Contains((long)x.categoryId)).ToList();
                 //}
 
                 itemsQuery = itemsQuery.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||

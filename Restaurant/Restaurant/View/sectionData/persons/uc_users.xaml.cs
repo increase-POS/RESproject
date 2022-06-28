@@ -247,11 +247,11 @@ namespace Restaurant.View.sectionData.persons
                             user.driverIsAvailable = 0;
 
                         if (cb_groupId.SelectedIndex != -1 && FillCombo.groupObject.HasPermissionAction(permissionPermission, FillCombo.groupObjects, "one"))
-                            user.groupId = (int)cb_groupId.SelectedValue;
-                            //user.role = "";
-                            //user.details = "";
+                            user.groupId = (long)cb_groupId.SelectedValue;
+                        //user.role = "";
+                        //user.details = "";
 
-                            int s = await user.save(user);
+                        var s = await user.save(user);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -320,11 +320,11 @@ namespace Restaurant.View.sectionData.persons
                             user.updateUserId = MainWindow.userLogin.userId;
                             user.notes = tb_notes.Text;
                             if (cb_groupId.SelectedIndex != -1 && FillCombo.groupObject.HasPermissionAction(permissionPermission, FillCombo.groupObjects, "one"))
-                                user.groupId = (int)cb_groupId.SelectedValue;
+                                user.groupId = (long)cb_groupId.SelectedValue;
                             //user.role = "";
                             //user.details = "";
 
-                            int s = await user.save(user);
+                            var s = await user.save(user);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -405,7 +405,7 @@ namespace Restaurant.View.sectionData.persons
                                 if (user.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!user.canDelete) && (user.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await user.delete(user.userId, MainWindow.userLogin.userId, user.canDelete);
+                                var s = await user.delete(user.userId, MainWindow.userLogin.userId, user.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -436,7 +436,7 @@ namespace Restaurant.View.sectionData.persons
         private async Task activate()
         {//activate
             user.isActive = 1;
-            int s = await user.save(user);
+            var s = await user.save(user);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -731,7 +731,7 @@ namespace Restaurant.View.sectionData.persons
                     if (cb_areaPhone.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid, brd_areaPhoneLocal);
+                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (long)countryid, brd_areaPhoneLocal);
                     }
                 }
                 HelpClass.EndAwait(grid_main);

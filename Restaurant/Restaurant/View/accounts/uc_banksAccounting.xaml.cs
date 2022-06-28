@@ -417,7 +417,7 @@ namespace Restaurant.View.accounts
                                 cashtrans.isConfirm = 0;
                                 cashtrans.bankId = Convert.ToInt32(cb_bank.SelectedValue);
 
-                                int s = await cashModel.Save(cashtrans);
+                                    long s = await cashModel.Save(cashtrans);
 
                                 if (!s.Equals(0))
                                 {
@@ -451,7 +451,7 @@ namespace Restaurant.View.accounts
                                     cashtrans.isConfirm = 1;
                                     cashtrans.docNum = tb_depositNumber.Text;
 
-                                    int s = await cashModel.Save(cashtrans);
+                                    long s = await cashModel.Save(cashtrans);
 
                                     if (!s.Equals(0))
                                     {
@@ -594,7 +594,7 @@ namespace Restaurant.View.accounts
 
             pos.balance += ammount;
 
-            int s = await posModel.save(pos);
+            long s = await posModel.save(pos);
 
         }
 

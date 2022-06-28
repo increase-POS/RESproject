@@ -90,7 +90,7 @@ namespace Restaurant.View.reports.storageReports
                 translate();
                 #endregion
 
-                Destroied = await statisticModel.GetDesItems((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+                Destroied = await statisticModel.GetDesItems((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
 
                 
                 await FillCombo.fillComboBranchesAllWithoutMain(cb_destroiedBranch);

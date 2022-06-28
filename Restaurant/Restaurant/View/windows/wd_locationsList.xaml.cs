@@ -163,7 +163,7 @@ namespace Restaurant.View.windows
                 
                     HelpClass.StartAwait(grid_locations);
 
-                int s = await location.saveLocationsSection(selectedLocations , sectionId, MainWindow.userLogin.userId);
+                long s = await location.saveLocationsSection(selectedLocations , sectionId, MainWindow.userLogin.userId);
 
                 isActive = true;
                 this.Close();

@@ -179,7 +179,7 @@ namespace Restaurant.View.windows
                     HelpClass.StartAwait(grid_main);
 
 
-                int msg;
+                long msg;
             sale_copy_countrow.value = (string)tb_saleCopyCount.Text;
             pur_copy_countrow.value = (string)tb_purCopyCount.Text;
             rep_copy_countrow.value = (string)tb_repPrintCount.Text;

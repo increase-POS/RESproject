@@ -430,12 +430,12 @@ namespace Restaurant.View.storage.stocktakingOperations
             inventory.inventoryType = invType;
             inventory.updateUserId = MainWindow.userLogin.userId;
 
-            int inventoryId = await inventory.save(inventory);
+            var inventoryId = await inventory.save(inventory);
 
             if (inventoryId != 0)
             {
                 // add inventory details
-                int res = await invItemModel.save(invItemsLocations, inventoryId);
+                var res = await invItemModel.save(invItemsLocations, inventoryId);
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                 clearInventory();
             }
@@ -858,7 +858,7 @@ txt_inventoryDate trInventoryDate
                     #endregion
                     if (w.isOk)
                     {
-                        int res = await inventory.delete(inventory.inventoryId, MainWindow.userLogin.userId, false);
+                        var res = await inventory.delete(inventory.inventoryId, MainWindow.userLogin.userId, false);
                         if (res > 0)
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);

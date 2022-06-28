@@ -84,7 +84,7 @@ namespace Restaurant.View.windows
                 translate();
 
              await FillCombo.FillComboShippingCompanies(cb_company);
-                await FillCombo.FillComboUsersForDelivery(cb_user, "deliveryEmployee",(int)customerId);
+                await FillCombo.FillComboUsersForDelivery(cb_user, "deliveryEmployee",(long)customerId);
 
                 fillInputs();
                 HelpClass.EndAwait(grid_main);
@@ -135,10 +135,10 @@ namespace Restaurant.View.windows
                     HelpClass.StartAwait(grid_main);
                 if (cb_company.SelectedIndex > 0)
                 {
-                    shippingCompany = FillCombo.shippingCompaniesList.Find(c => c.shippingCompanyId == (int)cb_company.SelectedValue);
+                    shippingCompany = FillCombo.shippingCompaniesList.Find(c => c.shippingCompanyId == (long)cb_company.SelectedValue);
                     _DeliveryCost = (decimal)shippingCompany.deliveryCost;
                     _RealDeliveryCost = (decimal)shippingCompany.realDeliveryCost;
-                    shippingCompanyId = (int)cb_company.SelectedValue;
+                    shippingCompanyId = (long)cb_company.SelectedValue;
 
                     if (shippingCompany.deliveryType == "local")
                     {
@@ -192,7 +192,7 @@ namespace Restaurant.View.windows
                 HelpClass.clearValidate(p_error_user);
                 if (shippingCompany.deliveryType == "local" && cb_user.SelectedIndex != -1 )
                 {
-                    shippingUserId = (int)cb_user.SelectedValue;
+                    shippingUserId = (long)cb_user.SelectedValue;
                 }
                 #endregion
                

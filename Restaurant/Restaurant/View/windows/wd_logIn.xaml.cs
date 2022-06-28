@@ -284,11 +284,11 @@ namespace Restaurant.View.windows
                             //make user online
                             user.isOnline = 1;
 
-                            //checkother
-                            //string str1 = await userLogsModel.checkOtherUser(MainWindow.userLogin.userId);
+                                //checkother
+                                //string str1 = await userLogsModel.checkOtherUser(MainWindow.userLogin.userId);
 
 
-                            int s = await userModel.save(user);
+                                long s = await userModel.save(user);
 
                             //create lognin record
                             UsersLogs userLog = new UsersLogs();
@@ -296,7 +296,7 @@ namespace Restaurant.View.windows
 
                             userLog.userId = user.userId;
                             MainWindow.userLog = userLog;
-                            int str = await userLogsModel.Save(userLog);
+                                long str = await userLogsModel.Save(userLog);
 
                             if (!str.Equals(0))
                                 MainWindow.userLog.logId = str;

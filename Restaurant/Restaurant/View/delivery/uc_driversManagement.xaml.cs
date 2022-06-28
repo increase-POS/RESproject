@@ -414,7 +414,7 @@ namespace Restaurant.View.delivery
                         if (driver != null)
                         {
                             if (orders != null)
-                                driverOrder = orders.Where(o => o.shipUserId == null ? false : (int)o.shipUserId == driver.userId).ToList();
+                                driverOrder = orders.Where(o => o.shipUserId == null ? false : (long)o.shipUserId == driver.userId).ToList();
 
                             if (driver.driverIsAvailable == 0)
                                 txt_activeInactive.Text = AppSettings.resourcemanager.GetString("activate");
@@ -436,7 +436,7 @@ namespace Restaurant.View.delivery
                         if (company != null)
                         {
                             if (orders != null)
-                                driverOrder = orders.Where(o => (int)o.shippingCompanyId == company.shippingCompanyId && o.status == "Ready").ToList();
+                                driverOrder = orders.Where(o => (long)o.shippingCompanyId == company.shippingCompanyId && o.status == "Ready").ToList();
 
                             if (company.isActive == 0)
                                 txt_activeInactive.Text = AppSettings.resourcemanager.GetString("activate");
@@ -513,7 +513,7 @@ namespace Restaurant.View.delivery
                             driver.driverIsAvailable = 0;
                             resultStr = "popDeActivation";
                         }
-                        int s = await driver.save(driver);
+                        long s = await driver.save(driver);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -536,7 +536,7 @@ namespace Restaurant.View.delivery
                             company.isActive = 0;
                             resultStr = "popDeActivation";
                         }
-                        int s = await company.save(company);
+                        long s = await company.save(company);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else

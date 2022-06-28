@@ -417,7 +417,7 @@ namespace Restaurant.View.kitchen
                 // get item matches the barcode
                 if (unit1 != null)
                 {
-                    long itemId = (int)unit1.itemId;
+                    long itemId = (long)unit1.itemId;
                     if (unit1.itemId != 0)
                     {
                         int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId).FirstOrDefault());
@@ -668,7 +668,7 @@ namespace Restaurant.View.kitchen
                     {
                         Agent agentinv = new Agent();
                         //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-                        agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                        agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                         prInvoice.agentCode = agentinv.code;
                         //new lines
                         prInvoice.agentName = agentinv.name;
@@ -683,13 +683,13 @@ namespace Restaurant.View.kitchen
                         prInvoice.agentCompany = "-";
                     }
                     User employ = new User();
-                    employ = await employ.getUserById((int)prInvoice.updateUserId);
+                    employ = await employ.getUserById((long)prInvoice.updateUserId);
                     prInvoice.uuserName = employ.name;
                     prInvoice.uuserLast = employ.lastname;
 
 
                     Branch branch = new Branch();
-                    //branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                    //branch = await branchModel.getBranchById((long)prInvoice.branchCreatorId);
                     //if (branch.branchId > 0)
                     //{
                     //    prInvoice.branchCreatorName = branch.name;
@@ -699,7 +699,7 @@ namespace Restaurant.View.kitchen
                     {
                         if (prInvoice.branchId > 0)
                         {
-                            branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                            branch = await branchModel.getBranchById((long)prInvoice.branchId);
                             prInvoice.branchName = branch.name;
                         }
                         else
@@ -1148,10 +1148,10 @@ namespace Restaurant.View.kitchen
             var smallUnits = await FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
             foreach (ItemUnit u in itemUnits)
             {
-                var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (int)u.itemUnitId && x.ID != ID); // unit exist in invoice
+                var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (long)u.itemUnitId && x.ID != ID); // unit exist in invoice
                 if (isInBill != null)
                 {
-                    var isSmall = smallUnits.Find(x => x.itemUnitId == (int)u.itemUnitId);
+                    var isSmall = smallUnits.Find(x => x.itemUnitId == (long)u.itemUnitId);
                     int unitValue = 0;
 
                     int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == u.itemUnitId).FirstOrDefault());
@@ -1162,12 +1162,12 @@ namespace Restaurant.View.kitchen
                     }
                     else if (isSmall != null) // from-unit is bigger than to-unit
                     {
-                        unitValue = await FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (int)u.itemUnitId);
+                        unitValue = await FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (long)u.itemUnitId);
                         quantity += count / unitValue;
                     }
                     else
                     {
-                        unitValue = await FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (int)u.itemUnitId);
+                        unitValue = await FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (long)u.itemUnitId);
 
                         if (unitValue != 0)
                         {
@@ -1187,10 +1187,10 @@ namespace Restaurant.View.kitchen
         //    var smallUnits = await FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
         //    foreach (ItemUnit u in itemUnits)
         //    {
-        //        var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (int)u.itemUnitId && x.ID != ID); // unit exist in invoice
+        //        var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (long)u.itemUnitId && x.ID != ID); // unit exist in invoice
         //        if (isInBill != null)
         //        {
-        //            var isSmall = smallUnits.Find(x => x.itemUnitId == (int)u.itemUnitId);
+        //            var isSmall = smallUnits.Find(x => x.itemUnitId == (long)u.itemUnitId);
         //            int unitValue = 0;
 
         //            int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == u.itemUnitId).FirstOrDefault());
@@ -1199,12 +1199,12 @@ namespace Restaurant.View.kitchen
         //            { }
         //            else if (isSmall != null) // from-unit is bigger than to-unit
         //            {
-        //                unitValue = await FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (int)u.itemUnitId);
+        //                unitValue = await FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (long)u.itemUnitId);
         //                quantity = quantity / unitValue;
         //            }
         //            else
         //            {
-        //                unitValue = await FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (int)u.itemUnitId);
+        //                unitValue = await FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (long)u.itemUnitId);
 
         //                if (unitValue != 0)
         //                {
@@ -1244,7 +1244,7 @@ namespace Restaurant.View.kitchen
                                 var cp = (ContentPresenter)cell.Content;
                                 var combo = (ComboBox)cp.ContentTemplate.FindName("cbm_unitItemDetails", cp);
                                 //var combo = (combo)cell.Content;
-                                combo.SelectedValue = (int)item.itemUnitId;
+                                combo.SelectedValue = (long)item.itemUnitId;
                             }
                         }
                     }
@@ -1274,7 +1274,7 @@ namespace Restaurant.View.kitchen
 
                     if (dg_billDetails.SelectedIndex != -1 && cmb != null)
                     {
-                        billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
+                        billDetails[dg_billDetails.SelectedIndex].itemUnitId = (long)cmb.SelectedValue;
                         if (_InvType == "fbc")
                             cmb.IsEnabled = false;
                         else
@@ -1348,7 +1348,7 @@ namespace Restaurant.View.kitchen
                 //if (billDetails.Count == 1)
                 //{
                     var cmb = sender as ComboBox;
-                    cmb.SelectedValue = (int)billDetails[0].itemUnitId;
+                    cmb.SelectedValue = (long)billDetails[0].itemUnitId;
 
                     if (_InvType == "fbc")
                         cmb.IsEnabled = false;
@@ -1492,16 +1492,16 @@ namespace Restaurant.View.kitchen
             {
                 _SequenceNum++;
                 decimal total = (decimal)(itemT.price * itemT.quantity);
-                int orderId = 0;
+                long orderId = 0;
                 if (itemT.invoiceId != null)
-                    orderId = (int)itemT.invoiceId;
+                    orderId = (long)itemT.invoiceId;
                 billDetails.Add(new BillDetailsPurchase()
                 {
                     ID = _SequenceNum,
                     Product = itemT.itemName,
-                    itemId = (int)itemT.itemId,
+                    itemId = (long)itemT.itemId,
                     Unit = itemT.itemUnitId.ToString(),
-                    itemUnitId = (int)itemT.itemUnitId,
+                    itemUnitId = (long)itemT.itemUnitId,
                     Count = (int)itemT.quantity,
                     Price = (decimal)itemT.price,
                     Total = total,

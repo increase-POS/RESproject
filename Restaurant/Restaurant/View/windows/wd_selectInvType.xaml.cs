@@ -118,7 +118,7 @@ namespace Restaurant.View.windows
             if (invSet != null)
             {
                 defaulInvType = invSet.valId;
-                settingId = (int)invSet.settingId;
+                settingId = (long)invSet.settingId;
                 notes = invSet.notes;
                 try
                 {
@@ -133,7 +133,7 @@ namespace Restaurant.View.windows
                 List<SettingCls> lstSettings;
                 lstSettings = await settingCls.GetAll();
                 var invTypeSet = lstSettings.Where(x => x.name == "invType").FirstOrDefault();
-                settingId = (int)invTypeSet.settingId;
+                settingId = (long)invTypeSet.settingId;
                 notes = invTypeSet.notes;
             }
         }
@@ -164,7 +164,7 @@ namespace Restaurant.View.windows
                     invSet.value = cb_invType.SelectedValue.ToString();
                     invSet.notes = notes;
 
-                    int res = await invSet.Save(invSet);
+                    var res = await invSet.Save(invSet);
                     #endregion
 
                     #region save user setting value

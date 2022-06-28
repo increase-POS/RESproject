@@ -866,9 +866,9 @@ namespace Restaurant.View.storage.storageOperations
                 {
                     ID = _SequenceNum,
                     Product = itemT.itemName,
-                    itemId = (int)itemT.itemId,
+                    itemId = (long)itemT.itemId,
                     Unit = itemT.itemUnitId.ToString(),
-                    itemUnitId = (int)itemT.itemUnitId,
+                    itemUnitId = (long)itemT.itemUnitId,
                     Count = (int)itemT.quantity,
                     Price = (decimal)itemT.price,
                     Total = total,
@@ -1060,7 +1060,7 @@ namespace Restaurant.View.storage.storageOperations
             {
                 //billDetails
                 var cmb = sender as ComboBox;
-                cmb.SelectedValue = (int)billDetails[0].itemUnitId;
+                cmb.SelectedValue = (long)billDetails[0].itemUnitId;
 
                 if (_InvoiceType == "p" || _InvoiceType == "pw" || _InvoiceType == "pb" ||
                     _InvoiceType == "pbw" || _InvoiceType == "is")
@@ -1082,7 +1082,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 if (dg_billDetails.SelectedIndex != -1 && cmb.SelectedValue != null)
                 {
-                    billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
+                    billDetails[dg_billDetails.SelectedIndex].itemUnitId = (long)cmb.SelectedValue;
                     if (_InvoiceType == "p" || _InvoiceType == "pw" || _InvoiceType == "pb" ||
                     _InvoiceType == "pbw" || _InvoiceType == "is")
                         cmb.IsEnabled = false;
@@ -1121,7 +1121,7 @@ namespace Restaurant.View.storage.storageOperations
                                 var cp = (ContentPresenter)cell.Content;
                                 var combo = (ComboBox)cp.ContentTemplate.FindName("cbm_unitItemDetails", cp);
                                 //var combo = (combo)cell.Content;
-                                combo.SelectedValue = (int)item.itemUnitId;
+                                combo.SelectedValue = (long)item.itemUnitId;
 
                                 if (_InvoiceType == "p" || _InvoiceType == "pw" || _InvoiceType == "pb" ||
                                     _InvoiceType == "pbw" || _InvoiceType == "is")
@@ -1751,7 +1751,7 @@ namespace Restaurant.View.storage.storageOperations
                         // get item matches the barcode
                         if (unit1 != null)
                         {
-                            long itemId = (int)unit1.itemId;
+                            long itemId = (long)unit1.itemId;
                             if (unit1.itemId != 0)
                             {
                                 int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId && p.OrderId == 0).FirstOrDefault());
@@ -1965,7 +1965,7 @@ namespace Restaurant.View.storage.storageOperations
                 {
                     Agent agentinv = new Agent();
                     //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-                    agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                    agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                     prInvoice.agentCode = agentinv.code;
                     //new lines
                     prInvoice.agentName = agentinv.name;
@@ -1980,13 +1980,13 @@ namespace Restaurant.View.storage.storageOperations
                     prInvoice.agentCompany = "-";
                 }
                 User employ = new User();
-                employ = await employ.getUserById((int)prInvoice.updateUserId);
+                employ = await employ.getUserById((long)prInvoice.updateUserId);
                 prInvoice.uuserName = employ.name;
                 prInvoice.uuserLast = employ.lastname;
 
 
                 Branch branch = new Branch();
-                branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                branch = await branchModel.getBranchById((long)prInvoice.branchCreatorId);
                 if (branch.branchId > 0)
                 {
                     prInvoice.branchCreatorName = branch.name;
@@ -1996,7 +1996,7 @@ namespace Restaurant.View.storage.storageOperations
                 {
                     if (prInvoice.branchId > 0)
                     {
-                        branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                        branch = await branchModel.getBranchById((long)prInvoice.branchId);
                         prInvoice.branchName = branch.name;
                     }
                     else

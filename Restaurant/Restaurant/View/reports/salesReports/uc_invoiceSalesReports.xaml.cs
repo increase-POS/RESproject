@@ -307,16 +307,16 @@ namespace Restaurant.View.reports.salesReports
             ).ToList();
             //branch
             if (selectedTab == 0)
-                InvoicesQuery = InvoicesQuery.Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true)).ToList();
+                InvoicesQuery = InvoicesQuery.Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((long)j.branchCreatorId) : true)).ToList();
             //pos
             if (selectedTab == 1)
-                InvoicesQuery = InvoicesQuery.Where(j => (selectedPosId.Count != 0 ? selectedPosId.Contains((int)j.posId) : true)).ToList();
+                InvoicesQuery = InvoicesQuery.Where(j => (selectedPosId.Count != 0 ? selectedPosId.Contains((long)j.posId) : true)).ToList();
             //agent
             if (selectedTab == 2)
-                InvoicesQuery = InvoicesQuery.Where(j => (selectedVendorsId.Count != 0 ? selectedVendorsId.Contains((int)j.agentId) : true)).ToList();
+                InvoicesQuery = InvoicesQuery.Where(j => (selectedVendorsId.Count != 0 ? selectedVendorsId.Contains((long)j.agentId) : true)).ToList();
             //user
             if (selectedTab == 3)
-                InvoicesQuery = InvoicesQuery.Where(j => (selectedUserId.Count != 0 ? selectedUserId.Contains((int)j.updateUserId) : true)).ToList();
+                InvoicesQuery = InvoicesQuery.Where(j => (selectedUserId.Count != 0 ? selectedUserId.Contains((long)j.updateUserId) : true)).ToList();
 
             RefreshInvoicesView();
         }
@@ -349,7 +349,7 @@ namespace Restaurant.View.reports.salesReports
 
         async Task<IEnumerable<ItemTransferInvoice>> RefreshInvoicesList()
         {
-            Invoices = await statisticModel.GetSaleitemcount((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+            Invoices = await statisticModel.GetSaleitemcount((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
             return Invoices;
         }
        
@@ -644,7 +644,7 @@ namespace Restaurant.View.reports.salesReports
                         stk_tagsBranches.Visibility = Visibility.Visible;
                         if (stk_tagsBranches.Children.Count < 5)
                         {
-                            int bId = (int)cb_branches.SelectedValue;
+                            long bId = (long)cb_branches.SelectedValue;
 
                             selectedBranch = await branchModel.getBranchById(bId);
                             var b = new MaterialDesignThemes.Wpf.Chip()
@@ -666,7 +666,7 @@ namespace Restaurant.View.reports.salesReports
                         stk_tagsPos.Visibility = Visibility.Visible;
                         if (stk_tagsPos.Children.Count < 5)
                         {
-                            int pId = (int)cb_branches.SelectedValue;
+                            long pId = (long)cb_branches.SelectedValue;
 
                             selectedPos = await posModel.getById(pId);
                             var p = new MaterialDesignThemes.Wpf.Chip()
@@ -688,7 +688,7 @@ namespace Restaurant.View.reports.salesReports
                         stk_tagsVendors.Visibility = Visibility.Visible;
                         if (stk_tagsVendors.Children.Count < 5)
                         {
-                            int aId = (int)cb_branches.SelectedValue;
+                            long aId = (long)cb_branches.SelectedValue;
 
                             selectedVendor = await agentModel.getAgentById(aId);
                             try
@@ -714,7 +714,7 @@ namespace Restaurant.View.reports.salesReports
                         stk_tagsUsers.Visibility = Visibility.Visible;
                         if (stk_tagsUsers.Children.Count < 5)
                         {
-                            int uId = (int)cb_branches.SelectedValue;
+                            long uId = (long)cb_branches.SelectedValue;
 
                             selectedUser = await userModel.getUserById(uId);
                             var u = new MaterialDesignThemes.Wpf.Chip()
@@ -868,7 +868,7 @@ namespace Restaurant.View.reports.salesReports
 
             if (selectedTab == 0)
             {
-                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true)).ToList();
+                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((long)j.branchCreatorId) : true)).ToList();
                 var titleTemp = temp.GroupBy(m => m.branchCreatorName);
                 titles.AddRange(titleTemp.Select(jj => jj.Key));
                 var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new { branchCreatorId = s.Key, count = s.Count() });
@@ -876,7 +876,7 @@ namespace Restaurant.View.reports.salesReports
             }
             else if (selectedTab == 1)
             {
-                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true)).ToList();
+                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((long)j.posId) : true)).ToList();
                 var titleTemp = temp.GroupBy(m => new { m.posName, m.posId });
                 titles.AddRange(titleTemp.Select(jj => jj.Key.posName));
                 var result = temp.GroupBy(s => s.posId).Select(s => new { posId = s.Key, count = s.Count() });
@@ -884,7 +884,7 @@ namespace Restaurant.View.reports.salesReports
             }
             else if (selectedTab == 2)
             {
-                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true)).ToList();
+                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((long)j.agentId) : true)).ToList();
                 var titleTemp = temp.GroupBy(m => m.agentName);
                 titles.AddRange(titleTemp.Select(jj => jj.Key));
                 var result = temp.GroupBy(s => s.agentId).Select(s => new { agentId = s.Key, count = s.Count() });
@@ -892,7 +892,7 @@ namespace Restaurant.View.reports.salesReports
             }
             else if (selectedTab == 3)
             {
-                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true)).ToList();
+                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((long)j.updateUserId) : true)).ToList();
                 var titleTemp = temp.GroupBy(m => m.cUserAccName);
                 titles.AddRange(titleTemp.Select(jj => jj.Key));
                 var result = temp.GroupBy(s => s.updateUserId).Select(s => new { updateUserId = s.Key, count = s.Count() });
@@ -952,7 +952,7 @@ namespace Restaurant.View.reports.salesReports
             var temp = InvoicesQuery;
             if (selectedTab == 0)
             {
-                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true)).ToList();
+                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((long)j.branchCreatorId) : true)).ToList();
                 var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new
                 {
                     branchCreatorId = s.Key,
@@ -971,7 +971,7 @@ namespace Restaurant.View.reports.salesReports
             }
             else if (selectedTab == 1)
             {
-                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true)).ToList();
+                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((long)j.posId) : true)).ToList();
                 var result = temp.GroupBy(s => s.posId).Select(s => new
                 {
                     posId = s.Key,
@@ -990,7 +990,7 @@ namespace Restaurant.View.reports.salesReports
             }
             else if (selectedTab == 2)
             {
-                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true)).ToList();
+                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((long)j.agentId) : true)).ToList();
                 var result = temp.GroupBy(s => s.agentId).Select(s => new
                 {
                     agentId = s.Key,
@@ -1010,7 +1010,7 @@ namespace Restaurant.View.reports.salesReports
             }
             else if (selectedTab == 3)
             {
-                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true)).ToList();
+                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((long)j.updateUserId) : true)).ToList();
                 var result = temp.GroupBy(s => s.updateUserId).Select(s => new
                 {
                     updateUserId = s.Key,
@@ -1105,7 +1105,7 @@ namespace Restaurant.View.reports.salesReports
             var temp = InvoicesQuery;
             if (selectedTab == 0)
             {
-                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true)).ToList();
+                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((long)j.branchCreatorId) : true)).ToList();
                 var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new
                 {
                     branchCreatorId = s.Key,
@@ -1126,7 +1126,7 @@ namespace Restaurant.View.reports.salesReports
             }
             if (selectedTab == 1)
             {
-                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true)).ToList();
+                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((long)j.posId) : true)).ToList();
                 var result = temp.GroupBy(s => s.posId).Select(s => new
                 {
                     posId = s.Key,
@@ -1146,7 +1146,7 @@ namespace Restaurant.View.reports.salesReports
             }
             if (selectedTab == 2)
             {
-                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true)).ToList();
+                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((long)j.agentId) : true)).ToList();
                 var result = temp.GroupBy(s => s.agentId).Select(s => new
                 {
                     agentId = s.Key,
@@ -1166,7 +1166,7 @@ namespace Restaurant.View.reports.salesReports
             }
             if (selectedTab == 3)
             {
-                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true)).ToList();
+                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((long)j.updateUserId) : true)).ToList();
                 var result = temp.GroupBy(s => s.updateUserId).Select(s => new
                 {
                     updateUserId = s.Key,

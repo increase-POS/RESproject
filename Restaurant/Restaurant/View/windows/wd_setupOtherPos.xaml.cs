@@ -219,8 +219,8 @@ namespace Restaurant.View.windows
                 string activationkey = serverConfigInstance.activationkey;
 
 
-                //// pos INFO
-               int posId = selectPosInstance.posId;
+                    //// pos INFO
+                    long posId = selectPosInstance.posId;
                string motherCode = setupConfiguration.GetMotherBoardID();
                string hardCode = setupConfiguration.GetHDDSerialNo();
                string deviceCode = motherCode + "-" + hardCode;

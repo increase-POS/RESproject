@@ -339,7 +339,7 @@ namespace Restaurant.View.windows
                         setVName.isDefault = 1;
                         setVName.settingId = nameId;
                         // string sName = await valueModel.Save(setVName);
-                        int sName = await valueModel.Save(setVName);
+                        var sName = await valueModel.Save(setVName);
                         if (!sName.Equals(0))
                             AppSettings.companyName = tb_name.Text;
                     }
@@ -350,7 +350,7 @@ namespace Restaurant.View.windows
                         setVAddress.isSystem = 1;
                         setVAddress.isDefault = 1;
                         setVAddress.settingId = addressId;
-                        int sAddress = await valueModel.Save(setVAddress);
+                        var sAddress = await valueModel.Save(setVAddress);
                         //   string sAddress = await valueModel.Save(setVAddress);
                         if (!sAddress.Equals(0))
                             AppSettings.Address = tb_address.Text;
@@ -363,7 +363,7 @@ namespace Restaurant.View.windows
                         setVEmail.settingId = emailId;
                         setVEmail.isDefault = 1;
                         //  string sEmail = await valueModel.Save(setVEmail);
-                        int sEmail = await valueModel.Save(setVEmail);
+                        var sEmail = await valueModel.Save(setVEmail);
                         if (!sEmail.Equals(0))
                             AppSettings.Email = tb_email.Text;
                     }
@@ -374,7 +374,7 @@ namespace Restaurant.View.windows
                         setVMobile.isSystem = 1;
                         setVMobile.isDefault = 1;
                         setVMobile.settingId = mobileId;
-                        int sMobile = await valueModel.Save(setVMobile);
+                        var sMobile = await valueModel.Save(setVMobile);
                         if (!sMobile.Equals(0))
                             AppSettings.Mobile = cb_areaMobile.Text + tb_mobile.Text;
                     }
@@ -385,7 +385,7 @@ namespace Restaurant.View.windows
                     setVPhone.isSystem = 1;
                     setVPhone.isDefault = 1;
                     setVPhone.settingId = phoneId;
-                    int sPhone = await valueModel.Save(setVPhone);
+                    var sPhone = await valueModel.Save(setVPhone);
                     if (!sPhone.Equals(0))
                         AppSettings.Phone = cb_areaPhone.Text + cb_areaPhoneLocal.Text + tb_phone.Text;
                     //}
@@ -395,7 +395,7 @@ namespace Restaurant.View.windows
                     setVFax.isSystem = 1;
                     setVFax.isDefault = 1;
                     setVFax.settingId = faxId;
-                    int sFax = await valueModel.Save(setVFax);
+                    var sFax = await valueModel.Save(setVFax);
                     if (!sFax.Equals(0))
                         AppSettings.Fax = cb_areaFax.Text + cb_areaFaxLocal.Text + tb_fax.Text;
 
@@ -403,7 +403,7 @@ namespace Restaurant.View.windows
                     //  save logo
                     // image
                     //  string sLogo = "";
-                    int sLogo = 0;
+                    long sLogo = 0;
                     if (isImgPressed)
                     {
                         isImgPressed = false;
@@ -497,8 +497,8 @@ namespace Restaurant.View.windows
                     if (cb_areaPhone.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-                        //await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid );
-                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid, brd_areaPhoneLocal);
+                        //await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (long)countryid );
+                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (long)countryid, brd_areaPhoneLocal);
 
                     }
                 }
@@ -522,8 +522,8 @@ namespace Restaurant.View.windows
                     if (cb_areaFax.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaFax.SelectedValue.ToString());
-                        //await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid );
-                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid, brd_areaFaxLocal);
+                        //await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (long)countryid );
+                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (long)countryid, brd_areaFaxLocal);
 
                     }
 

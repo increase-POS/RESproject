@@ -272,7 +272,7 @@ namespace Restaurant.View.windows
                 
                 if (validate(location))
                 {
-                    int s = 0;
+                    long s = 0;
                     generateLocationListX(location);
                     foreach (var item in locations)
                     {

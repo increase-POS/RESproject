@@ -165,7 +165,7 @@ namespace Restaurant.View.windows
                         tag.notes = tb_notes.Text;
                         tag.isActive = 1;
 
-                        int s = await tag.Save(tag);
+                    var s = await tag.Save(tag);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -198,7 +198,7 @@ namespace Restaurant.View.windows
                     //tag.categoryId = categoryId;
                     tag.updateUserId = MainWindow.userLogin.userId;
                     tag.notes = tb_notes.Text;
-                        int s = await tag.Save(tag);
+                    long s = await tag.Save(tag);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -255,7 +255,7 @@ namespace Restaurant.View.windows
                             if (tag.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                             if ((!tag.canDelete) && (tag.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                            int s = await tag.Delete(tag.tagId, MainWindow.userLogin.userId, tag.canDelete);
+                            long s = await tag.Delete(tag.tagId, MainWindow.userLogin.userId, tag.canDelete);
                             if (s < 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -280,7 +280,7 @@ namespace Restaurant.View.windows
         private async Task activate()
         {//activate
             tag.isActive = 1;
-            int s = await tag.Save(tag);
+            var s = await tag.Save(tag);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

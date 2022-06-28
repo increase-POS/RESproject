@@ -211,7 +211,7 @@ namespace Restaurant.View.sales.promotion.membership
                             membership.isFreeDelivery = false;
                             membership.deliveryDiscountPercent = 0;
 
-                            int s = await membership.SaveMemberAndSub(membership);
+                            long s = await membership.SaveMemberAndSub(membership);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -268,7 +268,7 @@ namespace Restaurant.View.sales.promotion.membership
                                 membership.isFreeDelivery = false;
                                 membership.deliveryDiscountPercent = 0;
 
-                                int s = await membership.SaveMemberAndSub(membership);
+                                long s = await membership.SaveMemberAndSub(membership);
                                 if (s <= 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -336,7 +336,7 @@ namespace Restaurant.View.sales.promotion.membership
                                 if (membership.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!membership.canDelete) && (membership.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await membership.delete(membership.membershipId, MainWindow.userLogin.userId, membership.canDelete);
+                                long s = await membership.delete(membership.membershipId, MainWindow.userLogin.userId, membership.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -367,7 +367,7 @@ namespace Restaurant.View.sales.promotion.membership
         {//activate
 
             membership.isActive = 1;
-            int s = await membership.save(membership);
+            long s = await membership.save(membership);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

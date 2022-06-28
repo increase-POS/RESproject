@@ -179,7 +179,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                         FillCombo.invoice.notes = tb_notes.Text;
 
                         if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
-                            FillCombo.invoice.userId = (int)cb_user.SelectedValue;
+                            FillCombo.invoice.userId = (long)cb_user.SelectedValue;
                         #endregion
 
                         List<ItemTransfer> orderList = new List<ItemTransfer>();
@@ -205,7 +205,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                             //await invoiceModel.saveInvoiceItems(orderList, invoiceId);
                             await invItemLoc.fallItem(invItemLoc);
                             if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
-                                await invItemLoc.ShortageRecordCash(FillCombo.invoice, (int)cb_user.SelectedValue);
+                                await invItemLoc.ShortageRecordCash(FillCombo.invoice, (long)cb_user.SelectedValue);
                             await refreshShortageDetails();
                             Search();
                             Clear();

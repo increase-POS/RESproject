@@ -356,7 +356,7 @@ namespace Restaurant.View.windows
                 // OrderListbeforesave = orders;
                 OrderListBeforesave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
             }
-            int res = await preparingOrder.savePreparingOrder(preparingOrder, preparingItemsList,statusObject);
+            var res = await preparingOrder.savePreparingOrder(preparingOrder, preparingItemsList,statusObject);
             if (res > 0)
             {
                
@@ -457,7 +457,7 @@ namespace Restaurant.View.windows
                     // OrderListbeforesave = orders;
                     OrderListBeforesave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
                 }
-                int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId, AppSettings.statusesOfPreparingOrder);
+                var res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId, AppSettings.statusesOfPreparingOrder);
 
                 if (res > 0)
                 {

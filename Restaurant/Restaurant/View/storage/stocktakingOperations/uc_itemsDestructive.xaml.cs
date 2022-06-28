@@ -165,8 +165,8 @@ namespace Restaurant.View.storage.stocktakingOperations
                         }
                         else
                         {
-                            itemUnitId = (int)cb_unit.SelectedValue;
-                            itemId = (int)cb_item.SelectedValue;
+                            itemUnitId = (long)cb_unit.SelectedValue;
+                            itemId = (long)cb_item.SelectedValue;
                         }
 
                         invItemLoc.cause = tb_cause.Text;
@@ -186,7 +186,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                         FillCombo.invoice.deserved = FillCombo.invoice.totalNet;
                         FillCombo.invoice.notes = tb_notes.Text;
                         if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
-                            FillCombo.invoice.userId = (int)cb_user.SelectedValue;
+                            FillCombo.invoice.userId = (long)cb_user.SelectedValue;
                         #endregion
                         List<ItemTransfer> orderList = new List<ItemTransfer>();
                         #region notification Object
@@ -227,9 +227,9 @@ namespace Restaurant.View.storage.stocktakingOperations
                                 FillCombo.invoice.invoiceId = invoiceId;
                                 await invItemLoc.distroyItem(invItemLoc);
                                 if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
-                                    await invItemLoc.ShortageRecordCash(FillCombo.invoice, (int)cb_user.SelectedValue);
+                                    await invItemLoc.ShortageRecordCash(FillCombo.invoice, (long)cb_user.SelectedValue);
 
-                                await FillCombo.itemLocation.decreaseItemLocationQuantity((int)invItemLoc.itemLocationId, (int)invItemLoc.amountDestroyed, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
+                                await FillCombo.itemLocation.decreaseItemLocationQuantity((long)invItemLoc.itemLocationId, (int)invItemLoc.amountDestroyed, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
                                 await refreshDestroyDetails();
                                 Clear();
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
@@ -240,7 +240,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                         }
                         else
                         {
-                            var avgPrice = items.ToList().Where(x => x.itemId == (int)cb_item.SelectedValue).Select(x => x.avgPurchasePrice).Single();
+                            var avgPrice = items.ToList().Where(x => x.itemId == (long)cb_item.SelectedValue).Select(x => x.avgPurchasePrice).Single();
                             if (avgPrice != null)
                                 price = (decimal)avgPrice;
                             total = price * int.Parse(tb_amount.Text);
@@ -249,9 +249,9 @@ namespace Restaurant.View.storage.stocktakingOperations
                             orderList.Add(new ItemTransfer()
                             {
                                 itemName = cb_item.SelectedItem.ToString(),
-                                itemId = (int)cb_item.SelectedValue,
+                                itemId = (long)cb_item.SelectedValue,
                                 unitName = cb_unit.SelectedItem.ToString(),
-                                itemUnitId = (int)cb_unit.SelectedValue,
+                                itemUnitId = (long)cb_unit.SelectedValue,
                                 quantity = long.Parse(tb_amount.Text),
                                 itemSerial = serialNum,
                                 price = price,

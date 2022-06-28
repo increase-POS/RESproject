@@ -96,7 +96,7 @@ namespace Restaurant.View.reports.storageReports
                 translate();
                 #endregion
 
-                storages = await statisticModel.GetStorage((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+                storages = await statisticModel.GetStorage((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
 
                 comboItems = statisticModel.getItemCombo(storages);
                 comboUnits = statisticModel.getUnitCombo(storages);

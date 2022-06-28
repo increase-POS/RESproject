@@ -211,9 +211,9 @@ namespace Restaurant.View.delivery
                         shCompany.updateUserId = MainWindow.userLogin.userId;
                         shCompany.isActive = 1;
                         shCompany.notes = tb_notes.Text;
-                        
 
-                        int s = await shCompany.save(shCompany);
+
+                        var s = await shCompany.save(shCompany);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -269,7 +269,7 @@ namespace Restaurant.View.delivery
 
 
 
-                        int s = await shCompany.save(shCompany);
+                            var s = await shCompany.save(shCompany);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -337,7 +337,7 @@ namespace Restaurant.View.delivery
                                 if (shCompany.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!shCompany.canDelete) && (shCompany.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await shCompany.delete(shCompany.shippingCompanyId, MainWindow.userLogin.userId, shCompany.canDelete);
+                                var s = await shCompany.delete(shCompany.shippingCompanyId, MainWindow.userLogin.userId, shCompany.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -367,7 +367,7 @@ namespace Restaurant.View.delivery
         private async Task activate()
         {//activate
             shCompany.isActive = 1;
-            int s = await shCompany.save(shCompany);
+            var s = await shCompany.save(shCompany);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -640,7 +640,7 @@ namespace Restaurant.View.delivery
                     if (cb_areaPhone.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid, brd_areaPhoneLocal);
+                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (long)countryid, brd_areaPhoneLocal);
                     }
                 }
                 HelpClass.EndAwait(grid_main);
@@ -661,7 +661,7 @@ namespace Restaurant.View.delivery
                     if (cb_areaFax.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaFax.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid, brd_areaFaxLocal);
+                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (long)countryid, brd_areaFaxLocal);
                     }
                 }
                 HelpClass.EndAwait(grid_main);

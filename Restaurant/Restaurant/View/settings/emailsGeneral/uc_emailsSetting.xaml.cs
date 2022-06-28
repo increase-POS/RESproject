@@ -184,13 +184,13 @@ namespace Restaurant.View.settings.emailsGeneral
                         sysEmail.isMajor = tgl_isMajor.IsChecked.Value;
                         sysEmail.smtpClient = tb_smtpClient.Text;
                         sysEmail.side = cb_side.SelectedValue.ToString();
-                        sysEmail.branchId = (int)cb_branchId.SelectedValue;
+                        sysEmail.branchId = (long)cb_branchId.SelectedValue;
                         sysEmail.notes = tb_notes.Text;
                         sysEmail.createUserId = MainWindow.userLogin.userId;
                         sysEmail.updateUserId = MainWindow.userLogin.userId;
                         sysEmail.isActive = 1;
 
-                        int s = await sysEmail.Save(sysEmail);
+                        var s = await sysEmail.Save(sysEmail);
                         if (s.Equals(-4))
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMajorEmaillAlreadyExists"), animation: ToasterAnimation.FadeIn);
                         else if (!s.Equals(0))
@@ -241,12 +241,12 @@ namespace Restaurant.View.settings.emailsGeneral
                         sysEmail.isMajor = tgl_isMajor.IsChecked.Value;
                         sysEmail.smtpClient = tb_smtpClient.Text;
                         sysEmail.side = cb_side.SelectedValue.ToString();
-                        sysEmail.branchId = (int)cb_branchId.SelectedValue;
+                        sysEmail.branchId = (long)cb_branchId.SelectedValue;
                         sysEmail.notes = tb_notes.Text;
                         sysEmail.updateUserId = MainWindow.userLogin.userId;
-                        //sysEmail.isActive = 1;
-                        //  string s = await sysEmail.Save(sysEmail);
-                        int s = await sysEmail.Save(sysEmail);
+                            //sysEmail.isActive = 1;
+                            //  string s = await sysEmail.Save(sysEmail);
+                            var s = await sysEmail.Save(sysEmail);
                         if (s.Equals(-4))
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMajorEmaillAlreadyExists"), animation: ToasterAnimation.FadeIn);
                         else if (!s.Equals(0))
@@ -313,7 +313,7 @@ namespace Restaurant.View.settings.emailsGeneral
                                 if (sysEmail.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!sysEmail.canDelete) && (sysEmail.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await sysEmail.Delete(sysEmail.emailId, MainWindow.userLogin.userId, sysEmail.canDelete);
+                                var s = await sysEmail.Delete(sysEmail.emailId, MainWindow.userLogin.userId, sysEmail.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -343,7 +343,7 @@ namespace Restaurant.View.settings.emailsGeneral
         private async Task activate()
         {//activate
             sysEmail.isActive = 1;
-            int s = await sysEmail.Save(sysEmail);
+            var s = await sysEmail.Save(sysEmail);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

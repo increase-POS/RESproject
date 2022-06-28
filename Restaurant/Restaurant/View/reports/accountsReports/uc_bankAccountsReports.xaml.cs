@@ -160,8 +160,8 @@ namespace Restaurant.View.reports.accountsReports
            , DatePicker startDate, DatePicker endDate)
         {
             var result = payments.Where(x => (
-                           (cb_paymentsBank.SelectedItem != null ? x.bankId == (int)cb_paymentsBank.SelectedValue : true)
-                        && (payType.SelectedItem != null ? x.userId == (int)cb_paymentsUser.SelectedValue : true)
+                           (cb_paymentsBank.SelectedItem != null ? x.bankId == (long)cb_paymentsBank.SelectedValue : true)
+                        && (payType.SelectedItem != null ? x.userId == (long)cb_paymentsUser.SelectedValue : true)
                         && (accountant.SelectedItem != null ? x.updateUserAcc == (string)cb_paymentsAccountant.SelectedValue : true)
                         && (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
                         && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true)));

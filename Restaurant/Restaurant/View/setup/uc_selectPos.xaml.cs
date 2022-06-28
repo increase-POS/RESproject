@@ -40,7 +40,7 @@ namespace Restaurant.View.setup
         }
 
 
-        public int posId { get; set; }
+        public long posId { get; set; }
         public long branchId { get; set; }
         BrushConverter bc = new BrushConverter();
         Branch branchModel = new Branch();
@@ -161,7 +161,7 @@ namespace Restaurant.View.setup
 
         private void Cb_pos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            posId = (int) cb_pos.SelectedValue;
+            posId = (long) cb_pos.SelectedValue;
 
         }
 

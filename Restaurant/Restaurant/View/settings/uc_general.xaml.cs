@@ -1015,7 +1015,7 @@ namespace Restaurant.View.settings
                             usLanguage.userId = MainWindow.userLogin.userId;
                             usLanguage.valId = Convert.ToInt32(cb_language.SelectedValue);
                             usLanguage.createUserId = MainWindow.userLogin.userId;
-                             int s = await usValueModel.Save(usLanguage);
+                        long s = await usValueModel.Save(usLanguage);
                             if (!s.Equals(0))
                             {
                                 //update language in main window
@@ -1235,9 +1235,9 @@ namespace Restaurant.View.settings
                         if (dateForm != null)
                         { 
                         dateForm.value = cb_dateForm.SelectedValue.ToString();
-                        //dateForm.isSystem = 1;
-                        //dateForm.settingId = dateFormId;
-                        int s = await valueModel.Save(dateForm);
+                            //dateForm.isSystem = 1;
+                            //dateForm.settingId = dateFormId;
+                            long s = await valueModel.Save(dateForm);
                         if (!s.Equals(0))
                         {
                             //update dateForm in main window
@@ -1472,7 +1472,7 @@ namespace Restaurant.View.settings
                         //itemCost.isDefault = 1;
                         //itemCost.settingId = itemCostId;
 
-                        int s = await valueModel.Save(itemCost);
+                        long s = await valueModel.Save(itemCost);
                         if (!s.Equals(0))
                         {
                             //update item cost in main window
@@ -1529,7 +1529,7 @@ namespace Restaurant.View.settings
                     maxDiscount.value = tb_maxDiscount.Text;
                     //maxDiscount.isSystem = 1;
                     //maxDiscount.settingId = maxDiscountId;
-                    int s = await valueModel.Save(maxDiscount);
+                    long s = await valueModel.Save(maxDiscount);
                     if (!s.Equals(0))
                     {
                         //update maxDiscount in main window
@@ -1616,7 +1616,7 @@ namespace Restaurant.View.settings
                         //update statusesOfPreparingOrder in main window
                     AppSettings.statusesOfPreparingOrder = statusesOfPreparingOrder.value;
 
-                    int msg = await setV.Save(statusesOfPreparingOrder);
+                    long msg = await setV.Save(statusesOfPreparingOrder);
                     if (msg > 0)
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
@@ -1752,7 +1752,7 @@ namespace Restaurant.View.settings
                         accuracy.value = cb_accuracy.SelectedValue.ToString();
                         //accuracy.isSystem = 1;
                         //accuracy.settingId = accuracyId;
-                        int s = await valueModel.Save(accuracy);
+                        long s = await valueModel.Save(accuracy);
                         if (!s.Equals(0))
                         {
                             //update accuracy in main window

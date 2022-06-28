@@ -159,7 +159,7 @@ namespace Restaurant.View.sales
 
         async Task<IEnumerable<ItemTransferInvoice>> RefreshItemTransferInvoiceList()
         {
-            itemTrasferInvoices = await statisticModel.GetUserdailyinvoice((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+            itemTrasferInvoices = await statisticModel.GetUserdailyinvoice((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
             return itemTrasferInvoices;
         }
 

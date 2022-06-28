@@ -196,9 +196,9 @@ namespace Restaurant.View.catalog.rawMaterials
                         Boolean codeAvailable = checkCodeAvailabiltiy();
                         if (codeAvailable)
                         {
-                            int? categoryId = null;
+                            long? categoryId = null;
                             if (cb_categoryId.SelectedIndex != -1)
-                                categoryId = (int)cb_categoryId.SelectedValue;
+                                categoryId = (long)cb_categoryId.SelectedValue;
 
                             int min = 0;
                             int max = 0;
@@ -211,12 +211,12 @@ namespace Restaurant.View.catalog.rawMaterials
                             if (tb_taxes.Text != "")
                                 taxes = decimal.Parse(tb_taxes.Text);
 
-                            Nullable<int> minUnitId = null;
+                            Nullable<long> minUnitId = null;
                             if (cb_minUnitId.SelectedIndex != -1)
-                                minUnitId = (int)cb_minUnitId.SelectedValue;
-                            Nullable<int> maxUnitId = null;
+                                minUnitId = (long)cb_minUnitId.SelectedValue;
+                            Nullable<long> maxUnitId = null;
                             if (cb_maxUnitId.SelectedIndex != -1)
-                                maxUnitId = (int)cb_maxUnitId.SelectedValue;
+                                maxUnitId = (long)cb_maxUnitId.SelectedValue;
 
                             item = new Item();
                             item.code = tb_code.Text;
@@ -234,7 +234,7 @@ namespace Restaurant.View.catalog.rawMaterials
                             item.minUnitId = minUnitId;
                             item.maxUnitId = maxUnitId;
                             item.type = cb_type.SelectedValue.ToString();
-                            int res = await item.save(item);
+                            long res = await item.save(item);
                             if (res == -1)// إظهار رسالة الترقية
                                 Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
@@ -280,9 +280,9 @@ namespace Restaurant.View.catalog.rawMaterials
                         Boolean codeAvailable = checkCodeAvailabiltiy(item.code);
                         if (codeAvailable)
                         {
-                            int? categoryId = null;
+                                long? categoryId = null;
                             if (cb_categoryId.SelectedIndex != -1)
-                                categoryId = (int)cb_categoryId.SelectedValue;
+                                categoryId = (long)cb_categoryId.SelectedValue;
 
                             int min = 0;
                             int max = 0;
@@ -294,12 +294,12 @@ namespace Restaurant.View.catalog.rawMaterials
                             if (tb_taxes.Text != "")
                                 taxes = decimal.Parse(tb_taxes.Text);
 
-                            Nullable<int> minUnitId = null;
+                            Nullable<long> minUnitId = null;
                             if (cb_minUnitId.SelectedIndex != -1)
-                                minUnitId = (int)cb_minUnitId.SelectedValue;
-                            Nullable<int> maxUnitId = null;
+                                minUnitId = (long)cb_minUnitId.SelectedValue;
+                            Nullable<long> maxUnitId = null;
                             if (cb_maxUnitId.SelectedIndex != -1)
-                                maxUnitId = (int)cb_maxUnitId.SelectedValue;
+                                maxUnitId = (long)cb_maxUnitId.SelectedValue;
                             item.code = tb_code.Text;
                             item.name = tb_name.Text;
                             item.details = tb_details.Text;
@@ -313,7 +313,7 @@ namespace Restaurant.View.catalog.rawMaterials
                             item.maxUnitId = maxUnitId;
                             item.type = cb_type.SelectedValue.ToString();
 
-                            int res = await item.save(item);
+                                long res = await item.save(item);
                             if (res == -1)// إظهار رسالة الترقية
                                 Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
@@ -393,7 +393,7 @@ namespace Restaurant.View.catalog.rawMaterials
                                 if (item.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!item.canDelete) && (item.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await item.delete(item.itemId, MainWindow.userLogin.userId, item.canDelete);
+                                long s = await item.delete(item.itemId, MainWindow.userLogin.userId, item.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -423,7 +423,7 @@ namespace Restaurant.View.catalog.rawMaterials
         private async Task activate()
         {//activate
             item.isActive = 1;
-            int s = await item.save(item);
+            long s = await item.save(item);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -534,7 +534,7 @@ namespace Restaurant.View.catalog.rawMaterials
                          var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr && FillCombo.purchaseTypes.Contains(c.type));
                         if (ob != null)
                         {
-                            long itemId = (int) ob.itemId;
+                            long itemId = (long) ob.itemId;
                             ChangeItemIdEvent(itemId);
                         }
                         else

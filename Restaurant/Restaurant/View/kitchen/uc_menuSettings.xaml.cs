@@ -354,7 +354,7 @@ namespace Restaurant.View.kitchen
                         var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr && FillCombo.purchaseTypes.Contains(c.type));
                         if (ob != null)
                         {
-                            long itemId = (int)ob.itemId;
+                            long itemId = (long)ob.itemId;
                             ChangeItemIdEvent(itemId);
                         }
                         else

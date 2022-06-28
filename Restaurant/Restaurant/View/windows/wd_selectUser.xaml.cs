@@ -116,7 +116,7 @@ namespace Restaurant.View.windows
             if (HelpClass.validate(requiredControlList, this))
             {
                 isOk = true;
-                userId = (int) cb_userId.SelectedValue;
+                userId = (long) cb_userId.SelectedValue;
                 this.Close();
             }
             // else return false

@@ -158,7 +158,7 @@ namespace Restaurant.View.windows
             st.createUserId = MainWindow.userLogin.userId;
             st.isActive = 1;
 
-            int res = await orderModel.EditInvoiceOrdersStatus(invoice.invoiceId, invoice.shipUserId, (int)invoice.shippingCompanyId, st);
+            int res = await orderModel.EditInvoiceOrdersStatus(invoice.invoiceId, invoice.shipUserId, (long)invoice.shippingCompanyId, st);
             if (res > 0)
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopConfirm"), animation: ToasterAnimation.FadeIn);
             else

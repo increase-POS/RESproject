@@ -64,7 +64,7 @@ namespace Restaurant.View.windows
             }
         }
         public bool isOk { get; set; }
-        public int customerId { get; set; }
+        public long customerId { get; set; }
         public decimal deliveryDiscount { get; set; }
         public bool hasOffers { get; set; }
         public string memberShipStatus;
@@ -294,7 +294,7 @@ namespace Restaurant.View.windows
             //{
                 // if have id return true
                 isOk = true;
-                customerId =(int) cb_customerId.SelectedValue;
+                customerId =(long) cb_customerId.SelectedValue;
                
                 this.Close();
             //}
@@ -307,7 +307,7 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_main);
                 if (cb_customerId.SelectedIndex != -1)
                 {
-                    customerId = (int)cb_customerId.SelectedValue;
+                    customerId = (long)cb_customerId.SelectedValue;
                     await fillMemberShipInfo();
                 }
                 HelpClass.EndAwait(grid_main);
@@ -361,7 +361,7 @@ namespace Restaurant.View.windows
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_updateVendor w = new wd_updateVendor();
                     //// pass agent id to update windows
-                    w.agent.agentId = (int)cb_customerId.SelectedValue;
+                    w.agent.agentId = (long)cb_customerId.SelectedValue;
                     w.type = "c";
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;

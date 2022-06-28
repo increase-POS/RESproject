@@ -328,10 +328,10 @@ namespace Restaurant.View.settings.reportsSettings
             try
             {
                 //  string msg = "";
-                int msg = 0;
+                long msg = 0;
                 if (cb_reportlang.SelectedIndex != -1)
                 {
-                    replangrow = replangList.Where(r => r.valId == (int)cb_reportlang.SelectedValue).FirstOrDefault();
+                    replangrow = replangList.Where(r => r.valId == (long)cb_reportlang.SelectedValue).FirstOrDefault();
                     replangrow.isDefault = 1;
                     msg = await setvalueModel.Save(replangrow);
                     //  replangrow.valId=
@@ -496,7 +496,7 @@ namespace Restaurant.View.settings.reportsSettings
                     printCount.isDefault = 1;
                     printCount.settingId = printCountId;
 
-                    int s = await valueModel.Save(printCount);
+                    var s = await valueModel.Save(printCount);
                     if (!s.Equals(0))
                     {
                         //update tax in main window
@@ -574,9 +574,9 @@ namespace Restaurant.View.settings.reportsSettings
                 if (!cb_printHeader.Text.Equals(""))
                 {
 
-                    int res = 0;
+                    //int res = 0;
                     show_header_row.value = cb_printHeader.SelectedValue.ToString();
-                    res = await setvalueModel.Save(show_header_row);
+                    var res = await setvalueModel.Save(show_header_row);
 
               
 
@@ -624,9 +624,9 @@ namespace Restaurant.View.settings.reportsSettings
                 if(w.isOk)
                 {
                     
-                    int res = 0;
+                    //int res = 0;
                     itemtax_note_row.value = w.note.Trim();
-                    res = await setvalueModel.Save(itemtax_note_row);
+                    var res = await setvalueModel.Save(itemtax_note_row);
 
 
 
@@ -673,9 +673,9 @@ namespace Restaurant.View.settings.reportsSettings
                 {
                     // MessageBox.Show(w.note);
                     //save
-                    int res = 0;
+                    //int res = 0;
                     sales_invoice_note_row.value = w.note.Trim();
-                    res = await setvalueModel.Save(sales_invoice_note_row);
+                    var res = await setvalueModel.Save(sales_invoice_note_row);
 
 
                     if (res > 0)

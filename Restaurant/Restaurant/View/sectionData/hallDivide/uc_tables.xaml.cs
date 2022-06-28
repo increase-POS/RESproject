@@ -227,7 +227,7 @@ namespace Restaurant.View.sectionData.hallDivide
                                 table.isActive = 1;
                                 //table.branchId = MainWindow.branchLogin.branchId;
 
-                                int s = await table.save(table);
+                                var s = await table.save(table);
                                 if (s <= 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -288,7 +288,7 @@ namespace Restaurant.View.sectionData.hallDivide
                                     table.notes = tb_notes.Text;
                                     table.updateUserId = MainWindow.userLogin.userId;
                                     table.sectionId = null;
-                                    int s = await table.save(table);
+                                    var s = await table.save(table);
                                     if (s <= 0)
                                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                     else
@@ -374,7 +374,7 @@ namespace Restaurant.View.sectionData.hallDivide
                                 if (table.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!table.canDelete) && (table.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await table.delete(table.tableId, MainWindow.userLogin.userId, table.canDelete);
+                                var s = await table.delete(table.tableId, MainWindow.userLogin.userId, table.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -404,7 +404,7 @@ namespace Restaurant.View.sectionData.hallDivide
         private async Task activate()
         {//activate
             table.isActive = 1;
-            int s = await table.save(table);
+            var s = await table.save(table);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

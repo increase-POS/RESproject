@@ -160,7 +160,7 @@ namespace Restaurant.View.windows
                     dishIngredient.notes = tb_notes.Text;
                     dishIngredient.isActive = 1;
 
-                    int s = await dishIngredient.save(dishIngredient);
+                    var s = await dishIngredient.save(dishIngredient);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -193,7 +193,7 @@ namespace Restaurant.View.windows
                     //dishIngredient.categoryId = categoryId;
                     dishIngredient.updateUserId = MainWindow.userLogin.userId;
                     dishIngredient.notes = tb_notes.Text;
-                    int s = await dishIngredient.save(dishIngredient);
+                    var s = await dishIngredient.save(dishIngredient);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -252,7 +252,7 @@ namespace Restaurant.View.windows
                             //if ((!dishIngredient.canDelete) && (dishIngredient.isActive == 1))
                             //popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                            int s = await dishIngredient.delete(dishIngredient.dishIngredId, MainWindow.userLogin.userId, true);
+                            var s = await dishIngredient.delete(dishIngredient.dishIngredId, MainWindow.userLogin.userId, true);
                             if (s < 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -277,7 +277,7 @@ namespace Restaurant.View.windows
         private async Task activate()
         {//activate
             dishIngredient.isActive = 1;
-            int s = await dishIngredient.save(dishIngredient);
+            var s = await dishIngredient.save(dishIngredient);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

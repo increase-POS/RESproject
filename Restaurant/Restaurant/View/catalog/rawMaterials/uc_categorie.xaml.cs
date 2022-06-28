@@ -191,7 +191,7 @@ namespace Restaurant.View.catalog.rawMaterials
                             categorie.isActive = 1;
                             categorie.createUserId = MainWindow.userLogin.userId;
                             categorie.updateUserId = MainWindow.userLogin.userId;
-                            int res = await categorie.save(categorie);
+                            long res = await categorie.save(categorie);
                             if (res == -1)// إظهار رسالة الترقية
                                 Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
@@ -202,7 +202,7 @@ namespace Restaurant.View.catalog.rawMaterials
                                 categorie.categoryId = res;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                                int categorieId = res;
+                                long categorieId = res;
 
                                 if (openFileDialog.FileName != "")
                                     await categorie.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + categorieId.ToString()), categorieId);
@@ -250,7 +250,7 @@ namespace Restaurant.View.catalog.rawMaterials
                             categorie.taxes = taxes;
                             categorie.updateUserId = MainWindow.userLogin.userId;
 
-                            int res = await categorie.save(categorie);
+                                long res = await categorie.save(categorie);
                             if (res == -1)// إظهار رسالة الترقية
                                 Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
@@ -361,7 +361,7 @@ namespace Restaurant.View.catalog.rawMaterials
         private async Task activate()
         {//activate
             categorie.isActive = 1;
-            int s = await categorie.save(categorie);
+            long s = await categorie.save(categorie);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -473,7 +473,7 @@ namespace Restaurant.View.catalog.rawMaterials
                         var ob = FillCombo.categorieUnitList.ToList().Find(c => c.barcode == _BarcodeStr && FillCombo.purchaseTypes.Contains(c.type));
                         if (ob != null)
                         {
-                            int categorieId = (int)ob.categorieId;
+                            int categorieId = (long)ob.categorieId;
                             ChangeCategoryIdEvent(categorieId);
                         }
                         else

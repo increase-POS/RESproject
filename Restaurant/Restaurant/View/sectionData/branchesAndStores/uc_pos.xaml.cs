@@ -212,7 +212,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                             pos.isActive = 1;
                             pos.notes = tb_notes.Text;
 
-                            int s = await pos.save(pos);
+                            var s = await pos.save(pos);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -276,7 +276,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                             pos.updateUserId = MainWindow.userLogin.userId;
                             pos.notes = tb_notes.Text;
 
-                            int s = await pos.save(pos);
+                                var s = await pos.save(pos);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -345,7 +345,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                                 if (pos.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!pos.canDelete) && (pos.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await pos.delete(pos.posId, MainWindow.userLogin.userId, pos.canDelete);
+                                var s = await pos.delete(pos.posId, MainWindow.userLogin.userId, pos.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -375,7 +375,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
         private async Task activate()
         {//activate
             pos.isActive = 1;
-            int s = await pos.save(pos);
+            var s = await pos.save(pos);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

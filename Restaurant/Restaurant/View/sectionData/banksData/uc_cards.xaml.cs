@@ -213,8 +213,8 @@ namespace Restaurant.View.sectionData.banksData
                             card.notes = tb_notes.Text;
                             card.createUserId = MainWindow.userLogin.userId;
                             card.updateUserId = MainWindow.userLogin.userId;
- 
-                            int s = await card.save(card);
+
+                            long s = await card.save(card);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -223,7 +223,7 @@ namespace Restaurant.View.sectionData.banksData
 
                                 if (isImgPressed)
                                 {
-                                    int cardId = s;
+                                    long cardId = s;
                                     string b = await card.uploadImage(imgFileName,
                                         Md5Encription.MD5Hash("Inc-m" + cardId.ToString()), cardId);
                                     card.image = b;
@@ -306,7 +306,7 @@ namespace Restaurant.View.sectionData.banksData
                                 //card.createUserId = MainWindow.userLogin.userId;
                                 card.updateUserId = MainWindow.userLogin.userId;
 
-                                int s = await card.save(card);
+                                long s = await card.save(card);
                                 if (s <= 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -314,7 +314,7 @@ namespace Restaurant.View.sectionData.banksData
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                     if (isImgPressed)
                                     {
-                                        int cardId = s;
+                                        long cardId = s;
                                         string b = await card.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + cardId.ToString()), cardId);
                                         card.image = b;
                                         isImgPressed = false;
@@ -387,7 +387,7 @@ namespace Restaurant.View.sectionData.banksData
                                 if (card.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!card.canDelete) && (card.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await card.delete(card.cardId, MainWindow.userLogin.userId, card.canDelete);
+                                long s = await card.delete(card.cardId, MainWindow.userLogin.userId, card.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -417,7 +417,7 @@ namespace Restaurant.View.sectionData.banksData
         private async Task activate()
         {//activate
             card.isActive = 1;
-            int s = await card.save(card);
+            long s = await card.save(card);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

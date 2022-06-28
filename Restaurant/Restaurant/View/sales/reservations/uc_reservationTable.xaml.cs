@@ -63,7 +63,7 @@ namespace Restaurant.View.sales.reservations
         //byte tgl_userState;
         #region for search
         int personCount = 0;
-        int sectionId = 0;
+        long sectionId = 0;
         #endregion
         public static List<string> requiredControlList;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -238,7 +238,7 @@ namespace Restaurant.View.sales.reservations
                             reserve.branchId = MainWindow.branchLogin.branchId;
                             reserve.code = await reserve.generateReserveCode("tr",MainWindow.branchLogin.code,MainWindow.branchLogin.branchId);
                             if (cb_customerId.SelectedIndex > 0)
-                                reserve.customerId = (int)cb_customerId.SelectedValue;
+                                reserve.customerId = (long)cb_customerId.SelectedValue;
                             reserve.reservationDate = dp_reservationDate.SelectedDate;
 
                             #region reservation time period                      
@@ -487,7 +487,7 @@ namespace Restaurant.View.sales.reservations
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_updateVendor w = new wd_updateVendor();
                     //// pass agent id to update windows
-                    w.agent.agentId = (int)cb_customerId.SelectedValue;
+                    w.agent.agentId = (long)cb_customerId.SelectedValue;
                     w.type = "c";
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
@@ -545,7 +545,7 @@ namespace Restaurant.View.sales.reservations
 
             if (cb_searchSection.SelectedIndex > 0)
             {
-                sectionId = (int)cb_searchSection.SelectedValue;
+                sectionId = (long)cb_searchSection.SelectedValue;
                 tablesQuery = tablesQuery.Where(s => s.sectionId == sectionId).ToList();
             }
             else

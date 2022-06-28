@@ -208,7 +208,7 @@ namespace Restaurant.View.storage.storageDivide
                             location.branchId = Convert.ToInt32(cb_branchId.SelectedValue);
 
 
-                            int s = await location.save(location);
+                            long s = await location.save(location);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -262,7 +262,7 @@ namespace Restaurant.View.storage.storageDivide
                             location.updateUserId = MainWindow.userLogin.userId;
 
 
-                            int s = await location.save(location);
+                                long s = await location.save(location);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -333,7 +333,7 @@ namespace Restaurant.View.storage.storageDivide
                                 if (location.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!location.canDelete) && (location.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await location.delete(location.locationId, MainWindow.userLogin.userId, location.canDelete);
+                                long s = await location.delete(location.locationId, MainWindow.userLogin.userId, location.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -363,7 +363,7 @@ namespace Restaurant.View.storage.storageDivide
         private async Task activate()
         {//activate
             location.isActive = 1;
-            int s = await location.save(location);
+            long s = await location.save(location);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

@@ -82,11 +82,11 @@ namespace Restaurant.View.purchase
         List<ItemTransfer> mainInvoiceItems;
         CashTransfer cashTransfer = new CashTransfer();
         #region //to handle barcode characters
-        static private int _SelectedBranch = -1;
-        static private int _SelectedVendor = -1;
+        static private long _SelectedBranch = -1;
+        static private long _SelectedVendor = -1;
         static private int _SelectedDiscountType = -1;
         static private string _SelectedPaymentType = "cash";
-        static private int _SelectedCard = -1;
+        static private long _SelectedCard = -1;
         // for barcode
         DateTime _lastKeystroke = new DateTime(0);
         static private string _BarcodeStr = "";
@@ -584,10 +584,10 @@ namespace Restaurant.View.purchase
             invoice.paid = 0;
             invoice.deserved = invoice.totalNet;
             if (cb_vendor.SelectedIndex != -1 && cb_vendor.SelectedIndex != 0)
-                invoice.agentId = (int)cb_vendor.SelectedValue;
+                invoice.agentId = (long)cb_vendor.SelectedValue;
 
             if (cb_branch.SelectedIndex != -1 && cb_branch.SelectedIndex != 0)
-                invoice.branchId = (int)cb_branch.SelectedValue;
+                invoice.branchId = (long)cb_branch.SelectedValue;
             else
                 invoice.branchId = MainWindow.branchLogin.branchId;
 
@@ -685,7 +685,7 @@ namespace Restaurant.View.purchase
                                         createUserId = MainWindow.userLogin.userId,
                                         updateUserId = MainWindow.userLogin.userId,
                                     };
-                                    await not.save(not, (int)invoice.branchCreatorId, "storageAlerts_ctreatePurchaseReturnInvoice", MainWindow.branchLogin.name);
+                                    await not.save(not, (long)invoice.branchCreatorId, "storageAlerts_ctreatePurchaseReturnInvoice", MainWindow.branchLogin.name);
                                     #endregion
                                     await addInvoice("pbw", "pb"); // pbw means waiting purchase bounce
                                     clearInvoice();
@@ -739,7 +739,7 @@ namespace Restaurant.View.purchase
                                             {
                                                 await addInvoice("pw", "pi");
                                                 #region notification Object
-                                                if ((int)cb_branch.SelectedIndex != -1 && (int)cb_branch.SelectedIndex != 0)
+                                                if ((long)cb_branch.SelectedIndex != -1 && (long)cb_branch.SelectedIndex != 0)
                                                 {
                                                     Notification not = new Notification()
                                                     {
@@ -749,7 +749,7 @@ namespace Restaurant.View.purchase
                                                         createUserId = MainWindow.userLogin.userId,
                                                         updateUserId = MainWindow.userLogin.userId,
                                                     };
-                                                    await not.save(not, (int)cb_branch.SelectedValue, "storageAlerts_ctreatePurchaseInvoice", MainWindow.branchLogin.name);
+                                                    await not.save(not, (long)cb_branch.SelectedValue, "storageAlerts_ctreatePurchaseInvoice", MainWindow.branchLogin.name);
                                                 }
                                                 #endregion
                                             }
@@ -1025,7 +1025,7 @@ namespace Restaurant.View.purchase
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds > 100 && cb_branch.SelectedIndex != -1)
                 {
-                    _SelectedBranch = (int)cb_branch.SelectedValue;
+                    _SelectedBranch = (long)cb_branch.SelectedValue;
                 }
                 else
                 {
@@ -1060,7 +1060,7 @@ namespace Restaurant.View.purchase
                     TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                     if (elapsed.TotalMilliseconds > 100 && cb_vendor.SelectedIndex != -1)
                     {
-                        _SelectedVendor = (int)cb_vendor.SelectedValue;
+                        _SelectedVendor = (long)cb_vendor.SelectedValue;
                         var v = FillCombo.vendorsList.Where(x => x.agentId == _SelectedVendor).FirstOrDefault();
                         if (v.payType != null)
                         {
@@ -1518,11 +1518,11 @@ namespace Restaurant.View.purchase
                 {
                     ID = _SequenceNum,
                     Product = itemT.itemName,
-                    itemId = (int)itemT.itemId,
+                    itemId = (long)itemT.itemId,
                     Unit = itemT.itemUnitId.ToString(),
-                    itemUnitId = (int)itemT.itemUnitId,
+                    itemUnitId = (long)itemT.itemUnitId,
                     Count = (int)itemT.quantity,
-                    OrderId = (int)itemT.invoiceId,
+                    OrderId = (long)itemT.invoiceId,
                     Price = decimal.Parse(HelpClass.DecTostring((decimal)itemT.price)),
                     Total = total,
                 });
@@ -1545,10 +1545,10 @@ namespace Restaurant.View.purchase
             var smallUnits = await FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
             foreach (ItemUnit u in itemUnits)
             {
-                var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (int)u.itemUnitId && x.ID != ID); // unit exist in invoice
+                var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (long)u.itemUnitId && x.ID != ID); // unit exist in invoice
                 if (isInBill != null)
                 {
-                    var isSmall = smallUnits.Find(x => x.itemUnitId == (int)u.itemUnitId);
+                    var isSmall = smallUnits.Find(x => x.itemUnitId == (long)u.itemUnitId);
                     int unitValue = 0;
 
                     int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == u.itemUnitId).FirstOrDefault());
@@ -1559,12 +1559,12 @@ namespace Restaurant.View.purchase
                     }
                     else if (isSmall != null) // from-unit is bigger than to-unit
                     {
-                        unitValue = await FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (int)u.itemUnitId);
+                        unitValue = await FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (long)u.itemUnitId);
                         quantity += count / unitValue;
                     }
                     else
                     {
-                        unitValue = await FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (int)u.itemUnitId);
+                        unitValue = await FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (long)u.itemUnitId);
 
                         if (unitValue != 0)
                         {
@@ -1584,7 +1584,7 @@ namespace Restaurant.View.purchase
             {
                 //billDetails
                 var cmb = sender as ComboBox;
-                cmb.SelectedValue = (int)billDetails[0].itemUnitId;
+                cmb.SelectedValue = (long)billDetails[0].itemUnitId;
 
                 if (_InvoiceType == "p" || _InvoiceType == "pw"
                         || _InvoiceType == "pb" || _InvoiceType == "pbw")
@@ -1605,17 +1605,17 @@ namespace Restaurant.View.purchase
 
                 if (dg_billDetails.SelectedIndex != -1 && cmb.SelectedValue != null)
                 {
-                    billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
+                    billDetails[dg_billDetails.SelectedIndex].itemUnitId = (long)cmb.SelectedValue;
                     TextBlock tb;
 
                     int _datagridSelectedIndex = dg_billDetails.SelectedIndex;
-                    int itemUnitId = (int)cmb.SelectedValue;
+                    long itemUnitId = (long)cmb.SelectedValue;
                     long itemId = billDetails[_datagridSelectedIndex].itemId;
-                    billDetails[_datagridSelectedIndex].itemUnitId = (int)cmb.SelectedValue;
+                    billDetails[_datagridSelectedIndex].itemUnitId = (long)cmb.SelectedValue;
                     #region Dina
 
                     dynamic unit;
-                    unit = FillCombo.itemUnitList.Where(x => x.itemUnitId == (int)cmb.SelectedValue);
+                    unit = FillCombo.itemUnitList.Where(x => x.itemUnitId == (long)cmb.SelectedValue);
                    
                     int oldCount = 0;
                     long newCount = 0;
@@ -1639,14 +1639,14 @@ namespace Restaurant.View.purchase
                         int availableAmount = availableAmountInBranch - amountInBill;
                         #endregion
                         #region calculate amount in purchase invoice
-                        var items = mainInvoiceItems.ToList().Where(i => itemUnitsIds.Contains((int)i.itemUnitId));
+                        var items = mainInvoiceItems.ToList().Where(i => itemUnitsIds.Contains((long)i.itemUnitId));
                         int purchasedAmount = 0;
                         foreach (ItemTransfer it in items)
                         {
-                            if (itemUnitId == (int)it.itemUnitId)
+                            if (itemUnitId == (long)it.itemUnitId)
                                 purchasedAmount += (int)it.quantity;
                             else
-                                purchasedAmount += await FillCombo.itemUnit.fromUnitToUnitQuantity((int)it.quantity, itemId, (int)it.itemUnitId, itemUnitId);
+                                purchasedAmount += await FillCombo.itemUnit.fromUnitToUnitQuantity((int)it.quantity, itemId, (long)it.itemUnitId, itemUnitId);
                         }
                         #endregion
                         if (newCount > (purchasedAmount - amountInBill) || newCount > availableAmount)
@@ -1719,7 +1719,7 @@ namespace Restaurant.View.purchase
                             {
                                 var cp = (ContentPresenter)cell.Content;
                                 var combo = (ComboBox)cp.ContentTemplate.FindName("cbm_unitItemDetails", cp);
-                                combo.SelectedValue = (int)item.itemUnitId;
+                                combo.SelectedValue = (long)item.itemUnitId;
 
                                 if (_InvoiceType == "p" || _InvoiceType == "pw" || _InvoiceType == "pb" || _InvoiceType == "pbw")
                                     combo.IsEnabled = false;
@@ -1814,14 +1814,14 @@ namespace Restaurant.View.purchase
                         int availableAmount = availableAmountInBranch - amountInBill;
                         #endregion
                         #region calculate amount in purchase invoice
-                        var items = mainInvoiceItems.ToList().Where(i => itemUnitsIds.Contains((int)i.itemUnitId));
+                        var items = mainInvoiceItems.ToList().Where(i => itemUnitsIds.Contains((long)i.itemUnitId));
                         int purchasedAmount = 0;
                         foreach (ItemTransfer it in items)
                         {
-                            if (selectedItemUnitId == (int)it.itemUnitId)
+                            if (selectedItemUnitId == (long)it.itemUnitId)
                                 purchasedAmount += (int)it.quantity;
                             else
-                                purchasedAmount += await FillCombo.itemUnit.fromUnitToUnitQuantity((int)it.quantity, row.itemId, (int)it.itemUnitId, selectedItemUnitId);
+                                purchasedAmount += await FillCombo.itemUnit.fromUnitToUnitQuantity((int)it.quantity, row.itemId, (long)it.itemUnitId, selectedItemUnitId);
                         }
                         #endregion
                         if (newCount > (purchasedAmount - amountInBill) || newCount > availableAmount)
@@ -2178,7 +2178,7 @@ namespace Restaurant.View.purchase
                         // get item matches the barcode
                         if (unit1 != null)
                         {
-                            long itemId = (int)unit1.itemId;
+                            long itemId = (long)unit1.itemId;
                             if (unit1.itemId != 0)
                             {
                                 int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId && p.OrderId == 0).FirstOrDefault());
@@ -2318,12 +2318,12 @@ namespace Restaurant.View.purchase
                     cb_paymentProcessType.SelectedValue = cashTransfers[0].processType;
                     try
                     {
-                        _SelectedCard = (int)cashTransfers[0].cardId;
+                        _SelectedCard = (long)cashTransfers[0].cardId;
                         tb_processNum.Text = cashTransfers[0].docNum;
 
-                        if ((int)cashTransfers[0].cardId != 0)
+                        if ((long)cashTransfers[0].cardId != 0)
                         {
-                            var card = FillCombo.cardsList.Where(x => x.cardId == (int)cashTransfers[0].cardId).FirstOrDefault();
+                            var card = FillCombo.cardsList.Where(x => x.cardId == (long)cashTransfers[0].cardId).FirstOrDefault();
                             txt_card.Text = card.name;
                             if (card.hasProcessNum)
                             {
@@ -2405,16 +2405,16 @@ namespace Restaurant.View.purchase
             {
                 _SequenceNum++;
                 decimal total = (decimal)(itemT.price * itemT.quantity);
-                int orderId = 0;
+                long orderId = 0;
                 if (itemT.invoiceId != null)
-                    orderId = (int)itemT.invoiceId;
+                    orderId = (long)itemT.invoiceId;
                 billDetails.Add(new BillDetailsPurchase()
                 {
                     ID = _SequenceNum,
                     Product = itemT.itemName,
-                    itemId = (int)itemT.itemId,
+                    itemId = (long)itemT.itemId,
                     Unit = itemT.itemUnitId.ToString(),
-                    itemUnitId = (int)itemT.itemUnitId,
+                    itemUnitId = (long)itemT.itemUnitId,
                     Count = (int)itemT.quantity,
                     Price = decimal.Parse(HelpClass.DecTostring((decimal)itemT.price)),
                     Total = total,
@@ -3003,7 +3003,7 @@ namespace Restaurant.View.purchase
                     {
                         ID = _SequenceNum,
                         Product = itemT.itemName,
-                        itemId = (int)itemT.itemId,
+                        itemId = (long)itemT.itemId,
                         Unit = itemT.itemUnitId.ToString(),
                         Count = (int)itemT.quantity,
                         Price = (decimal)itemT.price,
@@ -3122,7 +3122,7 @@ namespace Restaurant.View.purchase
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_updateVendor w = new wd_updateVendor();
                     //// pass agent id to update windows
-                    w.agent.agentId = (int)cb_vendor.SelectedValue;
+                    w.agent.agentId = (long)cb_vendor.SelectedValue;
                     w.type = "v";
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
@@ -3245,7 +3245,7 @@ namespace Restaurant.View.purchase
                                 {
                                     Agent agentinv = new Agent();
                                     //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-                                    agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                                    agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                                     prInvoice.agentCode = agentinv.code;
                                     //new lines
                                     prInvoice.agentName = agentinv.name;
@@ -3260,14 +3260,14 @@ namespace Restaurant.View.purchase
                                     prInvoice.agentCompany = "-";
                                 }
                                 User employ = new User();
-                                employ = await employ.getUserById((int)prInvoice.updateUserId);
+                                employ = await employ.getUserById((long)prInvoice.updateUserId);
                                 prInvoice.uuserName = employ.name;
                                 prInvoice.uuserLast = employ.lastname;
 
 
                                 //
                                 Branch branch = new Branch();
-                                branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                                branch = await branchModel.getBranchById((long)prInvoice.branchCreatorId);
                                 //branch creator
                                 if (branch.branchId > 0)
                                 {
@@ -3279,7 +3279,7 @@ namespace Restaurant.View.purchase
                                 {
                                     if (prInvoice.branchId > 0)
                                     {
-                                        branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                        branch = await branchModel.getBranchById((long)prInvoice.branchId);
                                         prInvoice.branchName = branch.name;
                                     }
                                     else
@@ -3451,7 +3451,7 @@ namespace Restaurant.View.purchase
                             if (prInvoice.agentId != null)
                             {
                                 Agent agentinv = new Agent();
-                                agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                                agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                                 // agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
 
                                 prInvoice.agentCode = agentinv.code;
@@ -3472,7 +3472,7 @@ namespace Restaurant.View.purchase
                       
                             //
                             Branch branch = new Branch();
-                            branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                            branch = await branchModel.getBranchById((long)prInvoice.branchCreatorId);
                             //branch creator
                             if (branch.branchId > 0)
                             {
@@ -3484,7 +3484,7 @@ namespace Restaurant.View.purchase
                             {
                                 if (prInvoice.branchId > 0)
                                 {
-                                    branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                    branch = await branchModel.getBranchById((long)prInvoice.branchId);
                                     prInvoice.branchName = branch.name;
                                 }
                                 else
@@ -3500,7 +3500,7 @@ namespace Restaurant.View.purchase
                             // end branch reciever
                             //
                             User employ = new User();
-                            employ = await employ.getUserById((int)prInvoice.updateUserId);
+                            employ = await employ.getUserById((long)prInvoice.updateUserId);
                             prInvoice.uuserName = employ.name;
                             prInvoice.uuserLast = employ.lastname;
 
@@ -3670,7 +3670,7 @@ namespace Restaurant.View.purchase
                             // agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
 
                             User employ = new User();
-                            employ = await employ.getUserById((int)prInvoice.updateUserId);
+                            employ = await employ.getUserById((long)prInvoice.updateUserId);
                             prInvoice.uuserName = employ.name;
                             prInvoice.uuserLast = employ.lastname;
 
@@ -3678,7 +3678,7 @@ namespace Restaurant.View.purchase
                             {
                                 Agent agentinv = new Agent();
                                 //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-                                agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                                agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                                 prInvoice.agentCode = agentinv.code;
                                 //new lines
                                 prInvoice.agentName = agentinv.name;
@@ -3696,7 +3696,7 @@ namespace Restaurant.View.purchase
                             invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
                             //
                             Branch branch = new Branch();
-                            branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                            branch = await branchModel.getBranchById((long)prInvoice.branchCreatorId);
                             //branch creator
                             if (branch.branchId > 0)
                             {
@@ -3708,7 +3708,7 @@ namespace Restaurant.View.purchase
                             {
                                 if (prInvoice.branchId > 0)
                                 {
-                                    branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                    branch = await branchModel.getBranchById((long)prInvoice.branchId);
                                     prInvoice.branchName = branch.name;
                                 }
                                 else
@@ -3883,7 +3883,7 @@ namespace Restaurant.View.purchase
                             invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
                             SysEmails email = new SysEmails();
                             EmailClass mailtosend = new EmailClass();
-                            email = await email.GetByBranchIdandSide((int)MainWindow.branchLogin.branchId, "purchase");
+                            email = await email.GetByBranchIdandSide((long)MainWindow.branchLogin.branchId, "purchase");
                             if (email == null)
                             {
                                 this.Dispatcher.Invoke(new Action(() =>
@@ -3899,7 +3899,7 @@ namespace Restaurant.View.purchase
                                 {
 
                                     //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-                                    toAgent = await toAgent.getAgentById((int)prInvoice.agentId);
+                                    toAgent = await toAgent.getAgentById((long)prInvoice.agentId);
                                     prInvoice.agentCode = toAgent.code;
                                     //new lines
                                     prInvoice.agentName = toAgent.name;
@@ -4072,7 +4072,7 @@ namespace Restaurant.View.purchase
                         {
                             Agent agentinv = new Agent();
                             //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-                            agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                            agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                             prInvoice.agentCode = agentinv.code;
                             //new lines
                             prInvoice.agentName = agentinv.name;
@@ -4090,7 +4090,7 @@ namespace Restaurant.View.purchase
                         invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
                         //
                         Branch branch = new Branch();
-                        branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                        branch = await branchModel.getBranchById((long)prInvoice.branchCreatorId);
                         //branch creator
                         if (branch.branchId > 0)
                         {
@@ -4102,7 +4102,7 @@ namespace Restaurant.View.purchase
                         {
                             if (prInvoice.branchId > 0)
                             {
-                                branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                branch = await branchModel.getBranchById((long)prInvoice.branchId);
                                 prInvoice.branchName = branch.name;
                             }
                             else
@@ -4119,7 +4119,7 @@ namespace Restaurant.View.purchase
                         //
 
                         User employ = new User();
-                        employ = await employ.getUserById((int)prInvoice.updateUserId);
+                        employ = await employ.getUserById((long)prInvoice.updateUserId);
                         prInvoice.uuserName = employ.name;
                         prInvoice.uuserLast = employ.lastname;
 
@@ -4348,7 +4348,7 @@ namespace Restaurant.View.purchase
         void card_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            _SelectedCard = int.Parse(button.Tag.ToString());
+            _SelectedCard = long.Parse(button.Tag.ToString());
             Card card = button.DataContext as Card;
             txt_card.Text = card.name;
             if (card.hasProcessNum)
@@ -4366,7 +4366,7 @@ namespace Restaurant.View.purchase
             //set border color
             foreach (var el in cardEllipseList)
             {
-                if ((int)el.Tag == (int)button.Tag)
+                if ((long)el.Tag == (long)button.Tag)
                     el.Stroke = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 else
                     el.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;

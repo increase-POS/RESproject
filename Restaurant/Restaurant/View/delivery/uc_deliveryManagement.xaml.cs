@@ -159,8 +159,8 @@ namespace Restaurant.View.delivery
                       || s.shipUserName.ToString().Contains(searchText)
                       || s.orderTime.ToString().Contains(searchText)
                       )
-                      && ((cb_searchUser.SelectedIndex != -1 && cb_searchUser.SelectedValue.ToString() != "0")   ?  s.shipUserId        == (int)cb_searchUser.SelectedValue : true)
-                      && ( (cb_searchCompany.SelectedIndex != -1 && cb_searchCompany.SelectedValue.ToString() != "0") ?  s.shippingCompanyId == (int)cb_searchCompany.SelectedValue : true)
+                      && ((cb_searchUser.SelectedIndex != -1 && cb_searchUser.SelectedValue.ToString() != "0")   ?  s.shipUserId        == (long)cb_searchUser.SelectedValue : true)
+                      && ( (cb_searchCompany.SelectedIndex != -1 && cb_searchCompany.SelectedValue.ToString() != "0") ?  s.shippingCompanyId == (long)cb_searchCompany.SelectedValue : true)
                   );
 
                 RefreshOrdersView();
@@ -495,7 +495,7 @@ namespace Restaurant.View.delivery
                                 {
                                     ops.status = "Collected";
                                     if(selectedOrders.Count == 1)
-                                        driverID = (int)cb_userId.SelectedValue;
+                                        driverID = (long)cb_userId.SelectedValue;
                                     else
                                         driverID = i.shipUserId;
                                 }
@@ -503,7 +503,7 @@ namespace Restaurant.View.delivery
                                 {
                                     ops.status = "InTheWay";
                                     if (selectedOrders.Count == 1)
-                                        driverID = (int)cb_userId.SelectedValue;
+                                        driverID = (long)cb_userId.SelectedValue;
                                     else
                                         driverID = i.shipUserId;
                                 }
@@ -521,7 +521,7 @@ namespace Restaurant.View.delivery
                                 {
                                     ops.status = "Done";
                                     if (selectedOrders.Count == 1)
-                                        comID = (int)cb_companyId.SelectedValue;
+                                        comID = (long)cb_companyId.SelectedValue;
                                     else
                                         comID = i.shippingCompanyId.Value;
 
@@ -599,11 +599,11 @@ namespace Restaurant.View.delivery
                             {
                                 if (i.status.Equals("Ready"))
                                 {
-                                    driverID = (int)cb_userId.SelectedValue;
+                                    driverID = (long)cb_userId.SelectedValue;
                                 }
                                 else if (i.status.Equals("Collected"))
                                 {
-                                    driverID = (int)cb_userId.SelectedValue;
+                                    driverID = (long)cb_userId.SelectedValue;
                                 }
                                 else if (i.status.Equals("InTheWay"))
                                 {
@@ -614,7 +614,7 @@ namespace Restaurant.View.delivery
                             {
                                 if (i.status.Equals("Ready"))
                                 {
-                                    comID = (int)cb_companyId.SelectedValue;
+                                    comID = (long)cb_companyId.SelectedValue;
                                 }
                             }
 

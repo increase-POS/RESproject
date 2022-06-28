@@ -89,7 +89,7 @@ namespace Restaurant.View.reports.storageReports
                 translate();
                 #endregion
 
-                itemsTransfer = await statisticModel.GetDirectInMov((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+                itemsTransfer = await statisticModel.GetDirectInMov((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
 
                 comboDirectItems = statisticModel.getExternalItemCombo(itemsTransfer);
                 comboDirectUnits = statisticModel.getExternalUnitCombo(itemsTransfer);

@@ -81,10 +81,10 @@ namespace Restaurant.View.windows
                 quantity = int.Parse(tb_fromQuantity.Text);
             if (quantity != 0 && cb_fromUnit.SelectedIndex != -1 && cb_toUnit.SelectedIndex != -1)
             {
-                isSmall = smallUnits.Find(x => x.itemUnitId == (int)cb_toUnit.SelectedValue);
+                isSmall = smallUnits.Find(x => x.itemUnitId == (long)cb_toUnit.SelectedValue);
                 if (isSmall != null) // from-unit is bigger than to-unit
                 {
-                    _ConversionQuantity = await itemUnit.largeToSmallUnitQuan((int)cb_fromUnit.SelectedValue, (int)cb_toUnit.SelectedValue);
+                    _ConversionQuantity = await itemUnit.largeToSmallUnitQuan((long)cb_fromUnit.SelectedValue, (long)cb_toUnit.SelectedValue);
                     _ToQuantity = quantity * _ConversionQuantity;
                     _FromUnit = "";
                     _FromQuantity = quantity;
@@ -92,7 +92,7 @@ namespace Restaurant.View.windows
                 }
                 else
                 {
-                    _ConversionQuantity = await itemUnit.smallToLargeUnit((int)cb_fromUnit.SelectedValue, (int)cb_toUnit.SelectedValue);
+                    _ConversionQuantity = await itemUnit.smallToLargeUnit((long)cb_fromUnit.SelectedValue, (long)cb_toUnit.SelectedValue);
 
                     if (_ConversionQuantity != 0)
                     {
@@ -211,7 +211,7 @@ namespace Restaurant.View.windows
             int quantity = int.Parse(tb_fromQuantity.Text);
             if (cb_sectionLocation.SelectedIndex == -1)
             {
-                int branchQuantity = await ItemLocation.getUnitAmount((int)cb_fromUnit.SelectedValue, MainWindow.branchLogin.branchId);
+                int branchQuantity = await ItemLocation.getUnitAmount((long)cb_fromUnit.SelectedValue, MainWindow.branchLogin.branchId);
 
                 if (branchQuantity < quantity)
                 {
@@ -308,8 +308,8 @@ namespace Restaurant.View.windows
 
                         if (cb_sectionLocation.SelectedIndex != -1)
                         {
-                            var locationId = locations.Find(x => x.itemsLocId == (int)cb_sectionLocation.SelectedValue).locationId;
-                            int res = await ItemLocation.transferAmountbetweenUnits((int)locationId, (int)cb_sectionLocation.SelectedValue, (int)cb_toUnit.SelectedValue, _FromQuantity, _ToQuantity, MainWindow.userLogin.userId);
+                            var locationId = locations.Find(x => x.itemsLocId == (long)cb_sectionLocation.SelectedValue).locationId;
+                            int res = await ItemLocation.transferAmountbetweenUnits((long)locationId, (long)cb_sectionLocation.SelectedValue, (long)cb_toUnit.SelectedValue, _FromQuantity, _ToQuantity, MainWindow.userLogin.userId);
                             if (res > 0)
                             {
                                 clearConversionInputs();
@@ -320,7 +320,7 @@ namespace Restaurant.View.windows
                         }
                         else
                         {
-                            int res = await ItemLocation.unitsConversion(MainWindow.branchLogin.branchId, (int)cb_fromUnit.SelectedValue, (int)cb_toUnit.SelectedValue, _FromQuantity, _ToQuantity, MainWindow.userLogin.userId, isSmall);
+                            int res = await ItemLocation.unitsConversion(MainWindow.branchLogin.branchId, (long)cb_fromUnit.SelectedValue, (long)cb_toUnit.SelectedValue, _FromQuantity, _ToQuantity, MainWindow.userLogin.userId, isSmall);
                             if (res > 0)
                             {
                                 clearConversionInputs();
@@ -365,7 +365,7 @@ namespace Restaurant.View.windows
             {
                 if (cb_itemId.SelectedIndex != -1)
                 {
-                    units = FillCombo.itemUnitList.Where(x => x.itemId == (int)cb_itemId.SelectedValue).ToList();
+                    units = FillCombo.itemUnitList.Where(x => x.itemId == (long)cb_itemId.SelectedValue).ToList();
 
                     cb_fromUnit.ItemsSource = units;
                     cb_fromUnit.SelectedValuePath = "itemUnitId";
@@ -392,7 +392,7 @@ namespace Restaurant.View.windows
 
                 if (cb_fromUnit.SelectedIndex != -1)
                 {
-                    smallUnits = await itemUnit.getSmallItemUnits((int)cb_itemId.SelectedValue, (int)cb_fromUnit.SelectedValue);
+                    smallUnits = await itemUnit.getSmallItemUnits((long)cb_itemId.SelectedValue, (long)cb_fromUnit.SelectedValue);
 
                     string itemUnitStr = cb_fromUnit.SelectedValue.ToString();
                     locations = await ItemLocation.getSpecificItemLocation(itemUnitStr, MainWindow.branchLogin.branchId);
@@ -456,7 +456,7 @@ namespace Restaurant.View.windows
         {
             if (cb_sectionLocation.SelectedIndex != -1)
             {
-                var locationQuantity = locations.Find(x => x.itemsLocId == (int)cb_sectionLocation.SelectedValue).quantity;
+                var locationQuantity = locations.Find(x => x.itemsLocId == (long)cb_sectionLocation.SelectedValue).quantity;
                 int quantity = 0;
                 if (!tb_fromQuantity.Text.Equals(""))
                     quantity = int.Parse(tb_fromQuantity.Text);

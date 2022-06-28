@@ -223,7 +223,7 @@ namespace Restaurant.View.windows
         public string userJob;
 
         public bool isOk { get; set; }
-        public int memberShipId { get; set; }
+        public long memberShipId { get; set; }
         public decimal manualDiscount = 0;
         public string discountType = "";
         public decimal _Sum = 0;
@@ -365,7 +365,7 @@ namespace Restaurant.View.windows
                 string s = _BarcodeStr;
                 if (cb_coupon.SelectedIndex != -1)
                 {
-                    couponModel = coupons.ToList().Find(c => c.cId == (int)cb_coupon.SelectedValue);
+                    couponModel = coupons.ToList().Find(c => c.cId == (long)cb_coupon.SelectedValue);
                     if (couponModel != null)
                     {
                         s = couponModel.barcode;

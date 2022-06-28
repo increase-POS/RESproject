@@ -239,7 +239,7 @@ namespace Restaurant.View.sales.promotion
                             invoicesClass.createUserId = MainWindow.userLogin.userId;
                             invoicesClass.updateUserId= MainWindow.userLogin.userId;
 
-                            int s = await invoicesClass.save(invoicesClass);
+                            long s = await invoicesClass.save(invoicesClass);
 
                             if (s > 0)
                             {
@@ -316,7 +316,7 @@ namespace Restaurant.View.sales.promotion
                                
                                 invoicesClass.updateUserId = MainWindow.userLogin.userId;
 
-                                int s = await invoicesClass.save(invoicesClass);
+                                long s = await invoicesClass.save(invoicesClass);
 
                                 if (s > 0)
                                 {
@@ -387,7 +387,7 @@ namespace Restaurant.View.sales.promotion
                                 if (invoicesClass.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!invoicesClass.canDelete) && (invoicesClass.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await invoicesClass.delete(invoicesClass.invClassId, MainWindow.userLogin.userId, invoicesClass.canDelete);
+                                long s = await invoicesClass.delete(invoicesClass.invClassId, MainWindow.userLogin.userId, invoicesClass.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -418,7 +418,7 @@ namespace Restaurant.View.sales.promotion
         private async Task activate()
         {//activate
             invoicesClass.isActive = 1;
-            int s = await invoicesClass.save(invoicesClass);
+            long s = await invoicesClass.save(invoicesClass);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

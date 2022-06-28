@@ -204,9 +204,9 @@ namespace Restaurant.View.catalog.foods
                             item.image = "";
                             item.isActive = 1;
                             if (cb_tagId.SelectedIndex != -1)
-                                item.tagId = (int)cb_tagId.SelectedValue;
+                                item.tagId = (long)cb_tagId.SelectedValue;
                             if (cb_categoryId.SelectedIndex != -1)
-                                item.categoryId = (int)cb_categoryId.SelectedValue;
+                                item.categoryId = (long)cb_categoryId.SelectedValue;
                             item.createUserId = MainWindow.userLogin.userId;
                             item.updateUserId = MainWindow.userLogin.userId;
                             item.type = "packageItems";
@@ -235,7 +235,7 @@ namespace Restaurant.View.catalog.foods
                             saleItemUnit.taxes = 0;
                             saleItemUnit.createUserId = MainWindow.userLogin.userId;
 
-                            int res = await item.saveSaleItem(item, saleItemUnit);
+                            var res = await item.saveSaleItem(item, saleItemUnit);
                             if (res == -1)// إظهار رسالة الترقية
                                 Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
@@ -289,9 +289,9 @@ namespace Restaurant.View.catalog.foods
                             item.image = "";
                             item.isActive = 1;
                             if (cb_tagId.SelectedIndex != -1)
-                                item.tagId = (int)cb_tagId.SelectedValue;
+                                item.tagId = (long)cb_tagId.SelectedValue;
                             if (cb_categoryId.SelectedIndex != -1)
-                                item.categoryId = (int)cb_categoryId.SelectedValue;
+                                item.categoryId = (long)cb_categoryId.SelectedValue;
                             //item.createUserId = MainWindow.userLogin.userId;
                             item.updateUserId = MainWindow.userLogin.userId;
                             item.type = "packageItems";
@@ -319,7 +319,7 @@ namespace Restaurant.View.catalog.foods
                             saleItemUnit.taxes = 0;
                             saleItemUnit.updateUserId = MainWindow.userLogin.userId;
 
-                            int res = await item.saveSaleItem(item, saleItemUnit);
+                                var res = await item.saveSaleItem(item, saleItemUnit);
                             if (res == -1)// إظهار رسالة الترقية
                                 Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
@@ -400,7 +400,7 @@ namespace Restaurant.View.catalog.foods
                                 if (item.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!item.canDelete) && (item.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await item.delete(item.itemId, MainWindow.userLogin.userId, item.canDelete);
+                                var s = await item.delete(item.itemId, MainWindow.userLogin.userId, item.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -430,7 +430,7 @@ namespace Restaurant.View.catalog.foods
         private async Task activate()
         {//activate
             item.isActive = 1;
-            int s = await item.save(item);
+            var s = await item.save(item);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -494,7 +494,7 @@ namespace Restaurant.View.catalog.foods
                         var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr && c.type == "packageItems");
                         if (ob != null)
                         {
-                            long itemId = (int)ob.itemId;
+                            long itemId = (long)ob.itemId;
                             ChangeItemIdEvent(itemId);
                         }
                         else

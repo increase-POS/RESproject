@@ -206,8 +206,8 @@ namespace Restaurant.View.storage.storageOperations
                             HelpClass.SetValidate(p_error_quantity, "trErrorQuantIsZeroToolTip");
                         else if (HelpClass.validate(requiredControlList, this))
                         {
-                            int oldLocationId = (int)itemLocation.locationId;
-                            int newLocationId = (int)cb_locationId.SelectedValue;
+                            long oldLocationId = (long)itemLocation.locationId;
+                            long newLocationId = (long)cb_locationId.SelectedValue;
                             if (oldLocationId != newLocationId)
                             {
                                 int quantity = int.Parse(tb_quantity.Text);
@@ -262,7 +262,7 @@ namespace Restaurant.View.storage.storageOperations
                 {
                     if (int.TryParse(cb_sectionId.SelectedValue.ToString(), out _int))
                     {
-                        await FillCombo.FillComboLocationsBySection(cb_locationId, (int)cb_sectionId.SelectedValue);
+                        await FillCombo.FillComboLocationsBySection(cb_locationId, (long)cb_sectionId.SelectedValue);
                         cb_locationId.SelectedValue = itemLocation.locationId;
                     }
                 }

@@ -252,7 +252,7 @@ namespace Restaurant.View.setup
         {
             try
             {
-                region.countryId  = (int)cb_region.SelectedValue;
+                region.countryId  = (long)cb_region.SelectedValue;
                 countryId = region.countryId.ToString();
             cb_areaMobile.SelectedValue = region.countryId;
             }

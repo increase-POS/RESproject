@@ -201,7 +201,7 @@ namespace Restaurant.View.windows
                     agent.name = tb_name.Text;
                     agent.company = tb_company.Text;
                     if (cb_residentSecId.SelectedIndex != -1)
-                        agent.residentSecId = (int)cb_residentSecId.SelectedValue;
+                        agent.residentSecId = (long)cb_residentSecId.SelectedValue;
                     agent.address = tb_address.Text;
                     agent.GPSAddress = tb_GPSAddress.Text;
                     agent.email = tb_email.Text;
@@ -218,7 +218,7 @@ namespace Restaurant.View.windows
                     agent.notes = tb_notes.Text;
                     agent.maxDeserve = maxDeserveValue;
 
-                    int s = await agent.save(agent);
+                    var s = await agent.save(agent);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -227,7 +227,7 @@ namespace Restaurant.View.windows
                         
                         if (openFileDialog.FileName != "")
                         {
-                            int agentId = s;
+                            var agentId = s;
                             string b = await agent.uploadImage(imgFileName,
                                 Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
                             agent.image = b;
@@ -385,7 +385,7 @@ namespace Restaurant.View.windows
                     if (cb_areaPhone.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid, brd_areaPhoneLocal);
+                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (long)countryid, brd_areaPhoneLocal);
                     }
                 }
                 HelpClass.EndAwait(grid_main);
@@ -406,7 +406,7 @@ namespace Restaurant.View.windows
                     if (cb_areaFax.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaFax.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid, brd_areaFaxLocal);
+                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (long)countryid, brd_areaFaxLocal);
                     }
                 }
                 HelpClass.EndAwait(grid_main);

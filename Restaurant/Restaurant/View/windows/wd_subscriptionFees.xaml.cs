@@ -144,7 +144,7 @@ namespace Restaurant.View.windows
                         subscription.notes = "";
                         subscription.isActive = 1;
 
-                        int s = await subscription.save(subscription);
+                        long s = await subscription.save(subscription);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -200,7 +200,7 @@ namespace Restaurant.View.windows
                             subscription.notes = "";
                             subscription.isActive = 1;
 
-                            int s = await subscription.save(subscription);
+                            long s = await subscription.save(subscription);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -260,7 +260,7 @@ namespace Restaurant.View.windows
                             if (subscription.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                             if ((!subscription.canDelete) && (subscription.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                            int s = await subscription.delete(subscription.subscriptionFeesId, MainWindow.userLogin.userId, subscription.canDelete);
+                            long s = await subscription.delete(subscription.subscriptionFeesId, MainWindow.userLogin.userId, subscription.canDelete);
                             if (s < 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -286,7 +286,7 @@ namespace Restaurant.View.windows
         {//activate
 
             subscription.isActive = 1;
-            int s = await subscription.save(subscription);
+            long s = await subscription.save(subscription);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

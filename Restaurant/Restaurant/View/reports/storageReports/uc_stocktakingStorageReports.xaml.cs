@@ -103,9 +103,9 @@ namespace Restaurant.View.reports.storageReports
                 translate();
                 #endregion
 
-                inventory = await statisticModel.GetInventory((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+                inventory = await statisticModel.GetInventory((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
 
-                falls = await statisticModel.GetFallsItems((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+                falls = await statisticModel.GetFallsItems((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
 
                 fillComboArchivedTypeType();
 

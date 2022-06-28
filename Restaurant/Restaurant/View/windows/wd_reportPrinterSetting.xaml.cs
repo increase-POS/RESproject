@@ -48,12 +48,12 @@ namespace Restaurant.View.windows
         Printers kitchenprinterRow = new Printers();
         PosSetting possettingModel = new PosSetting();
 
-        int saleInvPrinterId;
-        int reportPrinterId;
-        int salepapersizeId;
-        int docpapersizeId;
-        int kitchenPrinterId;
-        int kitchenPapersizeId;
+        long saleInvPrinterId;
+        long reportPrinterId;
+        long salepapersizeId;
+        long docpapersizeId;
+        long kitchenPrinterId;
+        long kitchenPapersizeId;
 
 
         Printers printerModel = new Printers();
@@ -107,7 +107,7 @@ namespace Restaurant.View.windows
             {
 
                 defpr.printFor = "sal";
-                int saleInvPrinterId = await printerModel.Save(defpr);
+                var saleInvPrinterId = await printerModel.Save(defpr);
                 defpossetting.saleInvPrinterId = saleInvPrinterId;
                 defpossetting.salname = defpr.name;
                 defpossetting.salprintFor = "sal";
@@ -118,7 +118,7 @@ namespace Restaurant.View.windows
             {
 
                 defpr.printFor = "kitchen";
-                int kitchenPrinterId = await printerModel.Save(defpr);
+                var kitchenPrinterId = await printerModel.Save(defpr);
                 defpossetting.kitchenPrinterId = kitchenPrinterId;
                 defpossetting.kitchenPrinter = defpr.name;
                 defpossetting.kitchenprintFor = "kitchen";
@@ -128,7 +128,7 @@ namespace Restaurant.View.windows
             if (oldsetting.reportPrinterId == null)
             {
                 defpr.printFor = "doc";//"doc"
-                int reportPrinterId = await printerModel.Save(defpr);
+                var reportPrinterId = await printerModel.Save(defpr);
                 defpossetting.reportPrinterId = reportPrinterId;
                 defpossetting.repname = defpr.name;
 
@@ -174,7 +174,7 @@ namespace Restaurant.View.windows
         async Task GetposSetting()
         {
 
-            possettingModel = await possettingModel.GetByposId((int)MainWindow.posLogin.posId);
+            possettingModel = await possettingModel.GetByposId((long)MainWindow.posLogin.posId);
 
             possettingModel = await GetdefaultposSetting(possettingModel);
           //  papersizeList = await papersizeModel.GetAll();
@@ -190,16 +190,16 @@ namespace Restaurant.View.windows
             {
 
 
-                reportPrinterId = (int)possettingModel.reportPrinterId;
-                saleInvPrinterId = (int)possettingModel.saleInvPrinterId;
-                kitchenPrinterId = (int)possettingModel.kitchenPrinterId;
+                reportPrinterId = (long)possettingModel.reportPrinterId;
+                saleInvPrinterId = (long)possettingModel.saleInvPrinterId;
+                kitchenPrinterId = (long)possettingModel.kitchenPrinterId;
 
-                salepapersizeId = (int)possettingModel.saleInvPapersizeId;
-                kitchenPapersizeId = (int)possettingModel.kitchenPapersizeId;
+                salepapersizeId = (long)possettingModel.saleInvPapersizeId;
+                kitchenPapersizeId = (long)possettingModel.kitchenPapersizeId;
 
                 if (possettingModel.docPapersizeId != null && possettingModel.docPapersizeId > 0)
                 {
-                    docpapersizeId = (int)possettingModel.docPapersizeId;
+                    docpapersizeId = (long)possettingModel.docPapersizeId;
                     //   docpapersizerow = await papersizeModel.GetByID(docpapersizeId);
                 }
 
@@ -315,7 +315,7 @@ namespace Restaurant.View.windows
         {
             PosSetting posscls = new PosSetting();
             // string msg = "";
-            int msg = 0;
+            long msg = 0;
             // report printer
             string printern = (string)cb_repname.SelectedValue;
 
@@ -450,7 +450,7 @@ namespace Restaurant.View.windows
             }
 
 
-            // possettingModel.docPapersizeId = (int)cb_docpapersize.SelectedValue;
+            // possettingModel.docPapersizeId = (long)cb_docpapersize.SelectedValue;
 
             posscls.posSettingId = possettingModel.posSettingId;
             posscls.posId = possettingModel.posId;

@@ -188,7 +188,7 @@ namespace Restaurant.View.storage.storageOperations
                         storageCost.updateUserId = MainWindow.userLogin.userId;
                         storageCost.isActive = 1;
 
-                        int s = await storageCost.save(storageCost);
+                        var s = await storageCost.save(storageCost);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -227,7 +227,7 @@ namespace Restaurant.View.storage.storageOperations
                         storageCost.notes = tb_notes.Text;
                         storageCost.updateUserId = MainWindow.userLogin.userId;
 
-                        int s = await storageCost.save(storageCost);
+                            var s = await storageCost.save(storageCost);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -293,7 +293,7 @@ namespace Restaurant.View.storage.storageOperations
                                 if (storageCost.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!storageCost.canDelete) && (storageCost.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await storageCost.delete(storageCost.storageCostId, MainWindow.userLogin.userId, storageCost.canDelete);
+                                var s = await storageCost.delete(storageCost.storageCostId, MainWindow.userLogin.userId, storageCost.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -323,7 +323,7 @@ namespace Restaurant.View.storage.storageOperations
         private async Task activate()
         {//activate
             storageCost.isActive = 1;
-            int s = await storageCost.save(storageCost);
+            var s = await storageCost.save(storageCost);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

@@ -220,7 +220,7 @@ namespace Restaurant.View.sectionData.banksData
                         bank.notes = tb_notes.Text;
                         bank.isActive = 1;
 
-                        int s = await bank.save(bank);
+                            var s = await bank.save(bank);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -289,7 +289,7 @@ namespace Restaurant.View.sectionData.banksData
                         bank.updateUserId = MainWindow.userLogin.userId;
                         bank.notes = tb_notes.Text;
 
-                        int s = await bank.save(bank);
+                                var s = await bank.save(bank);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -356,7 +356,7 @@ namespace Restaurant.View.sectionData.banksData
                             if (bank.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                             if ((!bank.canDelete) && (bank.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                            int s = await bank.delete(bank.bankId, MainWindow.userLogin.userId, bank.canDelete);
+                                var s = await bank.delete(bank.bankId, MainWindow.userLogin.userId, bank.canDelete);
                             if (s < 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -385,7 +385,7 @@ namespace Restaurant.View.sectionData.banksData
         private async Task activate()
         {//activate
             bank.isActive = 1;
-            int s = await bank.save(bank);
+            var s = await bank.save(bank);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -653,7 +653,7 @@ namespace Restaurant.View.sectionData.banksData
                     if (cb_areaPhone.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid, brd_areaPhoneLocal);
+                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (long)countryid, brd_areaPhoneLocal);
                     }
                 }
                 HelpClass.EndAwait(grid_main);

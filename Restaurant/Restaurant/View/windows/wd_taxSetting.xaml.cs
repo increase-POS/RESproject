@@ -233,7 +233,7 @@ namespace Restaurant.View.windows
                     setVInvoiceBool.value = tgl_invoiceTax.IsChecked.ToString();
                     setVInvoiceBool.isSystem = 1;
                     setVInvoiceBool.settingId = setInvoiceBool.settingId;
-                    int invoiceBoolRes = await setValuesModel.Save(setVInvoiceBool);
+                    long invoiceBoolRes = await setValuesModel.Save(setVInvoiceBool);
 
                     if (setVInvoice == null)
                         setVInvoice = new SetValues();
@@ -244,7 +244,7 @@ namespace Restaurant.View.windows
                     setVInvoice.value = invTax;
                     setVInvoice.isSystem = 1;
                     setVInvoice.settingId = setInvoice.settingId;
-                    int invoiceRes = await setValuesModel.Save(setVInvoice);
+                    long invoiceRes = await setValuesModel.Save(setVInvoice);
 
                     if (setVItemBool == null)
                         setVItemBool = new SetValues();
@@ -252,7 +252,7 @@ namespace Restaurant.View.windows
                     setVItemBool.value = tgl_itemsTax.IsChecked.ToString();
                     setVItemBool.isSystem = 1;
                     setVItemBool.settingId = setItemBool.settingId;
-                    int itemBoolRes = await setValuesModel.Save(setVItemBool);
+                    long itemBoolRes = await setValuesModel.Save(setVItemBool);
 
                     if ((invoiceBoolRes > 0) && (invoiceRes > 0) && (itemBoolRes > 0))
                     {

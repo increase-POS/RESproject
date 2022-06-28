@@ -281,7 +281,7 @@ namespace Restaurant.View.windows
 
                 HelpClass.StartAwait(grid_main);
                 //  string msg = "";
-                int msg = 0;
+                long msg = 0;
                 if ((bool)tgl_printOnSavePur.IsChecked)
                 {
                     print_on_save_purrow.value = "1";

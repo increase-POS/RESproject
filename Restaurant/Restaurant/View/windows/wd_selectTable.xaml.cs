@@ -116,7 +116,7 @@ namespace Restaurant.View.windows
             {
                 isOk = true;
 
-                int tableId = (int)cb_tableId.SelectedValue;
+                long tableId = (long)cb_tableId.SelectedValue;
                 table = tables.Where(x => x.tableId == tableId).FirstOrDefault();
                 this.Close();
             }

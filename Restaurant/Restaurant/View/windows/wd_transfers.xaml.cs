@@ -90,7 +90,7 @@ namespace Restaurant.View.windows
 
         async Task fillDataGrid()
         {
-            cashesQuery = await cashModel.GetCashTransferForPosById("all", "p", (int)MainWindow.posLogin.posId); 
+            cashesQuery = await cashModel.GetCashTransferForPosById("all", "p", (long)MainWindow.posLogin.posId); 
             cashesQuery = cashesQuery.Where(c => c.posId == MainWindow.posLogin.posId && c.isConfirm == 0 );
 
             foreach (var c in cashesQuery)
@@ -194,14 +194,14 @@ namespace Restaurant.View.windows
                         {
                             Pos pos = await posModel.getById(row.posId.Value);
                             Pos pos2 = await posModel.getById(row.pos2Id.Value);
-                            int s1 = 0;
+                            long s1 = 0;
                             if (row.transType == "d")
                             {
                                 //there is enough balance
                                 if (pos.balance >= row.cash)
                                 {
                                     pos.balance -= row.cash;
-                                    int s = await posModel.save(pos);
+                                    var s = await posModel.save(pos);
 
                                     pos2.balance += row.cash;
                                     s1 = await posModel.save(pos2);
@@ -221,7 +221,7 @@ namespace Restaurant.View.windows
                                 if (pos2.balance >= row.cash)
                                 {
                                     pos2.balance -= row.cash;
-                                    int s = await posModel.save(pos2);
+                                    long s = await posModel.save(pos2);
 
                                     pos.balance += row.cash;
                                     s1 = await posModel.save(pos);
@@ -252,7 +252,7 @@ namespace Restaurant.View.windows
         private async Task confirmOpr(CashTransfer cashtrans)
         {
             cashtrans.isConfirm = 1;
-            int s = await cashModel.Save(cashtrans);
+            long s = await cashModel.Save(cashtrans);
             if (!s.Equals(0))
             {
                 await fillDataGrid();
@@ -291,8 +291,8 @@ namespace Restaurant.View.windows
                         cashtrans2.isConfirm = 2;
                         cashtrans3.isConfirm = 2;
 
-                        int s2 = await cashModel.Save(cashtrans2);
-                        int s3 = await cashModel.Save(cashtrans3);
+                        long s2 = await cashModel.Save(cashtrans2);
+                        long s3 = await cashModel.Save(cashtrans3);
 
                         if ((!s2.Equals(0)) && (!s3.Equals(0)))
                         {

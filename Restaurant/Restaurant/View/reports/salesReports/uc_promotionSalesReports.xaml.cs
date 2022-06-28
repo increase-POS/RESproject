@@ -227,7 +227,7 @@ namespace Restaurant.View.reports.salesReports
             (dt_couponEndTime.SelectedTime   != null   ? s.invDate <= dt_couponEndTime.SelectedTime : true)
             ).ToList();
             
-            couponsQuery = couponsQuery.Where(j => (selectedcouponId.Count != 0 ? selectedcouponId.Contains((int)j.CopcId) : true)).ToList();
+            couponsQuery = couponsQuery.Where(j => (selectedcouponId.Count != 0 ? selectedcouponId.Contains((long)j.CopcId) : true)).ToList();
         }
 
         async Task offerSearch()
@@ -259,7 +259,7 @@ namespace Restaurant.View.reports.salesReports
             (dt_couponEndTime.SelectedTime != null ? s.invDate <= dt_couponEndTime.SelectedTime : true)
             ).ToList();
 
-            offersQuery = offersQuery.Where(j => (selectedOfferId.Count != 0 ? selectedOfferId.Contains((int)j.OofferId) : true)).ToList();
+            offersQuery = offersQuery.Where(j => (selectedOfferId.Count != 0 ? selectedOfferId.Contains((long)j.OofferId) : true)).ToList();
         }
 
         async Task invoiceSearch()
@@ -287,22 +287,22 @@ namespace Restaurant.View.reports.salesReports
            (dt_couponEndTime.SelectedTime != null ? s.invDate <= dt_couponEndTime.SelectedTime : true)
            ).ToList();
 
-            invoicesClassesQuery = invoicesClassesQuery.Where(j => (selectedInvoiceId.Count != 0 ? selectedInvoiceId.Contains((int)j.invClassId) : true)).ToList();
+            invoicesClassesQuery = invoicesClassesQuery.Where(j => (selectedInvoiceId.Count != 0 ? selectedInvoiceId.Contains((long)j.invClassId) : true)).ToList();
         }
 
         async Task<IEnumerable<ItemTransferInvoice>> RefreshCouponsList()
         {
-            coupons = await statisticModel.GetSalecoupon((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+            coupons = await statisticModel.GetSalecoupon((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
             return coupons;
         }
         async Task<IEnumerable<ItemTransferInvoice>> RefreshOffersList()
         {
-            offers = await statisticModel.GetPromoOffer((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+            offers = await statisticModel.GetPromoOffer((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
             return offers;
         }
         async Task<IEnumerable<SalesMembership>> RefreshInvoicesList()
         {
-            invoicesClasses = await statisticModel.GetInvoiceClass((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+            invoicesClasses = await statisticModel.GetInvoiceClass((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
             return invoicesClasses;
         }
         private void translate()
@@ -467,7 +467,7 @@ namespace Restaurant.View.reports.salesReports
                 var temp = couponsQuery;
 
                 titles.Clear();
-                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((int)j.CopcId) : true)).ToList();
+                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((long)j.CopcId) : true)).ToList();
                 var titleTemp = temp.GroupBy(m => m.Copname);
                 titles.AddRange(titleTemp.Select(jj => jj.Key));
                 var result = temp.GroupBy(s => s.CopcId).Select(s => new { CopcId = s.Key, count = s.Count() });
@@ -479,7 +479,7 @@ namespace Restaurant.View.reports.salesReports
                 var temp = offersQuery;
 
                 titles.Clear();
-                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((int)j.OofferId) : true)).ToList();
+                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((long)j.OofferId) : true)).ToList();
                 var titleTemp = temp.GroupBy(m => m.Oname);
                 titles.AddRange(titleTemp.Select(jj => jj.Key));
                 var result = temp.GroupBy(s => s.OofferId).Select(s => new { OofferId = s.Key, count = s.Count() });
@@ -491,7 +491,7 @@ namespace Restaurant.View.reports.salesReports
                 var temp = invoicesClassesQuery;
 
                 titles.Clear();
-                temp = temp.Where(j => (selectedInvoiceId.Count != 0 ? stackedButton.Contains((int)j.invClassId) : true)).ToList();
+                temp = temp.Where(j => (selectedInvoiceId.Count != 0 ? stackedButton.Contains((long)j.invClassId) : true)).ToList();
                 var titleTemp = temp.GroupBy(m => m.invoicesClassName);
                 titles.AddRange(titleTemp.Select(jj => jj.Key));
                 var result = temp.GroupBy(s => s.invClassId).Select(s => new { OofferId = s.Key, count = s.Count() });
@@ -551,7 +551,7 @@ namespace Restaurant.View.reports.salesReports
             {
                 var temp = couponsQuery;
 
-                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((int)j.CopcId) : true)).ToList();
+                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((long)j.CopcId) : true)).ToList();
                 var result = temp.GroupBy(s => s.CopcId).Select(s => new
                 {
                     CopcId = s.Key,
@@ -574,7 +574,7 @@ namespace Restaurant.View.reports.salesReports
             {
                 var temp = offersQuery;
 
-                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((int)j.OofferId) : true)).ToList();
+                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((long)j.OofferId) : true)).ToList();
                 var result = temp.GroupBy(s => s.OofferId).Select(s => new
                 {
                     CopcId = s.Key,
@@ -596,7 +596,7 @@ namespace Restaurant.View.reports.salesReports
             {
                 var temp = invoicesClassesQuery;
 
-                temp = temp.Where(j => (selectedInvoiceId.Count != 0 ? stackedButton.Contains((int)j.invClassId) : true)).ToList();
+                temp = temp.Where(j => (selectedInvoiceId.Count != 0 ? stackedButton.Contains((long)j.invClassId) : true)).ToList();
                 var result = temp.GroupBy(s => s.invClassId).Select(s => new
                 {
                     CopcId = s.Key,
@@ -694,7 +694,7 @@ namespace Restaurant.View.reports.salesReports
 
                 var temp = couponsQuery;
 
-                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((int)j.CopcId) : true)).ToList();
+                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((long)j.CopcId) : true)).ToList();
                 var result = temp.GroupBy(s => new { s.CopcId }).Select(s => new
                 {
                     CopcId = s.FirstOrDefault().CopcId,
@@ -717,7 +717,7 @@ namespace Restaurant.View.reports.salesReports
 
                 var temp = offersQuery;
 
-                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((int)j.OofferId) : true)).ToList();
+                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((long)j.OofferId) : true)).ToList();
                 var result1 = temp.GroupBy(s => new { s.OofferId, s.ITitemUnitId }).Select(s => new
                 {
                     offerId = s.FirstOrDefault().OofferId,
@@ -742,7 +742,7 @@ namespace Restaurant.View.reports.salesReports
 
                 var temp = invoicesClassesQuery;
 
-                temp = temp.Where(j => (selectedInvoiceId.Count != 0 ? stackedButton.Contains((int)j.invClassId) : true)).ToList();
+                temp = temp.Where(j => (selectedInvoiceId.Count != 0 ? stackedButton.Contains((long)j.invClassId) : true)).ToList();
                 var result1 = temp.GroupBy(s => new { s.invClassId}).Select(s => new
                 {
                     invClassId = s.FirstOrDefault().invClassId,
@@ -1088,7 +1088,7 @@ namespace Restaurant.View.reports.salesReports
                         stk_tagsCoupons.Visibility = Visibility.Visible;
                         if (stk_tagsCoupons.Children.Count < 5)
                         {
-                            int cId = (int)cb_Coupons.SelectedValue;
+                            long cId = (long)cb_Coupons.SelectedValue;
 
                             selectedCoupon = await couponModel.getById(cId);
                             var c = new MaterialDesignThemes.Wpf.Chip()
@@ -1110,7 +1110,7 @@ namespace Restaurant.View.reports.salesReports
                         stk_tagsOffers.Visibility = Visibility.Visible;
                         if (stk_tagsOffers.Children.Count < 5)
                         {
-                            int oId = (int)cb_Coupons.SelectedValue;
+                            long oId = (long)cb_Coupons.SelectedValue;
 
                             selectedOffer = await offerModel.getOfferById(oId);
                             var o = new MaterialDesignThemes.Wpf.Chip()
@@ -1132,7 +1132,7 @@ namespace Restaurant.View.reports.salesReports
                         stk_tagsInvoices.Visibility = Visibility.Visible;
                         if (stk_tagsInvoices.Children.Count < 5)
                         {
-                            int iId = (int)cb_Coupons.SelectedValue;
+                            long iId = (long)cb_Coupons.SelectedValue;
 
                             selectedInvoice = await invoiceModel.GetById(iId);
                             try

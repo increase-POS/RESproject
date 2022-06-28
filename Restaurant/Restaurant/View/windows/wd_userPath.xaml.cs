@@ -449,7 +449,7 @@ namespace Restaurant.View.windows
         //    try
         //    {
         //        ComboBox combo = sender as ComboBox;
-        //        secondLevel = objects.Where(x => x.parentObjectId == (int)cb_firstLevel.SelectedValue);
+        //        secondLevel = objects.Where(x => x.parentObjectId == (long)cb_firstLevel.SelectedValue);
 
         //        if (secondLevel.Count() > 0)
         //        {
@@ -466,7 +466,7 @@ namespace Restaurant.View.windows
         //                newrow.parentObjectId = row.parentObjectId;
         //                newlist2.Add(newrow);
         //            }
-        //            //secondLevel = objects.Where(x => x.parentObjectId == (int)cb_firstLevel.SelectedValue);
+        //            //secondLevel = objects.Where(x => x.parentObjectId == (long)cb_firstLevel.SelectedValue);
         //            cb_secondLevel.DisplayMemberPath = "name";
         //            cb_secondLevel.SelectedValuePath = "objectId";
         //            //cb_secondLevel.ItemsSource = secondLevel;
@@ -570,8 +570,8 @@ namespace Restaurant.View.windows
                 #region save
                 //if ((!cb_firstLevel.Text.Equals("")) && (!cb_firstLevel.Text.Equals("")))
                 //{
-                    //string first = objects.Where(x => x.objectId == (int)cb_firstLevel.SelectedValue).FirstOrDefault().name.ToString();
-                    //string second = objects.Where(x => x.objectId == (int)cb_secondLevel.SelectedValue).FirstOrDefault().name.ToString();
+                    //string first = objects.Where(x => x.objectId == (long)cb_firstLevel.SelectedValue).FirstOrDefault().name.ToString();
+                    //string second = objects.Where(x => x.objectId == (long)cb_secondLevel.SelectedValue).FirstOrDefault().name.ToString();
                
                     //save first path
                     if(defaulPathUserSetValue == null)
@@ -584,7 +584,7 @@ namespace Restaurant.View.windows
                     defaulPathUserSetValue.notes = _parentObjectName;
                     defaulPathUserSetValue.createUserId = MainWindow.userLogin.userId;
                     defaulPathUserSetValue.updateUserId = MainWindow.userLogin.userId;
-                    int res1 = await userSetValuesModel.Save(defaulPathUserSetValue);
+                var res1 = await userSetValuesModel.Save(defaulPathUserSetValue);
 
                     ////save second path
                     //if(secondUserSetValue == null)
@@ -631,7 +631,7 @@ namespace Restaurant.View.windows
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            //+ $"Second: {objects.Where(x => x.objectId == (int)cb_secondLevel.SelectedValue).FirstOrDefault().name}");
+            //+ $"Second: {objects.Where(x => x.objectId == (long)cb_secondLevel.SelectedValue).FirstOrDefault().name}");
         }
 
     }

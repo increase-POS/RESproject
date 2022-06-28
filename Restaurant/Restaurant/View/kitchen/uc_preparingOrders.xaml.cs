@@ -824,7 +824,7 @@ namespace Restaurant.View.kitchen
 
             #region seacrch in catalog
             if (cb_searchCatalog.SelectedIndex > 0)
-                ordersQuery = ordersQuery.Where(c => c.items.Where(p => p.categoryId == (int)cb_searchCatalog.SelectedValue).Any()).ToList();
+                ordersQuery = ordersQuery.Where(c => c.items.Where(p => p.categoryId == (long)cb_searchCatalog.SelectedValue).Any()).ToList();
             #endregion 
             #region seacrch status
             //if (cb_searchStatus.SelectedIndex >0)

@@ -181,7 +181,7 @@ namespace Restaurant.View.accounts
         List<Button> cardBtnList = new List<Button>();
         List<Ellipse> cardEllipseList = new List<Ellipse>();
         bool hasProcessNum = false;
-        static private int _SelectedCard = -1;
+        static private long _SelectedCard = -1;
 
         void InitializeCardsPic(IEnumerable<Card> cards)
         {
@@ -235,7 +235,7 @@ namespace Restaurant.View.accounts
         {
             HelpClass.clearValidate(requiredControlList, this);
             var button = sender as Button;
-            _SelectedCard = int.Parse(button.Tag.ToString());
+            _SelectedCard = long.Parse(button.Tag.ToString());
 
             Card card = button.DataContext as Card;
 
@@ -264,7 +264,7 @@ namespace Restaurant.View.accounts
             //set border color
             foreach (var el in cardEllipseList)
             {
-                if ((int)el.Tag == (int)button.Tag)
+                if ((long)el.Tag == (long)button.Tag)
                     el.Stroke = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 else
                     el.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
@@ -547,8 +547,8 @@ namespace Restaurant.View.accounts
             {
                 HelpClass.StartAwait(grid_main);
                 //  string s = "0", s1 = "";
-                int s = 0;
-                int s1 = 0;
+                long s = 0;
+                long s1 = 0;
                 if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     if (MainWindow.posLogin.boxState == "o") // box is open
@@ -558,7 +558,7 @@ namespace Restaurant.View.accounts
                         if (HelpClass.validate(requiredControlList, this))
                         {
                             string depositor = cb_depositFrom.SelectedValue.ToString();
-                            int agentid = 0;
+                            long agentid = 0;
 
                             CashTransfer cash = new CashTransfer();
 
@@ -671,13 +671,13 @@ namespace Restaurant.View.accounts
             }
         }
 
-        private async Task calcBalance(decimal ammount, string depositor, int agentid)
+        private async Task calcBalance(decimal ammount, string depositor, long agentid)
         {
-            int s = 0;
+            //int s = 0;
             //increase pos balance
             Pos pos = await posModel.getById(MainWindow.posLogin.posId);
             pos.balance += ammount;
-            s = await pos.save(pos);
+            var s = await pos.save(pos);
         }
 
         private async Task calcUserBalance(decimal value, long userId)
@@ -970,7 +970,7 @@ namespace Restaurant.View.accounts
                         {
                             if (cashtrans.cardId != null)
                             {
-                                Button btn = cardBtnList.Where(c => (int)c.Tag == cashtrans.cardId.Value).FirstOrDefault();
+                                Button btn = cardBtnList.Where(c => (long)c.Tag == cashtrans.cardId.Value).FirstOrDefault();
                                 card_Click(btn, null);
                             }
                         }

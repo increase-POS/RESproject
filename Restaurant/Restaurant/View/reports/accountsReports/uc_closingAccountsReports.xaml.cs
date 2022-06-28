@@ -626,7 +626,7 @@ namespace Restaurant.View.reports.accountsReports
 
             Statistics statisticsModel = new Statistics();
 
-            opquery = await statisticsModel.GetTransBetweenOpenClose((int)ocrow.openCashTransId, ocrow.cashTransId);
+            opquery = await statisticsModel.GetTransBetweenOpenClose((long)ocrow.openCashTransId, ocrow.cashTransId);
             opquery = opquery.Where(c => c.transType != "c" && c.transType != "o");
 
             openclosrow = ocrow;

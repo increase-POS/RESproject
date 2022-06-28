@@ -239,7 +239,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                             branch.isActive = 1;
                             branch.parentId = Convert.ToInt32(cb_parentId.SelectedValue);
 
-                            int s = await branch.save(branch);
+                            var s = await branch.save(branch);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -306,7 +306,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                                 branch.updateUserId = MainWindow.userLogin.userId;
                                 branch.parentId = Convert.ToInt32(cb_parentId.SelectedValue);
 
-                                int s = await branch.save(branch);
+                                var s = await branch.save(branch);
                                 if (s <= 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -373,7 +373,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                                     if (branch.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                     if ((!branch.canDelete) && (branch.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                    int s = await branch.delete(branch.branchId, MainWindow.userLogin.userId, branch.canDelete);
+                                var s = await branch.delete(branch.branchId, MainWindow.userLogin.userId, branch.canDelete);
                                     if (s < 0)
                                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                     else
@@ -403,7 +403,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
             private async Task activate()
             {//activate
                 branch.isActive = 1;
-                int s = await branch.save(branch);
+            var s = await branch.save(branch);
                 if (s <= 0)
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                 else
@@ -673,7 +673,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                         if (cb_areaPhone.SelectedIndex >= 0)
                         {
                             countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-                            await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid, brd_areaPhoneLocal);
+                            await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (long)countryid, brd_areaPhoneLocal);
                         }
                     }
                     HelpClass.EndAwait(grid_main);

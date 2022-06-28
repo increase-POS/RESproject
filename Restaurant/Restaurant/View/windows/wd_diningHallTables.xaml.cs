@@ -261,7 +261,7 @@ namespace Restaurant.View.windows
         }
         #endregion
         #region Refresh & Search
-        int sectionId = 0;
+        long sectionId = 0;
          void Search()
         {
             tablesQuery = tablesList;
@@ -272,7 +272,7 @@ namespace Restaurant.View.windows
             #region section search
             if (cb_searchSection.SelectedIndex > 0)
             {
-                sectionId = (int)cb_searchSection.SelectedValue;
+                sectionId = (long)cb_searchSection.SelectedValue;
                 tablesQuery = tablesQuery.Where(s => s.sectionId == sectionId).ToList();
             }
             else
@@ -751,7 +751,7 @@ namespace Restaurant.View.windows
                         #endregion
                         if (w.isOk)
                         {
-                            int res = await reservation.updateReservationStatus(reservation.reservationId, "confirm", MainWindow.userLogin.userId);
+                        var res = await reservation.updateReservationStatus(reservation.reservationId, "confirm", MainWindow.userLogin.userId);
                             if (res > 0)
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("popConfirmed"), animation: ToasterAnimation.FadeIn);
@@ -799,7 +799,7 @@ namespace Restaurant.View.windows
                         #endregion
                         if (w.isOk)
                         {
-                            int res = await reservation.updateReservationStatus(reservation.reservationId, "cancle", MainWindow.userLogin.userId);
+                        var res = await reservation.updateReservationStatus(reservation.reservationId, "cancle", MainWindow.userLogin.userId);
                             if (res > 0)
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("popCanceled"), animation: ToasterAnimation.FadeIn);
@@ -1044,7 +1044,7 @@ namespace Restaurant.View.windows
                     #endregion
                     if (w.isOk)
                     {
-                        int res = await reservation.updateReservationStatus(nextReservation.reservationId, "confirm", MainWindow.userLogin.userId);
+                    var res = await reservation.updateReservationStatus(nextReservation.reservationId, "confirm", MainWindow.userLogin.userId);
                         if (res > 0)
                         {
                             res = await openInvoiceForReserve(nextReservation);
@@ -1088,7 +1088,7 @@ namespace Restaurant.View.windows
                     #endregion
                     if (w.isOk)
                     {
-                        int res = await reservation.updateReservationStatus(nextReservation.reservationId, "cancle", MainWindow.userLogin.userId);
+                    var res = await reservation.updateReservationStatus(nextReservation.reservationId, "cancle", MainWindow.userLogin.userId);
                         if (res > 0)
                         {
                             res = await openEmptyInvoice();
@@ -1121,7 +1121,7 @@ namespace Restaurant.View.windows
 
         #endregion
         #region open
-        private async Task<int> openEmptyInvoice()
+        private async Task<long> openEmptyInvoice()
         {
             #region invoice object
             invoice = new Invoice();
@@ -1144,11 +1144,11 @@ namespace Restaurant.View.windows
             invTables.Add(table);
             selectedTables = invTables;
             #endregion
-            int res = await FillCombo.invoice.saveInvoiceWithTables(invoice, invTables);
+            var res = await FillCombo.invoice.saveInvoiceWithTables(invoice, invTables);
             invoice.invoiceId = res;
             return res;
         }
-        private async Task<int> openInvoiceForReserve(TablesReservation reserv)
+        private async Task<long> openInvoiceForReserve(TablesReservation reserv)
         {
             #region invoice object
             invoice = new Invoice();
@@ -1173,7 +1173,7 @@ namespace Restaurant.View.windows
             invTables.AddRange(reserv.tables);
             selectedTables = invTables;
             #endregion
-            int res = await FillCombo.invoice.saveInvoiceWithTables(invoice, invTables);
+            var res = await FillCombo.invoice.saveInvoiceWithTables(invoice, invTables);
             invoice.invoiceId = res;
             return res;
         }
@@ -1184,7 +1184,7 @@ namespace Restaurant.View.windows
                 //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "open"))
                 //{
                     HelpClass.StartAwait(grid_main);
-                    int res = await openEmptyInvoice();
+                var res = await openEmptyInvoice();
                     if (res > 0)
                     {
                         //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);

@@ -259,7 +259,7 @@ namespace Restaurant.View.sales.reservations
                             reservation.branchId = MainWindow.branchLogin.branchId;
                             //reserve.code = await reserve.generateReserveCode("tr", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                             if (cb_customerId.SelectedIndex > 0)
-                                reservation.customerId = (int)cb_customerId.SelectedValue;
+                                reservation.customerId = (long)cb_customerId.SelectedValue;
                             reservation.reservationDate = dp_reservationDate.SelectedDate;
 
                             #region reservation time period                      
@@ -398,7 +398,7 @@ namespace Restaurant.View.sales.reservations
                         bool valid = await validateTablesBeforeConfirm();
                         if (valid)
                         {
-                            int res = await reservation.updateReservationStatus(reservation.reservationId, "confirm", MainWindow.userLogin.userId);
+                            var res = await reservation.updateReservationStatus(reservation.reservationId, "confirm", MainWindow.userLogin.userId);
                             if (res > 0)
                             {
                                 await openInvoiceForReserve();
@@ -423,7 +423,7 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async Task<int> openInvoiceForReserve()
+        private async Task<long> openInvoiceForReserve()
         {
             #region invoice object
             FillCombo.invoice = new Invoice();
@@ -438,7 +438,7 @@ namespace Restaurant.View.sales.reservations
             FillCombo.invoice.createUserId = MainWindow.userLogin.userId;
             #endregion
 
-            int res = await FillCombo.invoice.saveInvoiceWithTables(FillCombo.invoice, reservation.tables);
+            var res = await FillCombo.invoice.saveInvoiceWithTables(FillCombo.invoice, reservation.tables);
             return res;
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
@@ -457,7 +457,7 @@ namespace Restaurant.View.sales.reservations
                     #endregion
                     if (w.isOk)
                     {
-                        int res = await reservation.updateReservationStatus(reservation.reservationId, "cancle", MainWindow.userLogin.userId);
+                        var res = await reservation.updateReservationStatus(reservation.reservationId, "cancle", MainWindow.userLogin.userId);
                         if (res > 0)
                         {
                             reservation.reservationId = 0;
@@ -576,7 +576,7 @@ namespace Restaurant.View.sales.reservations
                     reservation = new TablesReservation();
                     reservation = dg_reservation.SelectedItem as TablesReservation;
                     this.DataContext = reservation;
-                    //_PersonsCount = (int)reservation.personsCount;
+                    //_PersonsCount = (long)reservation.personsCount;
                     _PersonsCount = 0;
                    // tb_personsCount.Text = _PersonsCount.ToString();
                     if (reservation.tables.Count != 0)
@@ -1005,7 +1005,7 @@ namespace Restaurant.View.sales.reservations
                 string s = _BarcodeStr;
                 if (cb_coupon.SelectedIndex != -1)
                 {
-                    couponModel = coupons.ToList().Find(c => c.cId == (int)cb_coupon.SelectedValue);
+                    couponModel = coupons.ToList().Find(c => c.cId == (long)cb_coupon.SelectedValue);
                     if (couponModel != null)
                     {
                         s = couponModel.barcode;
@@ -1064,7 +1064,7 @@ namespace Restaurant.View.sales.reservations
 
                     if (w.isOk)
                     {
-                        int res = await reservation.updateReservationStatus(reservation.reservationId, "cancle", MainWindow.userLogin.userId);
+                        var res = await reservation.updateReservationStatus(reservation.reservationId, "cancle", MainWindow.userLogin.userId);
                         if (res > 0)
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);

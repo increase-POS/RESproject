@@ -91,7 +91,7 @@ namespace Restaurant.View.windows
         {
             await MainWindow.refreshBalance();
             //cashes = await cashModel.GetCashTransfer("d", "p");
-            cashes = await cashModel.GetCashTransferForPosById("all", "p",(int)MainWindow.posLogin.posId);
+            cashes = await cashModel.GetCashTransferForPosById("all", "p",(long)MainWindow.posLogin.posId);
             cashesQuery = cashes.Where(s => s.isConfirm == 1 
                                                 && s.posId == MainWindow.posLogin.posId
                                                 && s.isConfirm2 == 0).ToList();
@@ -316,12 +316,12 @@ namespace Restaurant.View.windows
             cashTransfer.transType = status;
             cashTransfer.cash = MainWindow.posLogin.balance;
             cashTransfer.createUserId = MainWindow.userLogin.userId;
-            cashTransfer.posId = (int)MainWindow.posLogin.posId;
+            cashTransfer.posId = (long)MainWindow.posLogin.posId;
             if (status == "o")
                 cashTransfer.transNum = await cashTransfer.generateCashNumber("bc");
             else
-                cashTransfer.transNum = await cashTransfer.getLastOpenTransNum((int)MainWindow.posLogin.posId);
-            int res = await posModel.updateBoxState((int)MainWindow.posLogin.posId, status,Convert.ToInt32(isAdmin),MainWindow.userLogin.userId,cashTransfer);
+                cashTransfer.transNum = await cashTransfer.getLastOpenTransNum((long)MainWindow.posLogin.posId);
+            int res = await posModel.updateBoxState((long)MainWindow.posLogin.posId, status,Convert.ToInt32(isAdmin),MainWindow.userLogin.userId,cashTransfer);
             if (res > 0)
             {
                 await MainWindow.refreshBalance();
@@ -344,7 +344,7 @@ namespace Restaurant.View.windows
             cash1.side = "p";//pos
             cash1.posId = Convert.ToInt32(MainWindow.posLogin.posId);
 
-            int s1 = await cash1.Save(cash1);
+            var s1 = await cash1.Save(cash1);
 
             if (!s1.Equals(0))
             {
@@ -361,7 +361,7 @@ namespace Restaurant.View.windows
                 cash2.posId = Convert.ToInt32(cb_pos.SelectedValue);
                 cash2.cashTransIdSource = s1;//id from first operation
 
-                int s2 = await cash2.Save(cash2);
+                var s2 = await cash2.Save(cash2);
                 if(s2 > 0)
                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                 else

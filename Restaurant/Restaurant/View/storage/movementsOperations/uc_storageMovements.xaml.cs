@@ -83,7 +83,7 @@ namespace Restaurant.View.storage.movementsOperations
         DateTime _lastKeystroke = new DateTime(0);
         static private string _BarcodeStr = "";
         static private string _SelectedProcess = "";
-        static private int _SelectedBranch = -1;
+        static private long _SelectedBranch = -1;
         bool _IsFocused = false;
         public static List<string> requiredControlList;
         #endregion
@@ -630,7 +630,7 @@ namespace Restaurant.View.storage.movementsOperations
                 // get item matches the barcode
                 if (unit1 != null)
                 {
-                    long itemId = (int)unit1.itemId;
+                    long itemId = (long)unit1.itemId;
                     if (unit1.itemId != 0)
                     {
                         int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId).FirstOrDefault());
@@ -730,7 +730,7 @@ namespace Restaurant.View.storage.movementsOperations
                             createUserId = MainWindow.userLogin.userId,
                             updateUserId = MainWindow.userLogin.userId,
                         };
-                        await not.save(not, (int)cb_branch.SelectedValue, "storageAlerts_ImpExp", MainWindow.branchLogin.name);
+                        await not.save(not, (long)cb_branch.SelectedValue, "storageAlerts_ImpExp", MainWindow.branchLogin.name);
                         #endregion
                         // expot order
                         if (invoice.invoiceId == 0) // create new export order
@@ -739,7 +739,7 @@ namespace Restaurant.View.storage.movementsOperations
                             invoice.invType = "exw";
                             invoice.invoiceMainId = invoiceId;
                             if (cb_branch.SelectedIndex != -1)
-                                invoice.branchId = (int)cb_branch.SelectedValue;
+                                invoice.branchId = (long)cb_branch.SelectedValue;
                             invoice.invNumber = await invoice.generateInvNumber("ex", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                             invoice.createUserId = MainWindow.userLogin.userId;
                         }
@@ -748,10 +748,10 @@ namespace Restaurant.View.storage.movementsOperations
                             invoice = await invoice.getgeneratedInvoice(invoiceId);
                             invoice.invType = "exw";
                             if (cb_branch.SelectedIndex != -1)
-                                invoice.branchId = (int)cb_branch.SelectedValue;
+                                invoice.branchId = (long)cb_branch.SelectedValue;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int exportId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
+                        var exportId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                         // add order details                      
                         //await invoice.saveInvoiceItems(invoiceItems, invoiceId);
@@ -783,7 +783,7 @@ namespace Restaurant.View.storage.movementsOperations
                             invoice.invType = "im";
                             invoice.invoiceMainId = invoiceId;
                             if (cb_branch.SelectedIndex != -1)
-                                invoice.branchId = (int)cb_branch.SelectedValue;
+                                invoice.branchId = (long)cb_branch.SelectedValue;
                             invoice.invNumber = await invoice.generateInvNumber("im", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                             invoice.createUserId = MainWindow.userLogin.userId;
                         }
@@ -792,10 +792,10 @@ namespace Restaurant.View.storage.movementsOperations
                             invoice = await invoice.getgeneratedInvoice(invoiceId);
                             invoice.invType = "im";
                             if (cb_branch.SelectedIndex != -1)
-                                invoice.branchId = (int)cb_branch.SelectedValue;
+                                invoice.branchId = (long)cb_branch.SelectedValue;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int importId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
+                        var importId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                         // add order details
                         // await invoice.saveInvoiceItems(invoiceItems, invoiceId);
@@ -924,7 +924,7 @@ namespace Restaurant.View.storage.movementsOperations
                                                     updateUserId = MainWindow.userLogin.userId,
                                                 };
                                                 #endregion
-                                                await FillCombo.itemLocation.recieptOrder(readyItemsLoc, orderList, (int)cb_branch.SelectedValue, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
+                                                await FillCombo.itemLocation.recieptOrder(readyItemsLoc, orderList, (long)cb_branch.SelectedValue, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
                                                 await save();
                                             }
                                         }
@@ -987,7 +987,7 @@ namespace Restaurant.View.storage.movementsOperations
                             invoice.invType = "exi";
                             invoice.invoiceMainId = invoiceId;
                             if (cb_branch.SelectedIndex != -1)
-                                invoice.branchId = (int)cb_branch.SelectedValue;
+                                invoice.branchId = (long)cb_branch.SelectedValue;
                             else
                                 invoice.branchId = MainWindow.branchLogin.branchId;
                             invoice.invNumber = await invoice.generateInvNumber("ex", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
@@ -997,12 +997,12 @@ namespace Restaurant.View.storage.movementsOperations
                         {
                             invoice = await invoice.getgeneratedInvoice(invoiceId);
                             if (cb_branch.SelectedIndex != -1)
-                                invoice.branchId = (int)cb_branch.SelectedValue;
+                                invoice.branchId = (long)cb_branch.SelectedValue;
                             else
                                 invoice.branchId = MainWindow.branchLogin.branchId;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int exportId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
+                        var exportId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                         // add order details                      
                         //await invoice.saveInvoiceItems(invoiceItems, invoiceId);
@@ -1033,7 +1033,7 @@ namespace Restaurant.View.storage.movementsOperations
                             invoice.invType = "imi";
                             invoice.invoiceMainId = invoiceId;
                             if (cb_branch.SelectedIndex != -1)
-                                invoice.branchId = (int)cb_branch.SelectedValue;
+                                invoice.branchId = (long)cb_branch.SelectedValue;
                             invoice.invNumber = await invoice.generateInvNumber("im", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                             invoice.createUserId = MainWindow.userLogin.userId;
                         }
@@ -1041,10 +1041,10 @@ namespace Restaurant.View.storage.movementsOperations
                         {
                             invoice = await invoice.getgeneratedInvoice(invoiceId);
                             if (cb_branch.SelectedIndex != -1)
-                                invoice.branchId = (int)cb_branch.SelectedValue;
+                                invoice.branchId = (long)cb_branch.SelectedValue;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int importId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
+                        var importId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                         // add order details
                         //await invoice.saveInvoiceItems(invoiceItems, invoiceId);
@@ -1067,10 +1067,10 @@ namespace Restaurant.View.storage.movementsOperations
             var smallUnits = await FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
             foreach (ItemUnit u in itemUnits)
             {
-                var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (int)u.itemUnitId && x.ID != ID); // unit exist in invoice
+                var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (long)u.itemUnitId && x.ID != ID); // unit exist in invoice
                 if (isInBill != null)
                 {
-                    var isSmall = smallUnits.Find(x => x.itemUnitId == (int)u.itemUnitId);
+                    var isSmall = smallUnits.Find(x => x.itemUnitId == (long)u.itemUnitId);
                     int unitValue = 0;
 
                     int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == u.itemUnitId).FirstOrDefault());
@@ -1174,7 +1174,7 @@ namespace Restaurant.View.storage.movementsOperations
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds > 100 && cb_branch.SelectedIndex != -1)
                 {
-                    _SelectedBranch = (int)cb_branch.SelectedValue;
+                    _SelectedBranch = (long)cb_branch.SelectedValue;
                 }
                 else
                 {
@@ -1271,7 +1271,7 @@ namespace Restaurant.View.storage.movementsOperations
                 //{
                 //    Agent agentinv = new Agent();
                 //    //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-                //    agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                //    agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                 //    prInvoice.agentCode = agentinv.code;
                 //    //new lines
                 //    prInvoice.agentName = agentinv.name;
@@ -1286,7 +1286,7 @@ namespace Restaurant.View.storage.movementsOperations
                 //    prInvoice.agentCompany = "-";
                 //}
                 User employ = new User();
-                employ = await employ.getUserById((int)prInvoice.updateUserId);
+                employ = await employ.getUserById((long)prInvoice.updateUserId);
                 prInvoice.uuserName = employ.name;
                 prInvoice.uuserLast = employ.lastname;
 
@@ -1298,7 +1298,7 @@ namespace Restaurant.View.storage.movementsOperations
                 //
                 //if (prInvoice.invoiceMainId == null)
                 //{
-                //    branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                //    branch = await branchModel.getBranchById((long)prInvoice.branchCreatorId);
                 //    prInvoice.branchCreatorName = branch.name;
                 //}
                 //branch creator
@@ -1308,14 +1308,14 @@ namespace Restaurant.View.storage.movementsOperations
                     if (prInvoice.branchId > 0)
                     {
                         //FROM
-                        branchfrom = await branchModel.getBranchById((int)prInvoice.branchId);
+                        branchfrom = await branchModel.getBranchById((long)prInvoice.branchId);
                         prInvoice.branchCreatorName = branchfrom.name;
                         //TO
                         Invoice secondinv = new Invoice();
                         secondinv = await invoice.getgeneratedInvoice(prInvoice.invoiceId);
                         if (secondinv.branchId != null)
                         {
-                            branchto = await branchModel.getBranchById((int)secondinv.branchId);
+                            branchto = await branchModel.getBranchById((long)secondinv.branchId);
                             prInvoice.branchName = branchto.name;
                         }
                         else
@@ -1335,14 +1335,14 @@ namespace Restaurant.View.storage.movementsOperations
                     if (prInvoice.branchId > 0)
                     {
                         //TO
-                        branchto = await branchModel.getBranchById((int)prInvoice.branchId);
+                        branchto = await branchModel.getBranchById((long)prInvoice.branchId);
                         prInvoice.branchName = branchto.name;
                         //FROM
                         Invoice secondinv = new Invoice();
-                        secondinv = await invoice.GetByInvoiceId((int)prInvoice.invoiceMainId); ;
+                        secondinv = await invoice.GetByInvoiceId((long)prInvoice.invoiceMainId); ;
                         if (secondinv.branchId != null)
                         {
-                            branchfrom = await branchModel.getBranchById((int)secondinv.branchId);
+                            branchfrom = await branchModel.getBranchById((long)secondinv.branchId);
                             prInvoice.branchCreatorName = branchfrom.name;
                         }
                         else
@@ -1594,11 +1594,11 @@ namespace Restaurant.View.storage.movementsOperations
                 {
                     ID = _SequenceNum,
                     Product = itemT.itemName,
-                    itemId = (int)itemT.itemId,
+                    itemId = (long)itemT.itemId,
                     Unit = itemT.itemUnitId.ToString(),
-                    itemUnitId = (int)itemT.itemUnitId,
+                    itemUnitId = (long)itemT.itemUnitId,
                     Count = (int)itemT.quantity,
-                    OrderId = (int)itemT.invoiceId,
+                    OrderId = (long)itemT.invoiceId,
                     Price = decimal.Parse(HelpClass.DecTostring((decimal)itemT.price)),
                     Total = total,
                 });
@@ -2061,7 +2061,7 @@ namespace Restaurant.View.storage.movementsOperations
                                 var cp = (ContentPresenter)cell.Content;
                                 var combo = (ComboBox)cp.ContentTemplate.FindName("cbm_unitItemDetails", cp);
                                 //var combo = (combo)cell.Content;
-                                combo.SelectedValue = (int)item.itemUnitId;
+                                combo.SelectedValue = (long)item.itemUnitId;
                                 #region disable & enable unit comboBox
                                 if (_ProcessType == "ex" || _ProcessType == "im" || _ProcessType == "exw" || _ProcessType == "imw")
                                     combo.IsEnabled = false;
@@ -2092,7 +2092,7 @@ namespace Restaurant.View.storage.movementsOperations
                 var cmb = sender as ComboBox;
 
                 if (dg_billDetails.SelectedIndex != -1 && cmb != null)
-                    billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
+                    billDetails[dg_billDetails.SelectedIndex].itemUnitId = (long)cmb.SelectedValue;
             }
             catch (Exception ex)
             {
@@ -2108,7 +2108,7 @@ namespace Restaurant.View.storage.movementsOperations
                 if (billDetails.Count == 1)
                 {
                     var cmb = sender as ComboBox;
-                    cmb.SelectedValue = (int)billDetails[0].itemUnitId;
+                    cmb.SelectedValue = (long)billDetails[0].itemUnitId;
 
                     #region disable & enable unit comboBox
                     if (_ProcessType == "ex" || _ProcessType == "im" || _ProcessType == "exw" || _ProcessType == "imw")
@@ -2235,7 +2235,7 @@ namespace Restaurant.View.storage.movementsOperations
             if (invoice.invoiceMainId == null)
                 generatedInvoice = await invoice.getgeneratedInvoice(invoice.invoiceId);
             else
-                generatedInvoice = await invoice.GetByInvoiceId((int)invoice.invoiceMainId);
+                generatedInvoice = await invoice.GetByInvoiceId((long)invoice.invoiceMainId);
             _Count = invoice.itemsCount;
             tb_count.Text = _Count.ToString();
 
@@ -2272,16 +2272,16 @@ namespace Restaurant.View.storage.movementsOperations
             {
                 _SequenceNum++;
                 decimal total = (decimal)(itemT.price * itemT.quantity);
-                int orderId = 0;
+                long orderId = 0;
                 if (itemT.invoiceId != null)
-                    orderId = (int)itemT.invoiceId;
+                    orderId = (long)itemT.invoiceId;
                 billDetails.Add(new BillDetailsPurchase()
                 {
                     ID = _SequenceNum,
                     Product = itemT.itemName,
-                    itemId = (int)itemT.itemId,
+                    itemId = (long)itemT.itemId,
                     Unit = itemT.itemUnitId.ToString(),
-                    itemUnitId = (int)itemT.itemUnitId,
+                    itemUnitId = (long)itemT.itemUnitId,
                     Count = (int)itemT.quantity,
                     Price = (decimal)itemT.price,
                     Total = total,

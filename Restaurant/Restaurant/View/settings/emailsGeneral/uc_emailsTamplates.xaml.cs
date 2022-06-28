@@ -153,7 +153,7 @@ namespace Restaurant.View.settings.emailsGeneral
                         //write here Mr.Naji
 
                         /////
-                        int msg = 0;
+                        long msg = 0;
                         setValues = setValuessQuery.Where(x => x.notes == "title").FirstOrDefault();
                         setValues.value = tb_title.Text;
                         msg += await setValuesModel.SaveValueByNotes(setValues);

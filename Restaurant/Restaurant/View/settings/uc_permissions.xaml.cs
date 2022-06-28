@@ -216,7 +216,7 @@ namespace Restaurant.View.settings
                             group.notes = tb_notes.Text;
                             group.isActive = 1;
 
-                            int s = await group.Save(group);
+                            var s = await group.Save(group);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -276,7 +276,7 @@ namespace Restaurant.View.settings
                             group.updateUserId = MainWindow.userLogin.userId;
                             group.notes = tb_notes.Text;
 
-                            int s = await group.Save(group);
+                                var s = await group.Save(group);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -344,7 +344,7 @@ namespace Restaurant.View.settings
                                 if (group.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!group.canDelete) && (group.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await group.Delete(group.groupId, MainWindow.userLogin.userId, group.canDelete);
+                                var s = await group.Delete(group.groupId, MainWindow.userLogin.userId, group.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -373,7 +373,7 @@ namespace Restaurant.View.settings
         private async Task activate()
         {//activate
             group.isActive = 1;
-            int s = await group.Save(group);
+            var s = await group.Save(group);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -978,7 +978,7 @@ namespace Restaurant.View.settings
                     HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") )
                 {
-                    int s = 0;
+                    long s = 0;
                     if (groupObjectsQuery.Count() == 0)
                     {
                     HelpClass.EndAwait(grid_main);

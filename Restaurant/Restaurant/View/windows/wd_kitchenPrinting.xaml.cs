@@ -177,7 +177,7 @@ namespace Restaurant.View.windows
 
                 HelpClass.StartAwait(grid_main);
                 //  string msg = "";
-                int msg = 0;
+                long msg = 0;
                 if ((bool)tgl_printOnPreparing.IsChecked)
                 {
                     printOnPreparingrow.value = "1";

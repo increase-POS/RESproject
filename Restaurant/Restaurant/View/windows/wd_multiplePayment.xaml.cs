@@ -43,7 +43,7 @@ namespace Restaurant.View.windows
         public decimal maxCredit { get; set; }
         ImageBrush brush = new ImageBrush();
         static private string _SelectedPaymentType = "cash";
-        static private int _SelectedCard = -1;
+        static private long _SelectedCard = -1;
         public List<CashTransfer> listPayments = new List<CashTransfer>();
         CashTransfer cashTrasnfer;
         Card cardModel = new Card();
@@ -331,7 +331,7 @@ namespace Restaurant.View.windows
             {
 
                 var button = sender as Button;
-                _SelectedCard = int.Parse(button.Tag.ToString());
+                _SelectedCard = long.Parse(button.Tag.ToString());
                 //txt_card.Text = button.DataContext.ToString();
                 Card card = button.DataContext as Card;
                 txt_card.Text = card.name;
@@ -348,7 +348,7 @@ namespace Restaurant.View.windows
                 //set border color
                 foreach (var el in cardEllipseList)
                 {
-                    if ((int)el.Tag == (int)button.Tag)
+                    if ((long)el.Tag == (long)button.Tag)
                         el.Stroke = Application.Current.Resources["MainColor"] as SolidColorBrush;
                     else
                         el.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;

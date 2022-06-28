@@ -156,7 +156,7 @@ namespace Restaurant.View.windows
 
                         user.password = password ;
 
-                        int s = await userModel.save(user);
+                        var s = await userModel.save(user);
 
                         if (s>0)
                         {

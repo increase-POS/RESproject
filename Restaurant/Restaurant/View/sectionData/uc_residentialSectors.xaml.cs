@@ -192,7 +192,7 @@ namespace Restaurant.View.sectionData
                         residential.notes = tb_notes.Text;
                         residential.isActive = 1;
 
-                        int s = await residential.Save(residential);
+                        var s = await residential.Save(residential);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -240,7 +240,7 @@ namespace Restaurant.View.sectionData
                         residential.updateUserId = MainWindow.userLogin.userId;
                         residential.notes = tb_notes.Text;
 
-                        int s = await residential.Save(residential);
+                            var s = await residential.Save(residential);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -307,7 +307,7 @@ namespace Restaurant.View.sectionData
                                 if (residential.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!residential.canDelete) && (residential.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await residential.Delete(residential.residentSecId, MainWindow.userLogin.userId, residential.canDelete);
+                                var s = await residential.Delete(residential.residentSecId, MainWindow.userLogin.userId, residential.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -336,7 +336,7 @@ namespace Restaurant.View.sectionData
         private async Task activate()
         {//activate
             residential.isActive = 1;
-            int s = await residential.Save(residential);
+            var s = await residential.Save(residential);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

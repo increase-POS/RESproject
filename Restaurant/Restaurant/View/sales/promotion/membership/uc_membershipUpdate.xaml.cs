@@ -500,7 +500,7 @@ namespace Restaurant.View.sales.promotion.membership
                             catch
                             { membership.deliveryDiscountPercent = 0; }
 
-                            int s = await membership.SaveMemberAndSub(membership);
+                            var s = await membership.SaveMemberAndSub(membership);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else

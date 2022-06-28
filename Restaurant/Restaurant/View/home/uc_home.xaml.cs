@@ -488,7 +488,7 @@ namespace Restaurant.View
         //    {
         //        List<InvoiceCount> listSalPur = await dash.Getdashsalpur();
         //        if (cb_branch.SelectedValue != null)
-        //            if ((int)cb_branch.SelectedValue == 0)
+        //            if ((long)cb_branch.SelectedValue == 0)
         //            {
         //                dash.countAllPurchase = listSalPur.Sum(x => x.purCount).ToString();
         //                dash.countAllSalesValue = listSalPur.Sum(x => x.saleCount).ToString();
@@ -524,14 +524,14 @@ namespace Restaurant.View
             {
                 List<TotalPurSale> listSalPur = await dash.GetTotalPurSale(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
-                    if ((int)cb_branch.SelectedValue == 0)
+                    if ((long)cb_branch.SelectedValue == 0)
                     {
                         dash.countMonthlyPurchase = listSalPur.Sum(x => x.countPur).ToString();
                         dash.countMonthlySales = listSalPur.Sum(x => x.countSale).ToString();
                     }
                     else
                     {
-                        var newSalPur = listSalPur.Where(s => s.branchCreatorId == (int)cb_branch.SelectedValue);
+                        var newSalPur = listSalPur.Where(s => s.branchCreatorId == (long)cb_branch.SelectedValue);
                         if (newSalPur != null)
                         {
                             dash.countMonthlyPurchase = newSalPur.Sum(x=> x.countPur).ToString();
@@ -552,7 +552,7 @@ namespace Restaurant.View
             {
                 List<InvoiceCount> listSalPur = await dash.GetdashsalpurDay(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
-                    if ((int)cb_branch.SelectedValue == 0)
+                    if ((long)cb_branch.SelectedValue == 0)
                     {
                         dash.countDailyPurchase = listSalPur.Sum(x => x.purCount).ToString();
                         dash.countDailySales = listSalPur.Sum(x => x.saleCount).ToString();
@@ -562,7 +562,7 @@ namespace Restaurant.View
                     }
                     else
                     {
-                        var newSalPur = listSalPur.Where(s => s.branchCreatorId == (int)cb_branch.SelectedValue).FirstOrDefault();
+                        var newSalPur = listSalPur.Where(s => s.branchCreatorId == (long)cb_branch.SelectedValue).FirstOrDefault();
                         if (newSalPur != null)
                         {
                             dash.countDailyPurchase = newSalPur.purCount.ToString();
@@ -657,7 +657,7 @@ namespace Restaurant.View
 
             if (cb_branch.SelectedValue != null)
             {
-                var newBestOfCount = listBestOfCount.Where(s => s.branchId == (int)cb_branch.SelectedValue).FirstOrDefault();
+                var newBestOfCount = listBestOfCount.Where(s => s.branchId == (long)cb_branch.SelectedValue).FirstOrDefault();
                 if (newBestOfCount != null)
                 {
 
@@ -715,7 +715,7 @@ namespace Restaurant.View
             {
                 List<CountByInvType> listCountByInvType = await dash.GetCountByInvType(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
-                    if ((int)cb_branch.SelectedValue == 0)
+                    if ((long)cb_branch.SelectedValue == 0)
                     {
                         dash.dhallCount = listCountByInvType.Sum(x => x.dhallCount).ToString();
                         dash.selfCount = listCountByInvType.Sum(x => x.selfCount).ToString();
@@ -723,7 +723,7 @@ namespace Restaurant.View
                     }
                     else
                     {
-                        var newCountByInvType = listCountByInvType.Where(s => s.branchId == (int)cb_branch.SelectedValue).FirstOrDefault();
+                        var newCountByInvType = listCountByInvType.Where(s => s.branchId == (long)cb_branch.SelectedValue).FirstOrDefault();
                         if (newCountByInvType != null)
                         {
                             dash.dhallCount = newCountByInvType.dhallCount.ToString();
@@ -768,13 +768,13 @@ namespace Restaurant.View
             {
                 List<BranchBalance> listBranchBalance = await dash.GetCashBalance(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
-                    if ((int)cb_branch.SelectedValue == 0)
+                    if ((long)cb_branch.SelectedValue == 0)
                     {
                         dash.balance = listBranchBalance.Sum(x => x.balance).ToString();
                     }
                     else
                     {
-                        var newBranchBalance = listBranchBalance.Where(s => s.branchId == (int)cb_branch.SelectedValue).FirstOrDefault();
+                        var newBranchBalance = listBranchBalance.Where(s => s.branchId == (long)cb_branch.SelectedValue).FirstOrDefault();
                         if (newBranchBalance != null)
                         {
                             dash.balance = newBranchBalance.balance.ToString();
@@ -812,7 +812,7 @@ namespace Restaurant.View
                 //List<TablesStatistics> listTablesStatistics = await tablesModel.GetTablesStatistics(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 List<TablesStatistics> listTablesStatistics = await tablesModel.GetTablesStatistics(DateTime.Now.ToString(), MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
-                    if ((int)cb_branch.SelectedValue == 0)
+                    if ((long)cb_branch.SelectedValue == 0)
                     {
                         dash.emptyCount = listTablesStatistics.Sum(x => x.emptyCount).ToString();
                         dash.openedCount = listTablesStatistics.Sum(x => x.openedCount).ToString();
@@ -820,7 +820,7 @@ namespace Restaurant.View
                     }
                     else
                     {
-                        var newTablesStatistics = listTablesStatistics.Where(s => s.branchId == (int)cb_branch.SelectedValue).FirstOrDefault();
+                        var newTablesStatistics = listTablesStatistics.Where(s => s.branchId == (long)cb_branch.SelectedValue).FirstOrDefault();
                         if (newTablesStatistics != null)
                         {
                             dash.emptyCount = newTablesStatistics.emptyCount.ToString();
@@ -856,14 +856,14 @@ namespace Restaurant.View
             {
                 List<UserOnlineCount> listUserOnline = await dash.Getuseronline(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
-                    if ((int)cb_branch.SelectedValue == 0)
+                    if ((long)cb_branch.SelectedValue == 0)
                     {
                         dash.userOnline = listUserOnline.Sum(x => x.userOnlineCount).ToString();
                         dash.userOffline = listUserOnline.Sum(x => x.offlineUsers).ToString();
                     }
                     else
                     {
-                        var newUserOnline = listUserOnline.Where(s => s.branchId == (int)cb_branch.SelectedValue).FirstOrDefault();
+                        var newUserOnline = listUserOnline.Where(s => s.branchId == (long)cb_branch.SelectedValue).FirstOrDefault();
                         if (newUserOnline != null)
                         {
                             dash.userOnline = newUserOnline.userOnlineCount.ToString();
@@ -901,13 +901,13 @@ namespace Restaurant.View
             {
                 dash.listUserOnline = await dash.GetuseronlineInfo(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
-                    if ((int)cb_branch.SelectedValue == 0)
+                    if ((long)cb_branch.SelectedValue == 0)
                     {
                         InitializeUserOnlinePic(dash.listUserOnline);
                     }
                     else
                     {
-                        List<userOnlineInfo> newUserOnline = dash.listUserOnline.Where(s => s.branchId == (int)cb_branch.SelectedValue).ToList();
+                        List<userOnlineInfo> newUserOnline = dash.listUserOnline.Where(s => s.branchId == (long)cb_branch.SelectedValue).ToList();
                         if (newUserOnline != null && newUserOnline.Count != 0)
                         {
                             InitializeUserOnlinePic(newUserOnline);
@@ -1096,7 +1096,7 @@ namespace Restaurant.View
             {
                 List<BestSeller> listAllBestSeller = await dash.Getbestseller(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
-                    if ((int)cb_branch.SelectedValue == 0)
+                    if ((long)cb_branch.SelectedValue == 0)
                     {
                         listBestSeller = listAllBestSeller.GroupBy(x => new { x.itemName, x.unitName }).Select(s => new BestSeller
                         {
@@ -1107,7 +1107,7 @@ namespace Restaurant.View
                     }
                     else
                     {
-                        listBestSeller = listAllBestSeller.Where(s => s.branchCreatorId == (int)cb_branch.SelectedValue).ToList();
+                        listBestSeller = listAllBestSeller.Where(s => s.branchCreatorId == (long)cb_branch.SelectedValue).ToList();
                         if (listBestSeller != null)
                         {
                             listBestSeller = listBestSeller.GroupBy(x => new { x.itemName, x.unitName }).Select(s => new BestSeller
@@ -1312,7 +1312,7 @@ namespace Restaurant.View
             {
                 List<IUStorage> listAllIUStorage = await dash.GetIUStorage(IUList, MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
-                    if ((int)cb_branch.SelectedValue == 0)
+                    if ((long)cb_branch.SelectedValue == 0)
                     {
                         listIUStorage = listAllIUStorage.GroupBy(x => new { x.itemName, x.unitName }).Select(s => new IUStorage
                         {
@@ -1323,7 +1323,7 @@ namespace Restaurant.View
                     }
                     else
                     {
-                        listIUStorage = listAllIUStorage.Where(s => s.branchId == (int)cb_branch.SelectedValue).ToList();
+                        listIUStorage = listAllIUStorage.Where(s => s.branchId == (long)cb_branch.SelectedValue).ToList();
                         if (listIUStorage != null)
                         {
                             listIUStorage = listIUStorage.GroupBy(x => new { x.itemName, x.unitName }).Select(s => new IUStorage
@@ -1465,7 +1465,7 @@ namespace Restaurant.View
                 string[] ArrayCount = new string[NumberDaysInMonth];
                 List<TotalPurSale> listAllBestSeller = await dash.GetTotalPurSale(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
-                    if ((int)cb_branch.SelectedValue == 0)
+                    if ((long)cb_branch.SelectedValue == 0)
                     {
                         listMonthlyInvoice = listAllBestSeller.GroupBy(x => new { x.day }).Select(s => new TotalPurSale
                         {
@@ -1482,7 +1482,7 @@ namespace Restaurant.View
                     }
                     else
                     {
-                        listMonthlyInvoice = listAllBestSeller.Where(s => s.branchCreatorId == (int)cb_branch.SelectedValue).ToList();
+                        listMonthlyInvoice = listAllBestSeller.Where(s => s.branchCreatorId == (long)cb_branch.SelectedValue).ToList();
                         if (listMonthlyInvoice != null)
                         {
                             listMonthlyInvoice = listMonthlyInvoice.GroupBy(x => new { x.day }).Select(s => new TotalPurSale

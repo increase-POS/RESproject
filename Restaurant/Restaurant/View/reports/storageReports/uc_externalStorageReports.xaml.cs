@@ -129,7 +129,7 @@ namespace Restaurant.View.reports.storageReports
         }
         async Task<IEnumerable<ItemTransferInvoice>> RefreshExternalList()
         {
-            itemsTransfer = await statisticModel.GetExternalMov((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+            itemsTransfer = await statisticModel.GetExternalMov((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
             fillBranches();
             fillItems();
             fillVendors();
@@ -297,7 +297,7 @@ namespace Restaurant.View.reports.storageReports
         {
             cb_units.SelectedValuePath = "unitId";
             cb_units.DisplayMemberPath = "unitName";
-            cb_units.ItemsSource = itemsTransfer.Where(i => i.itemId == (int)cb_items.SelectedValue)
+            cb_units.ItemsSource = itemsTransfer.Where(i => i.itemId == (long)cb_items.SelectedValue)
                                                 .GroupBy(g => g.unitId)
                                                 .Select(i => new { i.FirstOrDefault().unitName, i.FirstOrDefault().unitId });
         }

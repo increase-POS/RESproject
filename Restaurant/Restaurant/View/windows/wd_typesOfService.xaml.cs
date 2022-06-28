@@ -196,7 +196,7 @@ namespace Restaurant.View.windows
 
                     HelpClass.StartAwait(grid_main);
                     //  string msg = "";
-                    int msg = 0;
+                    long msg = 0;
                     if ((bool)tgl_diningHall.IsChecked)
                     {
                         diningHallrow.value = "1";

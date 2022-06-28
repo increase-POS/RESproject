@@ -78,7 +78,7 @@ namespace Restaurant.View.accounts
         Card cardModel = new Card();
         bool hasProcessNum = false;
 
-        static private int _SelectedCard = -1;
+        static private long _SelectedCard = -1;
 
         void InitializeCardsPic(IEnumerable<Card> cards)
         {
@@ -131,7 +131,7 @@ namespace Restaurant.View.accounts
         {
             HelpClass.clearValidate(requiredControlList, this);
             var button = sender as Button;
-            _SelectedCard = int.Parse(button.Tag.ToString());
+            _SelectedCard = long.Parse(button.Tag.ToString());
 
             Card card = button.DataContext as Card;
 
@@ -158,7 +158,7 @@ namespace Restaurant.View.accounts
             //set border color
             foreach (var el in cardEllipseList)
             {
-                if ((int)el.Tag == (int)button.Tag)
+                if ((long)el.Tag == (long)button.Tag)
                     el.Stroke = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 else
                     el.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
@@ -715,7 +715,7 @@ namespace Restaurant.View.accounts
                         {
                             if (subscription.cardId != null)
                             {
-                                Button btn = cardBtnList.Where(c => (int)c.Tag == subscription.cardId.Value).FirstOrDefault();
+                                Button btn = cardBtnList.Where(c => (long)c.Tag == subscription.cardId.Value).FirstOrDefault();
                                 card_Click(btn, null);
                             }
                         }
@@ -770,7 +770,7 @@ namespace Restaurant.View.accounts
                             cashtrans.transType = "d";
                             cashtrans.posId = MainWindow.posLogin.posId;
                             cashtrans.userId = null;
-                            cashtrans.agentId = (int)cb_customerId.SelectedValue;
+                            cashtrans.agentId = (long)cb_customerId.SelectedValue;
                             cashtrans.invId = null;
                             cashtrans.transNum = await cashtrans.generateCashNumber(cashtrans.transType + "c");////????????
                             cashtrans.cash = decimal.Parse(tb_amount.Text);
@@ -801,7 +801,7 @@ namespace Restaurant.View.accounts
                             subscription.subscriptionFeesId = _subscriptionFeesId;
                             subscription.cashTransId = cashtrans.cashTransId;
                             subscription.membershipId = ag.membershipId;
-                            subscription.agentId = (int)cb_customerId.SelectedValue;
+                            subscription.agentId = (long)cb_customerId.SelectedValue;
                             subscription.startDate = ag.startDate;
                             subscription.EndDate = ag.updateDate;
                             subscription.notes = "";
@@ -831,7 +831,7 @@ namespace Restaurant.View.accounts
                             subscription.subscriptionType = ag.subscriptionType;
                             #endregion
 
-                            int res = await subscription.Savepay(subscription, cashtrans);
+                            var res = await subscription.Savepay(subscription, cashtrans);
 
                             if (res <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -876,11 +876,11 @@ namespace Restaurant.View.accounts
         }
         private async Task calcBalance(decimal ammount)
         {
-            int s = 0;
+            //int s = 0;
             //increase pos balance
             MainWindow.posLogin = await FillCombo.pos.getById(MainWindow.posLogin.posId);
             MainWindow.posLogin.balance += ammount;
-            s = await FillCombo.pos.save(MainWindow.posLogin);
+            var s = await FillCombo.pos.save(MainWindow.posLogin);
         }
         private void Chb_all_Checked(object sender, RoutedEventArgs e)
         {

@@ -209,7 +209,7 @@ namespace Restaurant.View.sectionData.hallDivide
                         section.updateUserId = MainWindow.userLogin.userId;
                         section.isActive = 1;
 
-                        int s = await section.save(section);
+                        long s = await section.save(section);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -256,7 +256,7 @@ namespace Restaurant.View.sectionData.hallDivide
                         section.notes = tb_notes.Text;
                         section.updateUserId = MainWindow.userLogin.userId;
 
-                        int s = await section.save(section);
+                            long s = await section.save(section);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -335,7 +335,7 @@ namespace Restaurant.View.sectionData.hallDivide
                                 if (section.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!section.canDelete) && (section.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await section.delete(section.sectionId, MainWindow.userLogin.userId, section.canDelete);
+                                long s = await section.delete(section.sectionId, MainWindow.userLogin.userId, section.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -365,7 +365,7 @@ namespace Restaurant.View.sectionData.hallDivide
         private async Task activate()
         {//activate
             section.isActive = 1;
-            int s = await section.save(section);
+            long s = await section.save(section);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

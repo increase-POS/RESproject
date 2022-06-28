@@ -144,7 +144,7 @@ namespace Restaurant.View.reports.purchaseReports
             {
                 HelpClass.StartAwait(grid_main);
 
-                Invoices = await statisticModel.GetPurorderitemcount((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+                Invoices = await statisticModel.GetPurorderitemcount((long)MainWindow.branchLogin.branchId, (long)MainWindow.userLogin.userId);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -310,7 +310,7 @@ namespace Restaurant.View.reports.purchaseReports
 
             if (selectedTab == 0)
             {
-                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true));
+                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((long)j.branchCreatorId) : true));
                 var titleTemp = temp.GroupBy(m => m.branchCreatorName);
                 titles.AddRange(titleTemp.Select(jj => jj.Key));
                 var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new { branchCreatorId = s.Key, count = s.Count() });
@@ -318,7 +318,7 @@ namespace Restaurant.View.reports.purchaseReports
             }
             else if (selectedTab == 1)
             {
-                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true));
+                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((long)j.posId) : true));
                 var titleTemp = temp.GroupBy(m => new { m.posName, m.posId });
                 titles.AddRange(titleTemp.Select(jj => jj.Key.posName));
                 var result = temp.GroupBy(s => s.posId).Select(s => new { posId = s.Key, count = s.Count() });
@@ -326,7 +326,7 @@ namespace Restaurant.View.reports.purchaseReports
             }
             else if (selectedTab == 2)
             {
-                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true));
+                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((long)j.agentId) : true));
                 var titleTemp = temp.GroupBy(m => m.agentName);
                 titles.AddRange(titleTemp.Select(jj => jj.Key));
                 var result = temp.GroupBy(s => s.agentId).Select(s => new { agentId = s.Key, count = s.Count() });
@@ -334,7 +334,7 @@ namespace Restaurant.View.reports.purchaseReports
             }
             else if (selectedTab == 3)
             {
-                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true));
+                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((long)j.updateUserId) : true));
                 var titleTemp = temp.GroupBy(m => m.cUserAccName);
                 titles.AddRange(titleTemp.Select(jj => jj.Key));
                 var result = temp.GroupBy(s => s.updateUserId).Select(s => new { updateUserId = s.Key, count = s.Count() });
@@ -395,7 +395,7 @@ namespace Restaurant.View.reports.purchaseReports
 
             if (selectedTab == 0)
             {
-                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true));
+                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((long)j.branchCreatorId) : true));
                 var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new
                 {
                     branchCreatorId = s.Key,
@@ -410,7 +410,7 @@ namespace Restaurant.View.reports.purchaseReports
             }
             else if (selectedTab == 1)
             {
-                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true));
+                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((long)j.posId) : true));
                 var result = temp.GroupBy(s => s.posId).Select(s => new
                 {
                     posId = s.Key,
@@ -425,7 +425,7 @@ namespace Restaurant.View.reports.purchaseReports
             }
             else if (selectedTab == 2)
             {
-                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true));
+                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((long)j.agentId) : true));
                 var result = temp.GroupBy(s => s.agentId).Select(s => new
                 {
                     agentId = s.Key,
@@ -440,7 +440,7 @@ namespace Restaurant.View.reports.purchaseReports
             }
             else if (selectedTab == 3)
             {
-                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true));
+                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((long)j.updateUserId) : true));
                 var result = temp.GroupBy(s => s.updateUserId).Select(s => new
                 {
                     updateUserId = s.Key,
@@ -503,7 +503,7 @@ namespace Restaurant.View.reports.purchaseReports
             //  if (selectedTab == 0)
             //  {
             //      var temp = fillRowChartList(Invoices, chk_invoice, chk_return, chk_drafs, dp_startDate, dp_endDate, dt_startTime, dt_endTime);
-            //      temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true));
+            //      temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((long)j.branchCreatorId) : true));
             //      var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new
             //      {
             //          branchCreatorId = s.Key,
@@ -525,7 +525,7 @@ namespace Restaurant.View.reports.purchaseReports
             //  if (selectedTab == 1)
             //  {
             //      var temp = fillRowChartList(Invoices, chk_posInvoice, chk_posReturn, chk_posDraft, dp_posStartDate, dp_posEndDate, dt_posStartTime, dt_posEndTime);
-            //      temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true));
+            //      temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((long)j.posId) : true));
             //      var result = temp.GroupBy(s => s.posId).Select(s => new
             //      {
             //          posId = s.Key,
@@ -546,7 +546,7 @@ namespace Restaurant.View.reports.purchaseReports
             //  if (selectedTab == 2)
             //  {
             //      var temp = fillRowChartList(Invoices, chk_vendorsInvoice, chk_vendorsReturn, chk_vendorsDraft, dp_vendorsStartDate, dp_vendorsEndDate, dt_vendorsStartTime, dt_vendorsEndTime);
-            //      temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true));
+            //      temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((long)j.agentId) : true));
             //      var result = temp.GroupBy(s => s.agentId).Select(s => new
             //      {
             //          agentId = s.Key,
@@ -567,7 +567,7 @@ namespace Restaurant.View.reports.purchaseReports
             //  if (selectedTab == 3)
             //  {
             //      var temp = fillRowChartList(Invoices, chk_usersInvoice, chk_usersReturn, chk_usersDraft, dp_usersStartDate, dp_usersEndDate, dt_usersStartTime, dt_usersEndTime);
-            //      temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true));
+            //      temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((long)j.updateUserId) : true));
             //      var result = temp.GroupBy(s => s.updateUserId).Select(s => new
             //      {
             //          updateUserId = s.Key,
@@ -588,7 +588,7 @@ namespace Restaurant.View.reports.purchaseReports
             //  if (selectedTab == 4)
             //  {
             //      var temp = fillRowChartList(Items, chk_itemInvoice, chk_itemReturn, chk_itemDrafs, dp_ItemStartDate, dp_ItemEndDate, dt_itemStartTime, dt_ItemEndTime);
-            //      temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((int)j.ITitemUnitId) : true));
+            //      temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((long)j.ITitemUnitId) : true));
             //      var result = temp.GroupBy(s => s.ITitemUnitId).Select(s => new
             //      {
             //          ITitemUnitId = s.Key,
@@ -602,7 +602,7 @@ namespace Restaurant.View.reports.purchaseReports
             //      pbTemp = result.Select(x => (decimal)x.totalPb);
             //      resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
             //      var tempName = temp.GroupBy(jj => jj.ITitemUnitId)
-            //       .Select(g => new ItemUnitCombo { itemUnitId = (int)g.FirstOrDefault().ITitemUnitId, itemUnitName = g.FirstOrDefault().ITitemName + "-" + g.FirstOrDefault().ITunitName }).ToList();
+            //       .Select(g => new ItemUnitCombo { itemUnitId = (long)g.FirstOrDefault().ITitemUnitId, itemUnitName = g.FirstOrDefault().ITitemName + "-" + g.FirstOrDefault().ITunitName }).ToList();
             //      names.AddRange(tempName.Select(nn => nn.itemUnitName));
             //  }
             //  /********************************************************************************/
@@ -647,22 +647,22 @@ namespace Restaurant.View.reports.purchaseReports
 
             if (selectedTab == 0)
             {
-                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true));
+                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((long)j.branchCreatorId) : true));
                 list = temp.ToList();
             }
             else if (selectedTab == 1)
             {
-                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true));
+                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((long)j.posId) : true));
                 list = temp.ToList();
             }
             else if (selectedTab == 2)
             {
-                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true));
+                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((long)j.agentId) : true));
                 list = temp.ToList();
             }
             else if (selectedTab == 3)
             {
-                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true));
+                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((long)j.updateUserId) : true));
                 list = temp.ToList();
             }
 
@@ -1448,7 +1448,7 @@ namespace Restaurant.View.reports.purchaseReports
 
                 if (selectedTab == 0)
                 {
-                    itemTransfers = invLst.Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true));
+                    itemTransfers = invLst.Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((long)j.branchCreatorId) : true));
 
                     dgInvoice.ItemsSource = itemTransfers
                         .Where(s => (s.branchCreatorName.Contains(txt_search.Text) ||
@@ -1458,7 +1458,7 @@ namespace Restaurant.View.reports.purchaseReports
                 else if (selectedTab == 1)
                 {
                     itemTransfers = invLst
-                        .Where(j => (selectedPosId.Count != 0 ? selectedPosId.Contains((int)j.posId) : true));
+                        .Where(j => (selectedPosId.Count != 0 ? selectedPosId.Contains((long)j.posId) : true));
 
                     dgInvoice.ItemsSource = itemTransfers
                         .Where(s => (s.branchCreatorName.Contains(txt_search.Text) ||
@@ -1470,7 +1470,7 @@ namespace Restaurant.View.reports.purchaseReports
                 else if (selectedTab == 2)
                 {
                     itemTransfers = invLst
-                    .Where(j => (selectedVendorsId.Count != 0 ? selectedVendorsId.Contains((int)j.agentId) : true));
+                    .Where(j => (selectedVendorsId.Count != 0 ? selectedVendorsId.Contains((long)j.agentId) : true));
 
                     dgInvoice.ItemsSource = itemTransfers
                         .Where(s => (s.branchCreatorName.Contains(txt_search.Text) ||
@@ -1483,7 +1483,7 @@ namespace Restaurant.View.reports.purchaseReports
                 else if (selectedTab == 3)
                 {
                     itemTransfers = invLst
-                    .Where(j => (selectedUserId.Count != 0 ? selectedUserId.Contains((int)j.updateUserId) : true));
+                    .Where(j => (selectedUserId.Count != 0 ? selectedUserId.Contains((long)j.updateUserId) : true));
 
                     dgInvoice.ItemsSource = itemTransfers
                         .Where(s => (s.branchCreatorName.Contains(txt_search.Text) ||

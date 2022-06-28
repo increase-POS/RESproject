@@ -398,7 +398,7 @@ namespace Restaurant.View.kitchen
                     itemsQuery = itemsQuery.Where(x => x.categoryId == categoryId).ToList();
 
                 if (cb_searchTags.SelectedIndex > 0)
-                    itemsQuery = itemsQuery.Where(x => x.tagId == (int)cb_searchTags.SelectedValue).ToList();
+                    itemsQuery = itemsQuery.Where(x => x.tagId == (long)cb_searchTags.SelectedValue).ToList();
 
                 RefreshItemsView();
             }

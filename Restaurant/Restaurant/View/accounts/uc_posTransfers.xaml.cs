@@ -261,7 +261,7 @@ namespace Restaurant.View.accounts
                             cash1.side = "p";//pos
                             cash1.posId = Convert.ToInt32(cb_pos1.SelectedValue);
 
-                            int s1 = await cashModel.Save(cash1);
+                                var s1 = await cashModel.Save(cash1);
 
                             if (!s1.Equals(0))
                             {
@@ -281,17 +281,17 @@ namespace Restaurant.View.accounts
                                 cash2.posId = Convert.ToInt32(cb_pos2.SelectedValue);
                                 cash2.cashTransIdSource = s1;//id from first operation
 
-                                int s2 = await cashModel.Save(cash2);
+                                    var s2 = await cashModel.Save(cash2);
 
                                 if (!s2.Equals(0))
                                 {
-                                    #region notification Object
-                                    int pos1 = 0;
-                                    int pos2 = 0;
-                                    if ((int)cb_pos1.SelectedValue != MainWindow.posLogin.posId)
-                                        pos1 = (int)cb_pos1.SelectedValue;
-                                    if ((int)cb_pos2.SelectedValue != MainWindow.posLogin.posId)
-                                        pos2 = (int)cb_pos2.SelectedValue;
+                                        #region notification Object
+                                        long pos1 = 0;
+                                        long pos2 = 0;
+                                    if ((long)cb_pos1.SelectedValue != MainWindow.posLogin.posId)
+                                        pos1 = (long)cb_pos1.SelectedValue;
+                                    if ((long)cb_pos2.SelectedValue != MainWindow.posLogin.posId)
+                                        pos2 = (long)cb_pos2.SelectedValue;
                                     Notification not = new Notification()
                                     {
                                         title = "trTransferAlertTilte",
@@ -301,9 +301,9 @@ namespace Restaurant.View.accounts
                                         updateUserId = MainWindow.userLogin.userId,
                                     };
                                     if (pos1 != 0)
-                                        await not.save(not, (int)cb_pos1.SelectedValue, "accountsAlerts_transfers", cb_pos2.Text, 0, pos1);
+                                        await not.save(not, (long)cb_pos1.SelectedValue, "accountsAlerts_transfers", cb_pos2.Text, 0, pos1);
                                     if (pos2 != 0)
-                                        await not.save(not, (int)cb_pos2.SelectedValue, "accountsAlerts_transfers", cb_pos1.Text, 0, pos2);
+                                        await not.save(not, (long)cb_pos2.SelectedValue, "accountsAlerts_transfers", cb_pos1.Text, 0, pos2);
 
                                     #endregion
 
@@ -359,7 +359,7 @@ namespace Restaurant.View.accounts
                             cashtrans2.notes = tb_notes.Text;
                             cashtrans2.posId = Convert.ToInt32(cb_pos1.SelectedValue);
 
-                            int s1 = await cashModel.Save(cashtrans2);
+                            var s1 = await cashModel.Save(cashtrans2);
                             #endregion
 
                             if (!s1.Equals(0))
@@ -370,7 +370,7 @@ namespace Restaurant.View.accounts
                                 cashtrans3.posId = Convert.ToInt32(cb_pos2.SelectedValue);
                                 cashtrans3.notes = tb_notes.Text;
 
-                                int s2 = await cashModel.Save(cashtrans3);
+                                var s2 = await cashModel.Save(cashtrans3);
                                 #endregion
 
                                 if (!s2.Equals(0))
@@ -418,7 +418,7 @@ namespace Restaurant.View.accounts
                         #endregion
                         if (w.isOk)
                         {
-                            int b = await cashModel.deletePosTrans(cashtrans.cashTransId);
+                            var b = await cashModel.deletePosTrans(cashtrans.cashTransId);
 
                             if (b == 1)
                             {
@@ -462,14 +462,14 @@ namespace Restaurant.View.accounts
                         {
                             Pos pos = await posModel.getById(cashtrans.posId.Value);
                             Pos pos2 = await posModel.getById(cashtrans.pos2Id.Value);
-                            int s1 = 0;
+                            long s1 = 0;
                             if (cashtrans.transType == "d")
                             {
                                 //there is enough balance
                                 if (pos.balance >= cashtrans.cash)
                                 {
                                     pos.balance -= cashtrans.cash;
-                                    int s = await posModel.save(pos);
+                                var s = await posModel.save(pos);
 
                                     pos2.balance += cashtrans.cash;
                                     s1 = await posModel.save(pos2);
@@ -489,7 +489,7 @@ namespace Restaurant.View.accounts
                                 if (pos2.balance >= cashtrans.cash)
                                 {
                                     pos2.balance -= cashtrans.cash;
-                                    int s = await posModel.save(pos2);
+                                var s = await posModel.save(pos2);
 
                                     pos.balance += cashtrans.cash;
                                     s1 = await posModel.save(pos);
@@ -524,7 +524,7 @@ namespace Restaurant.View.accounts
         private async Task confirmOpr()
         {
             cashtrans.isConfirm = 1;
-            int s = await cashModel.Save(cashtrans);
+            var s = await cashModel.Save(cashtrans);
             if (!s.Equals(0))
             {
                 await RefreshCashesList();
@@ -792,7 +792,7 @@ namespace Restaurant.View.accounts
         }
         async Task<IEnumerable<CashTransfer>> RefreshCashesList()
         {
-            cashes = await cashModel.GetCashTransferForPosById("all", "p", (int)MainWindow.posLogin.posId);
+            cashes = await cashModel.GetCashTransferForPosById("all", "p", (long)MainWindow.posLogin.posId);
             return cashes;
 
         }
@@ -1343,8 +1343,8 @@ namespace Restaurant.View.accounts
                         cashtrans2.isConfirm = 2;
                         cashtrans3.isConfirm = 2;
 
-                        int s2 = await cashModel.Save(cashtrans2);
-                        int s3 = await cashModel.Save(cashtrans3);
+                    var s2 = await cashModel.Save(cashtrans2);
+                    var s3 = await cashModel.Save(cashtrans3);
 
                         if ((!s2.Equals(0)) && (!s3.Equals(0)))
                         {

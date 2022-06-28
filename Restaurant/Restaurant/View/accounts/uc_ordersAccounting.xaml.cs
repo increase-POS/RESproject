@@ -400,7 +400,7 @@ namespace Restaurant.View.accounts
       
         private async Task calcBalance(decimal ammount)
         {
-            int s = 0;
+            long s = 0;
             //increase pos balance
             Pos pos = await posModel.getById(MainWindow.posLogin.posId);
             pos.balance += ammount;
@@ -743,7 +743,7 @@ namespace Restaurant.View.accounts
                                 }
                             }
 
-                            int s = await invoice.saveInvoice(invoice);
+                            var s = await invoice.saveInvoice(invoice);
                             
                             if (!s.Equals(0))
                             {

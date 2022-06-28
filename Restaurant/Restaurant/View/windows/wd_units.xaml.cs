@@ -255,14 +255,14 @@ namespace Restaurant.View.windows
                                 {
 
                                 //unit
-                                Nullable<int> unitId = null;
+                                Nullable<long> unitId = null;
                                 if (cb_unitId.SelectedIndex != -1)
-                                    unitId = (int) cb_unitId.SelectedValue;
+                                    unitId = (long) cb_unitId.SelectedValue;
 
                                 //count
                                 int unitValue = int.Parse(tb_unitValue.Text);
                                 //smallUnitId
-                                Nullable<int> smallUnitId = (int)cb_subUnitId.SelectedValue;
+                                Nullable<long> smallUnitId = (long)cb_subUnitId.SelectedValue;
                                 //defaultBurchase
                                 short defaultBurchase = 0;
                                 if (tbtn_isDefaultPurchases.IsChecked == true)
@@ -288,7 +288,7 @@ namespace Restaurant.View.windows
                                 itemUnit.barcode = barcode;
                                 itemUnit.createUserId = MainWindow.userLogin.userId;
                                 itemUnit.updateUserId = MainWindow.userLogin.userId;
-                                int res = await itemUnit.saveItemUnit(itemUnit);
+                                long res = await itemUnit.saveItemUnit(itemUnit);
                                 if (res <= 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -342,14 +342,14 @@ namespace Restaurant.View.windows
                             {
 
                                 //unit
-                                Nullable<int> unitId = null;
+                                Nullable<long> unitId = null;
                                 if (cb_unitId.SelectedIndex != -1)
-                                    unitId = (int) cb_unitId.SelectedValue;
+                                    unitId = (long) cb_unitId.SelectedValue;
 
                                 //count
                                 int unitValue = int.Parse(tb_unitValue.Text);
                                 //smallUnitId
-                                Nullable<int> smallUnitId = (int)cb_subUnitId.SelectedValue;
+                                Nullable<long> smallUnitId = (long)cb_subUnitId.SelectedValue;
                                 //defaultBurchase
                                 short defaultBurchase = 0;
                                 if (tbtn_isDefaultPurchases.IsChecked == true)
@@ -366,7 +366,7 @@ namespace Restaurant.View.windows
    
                                 itemUnit.barcode = barcode;
                                 itemUnit.updateUserId = MainWindow.userLogin.userId;
-                                int res = await itemUnit.saveItemUnit(itemUnit);
+                                long res = await itemUnit.saveItemUnit(itemUnit);
                                 if (res <= 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -429,7 +429,7 @@ namespace Restaurant.View.windows
                                 if (itemUnit.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!itemUnit.canDelete) && (itemUnit.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await itemUnit.Delete(itemUnit.itemUnitId, MainWindow.userLogin.userId, itemUnit.canDelete);
+                            long s = await itemUnit.Delete(itemUnit.itemUnitId, MainWindow.userLogin.userId, itemUnit.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -455,7 +455,7 @@ namespace Restaurant.View.windows
         private async Task activate()
         {//activate
             itemUnit.isActive = 1;
-            int s = await itemUnit.saveItemUnit(itemUnit);
+            long s = await itemUnit.saveItemUnit(itemUnit);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -585,7 +585,7 @@ namespace Restaurant.View.windows
                 {
                     if (int.TryParse(cb_unitId.SelectedValue.ToString(), out _int))
                     {
-                        await FillCombo.FillSmallUnits(cb_subUnitId, (int)cb_unitId.SelectedValue, item.itemId);
+                        await FillCombo.FillSmallUnits(cb_subUnitId, (long)cb_unitId.SelectedValue, item.itemId);
                         cb_subUnitId.SelectedValue = itemUnit.subUnitId;
                         if (itemUnit.itemUnitId == 0)
                             generateBarcode();
@@ -607,7 +607,7 @@ namespace Restaurant.View.windows
             {
                 if (cb_unitId.SelectedIndex != -1 && cb_subUnitId.SelectedIndex != -1)
                 {
-                    if ((int)cb_unitId.SelectedValue == (int)cb_subUnitId.SelectedValue)
+                    if ((long)cb_unitId.SelectedValue == (long)cb_subUnitId.SelectedValue)
                         tb_unitValue.Text = "1";
                 }
             }
@@ -869,8 +869,8 @@ namespace Restaurant.View.windows
         private async Task fillItemUnit()
         {
             this.DataContext = itemUnit;
-            await FillCombo.FillSmallUnits(cb_subUnitId, (int)itemUnit.unitId, item.itemId);
-            cb_subUnitId.SelectedValue = (int)itemUnit.subUnitId;
+            await FillCombo.FillSmallUnits(cb_subUnitId, (long)itemUnit.unitId, item.itemId);
+            cb_subUnitId.SelectedValue = (long)itemUnit.subUnitId;
             tb_unitValue.Text = itemUnit.unitValue.ToString();
             tb_barcode.Text = itemUnit.barcode;
             if (itemUnit != null)

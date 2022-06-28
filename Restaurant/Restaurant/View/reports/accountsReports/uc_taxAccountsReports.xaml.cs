@@ -534,7 +534,7 @@ namespace Restaurant.View.reports.accountsReports
                 if (selectedTab == 1)
                     tax.Add(taxTemp.Select(b => b.itemUnitTaxwithQTY.Value).Sum());
 
-                names.AddRange(taxTemp.Where(nn => nn.branchId == (int)cb_branches.SelectedValue).Select(nn => nn.branchName));
+                names.AddRange(taxTemp.Where(nn => nn.branchId == (long)cb_branches.SelectedValue).Select(nn => nn.branchName));
                 axcolumn.Labels.Add(names.ToList().Skip(0).FirstOrDefault());
 
                 columnChartData.Add(

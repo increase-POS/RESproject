@@ -188,7 +188,7 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                int msg;
+                long msg;
             time_stayingSetValues.value = (string)tb_time_staying.Text;
             maximumTimeToKeepReservationSetValues.value = (string)tb_maximumTimeToKeepReservation.Text;
             warningTimeForLateReservationSetValues.value = (string)tb_warningTimeForLateReservation.Text;

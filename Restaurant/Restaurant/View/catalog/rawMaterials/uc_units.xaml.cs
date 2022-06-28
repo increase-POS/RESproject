@@ -181,7 +181,7 @@ namespace Restaurant.View.catalog.rawMaterials
                             unit.isActive = 1;
 
 
-                            int s = await unit.save(unit);
+                            var s = await unit.save(unit);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -232,7 +232,7 @@ namespace Restaurant.View.catalog.rawMaterials
                             unit.updateUserId = MainWindow.userLogin.userId;
 
 
-                            int s = await unit.save(unit);
+                                var s = await unit.save(unit);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -305,7 +305,7 @@ namespace Restaurant.View.catalog.rawMaterials
                                 if (unit.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!unit.canDelete) && (unit.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await unit.delete(unit.unitId, MainWindow.userLogin.userId, unit.canDelete);
+                                var s = await unit.delete(unit.unitId, MainWindow.userLogin.userId, unit.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -335,7 +335,7 @@ namespace Restaurant.View.catalog.rawMaterials
         private async Task activate()
         {//activate
             unit.isActive = 1;
-            int s = await unit.save(unit);
+            var s = await unit.save(unit);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

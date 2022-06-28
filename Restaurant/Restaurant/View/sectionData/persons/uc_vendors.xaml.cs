@@ -220,7 +220,7 @@ namespace Restaurant.View.sectionData.persons
                         agent.notes = tb_notes.Text;
                         agent.isActive = 1;
 
-                        int s = await agent.save(agent);
+                        var s = await agent.save(agent);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -229,7 +229,7 @@ namespace Restaurant.View.sectionData.persons
 
                             if (openFileDialog.FileName != "")
                             {
-                                int agentId = s;
+                                var agentId = s;
                                 string b = await agent.uploadImage(imgFileName,
                                     Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
                                 agent.image = b;
@@ -283,7 +283,7 @@ namespace Restaurant.View.sectionData.persons
                         agent.updateUserId = MainWindow.userLogin.userId;
                         agent.notes = tb_notes.Text;
 
-                        int s = await agent.save(agent);
+                            var s = await agent.save(agent);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -294,7 +294,7 @@ namespace Restaurant.View.sectionData.persons
                             FillCombo.vendorsList = agents.ToList();
                             if (openFileDialog.FileName != "")
                             {
-                            int agentId = s;
+                                    var agentId = s;
                             string b = await agent.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
                             agent.image = b;
                             //isImgPressed = false;
@@ -366,7 +366,7 @@ namespace Restaurant.View.sectionData.persons
                                 if (agent.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
                                 if ((!agent.canDelete) && (agent.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                int s = await agent.delete(agent.agentId, MainWindow.userLogin.userId, agent.canDelete);
+                                var s = await agent.delete(agent.agentId, MainWindow.userLogin.userId, agent.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -397,7 +397,7 @@ namespace Restaurant.View.sectionData.persons
         private async Task activate()
         {//activate
             agent.isActive = 1;
-            int s = await agent.save(agent);
+            var s = await agent.save(agent);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -677,7 +677,7 @@ namespace Restaurant.View.sectionData.persons
                     if (cb_areaPhone.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid, brd_areaPhoneLocal);
+                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (long)countryid, brd_areaPhoneLocal);
                     }
                 }
                 HelpClass.EndAwait(grid_main);
@@ -698,7 +698,7 @@ namespace Restaurant.View.sectionData.persons
                     if (cb_areaFax.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaFax.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid, brd_areaFaxLocal);
+                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (long)countryid, brd_areaFaxLocal);
                     }
                 }
                 HelpClass.EndAwait(grid_main);

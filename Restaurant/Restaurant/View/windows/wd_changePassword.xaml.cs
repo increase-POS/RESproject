@@ -215,7 +215,7 @@ namespace Restaurant.View.windows
                             //change password
                             string newPassword = Md5Encription.MD5Hash("Inc-m" + pb_newPassword.Password);
                             newUser.password = newPassword;
-                            int s = await userModel.save(newUser);
+                            var s = await userModel.save(newUser);
 
                             //MainWindow.userLogin.password = newPassword;
                             //int s = await userModel.save(MainWindow.userLogin);
