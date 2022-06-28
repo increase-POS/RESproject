@@ -65,7 +65,7 @@ namespace Restaurant.Classes
         }
 
    
-        public async Task<int> Save(GroupObject newObject)
+        public async Task<long> Save(GroupObject newObject)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "GroupObject/Save";

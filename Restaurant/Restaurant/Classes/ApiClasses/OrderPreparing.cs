@@ -179,7 +179,7 @@ namespace Restaurant.Classes.ApiClasses
             return items;
         }
 
-        public async Task<int> savePreparingOrder(OrderPreparing order, List<ItemOrderPreparing> orderItems, orderPreparingStatus statusObject)
+        public async Task<long> savePreparingOrder(OrderPreparing order, List<ItemOrderPreparing> orderItems, orderPreparingStatus statusObject)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "OrderPreparing/SaveWithItemsAndStatus";
@@ -191,7 +191,7 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("statusObject", myContent);
             return await APIResult.post(method, parameters);
         }
-        public async Task<int> savePreparingOrders(OrderPreparing order, List<ItemOrderPreparing> orderItems, orderPreparingStatus statusObject, long branchId,string statusesOfPreparingOrder)
+        public async Task<long> savePreparingOrders(OrderPreparing order, List<ItemOrderPreparing> orderItems, orderPreparingStatus statusObject, long branchId,string statusesOfPreparingOrder)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "OrderPreparing/SaveOrdersWithItemsAndStatus";

@@ -91,7 +91,7 @@ namespace Restaurant.Classes
       
         public Nullable<short> defaultSale { get; set; }
 
-        public async Task<int> save(Item item)
+        public async Task<long> save(Item item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Items/Save";
@@ -109,7 +109,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> saveSaleItem(Item item, ItemUnit itemUnit)
+        public async Task<long> saveSaleItem(Item item, ItemUnit itemUnit)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Items/SaveSaleItem";
@@ -224,7 +224,7 @@ namespace Restaurant.Classes
             }
             return items;            
         }
-        public async Task<int> delete(long itemId, long userId,Boolean final)
+        public async Task<long> delete(long itemId, long userId,Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());

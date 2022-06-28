@@ -3290,11 +3290,11 @@ namespace Restaurant.Classes
                             User employ = new User();
                             if (FillCombo.usersList != null)
                             {
-                                employ = FillCombo.usersList.Where(X => X.userId == (int)prInvoice.updateUserId).FirstOrDefault();
+                                employ = FillCombo.usersList.Where(X => X.userId == (long)prInvoice.updateUserId).FirstOrDefault();
                             }
                             else
                             {
-                                employ = await employ.getUserById((int)prInvoice.updateUserId);
+                                employ = await employ.getUserById((long)prInvoice.updateUserId);
                             }
 
                             prInvoice.uuserName = employ.name;
@@ -3308,11 +3308,11 @@ namespace Restaurant.Classes
 
                                 if (FillCombo.customersList != null)
                                 {
-                                    agentinv = FillCombo.customersList.Where(X => X.agentId == (int)prInvoice.agentId).FirstOrDefault();
+                                    agentinv = FillCombo.customersList.Where(X => X.agentId == (long)prInvoice.agentId).FirstOrDefault();
                                 }
                                 else
                                 {
-                                    agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                                    agentinv = await agentinv.getAgentById((long)prInvoice.agentId);
                                 }
 
                                 prInvoice.agentCode = agentinv.code;
@@ -3331,12 +3331,12 @@ namespace Restaurant.Classes
                             Branch branch = new Branch();
                             if (FillCombo.branchsList != null)
                             {
-                                branch = FillCombo.branchsList.Where(X => X.branchId == (int)prInvoice.branchCreatorId).FirstOrDefault();
+                                branch = FillCombo.branchsList.Where(X => X.branchId == (long)prInvoice.branchCreatorId).FirstOrDefault();
 
                             }
                             else
                             {
-                                branch = await branch.getBranchById((int)prInvoice.branchCreatorId);
+                                branch = await branch.getBranchById((long)prInvoice.branchCreatorId);
                             }
 
                             if (branch.branchId > 0)
@@ -3352,19 +3352,19 @@ namespace Restaurant.Classes
                             {
                                 if (FillCombo.shippingCompaniesList != null)
                                 {
-                                    shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (int)prInvoice.shippingCompanyId).FirstOrDefault();
+                                    shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (long)prInvoice.shippingCompanyId).FirstOrDefault();
 
                                 }
                                 else
                                 {
-                                    shippingcom = await shippingcom.GetByID((int)prInvoice.shippingCompanyId);
+                                    shippingcom = await shippingcom.GetByID((long)prInvoice.shippingCompanyId);
                                 }
 
                             }
                             User shipuser = new User();
                             if (prInvoice.shipUserId > 0)
                             {
-                                shipuser = await shipuser.getUserById((int)prInvoice.shipUserId);
+                                shipuser = await shipuser.getUserById((long)prInvoice.shipUserId);
                             }
                             prInvoice.shipUserName = shipuser.name + " " + shipuser.lastname;
                             //end shipping

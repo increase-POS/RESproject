@@ -50,7 +50,7 @@ namespace Restaurant.Classes
 
 
         //
-        public async Task<int> Save(UserSetValues obj)
+        public async Task<long> Save(UserSetValues obj)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "userSetValues/Saveu";

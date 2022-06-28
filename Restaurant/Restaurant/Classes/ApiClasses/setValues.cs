@@ -118,7 +118,7 @@ namespace Restaurant.Classes
          
         }
         // email
-        public async Task<int> SaveValueByNotes(SetValues obj)
+        public async Task<long> SaveValueByNotes(SetValues obj)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "setValues/SaveValueByNotes";
@@ -129,7 +129,7 @@ namespace Restaurant.Classes
 
         }
 
-        public async Task<int> Save(SetValues obj)
+        public async Task<long> Save(SetValues obj)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "setValues/Save";
@@ -164,7 +164,7 @@ namespace Restaurant.Classes
 
      
 
-        public async Task<int> Delete(long Id, long userId)
+        public async Task<long> Delete(long Id, long userId)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -211,7 +211,7 @@ namespace Restaurant.Classes
         #region image
 
 
-        public async Task<string> uploadImage(string imagePath, string imageName, int valId)
+        public async Task<string> uploadImage(string imagePath, string imageName, long valId)
         //public async Task<Boolean> uploadImage(string imagePath, long userId)
         {
             if (imagePath != "")

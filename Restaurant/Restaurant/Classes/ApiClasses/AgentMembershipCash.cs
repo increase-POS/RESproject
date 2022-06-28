@@ -152,7 +152,7 @@ namespace Restaurant.Classes
         //    parameters.Add("itemObject", myContent);
         //   return await APIResult.post(method, parameters);
         //}
-        public async Task<int> Savepay(AgentMembershipCash item,CashTransfer cashtransferobject)
+        public async Task<long> Savepay(AgentMembershipCash item,CashTransfer cashtransferobject)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "AgentMembershipCash/Savepay";

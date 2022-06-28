@@ -31,7 +31,7 @@ namespace Restaurant.Classes
         public Nullable<long> tableId { get; set; }
 
         //***********************************************
-        public async Task<int> saveDocImage(DocImage docImage)
+        public async Task<long> saveDocImage(DocImage docImage)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "DocImage/saveImageDoc";
@@ -201,7 +201,7 @@ namespace Restaurant.Classes
 
         //**********************************************
         // call api method to delete doc image
-        public async Task<int> delete(long docId)
+        public async Task<long> delete(long docId)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();

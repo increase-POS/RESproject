@@ -175,7 +175,7 @@ namespace Restaurant.Classes
        
         /// ///////////////////////////////////////
 
-        public async Task<int> Save(CashTransfer cashTr)
+        public async Task<long> Save(CashTransfer cashTr)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Cashtransfer/Save";
@@ -231,7 +231,7 @@ namespace Restaurant.Classes
          
         }
 
-        public async Task<int> deletePosTrans(long cashTransId)
+        public async Task<long> deletePosTrans(long cashTransId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("cashTransId", cashTransId.ToString());

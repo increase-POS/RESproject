@@ -122,7 +122,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
        
-        public async Task<int> unitsConversion(long branchId,int fromItemUnit , int toItemUnt, int fromQuantity,int toQuantity, long userId, ItemUnit smallUnit)
+        public async Task<int> unitsConversion(long branchId, long fromItemUnit , long toItemUnt, int fromQuantity,int toQuantity, long userId, ItemUnit smallUnit)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemsLocations/unitsConversion";

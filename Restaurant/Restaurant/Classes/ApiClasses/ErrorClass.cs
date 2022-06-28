@@ -47,7 +47,7 @@ namespace Restaurant.Classes
             return items;
         }
        
-        public async Task<int> save(ErrorClass item)
+        public async Task<long> save(ErrorClass item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "errorcontroller/Save";

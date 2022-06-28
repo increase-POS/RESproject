@@ -106,7 +106,7 @@ namespace Restaurant.Classes
             //    return list;
             //}
         }
-        public async Task<int> Save(Group newObject)
+        public async Task<long> Save(Group newObject)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Group/Save";
@@ -118,7 +118,7 @@ namespace Restaurant.Classes
            
         }
      
-        public async Task<int> Delete(long groupId, long userId, bool final)
+        public async Task<long> Delete(long groupId, long userId, bool final)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();

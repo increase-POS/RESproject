@@ -38,7 +38,7 @@ namespace Restaurant.Classes
         public byte isActive { get; set; }
 
         //***********************************************
-        public async Task<int> save(Notification obj, long branchId, string objectName, string prefix,
+        public async Task<long> save(Notification obj, long branchId, string objectName, string prefix,
             long userId = 0, long posId = 0)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();

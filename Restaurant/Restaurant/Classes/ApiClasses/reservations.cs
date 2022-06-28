@@ -58,7 +58,7 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("tables", myContent);
             return await APIResult.post(method, parameters);
         }
-        internal async Task<int> updateReservationStatus(long reservationId, string status, long userId)
+        internal async Task<long> updateReservationStatus(long reservationId, string status, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Tables/updateReservationStatus";

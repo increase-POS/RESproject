@@ -94,7 +94,7 @@ namespace Restaurant.Classes
             return items;
         }
 
-        public async Task<int> save(List<InventoryItemLocation> newObject, long inventoryId)
+        public async Task<long> save(List<InventoryItemLocation> newObject, long inventoryId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "InventoryItemLocation/Save";

@@ -143,7 +143,7 @@ namespace Restaurant.Classes
         //***************************************
         // add or update item unit
         //***************************************
-        public async Task<int> saveItemUnit(ItemUnit itemUnit)
+        public async Task<long> saveItemUnit(ItemUnit itemUnit)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemsUnits/Save";
@@ -155,7 +155,7 @@ namespace Restaurant.Classes
         //***************************************
         // delete item unit (barcode)
         //***************************************
-        public async Task<int> Delete(long ItemUnitId, long userId, bool final)
+        public async Task<long> Delete(long ItemUnitId, long userId, bool final)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();

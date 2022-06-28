@@ -52,7 +52,7 @@ namespace Restaurant.Classes
         }
 
        
-        public async Task<int> save(Memberships item)
+        public async Task<long> save(Memberships item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "memberships/Save";
@@ -60,7 +60,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(long itemId, long userId, Boolean final)
+        public async Task<long> delete(long itemId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());
@@ -69,7 +69,7 @@ namespace Restaurant.Classes
             string method = "memberships/Delete";
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> SaveMemberAndSub(Memberships item)
+        public async Task<long> SaveMemberAndSub(Memberships item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "memberships/SaveMemberAndSub";

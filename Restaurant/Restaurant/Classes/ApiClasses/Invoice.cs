@@ -181,7 +181,7 @@ namespace Restaurant.Classes
         public string shipUserLastName { get; set; }
         public string shippingCompanyName { get; set; }
         public string status { get; set; }
-        public int invStatusId { get; set; }
+        public long invStatusId { get; set; }
 
         public string createrUserName { get; set; }
 
@@ -699,7 +699,7 @@ namespace Restaurant.Classes
             return items;
         }
         
-        public async Task<int> saveInvoice(Invoice item)
+        public async Task<long> saveInvoice(Invoice item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Invoices/Save";
@@ -707,7 +707,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> saveInvoiceWithItems(Invoice invoice, List<ItemTransfer> invoiceItems)
+        public async Task<long> saveInvoiceWithItems(Invoice invoice, List<ItemTransfer> invoiceItems)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Invoices/SaveWithItems";
@@ -718,7 +718,7 @@ namespace Restaurant.Classes
 
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> saveInvoiceWithItemsAndTables(Invoice invoice, List<ItemTransfer> invoiceItems, List<Tables> tables)
+        public async Task<long> saveInvoiceWithItemsAndTables(Invoice invoice, List<ItemTransfer> invoiceItems, List<Tables> tables)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Invoices/saveInvoiceWithItemsAndTables";
@@ -730,7 +730,7 @@ namespace Restaurant.Classes
             parameters.Add("tablesObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> saveInvoiceWithTables(Invoice invoice, List<Tables> tables)
+        public async Task<long> saveInvoiceWithTables(Invoice invoice, List<Tables> tables)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Invoices/saveInvoiceWithTables";
@@ -769,7 +769,7 @@ namespace Restaurant.Classes
             parameters.Add("itemTransferObject", myContent);
             await APIResult.post(method, parameters);
         }
-        public async Task<int> saveInvoiceCoupons(List<CouponInvoice> invoiceCoupons, long invoiceId, string invType)
+        public async Task<long> saveInvoiceCoupons(List<CouponInvoice> invoiceCoupons, long invoiceId, string invType)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "couponsInvoices/Save";
@@ -780,7 +780,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> saveMemberShipClassDis(InvoicesClass invoiceClass, long invoiceId)
+        public async Task<long> saveMemberShipClassDis(InvoicesClass invoiceClass, long invoiceId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "invoices/saveMemberShipClassDis";
@@ -798,7 +798,7 @@ namespace Restaurant.Classes
             parameters.Add("invoiceId", invoiceId.ToString());
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> deleteInvoice(long invoiceId)
+        public async Task<long> deleteInvoice(long invoiceId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", invoiceId.ToString());

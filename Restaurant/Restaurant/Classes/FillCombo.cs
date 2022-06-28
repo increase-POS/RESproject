@@ -1279,7 +1279,7 @@ namespace Restaurant.Classes
 
             posSetting = new PosSetting();
 
-            posSetting = await posSetting.GetByposId((int)MainWindow.posLogin.posId);
+            posSetting = await posSetting.GetByposId((long)MainWindow.posLogin.posId);
             posSetting = posSetting.MaindefaultPrinterSetting(posSetting);
 
             if (posSetting.repname is null || posSetting.repname == "")

@@ -59,7 +59,7 @@ namespace Restaurant.Classes
             //newlog.userId = MainWindow.userID;
             //newlog.posId = MainWindow.posID;
 
-            int logId = (int)MainWindow.userLogin.userId;
+            long logId = (long)MainWindow.userLogin.userId;
             BackupCls item = new BackupCls();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("logId", logId.ToString());

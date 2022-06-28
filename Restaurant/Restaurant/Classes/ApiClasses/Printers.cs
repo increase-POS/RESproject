@@ -31,7 +31,7 @@ namespace Restaurant.Classes
         /// 
 
    
-        public async Task<int> Save(Printers obj)
+        public async Task<long> Save(Printers obj)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();

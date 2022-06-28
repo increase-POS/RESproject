@@ -152,7 +152,7 @@ namespace Restaurant.Classes
         /// <returns></returns>
         /// 
 
-        public async Task<int> save(Agent agent)
+        public async Task<long> save(Agent agent)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Agent/Save";
@@ -194,7 +194,7 @@ namespace Restaurant.Classes
                 });
         }
         // delete agent
-        public async Task<int> delete(long agentId, long userId, Boolean final)
+        public async Task<long> delete(long agentId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", agentId.ToString());

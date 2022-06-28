@@ -155,7 +155,7 @@ namespace Restaurant.Classes
             return user;
         }
          
-        public async Task<int> save(User user)
+        public async Task<long> save(User user)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Users/Save";
@@ -165,7 +165,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> delete(long delUserId, long userId, bool final)
+        public async Task<long> delete(long delUserId, long userId, bool final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("delUserId", delUserId.ToString());
@@ -299,7 +299,7 @@ namespace Restaurant.Classes
             }
         }
 
-        public async Task<int> checkLoginAvalability(int posId, string userName, string password)
+        public async Task<int> checkLoginAvalability(long posId, string userName, string password)
         {
             string motherCode = setupConfiguration.GetMotherBoardID();
             string hardCode = setupConfiguration.GetHDDSerialNo();

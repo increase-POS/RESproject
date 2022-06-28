@@ -85,7 +85,7 @@ namespace Restaurant.Classes
             return items;
         }
 
-        public async Task<int> save(Location item)
+        public async Task<long> save(Location item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Locations/Save";
@@ -94,7 +94,7 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> saveLocationsSection(List<Location> locations, long sectionId, long userId)
+        public async Task<long> saveLocationsSection(List<Location> locations, long sectionId, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Locations/AddLocationsToSection";
@@ -104,7 +104,7 @@ namespace Restaurant.Classes
             parameters.Add("userId", userId.ToString());
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(long locationId, long userId, Boolean final)
+        public async Task<long> delete(long locationId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", locationId.ToString());

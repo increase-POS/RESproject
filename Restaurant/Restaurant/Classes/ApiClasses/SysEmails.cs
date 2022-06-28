@@ -65,7 +65,7 @@ namespace Restaurant.Classes
 
         }
 
-        public async Task<int> Save(SysEmails obj)
+        public async Task<long> Save(SysEmails obj)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "SysEmails/Save";
@@ -100,7 +100,7 @@ namespace Restaurant.Classes
 
         }
 
-        public async Task<int> Delete(long emailId, long userId, bool final)
+        public async Task<long> Delete(long emailId, long userId, bool final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("emailId", emailId.ToString());

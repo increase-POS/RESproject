@@ -80,7 +80,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<int> save(Unit item)
+        public async Task<long> save(Unit item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Units/Save";
@@ -88,7 +88,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> delete(long unitId, long userId, Boolean final)
+        public async Task<long> delete(long unitId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", unitId.ToString());

@@ -58,7 +58,7 @@ namespace Restaurant.Classes
             parameters.Add("posName", posName);
             return await APIResult.post(method, parameters);
         }
-        public async static Task<int> setPosConfiguration(string activationCode, string deviceCode,int posId)
+        public async static Task<int> setPosConfiguration(string activationCode, string deviceCode, long posId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "pos/setPosConfiguration";

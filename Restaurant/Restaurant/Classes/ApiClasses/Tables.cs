@@ -29,7 +29,7 @@ namespace Restaurant.Classes.ApiClasses
         public string sectionName { get; set; }
         public string branchName { get; set; }
 
-        internal async Task<int> save(Tables table)
+        internal async Task<long> save(Tables table)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Tables/Save";
@@ -38,7 +38,7 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        internal async Task<int> delete(long tableId, long userId, bool final)
+        internal async Task<long> delete(long tableId, long userId, bool final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("tableId", tableId.ToString());

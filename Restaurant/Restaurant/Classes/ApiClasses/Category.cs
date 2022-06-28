@@ -76,7 +76,7 @@ namespace Restaurant.Classes
       
         // adding or editing  category by calling API metod "save"
         // if categoryId = 0 will call save else call edit
-        public async Task<int> save(Category item)
+        public async Task<long> save(Category item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Categories/Save";
