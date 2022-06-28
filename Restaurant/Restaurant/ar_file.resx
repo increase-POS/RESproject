@@ -4165,4 +4165,7 @@
   <data name="extraOrders" xml:space="preserve">
     <value>طلبات اضافية</value>
   </data>
+  <data name="trAdministrative" xml:space="preserve">
+    <value>إداري</value>
+  </data>
 </root>

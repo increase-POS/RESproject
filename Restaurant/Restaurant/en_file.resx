@@ -4180,4 +4180,7 @@ Please add Email in setting</value>
   <data name="extraOrders" xml:space="preserve">
     <value>Extra orders</value>
   </data>
+  <data name="trAdministrative" xml:space="preserve">
+    <value>Administrative</value>
+  </data>
 </root>

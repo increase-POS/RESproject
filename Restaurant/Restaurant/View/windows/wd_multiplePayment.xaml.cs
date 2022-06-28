@@ -117,12 +117,19 @@ namespace Restaurant.View.windows
                 new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
                 new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
                  };
-
+                if (!isPurchase)
+                {
+                    typelist = new[] {
+                new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
+                new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
+                new { Text = AppSettings.resourcemanager.GetString("trAdministrative") , Value = "admin" },
+                 };
+                }
                 cb_paymentProcessType.ItemsSource = typelist;
             }
             cb_paymentProcessType.SelectedIndex = 0;
         }
-        private void Btn_colse_Click(object sender, RoutedEventArgs e)
+            private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             isOk = false;
             this.Close();

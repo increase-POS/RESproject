@@ -2832,7 +2832,16 @@ namespace Restaurant.View.sales
                     cashTransfer.createUserId = MainWindow.userLogin.userId;
                     await cashTransfer.Save(cashTransfer); //add cash transfer  
                     break;
-
+                case "admin": // admin
+                    cashTransfer.transType = "d"; //deposit
+                    cashTransfer.posId = MainWindow.posLogin.posId;
+                    cashTransfer.agentId = invoice.agentId;
+                    cashTransfer.invId = invoice.invoiceId;
+                    cashTransfer.transNum = await cashTransfer.generateCashNumber("dc");
+                    cashTransfer.side = "c"; // customer
+                    cashTransfer.createUserId = MainWindow.userLogin.userId;
+                    await cashTransfer.Save(cashTransfer); //add cash transfer  
+                    break;
             }
         }
         private async void Btn_pay_Click(object sender, RoutedEventArgs e)
