@@ -489,7 +489,7 @@ namespace Restaurant
                 if (invSet != null)
                 {
                     //defaulInvType = invSet.valId;
-                    //settingId = (int)invSet.settingId;
+                    //settingId = (long)invSet.settingId;
                     //notes = invSet.notes;
                     //try
                     //{
@@ -1288,7 +1288,7 @@ namespace Restaurant
 
             AppSettings.posSetting = new PosSetting();
 
-            AppSettings.posSetting = await AppSettings.posSetting.GetByposId((int)MainWindow.posLogin.posId);
+            AppSettings.posSetting = await AppSettings.posSetting.GetByposId((long)MainWindow.posLogin.posId);
             AppSettings.posSetting = AppSettings.posSetting.MaindefaultPrinterSetting(AppSettings.posSetting);
             // report
             if (AppSettings.posSetting.repname is null || AppSettings.posSetting.repname == "")
@@ -1685,7 +1685,7 @@ namespace Restaurant
                 #region get cachtransfers for current pos
                 CashTransfer cashModel = new CashTransfer();
                 IEnumerable<CashTransfer> cashesQuery;
-                cashesQuery = await cashModel.GetCashTransferForPosById("all", "p", (int)MainWindow.posLogin.posId);
+                cashesQuery = await cashModel.GetCashTransferForPosById("all", "p", (long)MainWindow.posLogin.posId);
                 cashesQuery = cashesQuery.Where(c => c.posId == MainWindow.posLogin.posId && c.isConfirm == 0);
                 int posCachTransfers = cashesQuery.Count();
                 #endregion
@@ -1724,7 +1724,7 @@ namespace Restaurant
                 //  User thruser = new User();
                 //UsersLogs thrlog = new UsersLogs();
 
-                //thrlog = await thrlog.GetByID((int)userLogInID);
+                //thrlog = await thrlog.GetByID((long)userLogInID);
                 // check go_out == true do logout()
                 //if (thrlog.sOutDate != null)
                 if (go_out)
