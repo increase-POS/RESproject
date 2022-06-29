@@ -81,6 +81,7 @@ namespace Restaurant.View.accounts
         string searchText = "";
         string createPermission = "received_create";
         string reportsPermission = "received_reports";
+        string administrativePaymentPermission = "received_administrativePayment";
         public static List<string> requiredControlList;
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -174,13 +175,17 @@ namespace Restaurant.View.accounts
                 new { Text = AppSettings.resourcemanager.GetString("trCheque")     , Value = "cheque" },
                 new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
                  };
-            if(cb_depositFrom.SelectedValue.ToString().Equals("c"))
+
+
+            if(cb_depositFrom.SelectedValue.ToString().Equals("c") &&  FillCombo.groupObject.HasPermissionAction(administrativePaymentPermission, FillCombo.groupObjects, "one"))
                 typelist = new[] {
                 new { Text = AppSettings.resourcemanager.GetString("trCash")                  , Value = "cash" },
                 new { Text = AppSettings.resourcemanager.GetString("trCheque")                , Value = "cheque" },
                 new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
                 new { Text = AppSettings.resourcemanager.GetString("trAdministrative")        , Value = "admin" },
                  };
+
+
             cb_paymentProcessType.DisplayMemberPath = "Text";
             cb_paymentProcessType.SelectedValuePath = "Value";
             cb_paymentProcessType.ItemsSource = typelist;

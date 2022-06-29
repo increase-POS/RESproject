@@ -704,6 +704,7 @@ namespace Restaurant.View.accounts
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_multiplePayment w = new wd_multiplePayment();
                         w.isPurchase = false;
+                        w.windowOfSourceName = this.Tag.ToString();
 
                         Agent customer = FillCombo.customersList.ToList().Find(b => b.agentId == invoice.agentId && b.isLimited == true);
                         if (customer != null)
