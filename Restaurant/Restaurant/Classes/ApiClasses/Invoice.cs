@@ -74,6 +74,9 @@ namespace Restaurant.Classes
         public Nullable<decimal> finalDiscount { get; set; }
 
         public Nullable<long> mainCourseId { get; set; }
+
+        public List<itemsTransferIngredients> itemsIngredients { get; set; }
+
     }
     public class invoiceTables
     {
@@ -711,6 +714,17 @@ namespace Restaurant.Classes
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Invoices/SaveWithItems";
+            var myContent = JsonConvert.SerializeObject(invoice);
+            parameters.Add("invoiceObject", myContent);
+            myContent = JsonConvert.SerializeObject(invoiceItems);
+            parameters.Add("itemsObject", myContent);
+
+           return await APIResult.post(method, parameters);
+        }
+        public async Task<long> saveSalesInvoice(Invoice invoice, List<ItemTransfer> invoiceItems)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Invoices/saveSalesInvoice";
             var myContent = JsonConvert.SerializeObject(invoice);
             parameters.Add("invoiceObject", myContent);
             myContent = JsonConvert.SerializeObject(invoiceItems);

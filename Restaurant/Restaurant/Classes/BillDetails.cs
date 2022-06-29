@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Classes.ApiClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,7 @@ namespace Restaurant.Classes
         public string forAgents { get; set; }
         public long itemsTransId { get; set; }
 
-
+        public List<itemsTransferIngredients> itemsIngredients { get; set; }
     }
 
 

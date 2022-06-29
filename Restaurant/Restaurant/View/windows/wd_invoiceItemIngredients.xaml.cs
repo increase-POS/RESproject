@@ -67,6 +67,7 @@ namespace Restaurant.View.windows
         }
         public bool isOpend = false;
         public int itemTransferId = 0;
+        public List<itemsTransferIngredients> itemsIngredients;
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -112,15 +113,16 @@ namespace Restaurant.View.windows
             {
                 HelpClass.StartAwait(grid_main);
 
-                #region test 
-                List<itemsTransferIngredients> dishIngredientsList = new List<itemsTransferIngredients>();
-                dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Potato", isActive = 1 });
-                dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Sauce", isActive = 0 });
-                dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Sauce", isActive = 1 });
-                dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Potato", isActive = 0 });
-                dg_ingredient.ItemsSource = dishIngredientsList;
-                #endregion
+                //#region test 
+                //List<itemsTransferIngredients> dishIngredientsList = new List<itemsTransferIngredients>();
+                //dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Potato", isActive = 1 });
+                //dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Sauce", isActive = 0 });
+                //dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Sauce", isActive = 1 });
+                //dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Potato", isActive = 0 });
+                //dg_ingredient.ItemsSource = dishIngredientsList;
+                //#endregion
 
+                dg_ingredient.ItemsSource = itemsIngredients;
                 requiredControlList = new List<string> { "extraItemId", "count" };
                 if (AppSettings.lang.Equals("en"))
                 {
@@ -167,7 +169,7 @@ namespace Restaurant.View.windows
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
             dg_tag.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
-            dg_tag.Columns[1].Header = AppSettings.resourcemanager.GetString("trNote");
+            dg_tag.Columns[1].Header = AppSettings.resourcemanager.GetString("trCount");
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -553,6 +555,10 @@ namespace Restaurant.View.windows
                     if (vis is DataGridRow)
                     {
                         itemsTransferIngredients row = (itemsTransferIngredients)dg_ingredient.SelectedItems[0];
+                        row.isActive = 0;
+
+                        dg_ingredient.ItemsSource = null;
+                        dg_ingredient.ItemsSource = itemsIngredients;
                         MessageBox.Show("my activity is: " + row.isActive);
                     }
 

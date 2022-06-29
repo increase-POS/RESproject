@@ -431,8 +431,8 @@ namespace Restaurant.View.sales
         }
         #endregion
         #region Get Id By Click  Y
-
-        public void ChangeItemIdEvent(long itemId)
+        itemsTransferIngredients dishIngredients = new itemsTransferIngredients();
+        public async void ChangeItemIdEvent(long itemId)
         {
             try
             {
@@ -441,7 +441,14 @@ namespace Restaurant.View.sales
                 else if (item != null)
                 {
                     item = items.Where(x => x.itemId == itemId).FirstOrDefault();
-                    addRowToBill(item, 1, false);
+                    #region item Ingredients
+                    List<itemsTransferIngredients> ingredientsList = await dishIngredients.GetItemIngredients(0,(long)item.itemUnitId);
+                    #endregion
+                    addRowToBill(item, 1, ingredientsList, false);
+                   
+
+                    #region save draft invoice
+                    #endregion
                 }
             }
             catch { }
@@ -804,12 +811,12 @@ namespace Restaurant.View.sales
         TablesReservation reservation = new TablesReservation();
         InvoicesClass invoiceMemberShipClass = new InvoicesClass();
         List<InvoicesClass> customerInvClasses = new List<InvoicesClass>();
-        private void addRowToBill(Item item, long count, bool isList = false)
+        private void addRowToBill(Item item, long count,List<itemsTransferIngredients> ingredients, bool isList = false)
         {
             decimal total = 0;
-            var invoiceItem = billDetailsList.Where(x => x.itemId == item.itemId).FirstOrDefault();
+           // var invoiceItem = billDetailsList.Where(x => x.itemId == item.itemId).FirstOrDefault();
             #region add item to invoice
-            if (invoiceItem == null)
+            //if (invoiceItem == null)
             {
                 decimal price = 0;
                 decimal basicPrice = (decimal)item.basicPrice;
@@ -845,18 +852,20 @@ namespace Restaurant.View.sales
                     OfferType = offerType,
                     OfferValue = offerValue,
                     forAgents = item.forAgent,
+                    itemsIngredients = ingredients,
+                    //itemsTransId = itemTransferId,
                 });
                 _SequenceNum++;
             }
             #endregion
-            #region item already exist in invoice
-            else
-            {
-                invoiceItem.Count++;
-                total = invoiceItem.Price * invoiceItem.Count;
-                invoiceItem.Total = total;
-            }
-            #endregion
+            //#region item already exist in invoice
+            //else
+            //{
+            //    invoiceItem.Count++;
+            //    total = invoiceItem.Price * invoiceItem.Count;
+            //    invoiceItem.Total = total;
+            //}
+            //#endregion
             BuildBillDesign();
             refreshTotal();
             if (isList == false)
@@ -1102,19 +1111,18 @@ namespace Restaurant.View.sales
         {
             var button = sender as Button;
             int index = int.Parse(button.Tag.ToString().Replace("image-", ""));
-
-            
-
+           
             try
             {
                 HelpClass.StartAwait(grid_main);
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoiceItemIngredients w = new wd_invoiceItemIngredients();
-               
+                w.itemsIngredients =  billDetailsList[index].itemsIngredients;
+
                 /*
                 billDetailsList[index].Count++;
                 */
-                w.itemTransferId = 1;
+                //w.itemTransferId = itemTransferId;
                 w.ShowDialog();
               
                 Window.GetWindow(this).Opacity = 1;
@@ -1531,11 +1539,12 @@ namespace Restaurant.View.sales
                     itemT.itemUnitPrice = item.basicPrice;
                     itemT.createUserId = MainWindow.userLogin.userId;
                     itemT.forAgents = item.forAgents;
-
+                    itemT.itemsIngredients = item.itemsIngredients;
                     invoiceItems.Add(itemT);
                 }
                 #endregion
-                long res = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
+                //long res = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
+                long res = await FillCombo.invoice.saveSalesInvoice(invoice, invoiceItems);
 
                 invoice.invoiceId = res;
                 prinvoiceId = invoice.invoiceId;
@@ -1718,7 +1727,7 @@ namespace Restaurant.View.sales
             foreach (ItemTransfer it in invoiceItems)
             {
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item, it.quantity, true);
+                addRowToBill(item, it.quantity, it.itemsIngredients,true);
             }
             setKitchenNotification();
         }
@@ -1729,7 +1738,7 @@ namespace Restaurant.View.sales
             foreach (BillDetailsSales it in tempBill)
             {
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item, it.Count, false);
+                addRowToBill(item, it.Count,it.itemsIngredients, false);
             }
         }
         async Task fillDiningHallInv()
