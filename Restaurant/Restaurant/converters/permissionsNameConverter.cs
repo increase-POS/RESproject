@@ -118,6 +118,7 @@ namespace Restaurant.converters
                      case "users_permission":
                     value = AppSettings.resourcemanager.GetString("trPermission");
                     break;
+                   
 
 
 
@@ -276,6 +277,10 @@ namespace Restaurant.converters
                          else if (value.ToString().Contains("_activateDriver"))
                         {
                             value = AppSettings.resourcemanager.GetString("activateDriver");
+                        }
+                        else if (value.ToString().Contains("_administrativePayment"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("administrativePayment");
                         }
                         break;
                     }
