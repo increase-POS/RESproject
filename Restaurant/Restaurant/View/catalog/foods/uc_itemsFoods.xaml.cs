@@ -1591,7 +1591,7 @@ namespace Restaurant.View.catalog.foods
                         await FillCombo.RefreshItemUnit();
                         wd_dishIngredients w = new wd_dishIngredients();
                         w.itemUnitId = FillCombo.itemUnitList.Where(x => x.itemId == item.itemId).FirstOrDefault().itemUnitId;
-                    // w.ShowInTaskbar = false;
+                        // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
 
@@ -1611,7 +1611,45 @@ namespace Restaurant.View.catalog.foods
             }
 
         }
+        private void Btn_extraItems_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //items
+                if (item.itemId > 0)
+                {
 
-       
+                    if (FillCombo.groupObject.HasPermissionAction(dishIngredientsPermission, FillCombo.groupObjects, "one"))
+                    {
+                        Window.GetWindow(this).Opacity = 0.2;
+
+
+
+                        //await FillCombo.RefreshItemUnit();
+                        //wd_dishIngredients w = new wd_dishIngredients();
+                        //w.itemUnitId = FillCombo.itemUnitList.Where(x => x.itemId == item.itemId).FirstOrDefault().itemUnitId;
+                        //w.ShowDialog();
+
+
+                        Window.GetWindow(this).Opacity = 1;
+
+                    }
+                    else
+                        Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+
     }
 }

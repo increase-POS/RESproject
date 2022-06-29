@@ -606,16 +606,26 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
+                    <Border Background="White" Grid.ColumnSpan="6"  Height="1"  BorderBrush="{StaticResource MainColor}" 
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
+                    
                     <Border x:Name="brd_dishIngredients"  Grid.Row="1" Grid.ColumnSpan="3">
                         <Button x:Name="btn_dishIngredients" 
                                 Content="Ingredients" materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                     Margin="1,1"   Foreground="White" Click="Btn_dishIngredients_Click" />
                     </Border>
-                    <Border Grid.Row="2">
+                        <Border x:Name="brd_extraItems"  Grid.Row="1" Grid.Column="3"  Grid.ColumnSpan="3">
+                            <Button x:Name="btn_extraItems" 
+                                Content="extraItems" materialDesign:ButtonAssist.CornerRadius="7"
+                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                    Margin="1,1"   Foreground="White" Click="Btn_extraItems_Click" />
+                        </Border>
+                        <Border Grid.Row="2" Grid.ColumnSpan="2" >
 
                         <Button x:Name="btn_add"  materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
@@ -638,7 +648,7 @@
                                     VerticalOffset="30"/>
                         </Border.ToolTip>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="1">
+                        <Border Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2">
                         <Button x:Name="btn_update"   materialDesign:ButtonAssist.CornerRadius="7"
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                    Margin="1,1"  Click="Btn_update_Click" Foreground="White" >
@@ -662,7 +672,7 @@
 
                         </Border.ToolTip>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="2">
+                        <Border Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2">
                         <Button x:Name="btn_delete"  materialDesign:ButtonAssist.CornerRadius="7"
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" Foreground="White"
                     Margin="1,1"  Click="Btn_delete_Click" >
