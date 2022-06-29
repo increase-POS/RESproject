@@ -732,14 +732,14 @@ namespace Restaurant.View.reports.accountsReports
                 ShippingCompanies toShipCompanies = new ShippingCompanies();
                 string emailto = "";
                 bool toemailexist = false;
-                email = await email.GetByBranchIdandSide((int)MainWindow.branchLogin.branchId, "accounting");
+                email = await email.GetByBranchIdandSide((long)MainWindow.branchLogin.branchId, "accounting");
                 switch (selectedTab)
                 {
                     case 0:
                         //vendor
                         var objct0 = cb_vendors.SelectedItem as VendorCombo;
 
-                        int agentId = (int)objct0.VendorId;
+                        long agentId = (long)objct0.VendorId;
                         toAgent = await toAgent.getAgentById(agentId);
                         emailto = toAgent.email;
 
@@ -761,7 +761,7 @@ namespace Restaurant.View.reports.accountsReports
 
                     case 1:
                         var objct1 = cb_vendors.SelectedItem as VendorCombo;
-                        agentId = (int)objct1.VendorId;
+                        agentId = (long)objct1.VendorId;
                         toAgent = await toAgent.getAgentById(agentId);
                         emailto = toAgent.email;
 
@@ -780,7 +780,7 @@ namespace Restaurant.View.reports.accountsReports
                         break;
                     case 2:
                         var objct2 = cb_vendors.SelectedItem as VendorCombo;
-                        long userId = (int)objct2.UserId;
+                        long userId = (long)objct2.UserId;
                         toUser = await toUser.getUserById(userId);
                         emailto = toUser.email;
 
@@ -799,7 +799,7 @@ namespace Restaurant.View.reports.accountsReports
                         break;
                     case 3:
                         var objct3 = cb_vendors.SelectedItem as ShippingCombo;
-                        int shipId = (int)objct3.ShippingId;
+                        long shipId = (long)objct3.ShippingId;
 
                         toShipCompanies = await toShipCompanies.GetByID(shipId);
                         emailto = toShipCompanies.email;
