@@ -281,6 +281,17 @@ namespace Restaurant.View.windows
                     case 1://card
                         gd_card.Visibility = Visibility.Visible;
                         break;
+                    case 2://admin
+                        gd_card.Visibility = Visibility.Collapsed;
+                        tb_processNum.Clear();
+                        _SelectedCard = -1;
+                        txt_card.Text = "";
+                        brd_processNum.Visibility = Visibility.Collapsed;
+                        /*
+                        HelpClass.clearTextBlockValidate(txt_card, p_errorCard);
+                        HelpClass.clearValidate(tb_processNum, p_errorCard);
+                        */
+                        break;
                 }
                 foreach (var el in cardEllipseList)
                 {
@@ -552,7 +563,10 @@ namespace Restaurant.View.windows
                                 s = txt_card.Text + " : " + cashTrasnfer.cash;
                             }
                         }
-
+                        else if(cb_paymentProcessType.SelectedValue.ToString().Equals("admin"))
+                        {
+                            s = validateDuplicate(cashTrasnfer.cash);
+                        }
 
                         lst_payments.Items.Add(s);
                         listPayments.Add(cashTrasnfer);

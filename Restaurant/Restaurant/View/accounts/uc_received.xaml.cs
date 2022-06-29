@@ -990,6 +990,15 @@ namespace Restaurant.View.accounts
                         }
                         catch { }
                         break;
+                    case 3://admin
+                        bdr_cheque.Visibility = Visibility.Collapsed;
+                        tb_docNumCheque.Visibility = Visibility.Collapsed;
+                        tb_docNumCheque.Clear();
+                        bdr_card.Visibility = Visibility.Collapsed;
+                        _SelectedCard = 0;
+                        tb_docNumCard.Clear();
+                        txt_card.Text = "";
+                        break;
                     case -1:
                         bdr_cheque.Visibility = Visibility.Collapsed;
                         tb_docNumCheque.Visibility = Visibility.Collapsed;
