@@ -444,7 +444,7 @@ namespace Restaurant.View.sales
                     #region item Ingredients
                     List<itemsTransferIngredients> ingredientsList = await dishIngredients.GetItemIngredients(0,(long)item.itemUnitId);
                     #endregion
-                    addRowToBill(item, 1, ingredientsList, false);
+                    addRowToBill(item, 1, ingredientsList,new List<ItemTransfer>(), false);
                    
 
                     #region save draft invoice
@@ -811,7 +811,7 @@ namespace Restaurant.View.sales
         TablesReservation reservation = new TablesReservation();
         InvoicesClass invoiceMemberShipClass = new InvoicesClass();
         List<InvoicesClass> customerInvClasses = new List<InvoicesClass>();
-        private void addRowToBill(Item item, long count,List<itemsTransferIngredients> ingredients, bool isList = false)
+        private void addRowToBill(Item item, long count,List<itemsTransferIngredients> ingredients,List<ItemTransfer> itemExtras, bool isList = false)
         {
             decimal total = 0;
            // var invoiceItem = billDetailsList.Where(x => x.itemId == item.itemId).FirstOrDefault();
@@ -853,6 +853,7 @@ namespace Restaurant.View.sales
                     OfferValue = offerValue,
                     forAgents = item.forAgent,
                     itemsIngredients = ingredients,
+                    itemExtras = itemExtras,
                     //itemsTransId = itemTransferId,
                 });
                 _SequenceNum++;
@@ -1118,11 +1119,9 @@ namespace Restaurant.View.sales
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoiceItemIngredients w = new wd_invoiceItemIngredients();
                 w.itemsIngredients =  billDetailsList[index].itemsIngredients;
+                w.itemExtras = billDetailsList[index].itemExtras;
+                w.itemId = billDetailsList[index].itemId;
 
-                /*
-                billDetailsList[index].Count++;
-                */
-                //w.itemTransferId = itemTransferId;
                 w.ShowDialog();
               
                 Window.GetWindow(this).Opacity = 1;
@@ -1727,7 +1726,7 @@ namespace Restaurant.View.sales
             foreach (ItemTransfer it in invoiceItems)
             {
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item, it.quantity, it.itemsIngredients,true);
+                addRowToBill(item, it.quantity, it.itemsIngredients,it.itemExtras,true);
             }
             setKitchenNotification();
         }
@@ -1738,7 +1737,7 @@ namespace Restaurant.View.sales
             foreach (BillDetailsSales it in tempBill)
             {
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item, it.Count,it.itemsIngredients, false);
+                addRowToBill(item, it.Count,it.itemsIngredients, it.itemExtras,false);
             }
         }
         async Task fillDiningHallInv()

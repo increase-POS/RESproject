@@ -76,6 +76,8 @@ namespace Restaurant.Classes
         public Nullable<long> mainCourseId { get; set; }
 
         public List<itemsTransferIngredients> itemsIngredients { get; set; }
+        public List<ItemTransfer> itemExtras { get; set; }
+
 
     }
     public class invoiceTables
@@ -1430,6 +1432,21 @@ namespace Restaurant.Classes
                 }
             }
             return item;
+        }
+        public async Task<List<ItemTransfer>> GetItemExtras(long itemTransferId)
+        {
+            List<ItemTransfer> items = new List<ItemTransfer>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("itemTransferId", itemTransferId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("invoices/GetItemExtras", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<ItemTransfer>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
         }
         public async Task<Invoice> getInvoiceByNumAndUser(string invType, string invNum, long userId)
         {

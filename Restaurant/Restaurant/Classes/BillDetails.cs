@@ -26,6 +26,8 @@ namespace Restaurant.Classes
         public long itemsTransId { get; set; }
 
         public List<itemsTransferIngredients> itemsIngredients { get; set; }
+        public List<ItemTransfer> itemExtras { get; set; }
+
     }
 
 

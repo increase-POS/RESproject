@@ -1,5 +1,6 @@
 ﻿<Window x:Class="Restaurant.View.windows.wd_invoiceItemIngredients"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:dotNetKitControls="clr-namespace:DotNetKit.Windows.Controls;assembly=DotNetKit.Wpf.AutoCompleteComboBox"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -184,7 +185,7 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                    <DataGridTextColumn Width="*"  Header="name - price" Binding="{Binding Path=name}">
+                                    <DataGridTextColumn Width="*"  Header="name - price" Binding="{Binding Path=itemName}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -195,7 +196,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                    <DataGridTextColumn Width="*"  Header="count"  Binding="{Binding Path =count }">
+                                    <DataGridTextColumn Width="*"  Header="count"  Binding="{Binding Path =quantity }">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -250,13 +251,30 @@
                                 </Grid>
                                     <Border x:Name="brd_extraItemId" Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                         <Grid   >
-                                            <ComboBox x:Name="cb_extraItemId"    SelectedValue="{Binding extraItemId, Mode=OneWay}"
+                                            <!--<ComboBox x:Name="cb_extraItemId"    SelectedValue="{Binding extraItemId, Mode=OneWay}"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   materialDesign:HintAssist.Hint="extraItem - price..."  
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     
                                   Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
+                                  BorderBrush="#737373" BorderThickness="0"  />-->
+                                            <dotNetKitControls:AutoCompleteComboBox   
+                                        x:Name="cb_extraItemId" Padding="10,5,5,5"  Grid.Column="0"
+                                        TextBlock.Foreground="#4E4E4E"    Margin="4,0"
+                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                        materialDesign:HintAssist.Hint="extraItem - price..."    
+                                        VerticalAlignment="Top" BorderThickness="0" Height="40" 
+                                        BorderBrush="#737373"
+                                        TextSearch.TextPath="name"
+                                         SelectedValue="{Binding extraItemId, Mode=OneWay}"
+                                        
+                                        SelectionChanged="Cb_extraItemId_SelectionChanged">
+                                                <dotNetKitControls:AutoCompleteComboBox.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <VirtualizingStackPanel />
+                                                    </ItemsPanelTemplate>
+                                                </dotNetKitControls:AutoCompleteComboBox.ItemsPanel>
+                                            </dotNetKitControls:AutoCompleteComboBox>
                                             <Path Fill="#E81123" x:Name="p_error_extraItemId" Stretch="Fill" Margin="5,5,20,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15" 
@@ -267,7 +285,7 @@
                                     <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                         <Grid>
                                             <TextBox x:Name="tb_count" Grid.Row="8"  Padding="10,0,5,0"  
-                                         Text="{Binding count, Mode=OneWay}"
+                                         Text="{Binding quantity, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="count..."    
                                         Foreground="#4E4E4E"    

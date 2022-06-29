@@ -168,6 +168,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
+        
         public async Task<List<Item>> GetAllSalesItemsInv(long branchId,string day,string invType, long membershipId =0)
         {
             List<Item> items = new List<Item>();
@@ -178,6 +179,25 @@ namespace Restaurant.Classes
             parameters.Add("branchId", branchId.ToString());
 
             IEnumerable<Claim> claims = await APIResult.getList("items/GetAllSalesItemsInv",parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+        public async Task<List<Item>> GetItemExtras(long itemId,string invType, long membershipId = 0)
+        {
+            List<Item> items = new List<Item>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("itemId", itemId.ToString());
+            parameters.Add("invType", invType);
+            parameters.Add("membershipId", membershipId.ToString());
+
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetItemExtras",parameters);
 
             foreach (Claim c in claims)
             {

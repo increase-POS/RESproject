@@ -66,8 +66,12 @@ namespace Restaurant.View.windows
             }
         }
         public bool isOpend = false;
-        public int itemTransferId = 0;
+       // public int itemTransferId = 0;
+        public long itemId;
         public List<itemsTransferIngredients> itemsIngredients;
+        public List<ItemTransfer> itemExtras;
+        Item item = new Item();
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -99,13 +103,12 @@ namespace Restaurant.View.windows
         public string categoryName;
         long categoryId;
 
-        Tag tag = new Tag();
-        IEnumerable<Tag> tagsQuery;
-        IEnumerable<Tag> tags;
+        ItemTransfer itemTransfer = new ItemTransfer();
         public List<Unit> units;
         byte tgl_tagState;
         string searchText = "";
         public static List<string> requiredControlList;
+        List<Item> extras;
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -113,16 +116,7 @@ namespace Restaurant.View.windows
             {
                 HelpClass.StartAwait(grid_main);
 
-                //#region test 
-                //List<itemsTransferIngredients> dishIngredientsList = new List<itemsTransferIngredients>();
-                //dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Potato", isActive = 1 });
-                //dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Sauce", isActive = 0 });
-                //dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Sauce", isActive = 1 });
-                //dishIngredientsList.Add(new itemsTransferIngredients { DishIngredientName = "Potato", isActive = 0 });
-                //dg_ingredient.ItemsSource = dishIngredientsList;
-                //#endregion
-
-                dg_ingredient.ItemsSource = itemsIngredients;
+                
                 requiredControlList = new List<string> { "extraItemId", "count" };
                 if (AppSettings.lang.Equals("en"))
                 {
@@ -135,17 +129,12 @@ namespace Restaurant.View.windows
                 translate();
 
                 //Keyboard.Focus(tb_tagName);
-                categoryId = FillCombo.GetCategoryId(categoryName);
+                //categoryId = FillCombo.GetCategoryId(categoryName);
 
-                await RefreshTagsList();
-                await Search();
-                Clear();
-
-
-                
-
-
-
+                dg_ingredient.ItemsSource = itemsIngredients;
+                RefreshExtrasView();
+                await fillExtrasCombo();
+                Clear();             
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -171,6 +160,17 @@ namespace Restaurant.View.windows
             dg_tag.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
             dg_tag.Columns[1].Header = AppSettings.resourcemanager.GetString("trCount");
         }
+        async Task fillExtrasCombo()
+        {
+            extras = await FillCombo.item.GetItemExtras(itemId, AppSettings.invType);
+
+            foreach (var e in extras)
+                e.name = e.name + " - " + e.price;
+
+            cb_extraItemId.ItemsSource = extras;
+            cb_extraItemId.DisplayMemberPath = "name";
+            cb_extraItemId.SelectedValuePath = "itemUnitId";
+        }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
@@ -178,29 +178,46 @@ namespace Restaurant.View.windows
             {
 
                 HelpClass.StartAwait(grid_main);
-                tag = new Tag();
+                itemTransfer = new ItemTransfer();
                 if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
-                    /*
-                    tag.tagName = tb_tagName.Text;
-                    tag.categoryId = categoryId;
-                    tag.createUserId = MainWindow.userLogin.userId;
-                    tag.updateUserId = MainWindow.userLogin.userId;
-                    tag.notes = tb_notes.Text;
-                    tag.isActive = 1;
+                    var it = itemExtras.Where(x => x.itemUnitId == (long) cb_extraItemId.SelectedValue).FirstOrDefault();
 
-                    int s = await tag.Save(tag);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    if (it == null)
+                    {
+                        item = extras.Where(x => x.itemUnitId == (long)cb_extraItemId.SelectedValue).FirstOrDefault();
+                        itemTransfer = new ItemTransfer();
+                        itemTransfer.invoiceId = 0;
+                        itemTransfer.quantity = int.Parse(tb_count.Text);
+                        itemTransfer.price = (decimal)item.price;
+                        itemTransfer.itemUnitId = item.itemUnitId;
+                        itemTransfer.itemName = item.name;
+                        long offerId = 0;
+                        string offerType = "1";
+                        decimal offerValue = 0;
+                        if (item.offerId != null)
+                        {
+                            offerId = (long)item.offerId;
+                            offerType = item.discountType;
+                            offerValue = (decimal)item.discountValue;
+                        }
+                        itemTransfer.offerId = offerId;
+                        itemTransfer.offerType = decimal.Parse( offerType);
+                        itemTransfer.offerValue = offerValue;
+                        //itemTransfer.itemTax = item.Tax;
+                        itemTransfer.itemUnitPrice = item.basicPrice;
+                        itemTransfer.createUserId = MainWindow.userLogin.userId;
+                        itemTransfer.forAgents = item.forAgent;
+
+                        itemExtras.Add(itemTransfer);
+                    }
                     else
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-                        Clear();
-                        await RefreshTagsList();
-                        await Search();
+                        it.quantity += int.Parse(tb_count.Text);
                     }
-*/
+                    RefreshExtrasView();
+                    Clear();
+
                 }
                 HelpClass.EndAwait(grid_main);
 
@@ -249,52 +266,52 @@ namespace Restaurant.View.windows
             try
             {//delete
                 HelpClass.StartAwait(grid_main);
-                if (tag.tagId != 0)
-                {
-                    if ((!tag.canDelete) && (tag.isActive == 0))
-                    {
-                        #region
-                        Window.GetWindow(this).Opacity = 0.2;
-                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
-                        w.ShowDialog();
-                        Window.GetWindow(this).Opacity = 1;
-                        #endregion
-                        if (w.isOk)
-                            await activate();
-                    }
-                    else
-                    {
-                        #region
-                        Window.GetWindow(this).Opacity = 0.2;
-                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        if (tag.canDelete)
-                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
-                        if (!tag.canDelete)
-                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
-                        w.ShowDialog();
-                        Window.GetWindow(this).Opacity = 1;
-                        #endregion
-                        if (w.isOk)
-                        {
-                            string popupContent = "";
-                            if (tag.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
-                            if ((!tag.canDelete) && (tag.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
+                //if (itemTransfer.tagId != 0)
+                //{
+                //    if ((!itemTransfer.canDelete) && (itemTransfer.isActive == 0))
+                //    {
+                //        #region
+                //        Window.GetWindow(this).Opacity = 0.2;
+                //        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                //        w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
+                //        w.ShowDialog();
+                //        Window.GetWindow(this).Opacity = 1;
+                //        #endregion
+                //        if (w.isOk)
+                //            await activate();
+                //    }
+                //    else
+                //    {
+                //        #region
+                //        Window.GetWindow(this).Opacity = 0.2;
+                //        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                //        if (itemTransfer.canDelete)
+                //            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
+                //        if (!itemTransfer.canDelete)
+                //            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
+                //        w.ShowDialog();
+                //        Window.GetWindow(this).Opacity = 1;
+                //        #endregion
+                //        if (w.isOk)
+                //        {
+                //            string popupContent = "";
+                //            if (itemTransfer.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
+                //            if ((!itemTransfer.canDelete) && (itemTransfer.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                            var s = await tag.Delete(tag.tagId, MainWindow.userLogin.userId, tag.canDelete);
-                            if (s < 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                            else
-                            {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                //            var s = await itemTransfer.Delete(itemTransfer.tagId, MainWindow.userLogin.userId, itemTransfer.canDelete);
+                //            if (s < 0)
+                //                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                //            else
+                //            {
+                //                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
-                                await RefreshTagsList();
-                                await Search();
-                                Clear();
-                            }
-                        }
-                    }
-                }
+                //                await RefreshTagsList();
+                //                await Search();
+                //                Clear();
+                //            }
+                //        }
+                //    }
+                //}
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -305,68 +322,22 @@ namespace Restaurant.View.windows
         }
         private async Task activate()
         {//activate
-            tag.isActive = 1;
-            var s = await tag.Save(tag);
-            if (s <= 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-            else
-            {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshTagsList();
-                await Search();
-            }
+            //itemTransfer.isActive = 1;
+            //var s = await itemTransfer.Save(itemTransfer);
+            //if (s <= 0)
+            //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            //else
+            //{
+            //    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+            //    await RefreshTagsList();
+            //    await Search();
+            //}
         }
         #endregion
         #region events
-        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (tags is null)
-                    await RefreshTagsList();
-                tgl_tagState = 1;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (tags is null)
-                    await RefreshTagsList();
-                tgl_tagState = 0;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+       
+       
+       
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -390,22 +361,22 @@ namespace Restaurant.View.windows
                 //selection
                 if (dg_tag.SelectedIndex != -1)
                 {
-                    tag = dg_tag.SelectedItem as Tag;
-                    this.DataContext = tag;
-                    if (tag != null)
-                    {
-                        #region delete
-                        if (tag.canDelete)
-                            btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
-                        else
-                        {
-                            if (tag.isActive == 0)
-                                btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
-                            else
-                                btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
-                        }
-                        #endregion
-                    }
+                    itemTransfer = dg_tag.SelectedItem as ItemTransfer;
+                    this.DataContext = itemTransfer;
+                    //if (itemTransfer != null)
+                    //{
+                    //    #region delete
+                    //    if (itemTransfer.canDelete)
+                    //        btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
+                    //    else
+                    //    {
+                    //        if (itemTransfer.isActive == 0)
+                    //            btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
+                    //        else
+                    //            btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
+                    //    }
+                    //    #endregion
+                    //}
                 }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
@@ -416,49 +387,34 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {//refresh
-
-                HelpClass.StartAwait(grid_main);
-                await RefreshTagsList();
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+       
         #endregion
         #region Refresh & Search
-        async Task Search()
-        {
+       // async Task Search()
+       // {
             //search
-            if (tags is null)
-                await RefreshTagsList();
-            tagsQuery = tags;
-            RefreshTagsView();
-        }
-        async Task<IEnumerable<Tag>> RefreshTagsList()
+            //if (tags is null)
+            //    await RefreshTagsList();
+            //tagsQuery = tags;
+            //RefreshTagsView();
+       // }
+        //async Task<IEnumerable<Tag>> RefreshTagsList()
+        //{
+        //    tags = await tag.Get(categoryId);
+        //    // tags = tags.Where(x => x.categoryId == categoryId);
+        //    return tags;
+        //}
+        void RefreshExtrasView()
         {
-            tags = await tag.Get(categoryId);
-            // tags = tags.Where(x => x.categoryId == categoryId);
-            return tags;
-        }
-        void RefreshTagsView()
-        {
-            dg_tag.ItemsSource = tagsQuery;
+            dg_tag.ItemsSource = null;
+            dg_tag.ItemsSource = itemExtras;
         }
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            tag = new Tag();
-            this.DataContext = tag;
+            itemTransfer = new ItemTransfer();
+            this.DataContext = itemTransfer;
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
@@ -571,5 +527,9 @@ namespace Restaurant.View.windows
             }
         }
 
+        private void Cb_extraItemId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
