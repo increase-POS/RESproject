@@ -1031,13 +1031,13 @@ namespace Restaurant.View.reports.accountsReports
              DataLabels = true,
              Title = AppSettings.resourcemanager.GetString("trInv")
          });
-            columnChartData.Add(
-        new StackedColumnSeries
-        {
-            Values = admin.AsChartValues(),
-            DataLabels = true,
-            Title = AppSettings.resourcemanager.GetString("trAdministrative")
-        });
+        //    columnChartData.Add(
+        //new StackedColumnSeries
+        //{
+        //    Values = admin.AsChartValues(),
+        //    DataLabels = true,
+        //    Title = AppSettings.resourcemanager.GetString("trAdministrative")
+        //});
 
             DataContext = this;
             cartesianChart.Series = columnChartData;
@@ -1195,13 +1195,13 @@ namespace Restaurant.View.reports.accountsReports
                 Title = AppSettings.resourcemanager.GetString("trInv")
 
             });
-            rowChartData.Add(
-            new LineSeries
-            {
-                Values = admin.AsChartValues(),
-                Title = AppSettings.resourcemanager.GetString("trAdministrative")
+            //rowChartData.Add(
+            //new LineSeries
+            //{
+            //    Values = admin.AsChartValues(),
+            //    Title = AppSettings.resourcemanager.GetString("trAdministrative")
 
-            });
+            //});
             DataContext = this;
             rowChart.Series = rowChartData;
         }
