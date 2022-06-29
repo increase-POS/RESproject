@@ -4183,4 +4183,7 @@ Please add Email in setting</value>
   <data name="trAdministrative" xml:space="preserve">
     <value>Administrative</value>
   </data>
+  <data name="administrativePayment" xml:space="preserve">
+    <value>Administrative payment</value>
+  </data>
 </root>

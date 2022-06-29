@@ -4168,4 +4168,7 @@
   <data name="trAdministrative" xml:space="preserve">
     <value>إداري</value>
   </data>
+  <data name="administrativePayment" xml:space="preserve">
+    <value>دفع إداري</value>
+  </data>
 </root>
