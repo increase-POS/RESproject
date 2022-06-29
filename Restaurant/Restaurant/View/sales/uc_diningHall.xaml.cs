@@ -2874,6 +2874,7 @@ namespace Restaurant.View.sales
 
                             wd_multiplePayment w = new wd_multiplePayment();
                             w.isPurchase = false;
+                            w.windowOfSourceName = this.Tag.ToString();
                             //w.invoice = new Invoice();
                             w.invoice.invType = _InvoiceType;
                             w.invoice.totalNet = decimal.Parse(tb_total.Text);

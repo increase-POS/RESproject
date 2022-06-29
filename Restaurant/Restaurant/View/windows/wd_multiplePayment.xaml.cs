@@ -53,7 +53,10 @@ namespace Restaurant.View.windows
         public Invoice invoice = new Invoice();
         public Agent agent = new Agent();
         bool amountIsValid = false;
-        private  void Window_Loaded(object sender, RoutedEventArgs e)
+
+        public string windowOfSourceName = "";
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -117,7 +120,10 @@ namespace Restaurant.View.windows
                 new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
                 new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
                  };
-                if (!isPurchase)
+
+                if (!isPurchase && 
+                    FillCombo.groupObject.HasPermissionAction((windowOfSourceName + "_administrativePayment"), FillCombo.groupObjects, "one") 
+                    )
                 {
                     typelist = new[] {
                 new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
@@ -125,6 +131,7 @@ namespace Restaurant.View.windows
                 new { Text = AppSettings.resourcemanager.GetString("trAdministrative") , Value = "admin" },
                  };
                 }
+
                 cb_paymentProcessType.ItemsSource = typelist;
             }
             cb_paymentProcessType.SelectedIndex = 0;
