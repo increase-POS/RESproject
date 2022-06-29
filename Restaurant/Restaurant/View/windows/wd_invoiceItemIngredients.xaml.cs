@@ -511,11 +511,13 @@ namespace Restaurant.View.windows
                     if (vis is DataGridRow)
                     {
                         itemsTransferIngredients row = (itemsTransferIngredients)dg_ingredient.SelectedItems[0];
-                        row.isActive = 0;
+                        if (row.isActive == 1)
+                            row.isActive = 0;
+                        else
+                            row.isActive = 1;
 
                         dg_ingredient.ItemsSource = null;
                         dg_ingredient.ItemsSource = itemsIngredients;
-                        MessageBox.Show("my activity is: " + row.isActive);
                     }
 
                 HelpClass.EndAwait(grid_main);

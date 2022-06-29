@@ -1539,6 +1539,7 @@ namespace Restaurant.View.sales
                     itemT.createUserId = MainWindow.userLogin.userId;
                     itemT.forAgents = item.forAgents;
                     itemT.itemsIngredients = item.itemsIngredients;
+                    itemT.itemExtras = item.itemExtras;
                     invoiceItems.Add(itemT);
                 }
                 #endregion
