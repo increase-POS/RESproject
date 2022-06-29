@@ -143,18 +143,8 @@ namespace Restaurant.View.accounts
 
                 await fillShippingCompanies();
 
-                #region fill process type
-                var typelist = new[] {
-                new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
-                //new { Text = AppSettings.resourcemanager.GetString("trDocument")   , Value = "doc" },
-                new { Text = AppSettings.resourcemanager.GetString("trCheque")     , Value = "cheque" },
-                new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
-                 };
-                cb_paymentProcessType.DisplayMemberPath = "Text";
-                cb_paymentProcessType.SelectedValuePath = "Value";
-                cb_paymentProcessType.ItemsSource = typelist;
-                #endregion
-
+                fillProcessType();
+               
                 #region fill card combo
                 try
                 {
@@ -175,6 +165,25 @@ namespace Restaurant.View.accounts
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+        void fillProcessType()
+        {
+            var typelist = new[] {
+                new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
+                new { Text = AppSettings.resourcemanager.GetString("trCheque")     , Value = "cheque" },
+                new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
+                 };
+            if(cb_depositFrom.SelectedValue.ToString().Equals("c"))
+                typelist = new[] {
+                new { Text = AppSettings.resourcemanager.GetString("trCash")                  , Value = "cash" },
+                new { Text = AppSettings.resourcemanager.GetString("trCheque")                , Value = "cheque" },
+                new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
+                new { Text = AppSettings.resourcemanager.GetString("trAdministrative")        , Value = "admin" },
+                 };
+            cb_paymentProcessType.DisplayMemberPath = "Text";
+            cb_paymentProcessType.SelectedValuePath = "Value";
+            cb_paymentProcessType.ItemsSource = typelist;
         }
 
         #region card
@@ -1001,6 +1010,7 @@ namespace Restaurant.View.accounts
             {
                 HelpClass.StartAwait(grid_main);
 
+                fillProcessType();
                 btn_invoices.IsEnabled = false;
             switch (cb_depositFrom.SelectedIndex)
             {
