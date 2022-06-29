@@ -529,11 +529,16 @@ namespace Restaurant.View.reports.accountsReports
                 cash.Add(drawCash);
 
 
-                MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + 2021);
+                MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
             }
-            l.Values = cash.AsChartValues();
-            rowChartData.Add(l);
-
+            //l.Values = cash.AsChartValues();
+            //rowChartData.Add(l);
+            rowChartData.Add(
+          new LineSeries
+          {
+              Values = l.Values = cash.AsChartValues(),
+              Title = AppSettings.resourcemanager.GetString("trCashTooltip")
+          }); 
             DataContext = this;
             rowChart.Series = rowChartData;
         }
@@ -551,12 +556,14 @@ namespace Restaurant.View.reports.accountsReports
             List<decimal> doc = new List<decimal>();
             List<decimal> cheque = new List<decimal>();
             List<decimal> inv = new List<decimal>();
+            List<decimal> admin = new List<decimal>();
 
             cash.Add(temp.Where(x => x.processType == "cash").Select(x => x.cash.Value).Sum());
             card.Add(temp.Where(x => x.processType == "card").Select(x => x.cash.Value).Sum());
             doc.Add(temp.Where(x => x.processType == "doc").Select(x => x.cash.Value).Sum());
             cheque.Add(temp.Where(x => x.processType == "cheque").Select(x => x.cash.Value).Sum());
             inv.Add(temp.Where(x => x.processType == "inv").Select(x => x.cash.Value).Sum());
+            admin.Add(temp.Where(x => x.processType == "admin").Select(x => x.cash.Value).Sum());
 
             columnChartData.Add(
             new ColumnSeries
@@ -595,6 +602,13 @@ namespace Restaurant.View.reports.accountsReports
             //    DataLabels = true,
             //    Title = AppSettings.resourcemanager.GetString("tr_Invoice")
             //});
+            columnChartData.Add(
+          new ColumnSeries
+          {
+              Values = admin.AsChartValues(),
+              DataLabels = true,
+              Title = AppSettings.resourcemanager.GetString("trAdministrative")
+          });
 
             DataContext = this;
             cartesianChart.Series = columnChartData;

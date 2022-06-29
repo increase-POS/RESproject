@@ -665,9 +665,7 @@ namespace Restaurant.View.reports.accountsReports
             fillRowChart();
         }
 
-        /*Charts*/
-        /*********************************************************************************/
-
+        #region chart 
         private void fillPieChart()
         {
             List<string> titles = new List<string>();
@@ -694,6 +692,7 @@ namespace Restaurant.View.reports.accountsReports
                     case "balance": s = AppSettings.resourcemanager.GetString("trCredit"); break;
                     case "card": s = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods"); break;
                     case "inv": s = AppSettings.resourcemanager.GetString("trInv"); break;
+                    case "admin": s = AppSettings.resourcemanager.GetString("trAdministrative"); break;
                 }
                 titles[t] = s;
             }
@@ -745,6 +744,7 @@ namespace Restaurant.View.reports.accountsReports
                     docTotal = x.Where(g => g.processType == "doc").Sum(g => (decimal)g.cash),
                     balanceTotal = x.Where(g => g.processType == "balance").Sum(g => (decimal)g.cash),
                     invoiceTotal = x.Where(g => g.processType == "inv").Sum(g => (decimal)g.cash),
+                    adminTotal = x.Where(g => g.processType == "admin").Sum(g => (decimal)g.cash),
                     agentName = x.FirstOrDefault().agentName,
                     agentId = x.FirstOrDefault().agentId,
                 }
@@ -776,6 +776,7 @@ namespace Restaurant.View.reports.accountsReports
                     docTotal = x.Where(g => g.processType == "doc").Sum(g => (decimal)g.cash),
                     balanceTotal = x.Where(g => g.processType == "balance").Sum(g => (decimal)g.cash),
                     invoiceTotal = x.Where(g => g.processType == "inv").Sum(g => (decimal)g.cash),
+                    adminTotal = x.Where(g => g.processType == "admin").Sum(g => (decimal)g.cash),
                     usersName = x.FirstOrDefault().usersName,
                     userId = x.FirstOrDefault().userId,
                 }
@@ -800,6 +801,7 @@ namespace Restaurant.View.reports.accountsReports
                     docTotal = x.Where(g => g.processType == "doc").Sum(g => (decimal)g.cash),
                     balanceTotal = x.Where(g => g.processType == "balance").Sum(g => (decimal)g.cash),
                     invoiceTotal = x.Where(g => g.processType == "inv").Sum(g => (decimal)g.cash),
+                    adminTotal = x.Where(g => g.processType == "admin").Sum(g => (decimal)g.cash),
                     usersName = x.FirstOrDefault().usersName,
                     userId = x.FirstOrDefault().userId,
                 }
@@ -825,6 +827,7 @@ namespace Restaurant.View.reports.accountsReports
                     docTotal = x.Where(g => g.processType == "doc").Sum(g => (decimal)g.cash),
                     balanceTotal = x.Where(g => g.processType == "balance").Sum(g => (decimal)g.cash),
                     invoiceTotal = x.Where(g => g.processType == "inv").Sum(g => (decimal)g.cash),
+                    adminTotal = x.Where(g => g.processType == "admin").Sum(g => (decimal)g.cash),
                     shippingCompanyName = x.FirstOrDefault().shippingCompanyName,
                     shippingCompanyId = x.FirstOrDefault().shippingCompanyId,
                 }
@@ -846,6 +849,7 @@ namespace Restaurant.View.reports.accountsReports
             List<decimal> cheque = new List<decimal>();
             List<decimal> balance = new List<decimal>();
             List<decimal> invoice = new List<decimal>();
+            List<decimal> admin = new List<decimal>();
 
             int xCount = 6;
             if (resultList.Count() <= 6)
@@ -857,12 +861,13 @@ namespace Restaurant.View.reports.accountsReports
                 doc.Add(resultList.ToList().Skip(i).FirstOrDefault().docTotal);
                 cheque.Add(resultList.ToList().Skip(i).FirstOrDefault().chequeTotal);
                 invoice.Add(resultList.ToList().Skip(i).FirstOrDefault().invoiceTotal);
+                admin.Add(resultList.ToList().Skip(i).FirstOrDefault().adminTotal);
 
                 axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
             }
             if (resultList.Count() > 6)
             {
-                decimal cashSum = 0, cardSum = 0, docSum = 0, chequeSum = 0, balanceSum = 0, invoiceSum = 0;
+                decimal cashSum = 0, cardSum = 0, docSum = 0, chequeSum = 0, balanceSum = 0, invoiceSum = 0 , adminSum = 0;
                 for (int i = 6; i < resultList.Count; i++)
                 {
                     cashSum = cashSum + resultList.ToList().Skip(i).FirstOrDefault().cashTotal;
@@ -870,14 +875,16 @@ namespace Restaurant.View.reports.accountsReports
                     docSum = docSum + resultList.ToList().Skip(i).FirstOrDefault().docTotal;
                     chequeSum = chequeSum + resultList.ToList().Skip(i).FirstOrDefault().chequeTotal;
                     invoiceSum = invoiceSum + resultList.ToList().Skip(i).FirstOrDefault().invoiceTotal;
+                    adminSum = adminSum + resultList.ToList().Skip(i).FirstOrDefault().adminTotal;
                 }
-                if (!((cashSum == 0) && (cardSum == 0) && (docSum == 0) && (chequeSum == 0) && (chequeSum == 0) && (balanceSum == 0) && (invoiceSum == 0)))
+                if (!((cashSum == 0) && (cardSum == 0) && (docSum == 0) && (chequeSum == 0) && (chequeSum == 0) && (balanceSum == 0) && (invoiceSum == 0) && (adminSum == 0)))
                 {
                     cash.Add(cashSum);
                     card.Add(cardSum);
                     doc.Add(docSum);
                     cheque.Add(chequeSum);
                     invoice.Add(invoiceSum);
+                    admin.Add(adminSum);
 
                     axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
                 }
@@ -916,6 +923,13 @@ namespace Restaurant.View.reports.accountsReports
              Values = invoice.AsChartValues(),
              DataLabels = true,
              Title = AppSettings.resourcemanager.GetString("trInv")
+         });
+            columnChartData.Add(
+         new StackedColumnSeries
+         {
+             Values = admin.AsChartValues(),
+             DataLabels = true,
+             Title = AppSettings.resourcemanager.GetString("trAdministrative")
          });
 
             DataContext = this;
@@ -974,6 +988,7 @@ namespace Restaurant.View.reports.accountsReports
             List<decimal> doc = new List<decimal>();
             List<decimal> cheque = new List<decimal>();
             List<decimal> invoice = new List<decimal>();
+            List<decimal> admin = new List<decimal>();
 
             if (endYear - startYear <= 1)
             {
@@ -989,12 +1004,14 @@ namespace Restaurant.View.reports.accountsReports
                         var drawCheque = temp.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.processType == "cheque").Select(c => c.cash.Value).Sum();
                         var drawBalance = temp.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.processType == "balance").Select(c => c.cash.Value).Sum();
                         var drawInvoice = temp.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.processType == "inv").Select(c => c.cash.Value).Sum();
+                        var drawAdmin = temp.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.processType == "admin").Select(c => c.cash.Value).Sum();
 
                         cash.Add(drawCash);
                         card.Add(drawCard);
                         doc.Add(drawDoc);
                         cheque.Add(drawCheque);
                         invoice.Add(drawInvoice);
+                        admin.Add(drawAdmin);
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
 
                         if (year == endYear && month == endMonth)
@@ -1020,12 +1037,14 @@ namespace Restaurant.View.reports.accountsReports
                     var drawDoc = temp.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.processType == "doc").Select(c => c.cash.Value).Sum();
                     var drawCheque = temp.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.processType == "cheque").Select(c => c.cash.Value).Sum();
                     var drawInvoice = temp.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.processType == "inv").Select(c => c.cash.Value).Sum();
+                    var drawAdmin = temp.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.processType == "admin").Select(c => c.cash.Value).Sum();
 
                     cash.Add(drawCash);
                     card.Add(drawCard);
                     doc.Add(drawDoc);
                     cheque.Add(drawCheque);
                     invoice.Add(drawInvoice);
+                    admin.Add(drawAdmin);
                     MyAxis.Labels.Add(year.ToString());
                 }
             }
@@ -1062,9 +1081,17 @@ namespace Restaurant.View.reports.accountsReports
                 Title = AppSettings.resourcemanager.GetString("trInv")
 
             });
+            rowChartData.Add(
+            new LineSeries
+            {
+                Values = admin.AsChartValues(),
+                Title = AppSettings.resourcemanager.GetString("trAdministrative")
+
+            });
             DataContext = this;
             rowChart.Series = rowChartData;
         }
+        #endregion
 
         private void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh

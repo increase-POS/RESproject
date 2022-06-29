@@ -31,7 +31,7 @@ namespace Restaurant.converters
                 //case "inv": return AppSettings.resourcemanager.GetString("trInv");
                 case "inv": return "-";
                 case "multiple": return AppSettings.resourcemanager.GetString("trMultiplePayment");
-
+                case "admin": return AppSettings.resourcemanager.GetString("trAdministrative");
                 //break;
                 default: return pType;
                     //break;

@@ -374,7 +374,7 @@ namespace Restaurant.Classes
         public decimal chequeTotal { get; set; }
         public decimal balanceTotal { get; set; }
         public decimal invoiceTotal { get; set; }
-
+        public decimal adminTotal { get; set; }
         public string createUserName { get; set; }
         public string updateUserName { get; set; }//
         public string updateUserJob { get; set; }
@@ -1973,6 +1973,7 @@ namespace Restaurant.Classes
                     : paymentsTypeName == "balance" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trCredit")
                     : paymentsTypeName == "card" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods")
                     : paymentsTypeName == "inv" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trInv")
+                    : paymentsTypeName == "admin" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trAdministrative")
                     : "";
                 set => paymentsTypeText = value;
             }
