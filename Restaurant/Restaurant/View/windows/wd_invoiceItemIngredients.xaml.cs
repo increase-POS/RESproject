@@ -235,22 +235,9 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_main);
                 if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
-                    /*
-                    tag.tagName = tb_tagName.Text;
-                    //tag.categoryId = categoryId;
-                    tag.updateUserId = MainWindow.userLogin.userId;
-                    tag.notes = tb_notes.Text;
-                    int s = await tag.Save(tag);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        await RefreshTagsList();
-                        await Search();
-
-                    }
-                    */
+                    itemTransfer.quantity = int.Parse(tb_count.Text);
+                    RefreshExtrasView();
+                    Clear();
                 }
                 HelpClass.EndAwait(grid_main);
 
@@ -363,20 +350,7 @@ namespace Restaurant.View.windows
                 {
                     itemTransfer = dg_tag.SelectedItem as ItemTransfer;
                     this.DataContext = itemTransfer;
-                    //if (itemTransfer != null)
-                    //{
-                    //    #region delete
-                    //    if (itemTransfer.canDelete)
-                    //        btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
-                    //    else
-                    //    {
-                    //        if (itemTransfer.isActive == 0)
-                    //            btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
-                    //        else
-                    //            btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
-                    //    }
-                    //    #endregion
-                    //}
+                    
                 }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);

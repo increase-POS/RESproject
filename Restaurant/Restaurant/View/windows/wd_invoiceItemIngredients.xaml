@@ -266,7 +266,7 @@
                                         VerticalAlignment="Top" BorderThickness="0" Height="40" 
                                         BorderBrush="#737373"
                                         TextSearch.TextPath="name"
-                                         SelectedValue="{Binding extraItemId, Mode=OneWay}"
+                                         SelectedValue="{Binding itemUnitId, Mode=OneWay}"
                                         
                                         SelectionChanged="Cb_extraItemId_SelectionChanged">
                                                 <dotNetKitControls:AutoCompleteComboBox.ItemsPanel>
