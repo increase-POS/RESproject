@@ -1123,7 +1123,7 @@ namespace Restaurant.View.sales
                 w.itemId = billDetailsList[index].itemId;
 
                 w.ShowDialog();
-              
+                setStarColor(index);
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(grid_main);
             }
@@ -1135,6 +1135,10 @@ namespace Restaurant.View.sales
 
         }
 
+        void setStarColor(int index)
+        {
+
+        }
         void buttonPlus_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
