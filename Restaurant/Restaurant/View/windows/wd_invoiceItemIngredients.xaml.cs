@@ -253,52 +253,12 @@ namespace Restaurant.View.windows
             try
             {//delete
                 HelpClass.StartAwait(grid_main);
-                //if (itemTransfer.tagId != 0)
-                //{
-                //    if ((!itemTransfer.canDelete) && (itemTransfer.isActive == 0))
-                //    {
-                //        #region
-                //        Window.GetWindow(this).Opacity = 0.2;
-                //        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                //        w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
-                //        w.ShowDialog();
-                //        Window.GetWindow(this).Opacity = 1;
-                //        #endregion
-                //        if (w.isOk)
-                //            await activate();
-                //    }
-                //    else
-                //    {
-                //        #region
-                //        Window.GetWindow(this).Opacity = 0.2;
-                //        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                //        if (itemTransfer.canDelete)
-                //            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
-                //        if (!itemTransfer.canDelete)
-                //            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
-                //        w.ShowDialog();
-                //        Window.GetWindow(this).Opacity = 1;
-                //        #endregion
-                //        if (w.isOk)
-                //        {
-                //            string popupContent = "";
-                //            if (itemTransfer.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
-                //            if ((!itemTransfer.canDelete) && (itemTransfer.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
-
-                //            var s = await itemTransfer.Delete(itemTransfer.tagId, MainWindow.userLogin.userId, itemTransfer.canDelete);
-                //            if (s < 0)
-                //                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                //            else
-                //            {
-                //                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
-
-                //                await RefreshTagsList();
-                //                await Search();
-                //                Clear();
-                //            }
-                //        }
-                //    }
-                //}
+                if (itemTransfer.itemName != "")
+                {
+                    itemExtras.Remove(itemTransfer);
+                    RefreshExtrasView();
+                    Clear();
+                }
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
