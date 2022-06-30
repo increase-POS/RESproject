@@ -1108,7 +1108,7 @@ namespace Restaurant.View.sales
             sv_billDetail.Content = gridContainer;
 
         }
-        void buttonItemImage_Click(object sender, RoutedEventArgs e)
+        async void buttonItemImage_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             int index = int.Parse(button.Tag.ToString().Replace("image-", ""));
@@ -1123,7 +1123,9 @@ namespace Restaurant.View.sales
                 w.itemId = billDetailsList[index].itemId;
 
                 w.ShowDialog();
+
                 setStarColor(index);
+                await refreshTotal();
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(grid_main);
             }
@@ -1137,7 +1139,11 @@ namespace Restaurant.View.sales
 
         void setStarColor(int index)
         {
+            var ingredientEdit = billDetailsList[index].itemsIngredients.Where(x => x.isActive == 0).FirstOrDefault();
+            if (billDetailsList[index].itemExtras.Count >0 || ingredientEdit != null )
+            {
 
+            }
         }
         void buttonPlus_Click(object sender, RoutedEventArgs e)
         {
@@ -1255,14 +1261,19 @@ namespace Restaurant.View.sales
 
 
         }
-        async void refreshTotal()
+        async Task refreshTotal()
         {
             decimal total = 0;
             #region subtotal
             _Sum = 0;
+
+
             foreach (var item in billDetailsList)
             {
                 _Sum += item.Total;
+
+                foreach (var it in item.itemExtras)
+                    _Sum += it.price * it.quantity;
             }
             tb_subtotal.Text = HelpClass.DecTostring( _Sum);
             total = _Sum;
