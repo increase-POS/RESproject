@@ -123,7 +123,7 @@ namespace Restaurant.View.windows
             {
 
                 int itemCountInOrder = 0;
-                try { itemCountInOrder = orders.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.quantity); }
+                try { itemCountInOrder = orders.Where(x => x.itemUnitId == b.itemUnitId && x.itemsTransId == b.itemsTransId).Sum(x => x.quantity); }
                 catch { }
 
                 int remainingCount = b.Count - itemCountInOrder;
@@ -135,6 +135,7 @@ namespace Restaurant.View.windows
                         itemName = b.itemName,
                         index = index,
                         Count = remainingCount,
+                        itemsTransId = b.itemsTransId,
                     };
                     index++;
                     unSentInvoiceItems.Add(newBillRow);
@@ -332,6 +333,7 @@ namespace Restaurant.View.windows
             ItemOrderPreparing it = new ItemOrderPreparing()
             {
                 itemUnitId = invoiceRow.itemUnitId,
+                itemsTransId = invoiceRow.itemsTransId,
                 quantity = int.Parse(tb_count.Text),
                 notes = tb_notes.Text,
                 createUserId = MainWindow.userLogin.userId,

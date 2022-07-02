@@ -56,6 +56,7 @@ namespace Restaurant.Classes.ApiClasses
 
         public string itemName { get; set; }
         public Nullable<long> itemUnitId { get; set; }
+        public Nullable<long> itemsTransId { get; set; }
         public int quantity { get; set; }
 
         //order

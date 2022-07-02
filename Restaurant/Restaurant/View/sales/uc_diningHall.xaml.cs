@@ -444,7 +444,7 @@ namespace Restaurant.View.sales
                     #region item Ingredients
                     List<itemsTransferIngredients> ingredientsList = await dishIngredients.GetItemIngredients(0,(long)item.itemUnitId);
                     #endregion
-                    addRowToBill(item, 1, ingredientsList,new List<ItemTransfer>(), false);
+                    addRowToBill(item, 1, ingredientsList,new List<ItemTransfer>(),0,false, false);
                    
 
                     #region save draft invoice
@@ -811,7 +811,7 @@ namespace Restaurant.View.sales
         TablesReservation reservation = new TablesReservation();
         InvoicesClass invoiceMemberShipClass = new InvoicesClass();
         List<InvoicesClass> customerInvClasses = new List<InvoicesClass>();
-        private void addRowToBill(Item item, long count,List<itemsTransferIngredients> ingredients,List<ItemTransfer> itemExtras, bool isList = false)
+        private void addRowToBill(Item item, long count,List<itemsTransferIngredients> ingredients,List<ItemTransfer> itemExtras,long itemTransferId,bool isExtra, bool isList = false)
         {
             decimal total = 0;
            // var invoiceItem = billDetailsList.Where(x => x.itemId == item.itemId).FirstOrDefault();
@@ -854,7 +854,8 @@ namespace Restaurant.View.sales
                     forAgents = item.forAgent,
                     itemsIngredients = ingredients,
                     itemExtras = itemExtras,
-                    //itemsTransId = itemTransferId,
+                    isExtra = isExtra,
+                    itemsTransId = itemTransferId,
                 });
                 _SequenceNum++;
             }
@@ -1166,7 +1167,8 @@ namespace Restaurant.View.sales
             var button = sender as Button;
             int index = int.Parse(button.Tag.ToString().Replace("minus-", ""));
             long itemUnitId = billDetailsList[index].itemUnitId;
-            int sentToKitchenCount = sentInvoiceItems.Where(x => x.itemUnitId == itemUnitId).Select(x => x.Count).Sum();
+            long itemTransId = billDetailsList[index].itemsTransId;
+            int sentToKitchenCount = sentInvoiceItems.Where(x => x.itemUnitId == itemUnitId && x.itemsTransId == itemTransId ).Select(x => x.Count).Sum();
             // index--;
             if (billDetailsList[index].Count <= sentToKitchenCount)
             {
@@ -1505,6 +1507,14 @@ namespace Restaurant.View.sales
                 refreshDraftNotification();
                 refreshOrdersNotification();
             }
+
+            #region inv items
+            billDetailsList = new ObservableCollection<BillDetailsSales>();
+            invoiceItems = await FillCombo.invoice.GetInvoicesItems(res);
+
+            fillInvoiceItems();
+            #endregion
+
             return res;
         }
 
@@ -1554,6 +1564,7 @@ namespace Restaurant.View.sales
                     {
                         itemT = new ItemTransfer();
                         itemT.invoiceId = 0;
+                        itemT.itemsTransId = item.itemsTransId;
                         itemT.quantity = item.Count;
                         itemT.price = item.Price;
                         itemT.itemUnitId = item.itemUnitId;
@@ -1697,6 +1708,7 @@ namespace Restaurant.View.sales
             invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
 
             fillInvoiceItems();
+            setKitchenNotification();
             #endregion
 
             #region set parameters
@@ -1755,10 +1767,17 @@ namespace Restaurant.View.sales
         {
             foreach (ItemTransfer it in invoiceItems)
             {
+                #region isExtra
+                var ingredientEdit = it.itemsIngredients.Where(x => x.isActive == 0).FirstOrDefault();
+                if (it.itemExtras.Count > 0 || ingredientEdit != null)
+                {
+                   it.isExtra = true;
+                }
+                #endregion
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item, it.quantity, it.itemsIngredients,it.itemExtras,true);
+                addRowToBill(item, it.quantity, it.itemsIngredients,it.itemExtras,it.itemsTransId,it.isExtra,true);
             }
-            setKitchenNotification();
+           
         }
         private void refreshItemsPrice()
         {
@@ -1767,7 +1786,7 @@ namespace Restaurant.View.sales
             foreach (BillDetailsSales it in tempBill)
             {
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item, it.Count,it.itemsIngredients, it.itemExtras,false);
+                addRowToBill(item, it.Count,it.itemsIngredients, it.itemExtras,it.itemsTransId,it.isExtra,false);
             }
         }
         async Task fillDiningHallInv()
@@ -2072,6 +2091,7 @@ namespace Restaurant.View.sales
                     itemName = b.itemName,
                     index = index,
                     Count = itemCountInOrder,
+                    itemsTransId = b.itemsTransId,
                 };
                 index++;
                 sentInvoiceItems.Add(newBillRow);
@@ -2091,7 +2111,7 @@ namespace Restaurant.View.sales
 
             foreach (BillDetailsSales b in billDetailsList)
             {
-                var sentItem = sentInvoiceItems.Where(x => x.itemUnitId == b.itemUnitId).FirstOrDefault();
+                var sentItem = sentInvoiceItems.Where(x => x.itemUnitId == b.itemUnitId && x.itemsTransId == b.itemsTransId).FirstOrDefault();
                 int sentCount = 0;
                 if (sentItem != null)
                 {
@@ -2103,6 +2123,7 @@ namespace Restaurant.View.sales
                     {
                         itemUnitId = b.itemUnitId,
                         quantity = b.Count - sentCount,
+                        itemsTransId = b.itemsTransId,
                         createUserId = MainWindow.userLogin.userId,
                     };
                     preparingItemsList.Add(it);
