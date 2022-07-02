@@ -78,6 +78,7 @@ namespace Restaurant.Classes
         public List<itemsTransferIngredients> itemsIngredients { get; set; }
         public List<ItemTransfer> itemExtras { get; set; }
 
+        public bool isExtra { get; set; }
 
     }
     public class invoiceTables

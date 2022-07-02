@@ -1142,7 +1142,8 @@ namespace Restaurant.View.sales
             var ingredientEdit = billDetailsList[index].itemsIngredients.Where(x => x.isActive == 0).FirstOrDefault();
             if (billDetailsList[index].itemExtras.Count >0 || ingredientEdit != null )
             {
-
+                billDetailsList[index].isExtra = true;
+                //yasin
             }
         }
         void buttonPlus_Click(object sender, RoutedEventArgs e)
@@ -1273,7 +1274,7 @@ namespace Restaurant.View.sales
                 _Sum += item.Total;
 
                 foreach (var it in item.itemExtras)
-                    _Sum += it.price * it.quantity;
+                    _Sum += it.price * it.quantity * item.Count ;
             }
             tb_subtotal.Text = HelpClass.DecTostring( _Sum);
             total = _Sum;
@@ -1541,21 +1542,34 @@ namespace Restaurant.View.sales
                 ItemTransfer itemT;
                 foreach (var item in billDetailsList)
                 {
-                    itemT = new ItemTransfer();
-                    itemT.invoiceId = 0;
-                    itemT.quantity = item.Count;
-                    itemT.price = item.Price;
-                    itemT.itemUnitId = item.itemUnitId;
-                    itemT.offerId = item.offerId;
-                    itemT.offerType = decimal.Parse(item.OfferType);
-                    itemT.offerValue = item.OfferValue;
-                    itemT.itemTax = item.Tax;
-                    itemT.itemUnitPrice = item.basicPrice;
-                    itemT.createUserId = MainWindow.userLogin.userId;
-                    itemT.forAgents = item.forAgents;
-                    itemT.itemsIngredients = item.itemsIngredients;
-                    itemT.itemExtras = item.itemExtras;
-                    invoiceItems.Add(itemT);
+                    #region check item with no extras and edits
+
+                    var it = invoiceItems.Where(x => x.itemUnitId == item.itemUnitId && x.isExtra == false).FirstOrDefault();
+                    #endregion
+                    if (it != null)
+                    {
+                        it.quantity += item.Count;
+                    }
+                    else
+                    {
+                        itemT = new ItemTransfer();
+                        itemT.invoiceId = 0;
+                        itemT.quantity = item.Count;
+                        itemT.price = item.Price;
+                        itemT.itemUnitId = item.itemUnitId;
+                        itemT.offerId = item.offerId;
+                        itemT.offerType = decimal.Parse(item.OfferType);
+                        itemT.offerValue = item.OfferValue;
+                        itemT.itemTax = item.Tax;
+                        itemT.itemUnitPrice = item.basicPrice;
+                        itemT.createUserId = MainWindow.userLogin.userId;
+                        itemT.forAgents = item.forAgents;
+                        itemT.itemsIngredients = item.itemsIngredients;
+                        itemT.itemExtras = item.itemExtras;
+                        itemT.isExtra = item.isExtra;
+                        invoiceItems.Add(itemT);
+
+                    }
                 }
                 #endregion
                 //long res = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
