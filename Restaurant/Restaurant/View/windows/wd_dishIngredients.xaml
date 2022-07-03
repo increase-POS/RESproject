@@ -79,7 +79,20 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
+                           
                             <DataGridTextColumn Width="*"  Header="Notes"  Binding="{Binding Path =notes }">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*"  Header=""  Binding="{Binding Path = isBasic }">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -136,25 +149,39 @@
 
                                 </Button>
                             </Grid>
-
-                            <Border Grid.Row="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid Margin="10,5,10,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Row="2" Grid.Column="0" CornerRadius="10" Margin="0,5,0,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid>
                                     <TextBox x:Name="tb_name"  Text="{Binding name, Mode=OneWay}" Padding="10,0,5,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="name..."  
-                                     Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0"  
-                                 LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
-                                    <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_name"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                             Data="{StaticResource infoCircle}">
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                             materialDesign:HintAssist.Hint="name..."  
+                                             Foreground="#4E4E4E"  
+                                             MaxLength="50" BorderThickness="0"
+                                             materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                             Height="40"   Margin="4,0"  
+                                             LostFocus="validateEmpty_LostFocus" 
+                                             TextChanged="ValidateEmpty_TextChange" />
+                                    <Path x:Name="p_error_name"
+                                          Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
+                                          HorizontalAlignment="Right" Visibility="Collapsed"   
+                                          VerticalAlignment="Center" Width="15"  Height="15"
+                                          Data="{StaticResource infoCircle}">
                                     </Path>
                                 </Grid>
                             </Border>
-
+                            <TextBlock  x:Name="txt_basic" Grid.Column="1"
+                                        Margin="10,0,5,0" Text="Basic" Foreground="{StaticResource SecondColor}"
+                                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        FontSize="12"/>
+                            <ToggleButton Grid.Column="2" Background="{StaticResource MainColor}"   x:Name="tgl_isBasic"   
+                                          VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
+                                          Margin="0" Height="13" Width="28" />
+                            </Grid>
                             <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid   >
                                     <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"

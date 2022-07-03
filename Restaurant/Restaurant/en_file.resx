@@ -1810,7 +1810,7 @@
     <value>Subscriptions</value>
   </data>
   <data name="trZeroAmmount" xml:space="preserve">
-    <value>Amount cann't be zero</value>
+    <value>Amount can't be zero</value>
   </data>
   <data name="trInvoiceDate" xml:space="preserve">
     <value>Invoice Date</value>
@@ -4185,5 +4185,8 @@ Please add Email in setting</value>
   </data>
   <data name="administrativePayment" xml:space="preserve">
     <value>Administrative payment</value>
+  </data>
+  <data name="trBasic" xml:space="preserve">
+    <value>Basic</value>
   </data>
 </root>

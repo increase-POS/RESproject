@@ -131,7 +131,7 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-            //txt_title.Text = AppSettings.resourcemanager.GetString("trUnits");
+            txt_basic.Text = AppSettings.resourcemanager.GetString("trBasic");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             btn_add.Content = AppSettings.resourcemanager.GetString("trAdd");
             btn_update.Content = AppSettings.resourcemanager.GetString("trUpdate");
