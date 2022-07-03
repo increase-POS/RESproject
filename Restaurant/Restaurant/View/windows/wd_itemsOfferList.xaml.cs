@@ -57,6 +57,21 @@ namespace Restaurant.View.windows
             }
         }
 
+        private static wd_itemsOfferList _instance;
+        public static wd_itemsOfferList Instance
+        {
+            get
+            {
+                if (_instance is null)
+                    _instance = new wd_itemsOfferList();
+                return _instance;
+            }
+            set
+            {
+                _instance = value;
+            }
+        }
+
         private void HandleKeyPress(object sender, KeyEventArgs e)
         {
             try
@@ -347,6 +362,12 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
 
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Instance = null;
+            GC.Collect();
         }
     }
 }

@@ -1625,13 +1625,10 @@ namespace Restaurant.View.catalog.foods
                     {
                         Window.GetWindow(this).Opacity = 0.2;
 
-
-
                         //await FillCombo.RefreshItemUnit();
-                        //wd_dishIngredients w = new wd_dishIngredients();
+                        wd_extraItemsList w = new wd_extraItemsList();
                         //w.itemUnitId = FillCombo.itemUnitList.Where(x => x.itemId == item.itemId).FirstOrDefault().itemUnitId;
-                        //w.ShowDialog();
-
+                        w.ShowDialog();
 
                         Window.GetWindow(this).Opacity = 1;
 
