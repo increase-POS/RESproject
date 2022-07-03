@@ -86,7 +86,7 @@ namespace Restaurant.ApiClasses
                 form.Add(content, "fileToUpload");
                
                 var response = await client.PostAsync(@method + "?token=" + "null", form);
-                if (response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode) 
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
                     var Sresponse = JsonConvert.DeserializeObject<string>(jsonString);
@@ -113,6 +113,109 @@ namespace Restaurant.ApiClasses
                 }
             }
             return null;
+        }
+
+        public static async Task<byte[]> getImage(string method, string imageName)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("imageName", imageName);
+
+            #region generate token to send it to api
+            byte[] key = Convert.FromBase64String(Secret);
+            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);
+
+            var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials
+                            (securityKey, SecurityAlgorithms.HmacSha256Signature);
+
+            //  Finally create a Token
+            var header = new JwtHeader(credentials);
+            var nbf = DateTime.UtcNow.AddSeconds(-1);
+            var exp = DateTime.UtcNow.AddSeconds(120);
+            var payload = new JwtPayload(null, "", new List<Claim>(), nbf, exp);
+
+            if (parameters != null)
+                for (int i = 0; i < parameters.Count; i++)
+                {
+                    payload.Add(parameters.Keys.ToList()[i], parameters.Values.ToList()[i]);
+                }
+
+            #region  add logId to parameters
+            if (MainWindow.userLog != null)
+                payload.Add("userLogInID", MainWindow.userLog.logId);
+            #endregion
+
+            var token = new JwtSecurityToken(header, payload);
+            var handler = new JwtSecurityTokenHandler();
+
+            // Token to String so you can use post it to api
+            string getToken = handler.WriteToken(token);
+            var encryptedToken = EncryptThenCompress(getToken);
+
+            string tmpPath = writeToTmpFile(encryptedToken);
+
+            FileStream fs = new FileStream(tmpPath, FileMode.Open, FileAccess.Read);
+            #endregion
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Global.APIUri);
+                client.Timeout = System.TimeSpan.FromSeconds(3600);
+                string boundary = string.Format("----WebKitFormBoundary{0}", DateTime.Now.Ticks.ToString("x"));
+                MultipartFormDataContent form = new MultipartFormDataContent();
+                HttpContent content = new StreamContent(fs);
+
+                content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                {
+                    FileName = "tmp.txt"
+                };
+                content.Headers.Add("client", "true");
+
+                form.Add(content, "fileToUpload");
+
+                var response = await client.PostAsync(@method + "?token=" + "null", form);
+                byte[] byteImg = null;
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    var Sresponse = JsonConvert.DeserializeObject<string>(jsonString);
+                    fs.Dispose();
+                    File.Delete(tmpPath);
+                    if (Sresponse != "")
+                    {
+                        var decryptedToken = DeCompressThenDecrypt(Sresponse);
+                        var jwtToken = new JwtSecurityToken(decryptedToken);
+                        var s = jwtToken.Claims.ToArray();
+                        IEnumerable<Claim> claims = jwtToken.Claims;
+                        string validAuth = claims.Where(f => f.Type == "scopes").Select(x => x.Value).FirstOrDefault();
+                        if (validAuth != null && s[2].Value == "-7") // invalid authintication
+                            return null;
+                        else if (validAuth != null && s[2].Value == "-8")
+                        {
+                            MainWindow.go_out = true;
+                        }
+
+                        foreach (Claim c in claims)
+                        {
+                            if (c.Type == "scopes")
+                            {
+                                string imageStr = c.Value;
+                                byteImg = Convert.FromBase64String(imageStr);
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    fs.Dispose();
+                    File.Delete(tmpPath);
+                }
+                return byteImg;
+            }
+
         }
         public static string writeToTmpFile(string text)
         {
