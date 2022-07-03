@@ -156,7 +156,34 @@
                                         <DataGridTextColumn Width="*"  Header="No." Binding="{Binding Path=index}"/>
                                         <DataGridTextColumn Width="2*"  Header="name" Binding="{Binding Path=itemName}"/>
                                         <DataGridTextColumn Width="*"  Header="count" Binding="{Binding Path=Count}"/>
-                                    </DataGrid.Columns>
+                                            <DataGridTemplateColumn Width="35" Header="" IsReadOnly="True" >
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button Margin="-10" 
+                                            Padding="0" 
+                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                            <Path  Stretch="Fill" Data="{StaticResource StarIconGeometry}"
+                                                HorizontalAlignment="Center" Grid.Column="0"  
+                                               VerticalAlignment="Center" Width="20" Height="20">
+                                                                <Path.Style>
+                                                                    <Style TargetType="{x:Type Path}">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding isExtra}" Value="true">
+                                                                                <Setter Property="Fill" Value="{StaticResource MainColor}"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding isExtra}" Value="false">
+                                                                                <Setter Property="Fill" Value="{StaticResource Grey}"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Path.Style>
+                                                            </Path>
+                                                        </Button>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+
+                                        </DataGrid.Columns>
                                 </DataGrid>
 
                             </Grid>
