@@ -79,7 +79,7 @@ namespace Restaurant.Classes
         public List<ItemTransfer> itemExtras { get; set; }
 
         public bool isExtra { get; set; }
-
+        public bool sentToKitchen { get; set; }
     }
     public class invoiceTables
     {

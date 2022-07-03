@@ -28,6 +28,9 @@ namespace Restaurant.Classes.ApiClasses
         public Nullable<long> categoryId { get; set; }
         public string categoryName { get; set; }
         public int sequence { get; set; }
+
+        public List<itemsTransferIngredients> itemsIngredients { get; set; }
+        public List<ItemTransfer> itemExtras { get; set; }
     }
     public class orderPreparingStatus
     {
@@ -84,7 +87,9 @@ namespace Restaurant.Classes.ApiClasses
         public string categoryName { get; set; }
         public string sectionTable { get; set; }
         //-------------------------------------------
-
+        // for extras and ingredients
+        public List<itemsTransferIngredients> itemsIngredients;
+        public List<ItemTransfer> itemExtras;
         // for check dataGrid
         public bool IsChecked { get; set; }
 

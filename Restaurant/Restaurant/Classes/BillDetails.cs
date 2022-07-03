@@ -25,6 +25,7 @@ namespace Restaurant.Classes
         public string forAgents { get; set; }
         public long itemsTransId { get; set; }
         public bool isExtra { get; set; }
+       public bool sentToKitchen { get; set; }
 
         public List<itemsTransferIngredients> itemsIngredients { get; set; }
         public List<ItemTransfer> itemExtras { get; set; }

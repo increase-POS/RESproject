@@ -136,6 +136,7 @@ namespace Restaurant.View.windows
                         index = index,
                         Count = remainingCount,
                         itemsTransId = b.itemsTransId,
+                        isExtra = b.isExtra,
                     };
                     index++;
                     unSentInvoiceItems.Add(newBillRow);

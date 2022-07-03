@@ -66,10 +66,12 @@ namespace Restaurant.View.windows
             }
         }
         public bool isOpend = false;
-       // public int itemTransferId = 0;
+
         public long itemId;
         public List<itemsTransferIngredients> itemsIngredients;
         public List<ItemTransfer> itemExtras;
+        public bool sentToKitchen;
+
         Item item = new Item();
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -104,9 +106,8 @@ namespace Restaurant.View.windows
         long categoryId;
 
         ItemTransfer itemTransfer = new ItemTransfer();
-        public List<Unit> units;
-        byte tgl_tagState;
-        string searchText = "";
+
+
         public static List<string> requiredControlList;
         List<Item> extras;
 
@@ -128,8 +129,7 @@ namespace Restaurant.View.windows
                 }
                 translate();
 
-                //Keyboard.Focus(tb_tagName);
-                //categoryId = FillCombo.GetCategoryId(categoryName);
+                setButtonEnabled();
 
                 dg_ingredient.ItemsSource = itemsIngredients;
                 RefreshExtrasView();
@@ -159,6 +159,18 @@ namespace Restaurant.View.windows
 
             dg_tag.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
             dg_tag.Columns[1].Header = AppSettings.resourcemanager.GetString("trCount");
+        }
+
+        void setButtonEnabled()
+        {
+            if(sentToKitchen)
+            {
+                btn_add.IsEnabled = false;
+                btn_update.IsEnabled = false;
+                btn_delete.IsEnabled = false;
+
+                col_activate.Visibility = Visibility.Collapsed;
+            }
         }
         async Task fillExtrasCombo()
         {
@@ -446,7 +458,9 @@ namespace Restaurant.View.windows
                     {
                         itemsTransferIngredients row = (itemsTransferIngredients)dg_ingredient.SelectedItems[0];
                         if (row.isActive == 1)
+                        {
                             row.isActive = 0;
+                        }
                         else
                             row.isActive = 1;
 

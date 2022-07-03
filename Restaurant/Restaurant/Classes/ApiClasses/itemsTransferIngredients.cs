@@ -15,10 +15,13 @@ namespace Restaurant.Classes.ApiClasses
         public long itemsTransIngredId { get; set; }
         public Nullable<long> itemsTransId { get; set; }
         public Nullable<long> dishIngredId { get; set; }
-        public string DishIngredientName { get; set; }
-        public string itemName { get; set; }
+        public Nullable<long> itemUnitId { get; set; }
         public byte isActive { get; set; }
         public string notes { get; set; }
+        public string itemName { get; set; }
+        public string DishIngredientName { get; set; }
+
+
 
         public async Task<List<itemsTransferIngredients>> GetItemIngredients(long itemTransferId, long itemUnitId=0)
         {

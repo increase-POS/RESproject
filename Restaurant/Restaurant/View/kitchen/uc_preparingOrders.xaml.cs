@@ -441,7 +441,7 @@ namespace Restaurant.View.kitchen
                 itemsList = new List<ItemOrderPreparing>();
                 BuildOrderItemsDesign();
                 ///////
-                dishIngredientsList = new List<DishIngredients>();
+                dishIngredientsList = new List<itemsTransferIngredients>();
                 BuildDishIngredientsDesign();
                 ///////
                 extraOrdersList = new List<ItemTransfer>();
@@ -754,18 +754,20 @@ namespace Restaurant.View.kitchen
                         ///////
                         itemsList = preparingOrder.items;
                         BuildOrderItemsDesign();
-                        ///////
-                        dishIngredientsList = new List<DishIngredients>();
-                        dishIngredientsList.Add(new DishIngredients { name = "Potato", isActive = 1 });
-                        dishIngredientsList.Add(new DishIngredients { name = "Sauce", isActive = 0 });
-                        dishIngredientsList.Add(new DishIngredients { name = "Sauce", isActive = 1 });
-                        dishIngredientsList.Add(new DishIngredients { name = "Potato", isActive = 0 });
+                        /////// 
+                        dishIngredientsList = new List<itemsTransferIngredients>();
+                        dishIngredientsList = preparingOrder.itemsIngredients;
+                        //dishIngredientsList.Add(new DishIngredients { name = "Potato", isActive = 1 });
+                        //dishIngredientsList.Add(new DishIngredients { name = "Sauce", isActive = 0 });
+                        //dishIngredientsList.Add(new DishIngredients { name = "Sauce", isActive = 1 });
+                        //dishIngredientsList.Add(new DishIngredients { name = "Potato", isActive = 0 });
                         BuildDishIngredientsDesign();
                         ///////
                         extraOrdersList = new List<ItemTransfer>();
-                        extraOrdersList.Add(new ItemTransfer { itemName = "Potato", quantity = 2 });
-                        extraOrdersList.Add(new ItemTransfer { itemName = "Sauce", quantity = 1 });
-                        extraOrdersList.Add(new ItemTransfer { itemName = "Potato", quantity = 4 });
+                        extraOrdersList = preparingOrder.itemExtras;
+                        //extraOrdersList.Add(new ItemTransfer { itemName = "Potato", quantity = 2 });
+                        //extraOrdersList.Add(new ItemTransfer { itemName = "Sauce", quantity = 1 });
+                        //extraOrdersList.Add(new ItemTransfer { itemName = "Potato", quantity = 4 });
                         BuildExtraOrdersDesign();
 
                         inputEditable(preparingOrder.status);
@@ -1394,7 +1396,7 @@ namespace Restaurant.View.kitchen
         #endregion
 
         #region dishIngredients
-        List<DishIngredients> dishIngredientsList = new List<DishIngredients>();
+        List<itemsTransferIngredients> dishIngredientsList = new List<itemsTransferIngredients>();
         void BuildDishIngredientsDesign()
         {
             sp_dishIngredients.Children.Clear();
@@ -1440,7 +1442,7 @@ namespace Restaurant.View.kitchen
                 #endregion
                 #region   name
                 var itemNameText = new TextBlock();
-                itemNameText.Text = item.name;
+                itemNameText.Text = item.DishIngredientName;
                 itemNameText.Margin = new Thickness(5);
                 itemNameText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
                 //itemNameText.FontWeight = FontWeights.SemiBold;
