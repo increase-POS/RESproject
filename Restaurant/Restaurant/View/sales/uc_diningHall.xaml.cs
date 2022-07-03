@@ -972,9 +972,12 @@ namespace Restaurant.View.sales
 
                 #endregion
                 #region IsExtra
-                var itemIsExtraPath = new Path();
+                Path itemIsExtraPath = new Path();
                 itemIsExtraPath.Tag = "isExtra-" + item.index;
-                itemIsExtraPath.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                if (item.isExtra)
+                    itemIsExtraPath.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                else
+                    itemIsExtraPath.Fill = Application.Current.Resources["Grey"] as SolidColorBrush;
                 itemIsExtraPath.Data = App.Current.Resources["StarIconGeometry"] as Geometry;
                 itemIsExtraPath.Stretch = Stretch.Fill;
                 itemIsExtraPath.FlowDirection = FlowDirection.LeftToRight;
@@ -984,7 +987,6 @@ namespace Restaurant.View.sales
                 Grid.SetRow(itemIsExtraPath, item.index);
                 Grid.SetColumn(itemIsExtraPath, 2);
                 gridContainer.Children.Add(itemIsExtraPath);
-
                 #endregion
                 #region   name
                 var itemNameText = new TextBlock();
@@ -1122,9 +1124,9 @@ namespace Restaurant.View.sales
                 w.itemsIngredients =  billDetailsList[index].itemsIngredients;
                 w.itemExtras = billDetailsList[index].itemExtras;
                 w.itemId = billDetailsList[index].itemId;
-
                 w.ShowDialog();
-
+                
+                    
                 setStarColor(index);
                 await refreshTotal();
                 Window.GetWindow(this).Opacity = 1;
@@ -1142,10 +1144,23 @@ namespace Restaurant.View.sales
         {
             var ingredientEdit = billDetailsList[index].itemsIngredients.Where(x => x.isActive == 0).FirstOrDefault();
             if (billDetailsList[index].itemExtras.Count >0 || ingredientEdit != null )
-            {
                 billDetailsList[index].isExtra = true;
+            else
+                billDetailsList[index].isExtra = false;
+
+
+            List<Path> isExtraPathList = FindControls.FindVisualChildren<Path>(this)
+                 .Where(x => x.Tag != null && x.Tag.ToString().Contains("isExtra-" + index)  ).ToList();
+            if(isExtraPathList.Count> 0)
+            {
+                Path isExtraPath = isExtraPathList.FirstOrDefault();
                 //yasin
+                if (billDetailsList[index].isExtra)
+                    isExtraPath.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                else
+                    isExtraPath.Fill = Application.Current.Resources["Grey"] as SolidColorBrush;
             }
+           
         }
         void buttonPlus_Click(object sender, RoutedEventArgs e)
         {
