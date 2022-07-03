@@ -222,6 +222,7 @@
     <Compile Include="Classes\ApiClasses\InvoicesClass.cs" />
     <Compile Include="Classes\ApiClasses\AgentMemberships.cs" />
     <Compile Include="Classes\ApiClasses\OrderPreparing.cs" />
+    <Compile Include="Classes\ApiClasses\ItemExtra.cs" />
     <Compile Include="Classes\ApiClasses\ResidentialSectorsUsers.cs" />
     <Compile Include="Classes\ApiClasses\setupConfiguration.cs" />
     <Compile Include="Classes\ApiClasses\SubscriptionFees.cs" />
