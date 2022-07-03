@@ -25,9 +25,9 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<long> createUserId { get; set; }
         public Nullable<long> updateUserId { get; set; }
+        public bool isBasic { get; set; }
 
 
-       
         public async Task<List<DishIngredients>> GetByItemUnitId(long itemUnitId)
         {
             List<DishIngredients> items = new List<DishIngredients>();
