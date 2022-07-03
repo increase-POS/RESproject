@@ -160,7 +160,8 @@ namespace Restaurant.View.catalog.foods
                     dishIngredientsPermission = "extraOrders_dishIngredients";
 
                     brd_tagId.Visibility = Visibility.Collapsed;
-                    brd_dishIngredients.Visibility = Visibility.Collapsed;
+                    Grid.SetColumnSpan(brd_dishIngredients , 6);
+                    brd_extraItems.Visibility = Visibility.Collapsed;
 
                 }
 
