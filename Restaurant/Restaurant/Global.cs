@@ -25,5 +25,6 @@ namespace Restaurant
         public const string TMPUsersFolder = "Thumb/users"; // folder to save users photos locally 
         public const string TMPSettingFolder = "Thumb/setting"; // folder to save Logo photos locally 
         public const string TMPCardsFolder = "Thumb/cards"; // folder to save Logo photos locally 
+        public const string TMPDocsFolder = "Thumb/cards"; // folder to save documents photos locally 
     }
 }

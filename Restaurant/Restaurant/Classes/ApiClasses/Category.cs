@@ -165,53 +165,79 @@ namespace Restaurant.Classes
             }
             return false;
         }
+        //public async Task<byte[]> downloadImage(string imageName)
+        //{
+        //    Stream jsonString = null;
+        //    byte[] byteImg = null;
+        //    Image img = null;
+        //    // ... Use HttpClient.
+        //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+        //    using (var client = new HttpClient())
+        //    {
+        //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+        //        client.BaseAddress = new Uri(Global.APIUri);
+        //        client.DefaultRequestHeaders.Clear();
+        //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
+        //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
+        //        HttpRequestMessage request = new HttpRequestMessage();
+        //        request.RequestUri = new Uri(Global.APIUri + "Categories/GetImage?imageName=" + imageName);
+        //        request.Method = HttpMethod.Get;
+        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //        HttpResponseMessage response = await client.SendAsync(request);
+
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            jsonString = await response.Content.ReadAsStreamAsync();
+        //            img = Bitmap.FromStream(jsonString);
+        //            byteImg = await response.Content.ReadAsByteArrayAsync();
+
+        //            // configure trmporery path
+        //            string dir = Directory.GetCurrentDirectory();
+        //            string tmpPath = Path.Combine(dir, Global.TMPFolder);
+        //            if (!Directory.Exists(tmpPath))
+        //                Directory.CreateDirectory(tmpPath);
+        //            string fileName = System.IO.Path.GetFileNameWithoutExtension(imageName);
+        //            string[] files = System.IO.Directory.GetFiles(tmpPath, fileName+".*");
+        //            foreach (string f in files)
+        //            {
+        //                System.IO.File.Delete(f);
+        //            }
+        //            tmpPath = Path.Combine(tmpPath, imageName);
+
+        //            using (FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.ReadWrite))
+        //            {
+        //                fs.Write(byteImg, 0, byteImg.Length);
+        //            }
+        //        }
+        //        return byteImg;
+        //    }
+        //}
+
         public async Task<byte[]> downloadImage(string imageName)
         {
-            Stream jsonString = null;
             byte[] byteImg = null;
-            Image img = null;
-            // ... Use HttpClient.
-            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            using (var client = new HttpClient())
+            if (imageName != "")
             {
-                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-                client.BaseAddress = new Uri(Global.APIUri);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-                client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-                HttpRequestMessage request = new HttpRequestMessage();
-                request.RequestUri = new Uri(Global.APIUri + "Categories/GetImage?imageName=" + imageName);
-                request.Method = HttpMethod.Get;
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = await client.SendAsync(request);
+                byteImg = await APIResult.getImage("Categories/GetImage", imageName);
 
-                if (response.IsSuccessStatusCode)
+                string dir = Directory.GetCurrentDirectory();
+                string tmpPath = Path.Combine(dir, Global.TMPFolder);
+                if (!Directory.Exists(tmpPath))
+                    Directory.CreateDirectory(tmpPath);
+                tmpPath = Path.Combine(tmpPath, imageName);
+                if (System.IO.File.Exists(tmpPath))
                 {
-                    jsonString = await response.Content.ReadAsStreamAsync();
-                    img = Bitmap.FromStream(jsonString);
-                    byteImg = await response.Content.ReadAsByteArrayAsync();
-
-                    // configure trmporery path
-                    string dir = Directory.GetCurrentDirectory();
-                    string tmpPath = Path.Combine(dir, Global.TMPFolder);
-                    if (!Directory.Exists(tmpPath))
-                        Directory.CreateDirectory(tmpPath);
-                    string fileName = System.IO.Path.GetFileNameWithoutExtension(imageName);
-                    string[] files = System.IO.Directory.GetFiles(tmpPath, fileName+".*");
-                    foreach (string f in files)
-                    {
-                        System.IO.File.Delete(f);
-                    }
-                    tmpPath = Path.Combine(tmpPath, imageName);
-
-                    using (FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.ReadWrite))
-                    {
-                        fs.Write(byteImg, 0, byteImg.Length);
-                    }
+                    System.IO.File.Delete(tmpPath);
                 }
-                return byteImg;
+                using (FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.ReadWrite))
+                {
+                    fs.Write(byteImg, 0, byteImg.Length);
+                }
+
             }
+
+            return byteImg;
+
         }
-       
     }
 }

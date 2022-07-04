@@ -88,7 +88,7 @@ namespace Restaurant.Classes
         public bool canUpdate { get; set; }
 
 
-      
+
         public Nullable<short> defaultSale { get; set; }
 
         public async Task<long> save(Item item)
@@ -98,7 +98,7 @@ namespace Restaurant.Classes
 
             var myContent = JsonConvert.SerializeObject(item);
             parameters.Add("itemObject", myContent);
-           return await APIResult.post(method, parameters);
+            return await APIResult.post(method, parameters);
         }
         public async Task<int> saveItemsCosting(List<Item> items)
         {
@@ -107,7 +107,7 @@ namespace Restaurant.Classes
 
             var myContent = JsonConvert.SerializeObject(items);
             parameters.Add("itemObject", myContent);
-           return await APIResult.post(method, parameters);
+            return await APIResult.post(method, parameters);
         }
         public async Task<long> saveSaleItem(Item item, ItemUnit itemUnit)
         {
@@ -118,18 +118,18 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
 
             myContent = JsonConvert.SerializeObject(itemUnit);
-            parameters.Add("itemUnit",myContent);
-           return await APIResult.post(method, parameters);
+            parameters.Add("itemUnit", myContent);
+            return await APIResult.post(method, parameters);
         }
-        
+
         public async Task<List<Item>> GetKitchenItemsWithUnits(long branchId, long categoryId)
         {
             List<Item> items = new List<Item>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("branchId",branchId.ToString());
+            parameters.Add("branchId", branchId.ToString());
             parameters.Add("categoryId", categoryId.ToString());
 
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetKitchenItemsWithUnits",parameters);
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetKitchenItemsWithUnits", parameters);
 
             foreach (Claim c in claims)
             {
@@ -168,8 +168,8 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        
-        public async Task<List<Item>> GetAllSalesItemsInv(long branchId,string day,string invType, long membershipId =0)
+
+        public async Task<List<Item>> GetAllSalesItemsInv(long branchId, string day, string invType, long membershipId = 0)
         {
             List<Item> items = new List<Item>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -178,7 +178,7 @@ namespace Restaurant.Classes
             parameters.Add("membershipId", membershipId.ToString());
             parameters.Add("branchId", branchId.ToString());
 
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetAllSalesItemsInv",parameters);
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetAllSalesItemsInv", parameters);
 
             foreach (Claim c in claims)
             {
@@ -189,7 +189,7 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Item>> GetItemExtras(long itemId,string invType, long membershipId = 0)
+        public async Task<List<Item>> GetItemExtras(long itemId, string invType, long membershipId = 0)
         {
             List<Item> items = new List<Item>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -197,7 +197,7 @@ namespace Restaurant.Classes
             parameters.Add("invType", invType);
             parameters.Add("membershipId", membershipId.ToString());
 
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetItemExtras",parameters);
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetItemExtras", parameters);
 
             foreach (Claim c in claims)
             {
@@ -214,7 +214,7 @@ namespace Restaurant.Classes
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("type", type);
 
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetSalesItems",parameters);
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetSalesItems", parameters);
 
             foreach (Claim c in claims)
             {
@@ -225,10 +225,10 @@ namespace Restaurant.Classes
             }
             return items;
         }
-      
+
         public async Task<List<Item>> GetKitchenItems(long categoryId, long branchId)
         {
-            List<Item> items = new List<Item>() ;
+            List<Item> items = new List<Item>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("categoryId", categoryId.ToString());
             parameters.Add("branchId", branchId.ToString());
@@ -242,9 +242,9 @@ namespace Restaurant.Classes
                     items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
-            return items;            
+            return items;
         }
-        public async Task<long> delete(long itemId, long userId,Boolean final)
+        public async Task<long> delete(long itemId, long userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());
@@ -252,8 +252,8 @@ namespace Restaurant.Classes
             parameters.Add("final", final.ToString());
 
             string method = "Items/Delete";
-           return await APIResult.post(method, parameters);         
-        }                 
+            return await APIResult.post(method, parameters);
+        }
 
         public async Task<Item> GetItemByID(long itemId)
         {
@@ -291,8 +291,8 @@ namespace Restaurant.Classes
             }
             return list;
         }
-       
-      
+
+
         #region image
         // update image field in DB
         public async Task<int> updateImage(long itemId, string imageName)
@@ -302,7 +302,7 @@ namespace Restaurant.Classes
             parameters.Add("imageName", imageName);
 
             string method = "Items/UpdateImage";
-           return await APIResult.post(method, parameters); 
+            return await APIResult.post(method, parameters);
         }
         public async Task<Boolean> uploadImage(string imagePath, string imageName, long itemId)
         {
@@ -370,59 +370,85 @@ namespace Restaurant.Classes
             }
             return false;
         }
+        //public async Task<byte[]> downloadImage(string imageName)
+        //{
+        //    Stream jsonString = null;
+        //    byte[] byteImg = null;
+        //    Image img = null;
+        //    // ... Use HttpClient.
+        //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+        //    using (var client = new HttpClient())
+        //    {
+        //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+        //        client.BaseAddress = new Uri(Global.APIUri);
+        //        client.DefaultRequestHeaders.Clear();
+        //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
+        //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
+        //        HttpRequestMessage request = new HttpRequestMessage();
+        //        request.RequestUri = new Uri(Global.APIUri + "Items/GetImage?imageName=" + imageName);
+        //        request.Method = HttpMethod.Get;
+        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //        HttpResponseMessage response = await client.SendAsync(request);
+
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            jsonString = await response.Content.ReadAsStreamAsync();
+        //            img = Bitmap.FromStream(jsonString);
+        //            byteImg = await response.Content.ReadAsByteArrayAsync();
+
+        //            // configure trmporery path
+        //            string dir = Directory.GetCurrentDirectory();
+        //            string tmpPath = Path.Combine(dir, Global.TMPItemsFolder);
+        //            if (!Directory.Exists(tmpPath))
+        //                Directory.CreateDirectory(tmpPath);
+        //            if (!Directory.Exists(tmpPath))
+        //                Directory.CreateDirectory(tmpPath);
+        //            string fileName = System.IO.Path.GetFileNameWithoutExtension(imageName);
+        //            string[] files = System.IO.Directory.GetFiles(tmpPath, fileName + ".*");
+        //            foreach (string f in files)
+        //            {
+        //                System.IO.File.Delete(f);
+        //            }
+        //            tmpPath = Path.Combine(tmpPath, imageName);
+
+        //            using (FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.ReadWrite))
+        //            {
+        //                fs.Write(byteImg, 0, byteImg.Length);
+        //            }
+        //        }
+        //        return byteImg;
+        //    }
+        //}
+
         public async Task<byte[]> downloadImage(string imageName)
         {
-            Stream jsonString = null;
             byte[] byteImg = null;
-            Image img = null;
-            // ... Use HttpClient.
-            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            using (var client = new HttpClient())
+            if (imageName != "")
             {
-                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-                client.BaseAddress = new Uri(Global.APIUri);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-                client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-                HttpRequestMessage request = new HttpRequestMessage();
-                request.RequestUri = new Uri(Global.APIUri + "Items/GetImage?imageName=" + imageName);
-                request.Method = HttpMethod.Get;
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = await client.SendAsync(request);
+                byteImg = await APIResult.getImage("Items/GetImage", imageName);
 
-                if (response.IsSuccessStatusCode)
+                string dir = Directory.GetCurrentDirectory();
+                string tmpPath = Path.Combine(dir, Global.TMPItemsFolder);
+                if (!Directory.Exists(tmpPath))
+                    Directory.CreateDirectory(tmpPath);
+                tmpPath = Path.Combine(tmpPath, imageName);
+                if (System.IO.File.Exists(tmpPath))
                 {
-                    jsonString = await response.Content.ReadAsStreamAsync();
-                    img = Bitmap.FromStream(jsonString);
-                    byteImg = await response.Content.ReadAsByteArrayAsync();
-
-                    // configure trmporery path
-                    string dir = Directory.GetCurrentDirectory();
-                    string tmpPath = Path.Combine(dir, Global.TMPItemsFolder);
-                    if (!Directory.Exists(tmpPath))
-                        Directory.CreateDirectory(tmpPath);
-                    if (!Directory.Exists(tmpPath))
-                        Directory.CreateDirectory(tmpPath);
-                    string fileName = System.IO.Path.GetFileNameWithoutExtension(imageName);
-                    string[] files = System.IO.Directory.GetFiles(tmpPath, fileName + ".*");
-                    foreach (string f in files)
-                    {
-                        System.IO.File.Delete(f);
-                    }
-                    tmpPath = Path.Combine(tmpPath, imageName);
-
-                    using (FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.ReadWrite))
-                    {
-                        fs.Write(byteImg, 0, byteImg.Length);
-                    }
+                    System.IO.File.Delete(tmpPath);
                 }
-                return byteImg;
+                using (FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.ReadWrite))
+                {
+                    fs.Write(byteImg, 0, byteImg.Length);
+                }
+
             }
+
+            return byteImg;
+
         }
-
-
-        #endregion
     
+        #endregion
+
 
     }
 }
