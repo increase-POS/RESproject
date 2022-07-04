@@ -92,7 +92,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*"  Header=""  Binding="{Binding Path = isBasic }">
+                            <DataGridTextColumn Width="*"  Header=""  Binding="{Binding Path = isBasic , Converter={StaticResource basicConverter}}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -179,7 +179,7 @@
                                         HorizontalAlignment="Left" VerticalAlignment="Center"
                                         FontSize="12"/>
                             <ToggleButton Grid.Column="2" Background="{StaticResource MainColor}"   x:Name="tgl_isBasic"   
-                                          VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
+                                          VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="{Binding isBasic}"
                                           Margin="0" Height="13" Width="28" />
                             </Grid>
                             <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">

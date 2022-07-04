@@ -8,6 +8,7 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
+            <converters:basicConverter x:Key="basicConverter"/>
             <converters:isOnlineConverter x:Key="isOnlineConverter"/>
             <converters:isActiveConverter x:Key="isActiveConverter"/>
             <converters:isLimitedDateConverter x:Key="isLimitedDateConverter"/>

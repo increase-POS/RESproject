@@ -4189,4 +4189,7 @@ Please add Email in setting</value>
   <data name="trBasic" xml:space="preserve">
     <value>Basic</value>
   </data>
+  <data name="trUnBasic" xml:space="preserve">
+    <value>Unbasic</value>
+  </data>
 </root>

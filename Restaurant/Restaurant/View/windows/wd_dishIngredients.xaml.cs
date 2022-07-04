@@ -159,6 +159,7 @@ namespace Restaurant.View.windows
                     dishIngredient.updateUserId = MainWindow.userLogin.userId;
                     dishIngredient.notes = tb_notes.Text;
                     dishIngredient.isActive = 1;
+                    dishIngredient.isBasic = tgl_isBasic.IsChecked.Value;
 
                     var s = await dishIngredient.save(dishIngredient);
                     if (s <= 0)
@@ -193,6 +194,8 @@ namespace Restaurant.View.windows
                     //dishIngredient.categoryId = categoryId;
                     dishIngredient.updateUserId = MainWindow.userLogin.userId;
                     dishIngredient.notes = tb_notes.Text;
+                    dishIngredient.isBasic = tgl_isBasic.IsChecked.Value;
+
                     var s = await dishIngredient.save(dishIngredient);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);

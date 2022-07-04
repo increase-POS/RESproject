@@ -4174,4 +4174,7 @@
   <data name="trBasic" xml:space="preserve">
     <value>أساسي</value>
   </data>
+  <data name="trUnBasic" xml:space="preserve">
+    <value>غير أساسي</value>
+  </data>
 </root>
