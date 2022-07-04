@@ -21,28 +21,21 @@ namespace Restaurant.View.windows
     public partial class wd_extraItemsList : Window
     {
         public bool isActive;
-
-        ItemUnitOffer itemUnitOffer = new ItemUnitOffer();
-        ItemUnit itemModel = new ItemUnit();
-        ItemUnitOffer itemUnitOfferModel = new ItemUnitOffer();
-        Offer offerModel = new Offer();
-
-        List<ItemUnit> allItems = new List<ItemUnit>();
-        List<ItemUnitOffer> selectedItems = new List<ItemUnitOffer>();
-
-        List<ItemUnit> allItemsSource = new List<ItemUnit>();
-        List<ItemUnitOffer> selectedItemsSource = new List<ItemUnitOffer>();
-
-        ItemUnit itemUnit = new ItemUnit();
-        Offer offer = new Offer();
-
         string searchText = "";
-
         public string txtItemSearch;
+        public long itemId { get; set; }
+        List<Item> allExtrasSource = new List<Item>();
+        List<Item> selectedExtrasSource = new List<Item>();
 
-        IEnumerable<ItemUnit> itemUnitQuery;
+        List<Item> allExtras = new List<Item>();
+        List<Item> selectedExtras = new List<Item>();
 
-        public long offerId { get; set; }
+        Item itemModel = new Item();
+        ItemExtra extraModel = new ItemExtra();
+        ItemExtra itemExtraModel = new ItemExtra();
+
+        List<ItemExtra> newList = new List<ItemExtra>();
+        List<Item> extraQuery = new List<Item>();
 
         public wd_extraItemsList()
         {
@@ -71,7 +64,7 @@ namespace Restaurant.View.windows
             }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
@@ -90,39 +83,28 @@ namespace Restaurant.View.windows
                 translat();
                 #endregion
 
-                //offer = await offerModel.getOfferById(offerId);
+                allExtrasSource = await itemModel.GetAllExtras();
+                selectedExtrasSource = await itemExtraModel.GetExtraByItemId(itemId);
 
-                //allItemsSource = await itemModel.Getall();
-                //allItemsSource = allItemsSource.Where(x => x.unitName == "saleUnit").ToList();
-                //selectedItemsSource = await itemUnitOffer.GetItemsByOfferId(offerId);
+                allExtras.AddRange(allExtrasSource);
+                selectedExtras.AddRange(selectedExtrasSource);
 
-                //allItems.AddRange(allItemsSource);
+                //remove selected items from all items
+                foreach (Item i in selectedExtras)
+                {
+                    itemModel = new Item();
+                    itemModel = allExtras.Where(ex => ex.itemId == i.itemId).FirstOrDefault();
+                    if(allExtras.Contains(itemModel))
+                        allExtras.Remove(itemModel);
+                }
 
-                ////foreach (var i in allItems)
-                ////{
-                ////    i.itemName = i.itemName + "-" + i.unitName;
-                ////}
+                dg_allItems.ItemsSource = allExtras;
+                dg_allItems.SelectedValuePath = "itemId";
+                dg_allItems.DisplayMemberPath = "name";
 
-                //selectedItems.AddRange(selectedItemsSource);
-                ////foreach (var i in selectedItems)
-                ////{
-                ////    i.itemName = i.itemName + "-" + i.unitName;
-                ////}
-
-                ////remove selected items from all items
-                //foreach (var i in selectedItems)
-                //{
-                //    itemUnit = allItemsSource.Where(s => s.itemUnitId == i.iuId).FirstOrDefault<ItemUnit>();
-                //    allItems.Remove(itemUnit);
-                //}
-
-                //dg_allItems.ItemsSource = allItems;
-                //dg_allItems.SelectedValuePath = "itemUnitId";
-                //dg_allItems.DisplayMemberPath = "itemName";
-
-                //dg_selectedItems.ItemsSource = selectedItems;
-                //dg_selectedItems.SelectedValuePath = "itemUnitId";
-                //dg_selectedItems.DisplayMemberPath = "itemName";
+                dg_selectedItems.ItemsSource = selectedExtras;
+                dg_selectedItems.SelectedValuePath = "itemId";
+                dg_selectedItems.DisplayMemberPath = "name";
 
                 HelpClass.EndAwait(grid_extraList);
             }
@@ -131,7 +113,6 @@ namespace Restaurant.View.windows
                 HelpClass.EndAwait(grid_extraList);
                 HelpClass.ExceptionMessage(ex, this);
             }
-
         }
 
         #region methods
@@ -143,7 +124,6 @@ namespace Restaurant.View.windows
 
             dg_allItems.Columns[0].Header = AppSettings.resourcemanager.GetString("trItem");
             dg_selectedItems.Columns[0].Header = AppSettings.resourcemanager.GetString("trItem");
-            dg_selectedItems.Columns[1].Header = AppSettings.resourcemanager.GetString("trQuantity");
 
             txt_title.Text = AppSettings.resourcemanager.GetString("trOffer");
             txt_items.Text = AppSettings.resourcemanager.GetString("trItems");
@@ -209,8 +189,8 @@ namespace Restaurant.View.windows
                 txtItemSearch = txb_searchitems.Text.ToLower();
 
                 searchText = txb_searchitems.Text;
-                //itemUnitQuery = allItems.Where(s => s.itemName.Contains(searchText) || s.unitName.Contains(searchText));
-                //dg_allItems.ItemsSource = itemUnitQuery;
+                extraQuery = allExtras.Where(s => s.name.Contains(searchText)).ToList();
+                dg_allItems.ItemsSource = extraQuery;
             }
             catch (Exception ex)
             {
@@ -230,24 +210,11 @@ namespace Restaurant.View.windows
             }
         }
 
-        private void Dg_allItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                Btn_selectedItem_Click(null, null);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
         private void Btn_selectedAll_Click(object sender, RoutedEventArgs e)
         {//select all
             try
             {
-                //int x = allItems.Count;
-                int x = 0;
+                int x = allExtras.Count;
                 for (int i = 0; i < x; i++)
                 {
                     dg_allItems.SelectedIndex = 0;
@@ -265,30 +232,25 @@ namespace Restaurant.View.windows
         {//select item
             try
             {
-                //itemUnit = dg_allItems.SelectedItem as ItemUnit;
-                //if (itemUnit != null)
-                //{
-                //    ItemUnitOffer iUO = new ItemUnitOffer();
-                //    iUO.ioId = 0;
-                //    iUO.iuId = itemUnit.itemUnitId;
-                //    iUO.offerId = offerId;
-                //    iUO.createUserId = MainWindow.userLogin.userId;
-                //    iUO.quantity = 1;
-                //    iUO.offerName = offer.name;
-                //    iUO.unitName = itemUnit.unitName;
-                //    iUO.itemName = itemUnit.itemName;
-                //    iUO.itemId = itemUnit.itemId;
-                //    iUO.unitId = itemUnit.unitId;
+                itemModel = dg_allItems.SelectedItem as Item;
+                if (itemModel != null)
+                {
+                    ItemExtra ie = new ItemExtra();
+                    ie.itemId = itemId;
+                    ie.extraId = itemModel.itemId;
+                    ie.notes = "";
+                    ie.createUserId = MainWindow.userLogin.userId;
 
-                //    allItems.Remove(itemUnit);
-                //    selectedItems.Add(iUO);
+                    newList.Add(ie);
+                    allExtras.Remove(itemModel);
+                    selectedExtras.Add(itemModel);
 
-                //    dg_allItems.ItemsSource = allItems;
-                //    dg_selectedItems.ItemsSource = selectedItems;
+                    dg_allItems.ItemsSource = allExtras;
+                    dg_selectedItems.ItemsSource = selectedExtras;
 
-                //    dg_allItems.Items.Refresh();
-                //    dg_selectedItems.Items.Refresh();
-                //}
+                    dg_allItems.Items.Refresh();
+                    dg_selectedItems.Items.Refresh();
+                }
             }
             catch (Exception ex)
             {
@@ -302,22 +264,22 @@ namespace Restaurant.View.windows
         {//unselect item
             try
             {
-                //itemUnitOffer = dg_selectedItems.SelectedItem as ItemUnitOffer;
-                //ItemUnit i = new ItemUnit();
-                //if (itemUnitOffer != null)
-                //{
-                //    i = allItemsSource.Where(s => s.itemUnitId == itemUnitOffer.iuId.Value).FirstOrDefault();
+                itemModel = dg_selectedItems.SelectedItem as Item;
+                ItemExtra i = new ItemExtra();
+                if (itemModel != null)
+                {
+                    i = newList.Where(s =>  s.extraId == itemModel.itemId).FirstOrDefault();
 
-                //    allItems.Add(i);
+                    newList.Remove(i);
+                    allExtras.Add(itemModel);
+                    selectedExtras.Remove(itemModel);
 
-                //    selectedItems.Remove(itemUnitOffer);
+                    dg_allItems.ItemsSource = allExtras;
+                    dg_selectedItems.ItemsSource = selectedExtras;
 
-                //    dg_allItems.ItemsSource = allItems;
-                //    dg_selectedItems.ItemsSource = selectedItems;
-
-                //    dg_allItems.Items.Refresh();
-                //    dg_selectedItems.Items.Refresh();
-                //}
+                    dg_allItems.Items.Refresh();
+                    dg_selectedItems.Items.Refresh();
+                }
             }
             catch (Exception ex)
             {
@@ -331,8 +293,7 @@ namespace Restaurant.View.windows
         {//unselect all
             try
             {
-                //int x = selectedItems.Count;
-                int x = 0;
+                int x = selectedExtras.Count;
                 for (int i = 0; i < x; i++)
                 {
                     dg_selectedItems.SelectedIndex = 0;
@@ -347,51 +308,28 @@ namespace Restaurant.View.windows
 
         private void Dg_selectedItems_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //try
-            //{
-            //    Btn_unSelectedItem_Click(null, null);
-            //}
-            //catch (Exception ex)
-            //{
-            //    SectionData.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                Btn_unSelectedItem_Click(null, null);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
-
-        private void Dg_selectedItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
 
         #endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private void Btn_save_Click(object sender, RoutedEventArgs e)
+        private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
             try
             {
                 HelpClass.StartAwait(grid_extraList);
 
-                //int s = await itemUnitOfferModel.updategroup(offerId, selectedItems, MainWindow.userLogin.userId);
+                int s = await extraModel.UpdateExtraByItemId(itemId, newList, MainWindow.userLogin.userId);
 
-                //isActive = true;
-                //this.Close();
+                isActive = true;
+                this.Close();
 
                 HelpClass.EndAwait(grid_extraList);
             }

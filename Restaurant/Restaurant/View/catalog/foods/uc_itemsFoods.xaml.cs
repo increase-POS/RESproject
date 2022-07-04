@@ -1613,11 +1613,11 @@ namespace Restaurant.View.catalog.foods
 
         }
         private void Btn_extraItems_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //items
+        { //extras
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
+               
                 if (item.itemId > 0)
                 {
 
@@ -1627,7 +1627,7 @@ namespace Restaurant.View.catalog.foods
 
                         //await FillCombo.RefreshItemUnit();
                         wd_extraItemsList w = new wd_extraItemsList();
-                        //w.itemUnitId = FillCombo.itemUnitList.Where(x => x.itemId == item.itemId).FirstOrDefault().itemUnitId;
+                        w.itemId =  item.itemId;
                         w.ShowDialog();
 
                         Window.GetWindow(this).Opacity = 1;
@@ -1639,13 +1639,13 @@ namespace Restaurant.View.catalog.foods
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
 

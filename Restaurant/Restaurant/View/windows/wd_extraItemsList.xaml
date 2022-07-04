@@ -110,9 +110,9 @@
                               AutoGenerateColumns="False"   
                               ColumnWidth="SizeToHeader" 
                               BeginningEdit="Grid_BeginningEdit" 
-                              MouseDoubleClick="Dg_allItems_MouseDoubleClick" SelectionChanged="Dg_allItems_SelectionChanged" >
+                              MouseDoubleClick="Dg_allItems_MouseDoubleClick" >
                         <DataGrid.Columns>
-                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Item" Binding="{Binding Path=itemName}"/>
+                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Item" Binding="{Binding Path=name}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
@@ -205,10 +205,9 @@
                               IsReadOnly="False" CanUserAddRows="False"
                               AutoGenerateColumns="False"  
                               BeginningEdit="Grid_BeginningEdit" 
-                              ColumnWidth="SizeToHeader" MouseDoubleClick="Dg_selectedItems_MouseDoubleClick" SelectionChanged="Dg_selectedItems_SelectionChanged"  >
+                              ColumnWidth="SizeToHeader" MouseDoubleClick="Dg_selectedItems_MouseDoubleClick" >
                         <DataGrid.Columns >
-                            <DataGridTextColumn  Width="3*" IsReadOnly="True"  Header="Item" Binding="{Binding Path=itemName}" />
-                            <DataGridTextColumn Width="*" x:Name="quantity" Header="Quantity" Binding="{Binding Path=quantity}"/>
+                            <DataGridTextColumn  Width="3*" IsReadOnly="True"  Header="Item" Binding="{Binding Path=name}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
