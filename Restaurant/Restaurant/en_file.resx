@@ -4192,4 +4192,7 @@ Please add Email in setting</value>
   <data name="trUnBasic" xml:space="preserve">
     <value>Unbasic</value>
   </data>
+  <data name="ingredientIsBasic" xml:space="preserve">
+    <value>Ingredient is basic</value>
+  </data>
 </root>

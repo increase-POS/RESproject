@@ -756,7 +756,7 @@ namespace Restaurant.View.kitchen
                         BuildOrderItemsDesign();
                         /////// 
                         dishIngredientsList = new List<itemsTransferIngredients>();
-                        dishIngredientsList = preparingOrder.itemsIngredients;
+                        dishIngredientsList = preparingOrder.items[0].itemsIngredients;
                         //dishIngredientsList.Add(new DishIngredients { name = "Potato", isActive = 1 });
                         //dishIngredientsList.Add(new DishIngredients { name = "Sauce", isActive = 0 });
                         //dishIngredientsList.Add(new DishIngredients { name = "Sauce", isActive = 1 });
@@ -764,7 +764,7 @@ namespace Restaurant.View.kitchen
                         BuildDishIngredientsDesign();
                         ///////
                         extraOrdersList = new List<ItemTransfer>();
-                        extraOrdersList = preparingOrder.itemExtras;
+                        extraOrdersList = preparingOrder.items[0].itemExtras;
                         //extraOrdersList.Add(new ItemTransfer { itemName = "Potato", quantity = 2 });
                         //extraOrdersList.Add(new ItemTransfer { itemName = "Sauce", quantity = 1 });
                         //extraOrdersList.Add(new ItemTransfer { itemName = "Potato", quantity = 4 });

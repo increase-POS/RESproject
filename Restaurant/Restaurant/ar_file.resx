@@ -4177,4 +4177,7 @@
   <data name="trUnBasic" xml:space="preserve">
     <value>غير أساسي</value>
   </data>
+  <data name="ingredientIsBasic" xml:space="preserve">
+    <value>المكون أساسي</value>
+  </data>
 </root>

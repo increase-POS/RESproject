@@ -21,7 +21,7 @@ namespace Restaurant.Classes.ApiClasses
         public string itemName { get; set; }
         public string DishIngredientName { get; set; }
 
-
+        public bool isBasic { get; set; }
 
         public async Task<List<itemsTransferIngredients>> GetItemIngredients(long itemTransferId, long itemUnitId=0)
         {
