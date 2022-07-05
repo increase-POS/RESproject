@@ -457,12 +457,14 @@ namespace Restaurant.View.windows
                     if (vis is DataGridRow)
                     {
                         itemsTransferIngredients row = (itemsTransferIngredients)dg_ingredient.SelectedItems[0];
-                        if (row.isActive == 1)
+                        if (row.isActive == 1 && row.isBasic == false)
                         {
                             row.isActive = 0;
                         }
-                        else
+                        else if(row.isActive == 0)
                             row.isActive = 1;
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("ingredientIsBasic"), animation: ToasterAnimation.FadeIn);
 
                         dg_ingredient.ItemsSource = null;
                         dg_ingredient.ItemsSource = itemsIngredients;
