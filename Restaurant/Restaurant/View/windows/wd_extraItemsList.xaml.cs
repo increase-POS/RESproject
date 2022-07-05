@@ -66,9 +66,9 @@ namespace Restaurant.View.windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                HelpClass.StartAwait(grid_extraList);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_extraList);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -83,7 +83,8 @@ namespace Restaurant.View.windows
                 translat();
                 #endregion
 
-                allExtrasSource = await itemModel.GetAllExtras();
+                allExtrasSource = await itemModel.GetAllSalesItems();
+                allExtrasSource = allExtrasSource.Where(ext => ext.categoryName == "extraOrders").ToList();
                 selectedExtrasSource = await itemExtraModel.GetExtraByItemId(itemId);
 
                 allExtras.AddRange(allExtrasSource);
@@ -106,13 +107,13 @@ namespace Restaurant.View.windows
                 dg_selectedItems.SelectedValuePath = "itemId";
                 dg_selectedItems.DisplayMemberPath = "name";
 
-                HelpClass.EndAwait(grid_extraList);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_extraList);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_extraList);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_extraList);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         #region methods

@@ -1623,15 +1623,15 @@ namespace Restaurant.View.catalog.foods
 
                     if (FillCombo.groupObject.HasPermissionAction(dishIngredientsPermission, FillCombo.groupObjects, "one"))
                     {
-                        //Window.GetWindow(this).Opacity = 0.2;
+                    Window.GetWindow(this).Opacity = 0.2;
 
-                        //wd_extraItemsList w = new wd_extraItemsList();
-                        //w.itemId =  item.itemId;
-                        //w.ShowDialog();
+                    wd_extraItemsList w = new wd_extraItemsList();
+                    w.itemId = item.itemId;
+                    w.ShowDialog();
 
-                        //Window.GetWindow(this).Opacity = 1;
+                    Window.GetWindow(this).Opacity = 1;
 
-                    }
+                }
                     else
                         Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 }
