@@ -250,12 +250,18 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Border Margin="5 5 5 15"  BorderThickness="1" BorderBrush="#DFDFDF" >
+                    <Border Margin="5 5 5 5"  BorderThickness="1" BorderBrush="#DFDFDF" >
                         <ListView 
                                   x:Name="lst_payments" SelectionChanged="Lst_payments_SelectionChanged" />
                     </Border>
-                    <Grid Grid.Row="1"   HorizontalAlignment="Right"
-                          Margin="5 5 15 5">
+                    <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   HorizontalAlignment="Right"
+                          Margin="5 0 15 0">
+                       
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
@@ -288,6 +294,24 @@
                         <TextBlock  Grid.Column="4"  x:Name="tb_moneySympol2"    Margin="5 5 0 5" Text="LSP"
                        Foreground="#4E4E4E"    FontWeight="Bold"  />
 
+                    </Grid>
+                    <Grid Grid.Row="1"   HorizontalAlignment="Right"
+                          Margin="5 0 15 5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"  x:Name="txt_theRemineTitle"  Margin="5" 
+                       Foreground="#4E4E4E" Text="The remine"
+                                  FontWeight="Bold"  />
+                        <TextBlock Grid.Column="1"  x:Name="txt_theRemine"  Margin="5" 
+                       Foreground="#4E4E4E" Text="0"
+                                  FontWeight="Regular"  />
+                        <TextBlock Grid.Column="2"    x:Name="tb_moneySympol3"    Margin="0 5 0 5" Text="LSP"
+                       Foreground="#4E4E4E"    FontWeight="Regular"  />
+
+                    </Grid>
                     </Grid>
                 </Grid>
                 <Line Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="3" Stretch="Fill" Stroke="#DFDFDF"  X2="1"  Margin="1,1,1,1"

@@ -55,6 +55,8 @@ namespace Restaurant.View.windows
         bool amountIsValid = false;
 
         public string windowOfSourceName = "";
+        public decimal theRemine = 0;
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -83,7 +85,7 @@ namespace Restaurant.View.windows
                 //////////////////////////
                 //invoice.agentId
                 //////////////////////////
-                tb_moneySympol1.Text = tb_moneySympol2.Text = AppSettings.Currency;
+                tb_moneySympol1.Text = tb_moneySympol2.Text = tb_moneySympol3.Text = AppSettings.Currency;
                 invoice.paid = 0;
                 tb_cash.Text = tb_total.Text = invoice.totalNet.ToString();
 
@@ -96,6 +98,8 @@ namespace Restaurant.View.windows
         private void translate()
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trMultiplePayment");
+
+            txt_theRemineTitle.Text = AppSettings.resourcemanager.GetString("trTheRemine");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentProcessType, AppSettings.resourcemanager.GetString("trPaymentProcessType"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, AppSettings.resourcemanager.GetString("trCash"));
@@ -136,7 +140,7 @@ namespace Restaurant.View.windows
             }
             cb_paymentProcessType.SelectedIndex = 0;
         }
-            private void Btn_colse_Click(object sender, RoutedEventArgs e)
+        private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             isOk = false;
             this.Close();
@@ -226,7 +230,6 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void input_LostFocus(object sender, RoutedEventArgs e)
         {
             try
@@ -533,7 +536,13 @@ namespace Restaurant.View.windows
                 }
                 if (cashTrasnfer.cash > 0)
                 {
-                    if (cashTrasnfer.cash + invoice.paid <= invoice.totalNet)
+                    decimal totalCashList = (listPayments.Where(x => x.processType == "cash").Count() > 0) ? 
+                        listPayments.Where(x => x.processType == "cash").FirstOrDefault().cash 
+                        :  0;
+
+
+
+                    if (cashTrasnfer.cash + invoice.paid <= invoice.totalNet ||  !(cb_paymentProcessType.SelectedValue.ToString().Equals("card") && cashTrasnfer.cash - (invoice.totalNet  - invoice.paid)> totalCashList))
                     {
                         cashTrasnfer.agentId = invoice.agentId;
                         cashTrasnfer.invId = invoice.invoiceId;
@@ -571,30 +580,63 @@ namespace Restaurant.View.windows
                         lst_payments.Items.Add(s);
                         listPayments.Add(cashTrasnfer);
                         invoice.paid += cashTrasnfer.cash;
+
+                        #region test if we have remain
+                        if (invoice.paid > invoice.totalNet)
+                        {
+                           
+                                int index = 0;
+                                foreach (var item in lst_payments.Items)
+                                {
+                                    if (item.ToString().Contains(AppSettings.resourcemanager.GetString("trCash")))
+                                    {
+                                        //List<string> str = item.ToString().Split(':').ToList<string>();
+                                        //str[1] = str[1].Replace(" ", "");
+                                        //dec += decimal.Parse(str[1]);
+                                        //invoice.paid -= decimal.Parse(str[1]);
+                                        //hasDuplicate = true;
+                                        break;
+                                    }
+                                    index++;
+                                }
+                                //if (hasDuplicate)
+                                {
+                                    
+                                    decimal difference = invoice.paid - invoice.totalNet;
+                                    listPayments[index].cash -= difference;
+                                    lst_payments.Items[index] = AppSettings.resourcemanager.GetString("trCash") + " : " + listPayments[index].cash;
+                                    invoice.paid -= difference;
+                                    theRemine += difference;
+
+                                if (listPayments[index].cash == 0)
+                                {
+                                    listPayments.Remove(listPayments[index]);
+                                    lst_payments.Items.Remove(lst_payments.Items[index]);
+                                }
+                            }
+                        }
+
                         txt_sum.Text = invoice.paid.ToString();
+                        txt_theRemine.Text = theRemine.ToString();
 
 
-                        if (invoice.paid == invoice.totalNet)
+                        if (invoice.paid >= invoice.totalNet)
                             txt_sum.Foreground = Application.Current.Resources["Green"] as SolidColorBrush;
                         else
                             txt_sum.Foreground = Application.Current.Resources["mediumRed"] as SolidColorBrush;
 
                         tb_cash.Text = (invoice.totalNet - invoice.paid).ToString();
+
+                        #endregion
                     }
                     else
                     {
                         HelpClass.SetValidate(p_error_cash, "trAmountGreaterInvoiceValue");
-                        //p_errorCash.Visibility = Visibility.Visible;
-                        //tt_errorCash.Content = AppSettings.resourcemanager.GetString("trAmountGreaterInvoiceValue");
-                        //tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#15FF0000"));
                     }
                 }
                 else
                 {
                     HelpClass.SetValidate(p_error_cash, "trZeroAmmount");
-                    //p_errorCash.Visibility = Visibility.Visible;
-                    //tt_errorCash.Content = AppSettings.resourcemanager.GetString("trZeroAmmount");
-                    //tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#15FF0000"));
                 }
             }
             catch (Exception ex)
@@ -658,7 +700,6 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void Lst_payments_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -675,12 +716,115 @@ namespace Restaurant.View.windows
                     listPayments.Remove(listPayments[lst_payments.SelectedIndex]);
                     lst_payments.Items.Remove(lst_payments.SelectedItem);
 
-                    if (invoice.paid == invoice.totalNet)
+                    if (invoice.paid >= invoice.totalNet)
                         txt_sum.Foreground = Application.Current.Resources["mediumGreen"] as SolidColorBrush;
                     else
                         txt_sum.Foreground = Application.Current.Resources["mediumRed"] as SolidColorBrush;
 
                     tb_cash.Text = (invoice.totalNet - invoice.paid).ToString();
+
+                    #region test remain
+                    if (theRemine>0)
+                    {
+                        try
+                        {
+                            string s = "";
+                            cashTrasnfer = new CashTransfer();
+                            try
+                            {
+                                cashTrasnfer.cash = theRemine;
+                            }
+                            catch
+                            {
+                                cashTrasnfer.cash = 0;
+                            }
+                            if (cashTrasnfer.cash > 0)
+                            {
+                                decimal totalCashList = (listPayments.Where(x => x.processType == "cash").Count() > 0) ?
+                                    listPayments.Where(x => x.processType == "cash").FirstOrDefault().cash
+                                    : 0;
+
+
+
+                                //if (cashTrasnfer.cash + invoice.paid <= invoice.totalNet || !(cb_paymentProcessType.SelectedValue.ToString().Equals("card") && cashTrasnfer.cash > totalCashList))
+                                {
+                                    cashTrasnfer.agentId = invoice.agentId;
+                                    cashTrasnfer.invId = invoice.invoiceId;
+                                    cb_paymentProcessType.SelectedValue = "cash";
+                                    cashTrasnfer.processType = cb_paymentProcessType.SelectedValue.ToString();
+                                    //if (cb_paymentProcessType.SelectedValue.ToString().Equals("cash"))
+                                    {
+                                        s = validateDuplicate(cashTrasnfer.cash);
+                                    }
+                                    
+
+                                    lst_payments.Items.Add(s);
+                                    listPayments.Add(cashTrasnfer);
+                                    invoice.paid += cashTrasnfer.cash;
+                                    theRemine = 0;
+
+                                    #region test if we have remain
+                                    if (invoice.paid > invoice.totalNet)
+                                    {
+
+                                        int index = 0;
+                                        foreach (var item in lst_payments.Items)
+                                        {
+                                            if (item.ToString().Contains(AppSettings.resourcemanager.GetString("trCash")))
+                                            {
+                                                break;
+                                            }
+                                            index++;
+                                        }
+                                        {
+
+                                            decimal difference = invoice.paid - invoice.totalNet;
+                                            listPayments[index].cash -= difference;
+                                            lst_payments.Items[index] = AppSettings.resourcemanager.GetString("trCash") + " : " + listPayments[index].cash;
+                                            invoice.paid -= difference;
+                                            theRemine += difference;
+
+                                            if (listPayments[index].cash == 0)
+                                            {
+                                                listPayments.Remove(listPayments[index]);
+                                                lst_payments.Items.Remove(lst_payments.Items[index]);
+                                            }
+                                        }
+                                    }
+
+                                    txt_sum.Text = invoice.paid.ToString();
+                                    txt_theRemine.Text = theRemine.ToString();
+
+
+                                    if (invoice.paid >= invoice.totalNet)
+                                        txt_sum.Foreground = Application.Current.Resources["Green"] as SolidColorBrush;
+                                    else
+                                        txt_sum.Foreground = Application.Current.Resources["mediumRed"] as SolidColorBrush;
+
+                                    tb_cash.Text = (invoice.totalNet - invoice.paid).ToString();
+
+                                    #endregion
+                                }
+                                //else
+                                //{
+                                //    HelpClass.SetValidate(p_error_cash, "trAmountGreaterInvoiceValue");
+                                //}
+                            }
+                            else
+                            {
+                                HelpClass.SetValidate(p_error_cash, "trZeroAmmount");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            HelpClass.ExceptionMessage(ex, this);
+                        }
+                    }
+                    #endregion
+
+
+
+                   
                 }
             }
             catch (Exception ex)
@@ -688,7 +832,6 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         #region check balance
         /*
         private decimal getCusAvailableBlnc(Agent customer)
