@@ -90,8 +90,8 @@ namespace Restaurant.View.windows
                 grid_offers.Visibility = Visibility.Collapsed;
                 grid_invoicesClasses.Visibility = Visibility.Collapsed;
 
-                await FillCombo.RefreshCustomers();
-                await FillCombo.FillComboCustomers(cb_customerId);
+                await fillCustomers();
+                //await FillCombo.FillComboCustomers(cb_customerId);
 
                 fillInputs();
 
@@ -123,6 +123,20 @@ namespace Restaurant.View.windows
 
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
 
+        }
+
+       private async Task fillCustomers()
+        {
+          var customers =  await  FillCombo.RefreshCustomers();
+            foreach(var c in customers)
+            {
+                if(c.name != "-")
+                c.name = c.name + ": " + c.mobile;
+            }
+            cb_customerId.ItemsSource = customers;
+            cb_customerId.DisplayMemberPath = "name";
+            cb_customerId.SelectedValuePath = "agentId";
+            cb_customerId.SelectedIndex = -1;
         }
         private void fillInputs()
         {
