@@ -131,7 +131,7 @@ namespace Restaurant.View.reports.purchaseReports
                 btn_branch_Click(btn_branch, null);
 
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -733,6 +733,9 @@ namespace Restaurant.View.reports.purchaseReports
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_branch);
                 path_branch.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
+                chk_invoice.IsChecked = true;
+                chk_drafs.IsChecked = false;
+                chk_return.IsChecked = false;
                 hideAllColumn();
                 col_branch.Visibility = Visibility.Visible;
                 col_count.Visibility = Visibility.Visible;
@@ -754,8 +757,7 @@ namespace Restaurant.View.reports.purchaseReports
         {//pos
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trPosHint"));
@@ -771,6 +773,9 @@ namespace Restaurant.View.reports.purchaseReports
                 path_pos.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                 hideAllColumn();
+                chk_invoice.IsChecked = true;
+                chk_drafs.IsChecked = false;
+                chk_return.IsChecked = false;
                 col_branch.Visibility = Visibility.Visible;
                 col_count.Visibility = Visibility.Visible;
                 col_pos.Visibility = Visibility.Visible;
@@ -779,13 +784,11 @@ namespace Restaurant.View.reports.purchaseReports
                 fillComboPos();
                 fillEvent();
 
-                
-                    HelpClass.EndAwait(grid_main);
+                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -794,8 +797,7 @@ namespace Restaurant.View.reports.purchaseReports
         {//vendors
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trVendorHint"));
@@ -811,6 +813,9 @@ namespace Restaurant.View.reports.purchaseReports
                 path_vendors.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                 hideAllColumn();
+                chk_invoice.IsChecked = true;
+                chk_drafs.IsChecked = false;
+                chk_return.IsChecked = false;
                 col_branch.Visibility = Visibility.Visible;
                 col_vendor.Visibility = Visibility.Visible;
                 col_agentCompany.Visibility = Visibility.Visible;
@@ -822,13 +827,11 @@ namespace Restaurant.View.reports.purchaseReports
                 fillComboVendors();
                 fillEvent();
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -837,8 +840,7 @@ namespace Restaurant.View.reports.purchaseReports
         {//users
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trUserHint"));
@@ -854,6 +856,9 @@ namespace Restaurant.View.reports.purchaseReports
                 path_users.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                 hideAllColumn();
+                chk_invoice.IsChecked = true;
+                chk_drafs.IsChecked = false;
+                chk_return.IsChecked = false;
                 col_branch.Visibility = Visibility.Visible;
                 col_pos.Visibility = Visibility.Visible;
                 col_user.Visibility = Visibility.Visible;
@@ -863,13 +868,11 @@ namespace Restaurant.View.reports.purchaseReports
                 fillComboUsers();
                 fillEvent();
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
