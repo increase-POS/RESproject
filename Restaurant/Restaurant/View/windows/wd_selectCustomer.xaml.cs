@@ -2,6 +2,7 @@
 using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
@@ -25,6 +26,8 @@ namespace Restaurant.View.windows
     {
         Memberships memberships = new Memberships();
         AgenttoPayCash agentToPayCash = new AgenttoPayCash();
+
+        IEnumerable<Agent> customers;
         public wd_selectCustomer() 
         {
             try
@@ -68,7 +71,9 @@ namespace Restaurant.View.windows
         public decimal deliveryDiscount { get; set; }
         public bool hasOffers { get; set; }
         public string memberShipStatus;
-        //public static List<string> requiredControlList = new List<string>();
+
+        private ICollectionView view;
+       
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -94,8 +99,8 @@ namespace Restaurant.View.windows
                 //await FillCombo.FillComboCustomers(cb_customerId);
 
                 fillInputs();
+                view = CollectionViewSource.GetDefaultView(customers);
 
-               
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -127,12 +132,8 @@ namespace Restaurant.View.windows
 
        private async Task fillCustomers()
         {
-          var customers =  await  FillCombo.RefreshCustomers();
-            foreach(var c in customers)
-            {
-                if(c.name != "-")
-                c.name = c.name + ": " + c.mobile;
-            }
+            customers =  await  FillCombo.RefreshCustomers();
+            
             cb_customerId.ItemsSource = customers;
             cb_customerId.DisplayMemberPath = "name";
             cb_customerId.SelectedValuePath = "agentId";
@@ -399,5 +400,48 @@ namespace Restaurant.View.windows
 
         }
 
+        #region autocomplete
+       
+        private void cmb_KeyUp(object sender, KeyEventArgs e)
+        {
+            var tb = cb_customerId.Template.FindName("PART_EditableTextBox", cb_customerId) as TextBox;
+            var val = tb.Text;
+            var empty = string.IsNullOrEmpty(tb.Text);
+
+            var keysToIgnore = new Key[] { Key.Down, Key.Up, Key.Enter, Key.Left, Key.Right };
+
+            if (keysToIgnore.Contains(e.Key))
+            {
+                return;
+            }
+
+            else
+            {
+                cb_customerId.ItemsSource = customers.Where(p => p.name.Contains(tb.Text) || (p.mobile != null && p.mobile.Contains(tb.Text))).ToList();
+            }
+            if (empty)
+            {
+                view.Filter = null;
+            }
+            else
+            {
+                view.Filter = (i) =>
+                {
+                    var str = i.ToString();
+                    return str.ToLowerInvariant().Contains(tb.Text.ToLowerInvariant());
+                };
+            }
+
+            cb_customerId.IsDropDownOpen = true;
+
+            tb.Text = val;
+            tb.CaretIndex = tb.Text.Length;
+
+        }
+        
+        
+        #endregion
+
+        
     }
 }

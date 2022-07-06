@@ -65,11 +65,11 @@
                         </Grid.ColumnDefinitions>
                         <Border Grid.Row="0"  CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
-                                <dotNetKitControls:AutoCompleteComboBox   
+                                <!--<dotNetKitControls:AutoCompleteComboBox   
                                         x:Name="cb_customerId" Padding="10,5,5,5"  Grid.Column="0"
                                         TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                                        materialDesign:HintAssist.Hint="extraItem - price..."    
+                                        materialDesign:HintAssist.Hint="customer..."    
                                         VerticalAlignment="Top" BorderThickness="0" Height="40" 
                                         BorderBrush="#737373"
                                         TextSearch.TextPath="name"
@@ -81,15 +81,19 @@
                                             <VirtualizingStackPanel />
                                         </ItemsPanelTemplate>
                                     </dotNetKitControls:AutoCompleteComboBox.ItemsPanel>
-                                </dotNetKitControls:AutoCompleteComboBox>
-                                <!--<ComboBox x:Name="cb_customerId"     
+                                </dotNetKitControls:AutoCompleteComboBox>-->
+                                <ComboBox x:Name="cb_customerId"     
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   materialDesign:HintAssist.Hint="customer..."  
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                    Grid.Column="0" Height="40"  Margin="4,0"
                                   BorderBrush="#737373" BorderThickness="0" 
                                       SelectionChanged="Cb_customerId_SelectionChanged"
-                                          IsTextSearchEnabled ="True" IsEditable="True"/>-->
+                                          KeyUp="cmb_KeyUp"
+     
+                                          IsTextSearchEnabled ="False"
+                                          IsEditable="True"
+                                          StaysOpenOnEdit="true"/>
                             <Path Fill="#E81123" x:Name="p_error_customerId" Stretch="Fill" Margin="5,5,20,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15" 
