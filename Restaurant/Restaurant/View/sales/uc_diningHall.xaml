@@ -613,7 +613,8 @@
                     <Border Grid.Row="1"     Margin="10,2.5"     Height="2" BorderThickness="0" Background="{StaticResource MainColor}" />
                     <ScrollViewer x:Name="sv_billDetail" Grid.Row="2"    VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Width="auto"
                                           ScrollViewer.CanContentScroll="True">
-                            <!--<Grid x:Name="grid_billDetailsContainer" Margin="5" >
+                           
+                        <!--<Grid x:Name="grid_billDetailsContainer" Margin="5" >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
@@ -632,7 +633,7 @@
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="35"/>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
@@ -656,11 +657,24 @@
                                     <materialDesign:PackIcon   Foreground="{StaticResource White}"
                                          Width="25" Height="25" Kind="Delete" />
                                 </Button>
-                                <TextBlock  Grid.Column="5" Text="17" FontSize="14"  
-                                  Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
-                                           Margin="5"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Button Tag="ssssssss" Grid.Column="6"    Margin="2.5"
+                                 
+                            <Border Tag="ssssssss"   Grid.Column="5"  CornerRadius="10" Margin="5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                    <TextBox Margin="4,0"  Text="00"
+                                             BorderThickness="0" 
+                                         Foreground="#4E4E4E"
+                                         MaxLength="2"  
+                                             Padding="0 2.5 0 0"
+                                             HorizontalAlignment="Center"
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" 
+                                             Height="20" 
+                                             Tag="int"       
+                                             PreviewTextInput="Number_PreviewTextInput" 
+                                             PreviewKeyDown="Spaces_PreviewKeyDown"
+                                             LostFocus="inviceItemCount_LostFocus"/>
+                            </Border>
+
+
+                            <Button Tag="ssssssss" Grid.Column="6"    Margin="2.5"
                                     Height="25" Width="25"  Padding="0"
                                         Background="#DFDFDF"   BorderThickness="0">
                                     <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
@@ -707,6 +721,7 @@
                                    Foreground="{StaticResource Grey}"   Margin="5"
                                             HorizontalAlignment="Right" VerticalAlignment="Center" />
                                 --><!--#endregion-->
+                                
                                 <!--#region  10--><!--
 
                                 <TextBlock  Grid.Row="2" Grid.Column="0" Text="10." FontSize="14"  
@@ -744,8 +759,8 @@
                                    Foreground="{StaticResource Grey}"   Margin="5"
                                             HorizontalAlignment="Right" VerticalAlignment="Center" />
 
-                                --><!--#endregion-->
-                                <!--#region  3--><!--
+                                --><!--#endregion
+                                #region  3--><!--
                                 <TextBlock Grid.Row="3"  Grid.Column="0" Text="1." FontSize="14"  
                                   Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
                                            FontWeight="Bold" Margin="5"
@@ -780,8 +795,8 @@
                                 <TextBlock  Grid.Row="3" Tag="ssssssss" Grid.Column="6" Text="12.05" FontSize="12"  
                                    Foreground="{StaticResource Grey}"   Margin="5"
                                             HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                --><!--#endregion-->
-                                <!--#region  4--><!--
+                                --><!--#endregion
+                                #region  4--><!--
                                 <TextBlock Grid.Row="4"  Grid.Column="0" Text="1." FontSize="14"  
                                   Tag="ssssssss" Foreground="{StaticResource SecondColor}" 
                                            FontWeight="Bold" Margin="5"
@@ -816,10 +831,13 @@
                                 <TextBlock  Grid.Row="4" Tag="ssssssss" Grid.Column="6" Text="12.05" FontSize="12"  
                                    Foreground="{StaticResource Grey}"   Margin="5"
                                             HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                --><!--#endregion-->
+                                --><!--#endregion--><!--
                                 
-
-                            <!--</Grid>-->
+                                
+                                
+                                
+                            </Grid>-->
+                        
                     </ScrollViewer>
                     <Border Grid.Row="3"     Margin="5,2.5"     Height="2" BorderThickness="0" Background="{StaticResource LightGrey}" />
                     <Grid Grid.Row="4" Margin="15 5" >

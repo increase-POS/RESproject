@@ -26,7 +26,7 @@ using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using System.Collections.Specialized;
 using System.Threading;
-
+using System.Text.RegularExpressions;
 
 namespace Restaurant.View.sales
 {
@@ -39,12 +39,10 @@ namespace Restaurant.View.sales
         string invoicePermission = "saleInvoice_invoice";
         string addRangePermission = "copoun_invoice";
         string addTablePermission = "addTable_invoice";
-
         #region for report
         long prinvoiceId = 0;
         #endregion
         decimal _DeliveryCost = 0;
-
         public static uc_diningHall Instance
         {
             get
@@ -209,7 +207,6 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         public async void changeInvType()
         {
             int diningHall = int.Parse(AppSettings.typesOfService_diningHall);
@@ -348,7 +345,6 @@ namespace Restaurant.View.sales
             }           
 
         }
-       
         private void translate()
         {
             txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");
@@ -413,7 +409,6 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         #region  Cards
         CatigoriesAndItemsView catigoriesAndItemsView = new CatigoriesAndItemsView();
         #region Refrish Y
@@ -811,7 +806,7 @@ namespace Restaurant.View.sales
         TablesReservation reservation = new TablesReservation();
         InvoicesClass invoiceMemberShipClass = new InvoicesClass();
         List<InvoicesClass> customerInvClasses = new List<InvoicesClass>();
-        private void addRowToBill(Item item, long count,List<itemsTransferIngredients> ingredients,List<ItemTransfer> itemExtras,long itemTransferId,bool isExtra, bool isList = false)
+        private async void addRowToBill(Item item, long count,List<itemsTransferIngredients> ingredients,List<ItemTransfer> itemExtras,long itemTransferId,bool isExtra, bool isList = false)
         {
             decimal total = 0;
            // var invoiceItem = billDetailsList.Where(x => x.itemId == item.itemId).FirstOrDefault();
@@ -835,7 +830,7 @@ namespace Restaurant.View.sales
                     offerValue = (decimal)item.discountValue;
                 }
                 // increase sequence for each read
-
+               
                 total = (decimal)item.price;
                 billDetailsList.Add(new BillDetailsSales()
                 {
@@ -847,7 +842,7 @@ namespace Restaurant.View.sales
                     Count = (int)count,
                     Price = (decimal)item.price,
                     basicPrice = basicPrice,
-                    Total = (decimal)item.price * (int)count,
+                    Total = ((decimal)item.price * (int)count),
                     offerId = item.offerId,
                     OfferType = offerType,
                     OfferValue = offerValue,
@@ -868,8 +863,8 @@ namespace Restaurant.View.sales
             //    invoiceItem.Total = total;
             //}
             //#endregion
+            await refreshTotal();
             BuildBillDesign();
-            refreshTotal();
             if (isList == false)
                 setKitchenNotification();
         }
@@ -903,7 +898,7 @@ namespace Restaurant.View.sales
             cd[2].Width = new GridLength(1, GridUnitType.Auto);
             cd[3].Width = new GridLength(1, GridUnitType.Star);
             cd[4].Width = new GridLength(1, GridUnitType.Auto);
-            cd[5].Width = new GridLength(1, GridUnitType.Auto);
+            cd[5].Width = new GridLength(35, GridUnitType.Pixel);
             cd[6].Width = new GridLength(1, GridUnitType.Auto);
             cd[7].Width = new GridLength(1, GridUnitType.Star);
             for (int i = 0; i < colCount; i++)
@@ -1005,21 +1000,56 @@ namespace Restaurant.View.sales
                 gridContainer.Children.Add(itemNameText);
                 #endregion
                 #region   count
-                var countText = new TextBlock();
-                countText.Text = item.Count.ToString();
-                countText.Tag = "count-" + item.index;
-                //countText.Tag = item.index;
-                countText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-                countText.FontSize = 14;
-                countText.FontWeight = FontWeights.Bold;
-                countText.Margin = new Thickness(5);
-                countText.VerticalAlignment = VerticalAlignment.Center;
-                countText.HorizontalAlignment = HorizontalAlignment.Center;
+                 /*
+                 var countText = new TextBlock();
+                 countText.Text = item.Count.ToString();
+                 countText.Tag = "count-" + item.index;
+                 //countText.Tag = item.index;
+                 countText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                 countText.FontSize = 14;
+                 countText.FontWeight = FontWeights.Bold;
+                 countText.Margin = new Thickness(5);
+                 countText.VerticalAlignment = VerticalAlignment.Center;
+                 countText.HorizontalAlignment = HorizontalAlignment.Center;
 
-                Grid.SetRow(countText, item.index);
-                Grid.SetColumn(countText, 5);
-                gridContainer.Children.Add(countText);
-                /////////////////////////////////
+                 Grid.SetRow(countText, item.index);
+                 Grid.SetColumn(countText, 5);
+                 gridContainer.Children.Add(countText);
+                 /////////////////////////////////
+                 */
+                Border countBorder = new Border();
+                countBorder.Tag = "count-" + item.index;
+                countBorder.CornerRadius = new CornerRadius(10);
+                countBorder.Margin = new Thickness(5);
+                countBorder.BorderThickness = new Thickness(1);
+                countBorder.BorderBrush = Application.Current.Resources["LightGrey"] as SolidColorBrush;
+                countBorder.Height = 32;
+
+                #region   count
+
+                var countTextBox = new TextBox();
+                countTextBox.Text = item.Count.ToString();
+                //countBorder.Name = "countTextBox-" + item.index;
+                countTextBox.Tag = "countTextBox-" + item.index;
+                countTextBox.Margin = new Thickness(4,0,4,0);
+                countTextBox.BorderThickness = new Thickness(0);
+                countTextBox.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
+                countTextBox.MaxLength = 2;
+                countTextBox.Height = 30;
+                countTextBox.Padding = new Thickness(0, 7.5, 0, 0);
+                countTextBox.HorizontalAlignment = HorizontalAlignment.Center;
+                countTextBox.VerticalAlignment = VerticalAlignment.Center;
+                MaterialDesignThemes.Wpf.TextFieldAssist.SetCharacterCounterStyle(countTextBox , null);
+                //countTextBox.TextChanged += inviceItemCount_TextChange;
+                countTextBox.PreviewTextInput += NumberInt_PreviewTextInput;
+                countTextBox.PreviewKeyDown += Spaces_PreviewKeyDown;
+                countTextBox.LostFocus += inviceItemCount_LostFocus;
+
+                countBorder.Child = countTextBox;
+                #endregion
+                Grid.SetRow(countBorder, item.index);
+                Grid.SetColumn(countBorder, 5);
+                gridContainer.Children.Add(countBorder);
 
                 #endregion
                 #region   total
@@ -1130,6 +1160,11 @@ namespace Restaurant.View.sales
                     
                 setStarColor(index);
                 await refreshTotal();
+                BuildBillDesign();
+
+
+
+
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(grid_main);
             }
@@ -1140,7 +1175,6 @@ namespace Restaurant.View.sales
             }
 
         }
-
         void setStarColor(int index)
         {
             var ingredientEdit = billDetailsList[index].itemsIngredients.Where(x => x.isActive == 0).FirstOrDefault();
@@ -1163,25 +1197,30 @@ namespace Restaurant.View.sales
             }
            
         }
-        void buttonPlus_Click(object sender, RoutedEventArgs e)
+        async void buttonPlus_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             int index = int.Parse(button.Tag.ToString().Replace("plus-", ""));
             //index--;
+            if(billDetailsList[index].Count < 99)
+            {
+
             billDetailsList[index].Count++;
-            billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
+            //billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
             editBillRow(index);
             if (billDetailsList[index].Count == 2)
                 refreshDeleteButtonInvoice(index, billDetailsList[index].Count);
 
+                await refreshTotal();
             BuildBillDesign();
-            refreshTotal();
-            setKitchenNotification();
+                setKitchenNotification();
+            }
         }
-        void buttonMinus_Click(object sender, RoutedEventArgs e)
+        async void   buttonMinus_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             int index = int.Parse(button.Tag.ToString().Replace("minus-", ""));
+
             long itemUnitId = billDetailsList[index].itemUnitId;
             long itemTransId = billDetailsList[index].itemsTransId;
             int sentToKitchenCount = sentInvoiceItems.Where(x => x.itemUnitId == itemUnitId && x.itemsTransId == itemTransId ).Select(x => x.Count).Sum();
@@ -1206,14 +1245,14 @@ namespace Restaurant.View.sales
                 else
                 {
                     billDetailsList[index].Count--;
-                    billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
+                    //billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
                     editBillRow(index);
                     if (billDetailsList[index].Count == 1)
                         refreshDeleteButtonInvoice(index, billDetailsList[index].Count);
                 }
 
+                await refreshTotal();
                 BuildBillDesign();
-                refreshTotal();
                 setKitchenNotification();
             }
 
@@ -1282,18 +1321,37 @@ namespace Restaurant.View.sales
         }
         async Task refreshTotal()
         {
-            decimal total = 0;
+           
+           decimal total = 0;
             #region subtotal
             _Sum = 0;
+            //foreach (var item in billDetailsList)
+            //{
+            //    _Sum += item.Total;
 
+            //    foreach (var it in item.itemExtras)
+            //    {
 
+            //        _Sum += it.price * it.quantity * item.Count;
+            //    }
+            //}
+
+            decimal totalItemExtras = 0;
             foreach (var item in billDetailsList)
             {
-                _Sum += item.Total;
 
-                foreach (var it in item.itemExtras)
-                    _Sum += it.price * it.quantity * item.Count ;
+                foreach (var itemEx in item.itemExtras)
+                {
+                    totalItemExtras += itemEx.price * itemEx.quantity;
+                }
+
+                item.Total = (item.Price + totalItemExtras) * item.Count;
+
+                _Sum += item.Total;
+                totalItemExtras = 0;
             }
+
+
             tb_subtotal.Text = HelpClass.DecTostring( _Sum);
             total = _Sum;
             #endregion
@@ -1415,6 +1473,118 @@ namespace Restaurant.View.sales
 
             tb_total.Text = HelpClass.DecTostring( total);
 
+        }
+        /*
+        private void inviceItemCount_TextChange(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    textBox.Text = "1";
+                }
+                else
+                {
+                    if (int.Parse(textBox.Text) <= 0)
+                        textBox.Text = "1";
+                }
+            }
+            catch
+            {
+                textBox.Text = "1";
+            }
+            int newCount = int.Parse(textBox.Text);
+            int index = int.Parse(textBox.Tag.ToString().Replace("countTextBox-", ""));
+                ////////// Plus
+            if(billDetailsList[index].Count < newCount)
+            {
+                billDetailsList[index].Count = newCount;
+                //billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
+                editBillRow(index);
+                //if (billDetailsList[index].Count == 2)
+                    refreshDeleteButtonInvoice(index, billDetailsList[index].Count);
+
+              
+            }
+                /////////// Minus
+            else if (billDetailsList[index].Count > newCount)
+            {
+                long itemUnitId = billDetailsList[index].itemUnitId;
+                long itemTransId = billDetailsList[index].itemsTransId;
+                int sentToKitchenCount = sentInvoiceItems.Where(x => x.itemUnitId == itemUnitId && x.itemsTransId == itemTransId).Select(x => x.Count).Sum();
+                if (billDetailsList[index].Count <= sentToKitchenCount)
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trItemCannotDelete"), animation: ToasterAnimation.FadeIn);
+                else
+                {
+                        billDetailsList[index].Count = newCount;
+                        //billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
+                        editBillRow(index);
+                        //if (billDetailsList[index].Count == 1)
+                            refreshDeleteButtonInvoice(index, billDetailsList[index].Count);
+                }
+            }
+
+            BuildBillDesign();
+            await  refreshTotal();
+            setKitchenNotification();
+            textBox.Focus();
+        }
+        */
+        private async void inviceItemCount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    textBox.Text = "1";
+                }
+                else
+                {
+                    if (int.Parse(textBox.Text) <= 0)
+                        textBox.Text = "1";
+                }
+            }
+            catch
+            {
+                textBox.Text = "1";
+            }
+            int newCount = int.Parse(textBox.Text);
+            int index = int.Parse(textBox.Tag.ToString().Replace("countTextBox-", ""));
+            ////////// Plus
+            if (billDetailsList[index].Count < newCount)
+            {
+                billDetailsList[index].Count = newCount;
+                //billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
+                editBillRow(index);
+                //if (billDetailsList[index].Count == 2)
+                refreshDeleteButtonInvoice(index, billDetailsList[index].Count);
+
+
+            }
+            /////////// Minus
+            else if (billDetailsList[index].Count > newCount)
+            {
+                long itemUnitId = billDetailsList[index].itemUnitId;
+                long itemTransId = billDetailsList[index].itemsTransId;
+                int sentToKitchenCount = sentInvoiceItems.Where(x => x.itemUnitId == itemUnitId && x.itemsTransId == itemTransId).Select(x => x.Count).Sum();
+                if (billDetailsList[index].Count <= sentToKitchenCount)
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trItemCannotDelete"), animation: ToasterAnimation.FadeIn);
+                else
+                {
+                    billDetailsList[index].Count = newCount;
+                    //billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
+                    editBillRow(index);
+                    //if (billDetailsList[index].Count == 1)
+                    refreshDeleteButtonInvoice(index, billDetailsList[index].Count);
+                }
+            }
+
+            await refreshTotal();
+            BuildBillDesign();
+            setKitchenNotification();
+            textBox.Focus();
         }
 
         #endregion
@@ -1701,8 +1871,8 @@ namespace Restaurant.View.sales
             Search();
             refreshItemsPrice();
             #endregion
+            await refreshTotal();
             BuildBillDesign();
-            refreshTotal();
         }
 
         private void setTablesName()
@@ -2084,7 +2254,6 @@ namespace Restaurant.View.sales
         }
 
         #endregion
-
         #region kitchen items
         List<BillDetailsSales> sentInvoiceItems = new List<BillDetailsSales>();
         List<OrderPreparing> kitchenOrders = new List<OrderPreparing>();
@@ -2574,7 +2743,7 @@ namespace Restaurant.View.sales
                             #region update invoice
                             invoice.agentId = w.customerId;
                             invoice.membershipId = customer.membershipId;
-                            refreshTotal();
+                            await refreshTotal();
                             var res = await addDraft();
                             if (res > 0)
                             {
@@ -2625,10 +2794,10 @@ namespace Restaurant.View.sales
                         txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         btn_delivery.IsEnabled = false;
-                        
+
                         #endregion
 
-                        refreshTotal();
+                        await refreshTotal();
                     }
 
                     #region refresh items with new price
@@ -2674,7 +2843,7 @@ namespace Restaurant.View.sales
                     _DiscountType = w.discountType;
                     selectedCopouns = w.selectedCopouns;
 
-                    refreshTotal();
+                    await refreshTotal();
                     #region change button Color
                     if (w.manualDiscount > 0 || w.selectedCopouns.Count > 0)
                     {
@@ -2747,7 +2916,7 @@ namespace Restaurant.View.sales
                         _DeliveryCost = w._DeliveryCost;
 
 
-                       // refreshTotal();
+                        //await  refreshTotal();
                         #region change button Color
                         var company = FillCombo.shippingCompaniesList.Where(x => x.shippingCompanyId == w.shippingCompanyId).FirstOrDefault();
 
@@ -2768,7 +2937,7 @@ namespace Restaurant.View.sales
                         path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         #endregion
                     }
-                    refreshTotal();
+                    await refreshTotal();
 
                     #region update invoice
                     invoice.shippingCompanyId = shippingCompanyId;
@@ -2939,7 +3108,7 @@ namespace Restaurant.View.sales
                 {
                     if (await validateInvoiceValues())
                     {
-                        refreshTotal();
+                        await refreshTotal();
                         bool multipleValid = true;
                         decimal remain = 0;
 
@@ -3096,7 +3265,6 @@ namespace Restaurant.View.sales
         }
 
         #endregion
-
         #region save invoice according to invType
         private async Task saveDiningHallInvoice(string invType)
         {
@@ -5051,5 +5219,68 @@ namespace Restaurant.View.sales
 
         #endregion
 
+
+        #region validate - clearValidate - textChange - lostFocus - . . . . 
+
+        string input;
+        decimal _decimal = 0;
+        private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+
+
+                //only  digits
+                TextBox textBox = sender as TextBox;
+                HelpClass.InputJustNumber(ref textBox);
+                if (textBox.Tag.ToString() == "int")
+                {
+                    Regex regex = new Regex("[^0-9]");
+                    e.Handled = regex.IsMatch(e.Text);
+                }
+                else if (textBox.Tag.ToString() == "decimal")
+                {
+                    input = e.Text;
+                    e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void NumberInt_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+                //only  digits
+                TextBox textBox = sender as TextBox;
+                HelpClass.InputJustNumber(ref textBox);
+                //if (textBox.Tag.ToString() == "int")
+                {
+                    Regex regex = new Regex("[^0-9]");
+                    e.Handled = regex.IsMatch(e.Text);
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Spaces_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                e.Handled = e.Key == Key.Space;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        #endregion
+         
     }
 }
