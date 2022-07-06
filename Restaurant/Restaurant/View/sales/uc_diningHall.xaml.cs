@@ -2941,6 +2941,7 @@ namespace Restaurant.View.sales
                     {
                         refreshTotal();
                         bool multipleValid = true;
+                        decimal remain = 0;
 
                         #region payment window
                         if (invoice.shippingCompanyId == null)// no shipping
@@ -2990,10 +2991,12 @@ namespace Restaurant.View.sales
                             Window.GetWindow(this).Opacity = 1;
                             multipleValid = w.isOk;
                             paymentsList = w.listPayments;
+                            remain = w.theRemine;
                             #endregion
                         }
                         if (multipleValid)
                         {
+                            invoice.cashReturn = remain;
                             invoice.invDate = DateTime.Now;
 
                             if (AppSettings.invType == "diningHall")
