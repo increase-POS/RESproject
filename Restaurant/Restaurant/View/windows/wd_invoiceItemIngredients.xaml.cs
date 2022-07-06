@@ -193,43 +193,47 @@ namespace Restaurant.View.windows
                 itemTransfer = new ItemTransfer();
                 if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
-                    var it = itemExtras.Where(x => x.itemUnitId == (long) cb_extraItemId.SelectedValue).FirstOrDefault();
-
-                    if (it == null)
-                    {
-                        item = extras.Where(x => x.itemUnitId == (long)cb_extraItemId.SelectedValue).FirstOrDefault();
-                        itemTransfer = new ItemTransfer();
-                        itemTransfer.invoiceId = 0;
-                        itemTransfer.quantity = int.Parse(tb_count.Text);
-                        itemTransfer.price = (decimal)item.price;
-                        itemTransfer.itemUnitId = item.itemUnitId;
-                        itemTransfer.itemName = item.name;
-                        long offerId = 0;
-                        string offerType = "1";
-                        decimal offerValue = 0;
-                        if (item.offerId != null)
-                        {
-                            offerId = (long)item.offerId;
-                            offerType = item.discountType;
-                            offerValue = (decimal)item.discountValue;
-                        }
-                        itemTransfer.offerId = offerId;
-                        itemTransfer.offerType = decimal.Parse( offerType);
-                        itemTransfer.offerValue = offerValue;
-                        //itemTransfer.itemTax = item.Tax;
-                        itemTransfer.itemUnitPrice = item.basicPrice;
-                        itemTransfer.createUserId = MainWindow.userLogin.userId;
-                        itemTransfer.forAgents = item.forAgent;
-
-                        itemExtras.Add(itemTransfer);
-                    }
+                    if (int.Parse(tb_count.Text) == 0)
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorQuantIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
                     else
                     {
-                        it.quantity += int.Parse(tb_count.Text);
-                    }
-                    RefreshExtrasView();
-                    Clear();
+                        var it = itemExtras.Where(x => x.itemUnitId == (long)cb_extraItemId.SelectedValue).FirstOrDefault();
 
+                        if (it == null)
+                        {
+                            item = extras.Where(x => x.itemUnitId == (long)cb_extraItemId.SelectedValue).FirstOrDefault();
+                            itemTransfer = new ItemTransfer();
+                            itemTransfer.invoiceId = 0;
+                            itemTransfer.quantity = int.Parse(tb_count.Text);
+                            itemTransfer.price = (decimal)item.price;
+                            itemTransfer.itemUnitId = item.itemUnitId;
+                            itemTransfer.itemName = item.name;
+                            long offerId = 0;
+                            string offerType = "1";
+                            decimal offerValue = 0;
+                            if (item.offerId != null)
+                            {
+                                offerId = (long)item.offerId;
+                                offerType = item.discountType;
+                                offerValue = (decimal)item.discountValue;
+                            }
+                            itemTransfer.offerId = offerId;
+                            itemTransfer.offerType = decimal.Parse(offerType);
+                            itemTransfer.offerValue = offerValue;
+                            //itemTransfer.itemTax = item.Tax;
+                            itemTransfer.itemUnitPrice = item.basicPrice;
+                            itemTransfer.createUserId = MainWindow.userLogin.userId;
+                            itemTransfer.forAgents = item.forAgent;
+
+                            itemExtras.Add(itemTransfer);
+                        }
+                        else
+                        {
+                            it.quantity += int.Parse(tb_count.Text);
+                        }
+                        RefreshExtrasView();
+                        Clear();
+                    }
                 }
                 HelpClass.EndAwait(grid_main);
 
