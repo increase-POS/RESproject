@@ -50,6 +50,9 @@ namespace Restaurant.converters
                     case "Drinks":
                         s = AppSettings.resourcemanager.GetString("trDrinks");
                         break;
+                    case "extraOrders":
+                        s = AppSettings.resourcemanager.GetString("extraOrders");
+                        break;
                 }
                 return s;
             }
