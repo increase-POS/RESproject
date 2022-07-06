@@ -3334,12 +3334,20 @@ namespace Restaurant.View.sales
 
             List<ItemOrderPreparing> preparingItemsList = new List<ItemOrderPreparing>();
 
+            #region inv items
+            billDetailsList = new ObservableCollection<BillDetailsSales>();
+            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
+
+            fillInvoiceItems();
+            #endregion
+
             foreach (BillDetailsSales b in billDetailsList)
             {
                 ItemOrderPreparing it = new ItemOrderPreparing()
                 {
                     itemUnitId = b.itemUnitId,
                     quantity = b.Count,
+                    itemsTransId = b.itemsTransId,
                     createUserId = MainWindow.userLogin.userId,
                 };
                 preparingItemsList.Add(it);
@@ -3379,6 +3387,12 @@ namespace Restaurant.View.sales
 
             List<ItemOrderPreparing> preparingItemsList = new List<ItemOrderPreparing>();
 
+            #region inv items
+            billDetailsList = new ObservableCollection<BillDetailsSales>();
+            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
+
+            fillInvoiceItems();
+            #endregion
             foreach (BillDetailsSales b in billDetailsList)
             {
                 var sentItem = sentInvoiceItems.Where(x => x.itemUnitId == b.itemUnitId && x.itemsTransId == b.itemsTransId).FirstOrDefault();
