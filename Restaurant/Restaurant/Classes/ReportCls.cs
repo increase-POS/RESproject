@@ -1043,7 +1043,7 @@ namespace Restaurant.Classes
                         addpath = @"\Reports\Sale\Invoice\Ar\LargeSaleReport.rdlc";
                         rs.width = 400;//400 =10cm
                         //rs.height = GetpageHeight( itemscount, 500);
-                        rs.height = GetpageHeight(itemscount,400, 15);
+                        rs.height = GetpageHeight(itemscount, 440, 15);
 
                     }
                     else if ( PaperSize == "8cm" && isPreview == 1)
@@ -1051,7 +1051,7 @@ namespace Restaurant.Classes
                         addpath = @"\Reports\Sale\Invoice\Ar\MediumSaleReport.rdlc";
                         rs.width = 315;//315 =8cm
                        // rs.height = GetpageHeight( itemscount, 500);
-                        rs.height = GetpageHeight(itemscount, 400, 19);
+                        rs.height = GetpageHeight(itemscount, 440, 19);
 
                     }
                     else if ( PaperSize == "5.7cm" && isPreview == 1)
@@ -1089,14 +1089,14 @@ namespace Restaurant.Classes
                         addpath = @"\Reports\Sale\Invoice\En\LargeSaleReport.rdlc";
                        rs.width = 400;//400 =10cm
                      
-                        rs.height = GetpageHeight(itemscount, 380, 15);
+                        rs.height = GetpageHeight(itemscount, 440, 15);
                     }
                     else if (PaperSize == "8cm" && isPreview == 1)
                     {
                         addpath = @"\Reports\Sale\Invoice\En\MediumSaleReport.rdlc";
                         rs.width = 315;//315 =8cm
                      //   rs.height = GetpageHeight( itemscount, 500);
-                        rs.height = GetpageHeight(itemscount, 400, 19);
+                        rs.height = GetpageHeight(itemscount, 440, 19);
                     }
                     else if (PaperSize == "5.7cm" && isPreview == 1)
                     {

@@ -213,8 +213,16 @@ namespace Restaurant.Classes
     }
     public class ItemUnitInvoiceProfit
     {
-
+        //4test
+        //  public Nullable<decimal> itemAdminPay { get; set; }
+        //public Nullable<decimal> itemPricePercent { get; set; }
+        //public Nullable<decimal> invoiceTotal { get; set; }
+       
+        //public Nullable<decimal> AdminPay { get; set; }
+        //public Nullable<decimal> itemunitProfitOld { get; set; }
         /////////////// الارباح
+
+
         public decimal shippingCost { get; set; }
         public decimal realShippingCost { get; set; }
         public decimal shippingProfit { get; set; }

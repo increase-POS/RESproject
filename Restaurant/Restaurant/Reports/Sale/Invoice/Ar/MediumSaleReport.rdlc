@@ -70,11 +70,19 @@
         </Field>
         <Field Name="createUserId">
           <DataField>createUserId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="finalDiscount">
+          <DataField>finalDiscount</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="forAgents">
+          <DataField>forAgents</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="inventoryItemLocId">
           <DataField>inventoryItemLocId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="invNumber">
           <DataField>invNumber</DataField>
@@ -82,15 +90,19 @@
         </Field>
         <Field Name="invoiceId">
           <DataField>invoiceId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="isActive">
           <DataField>isActive</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
+        <Field Name="isExtra">
+          <DataField>isExtra</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
         <Field Name="itemId">
           <DataField>itemId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="itemName">
           <DataField>itemName</DataField>
@@ -102,7 +114,7 @@
         </Field>
         <Field Name="itemsTransId">
           <DataField>itemsTransId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
         <Field Name="itemTax">
           <DataField>itemTax</DataField>
@@ -114,7 +126,7 @@
         </Field>
         <Field Name="itemUnitId">
           <DataField>itemUnitId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="itemUnitPrice">
           <DataField>itemUnitPrice</DataField>
@@ -122,14 +134,18 @@
         </Field>
         <Field Name="locationIdNew">
           <DataField>locationIdNew</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="locationIdOld">
           <DataField>locationIdOld</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="lockedQuantity">
           <DataField>lockedQuantity</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="mainCourseId">
+          <DataField>mainCourseId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="newLocked">
@@ -140,9 +156,17 @@
           <DataField>notes</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="offerCode">
+          <DataField>offerCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="offerId">
           <DataField>offerId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="offerName">
+          <DataField>offerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="offerType">
           <DataField>offerType</DataField>
@@ -154,15 +178,31 @@
         </Field>
         <Field Name="price">
           <DataField>price</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="profit">
+          <DataField>profit</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="purchasePrice">
+          <DataField>purchasePrice</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="quantity">
           <DataField>quantity</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="sentToKitchen">
+          <DataField>sentToKitchen</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
         <Field Name="subTotal">
           <DataField>subTotal</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="unitId">
+          <DataField>unitId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="unitName">
           <DataField>unitName</DataField>
@@ -174,13 +214,13 @@
         </Field>
         <Field Name="updateUserId">
           <DataField>updateUserId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>POS.Classes</rd:DataSetName>
+        <rd:DataSetName>Restaurant.Classes</rd:DataSetName>
         <rd:TableName>ItemTransfer</rd:TableName>
-        <rd:ObjectDataSourceType>POS.Classes.ItemTransfer, POS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>Restaurant.Classes.ItemTransfer, Restaurant, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
     <DataSet Name="DataSetPayedInvclass">
@@ -238,7 +278,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox30</rd:DefaultName>
-            <Top>0.37736cm</Top>
+            <Top>0.44086cm</Top>
             <Left>0.75936cm</Left>
             <Height>3.85807cm</Height>
             <Width>6.48127cm</Width>
@@ -274,7 +314,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox30</rd:DefaultName>
-            <Top>0.38901cm</Top>
+            <Top>0.45251cm</Top>
             <Left>0.7493cm</Left>
             <Height>3.43802cm</Height>
             <Width>6.48127cm</Width>
@@ -632,6 +672,13 @@
                 </TablixMember>
                 <TablixMember>
                   <Group Name="Details" />
+                  <TablixMembers>
+                    <TablixMember>
+                      <Visibility>
+                        <Hidden>=Fields!isExtra.Value=true</Hidden>
+                      </Visibility>
+                    </TablixMember>
+                  </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
@@ -669,7 +716,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.71514cm</Top>
+            <Top>1.77864cm</Top>
             <Left>2.50658cm</Left>
             <Height>0.49748cm</Height>
             <Width>1.20129cm</Width>
@@ -713,7 +760,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.71514cm</Top>
+            <Top>1.77864cm</Top>
             <Left>0.2603cm</Left>
             <Height>0.49748cm</Height>
             <Width>2.17573cm</Width>
@@ -749,7 +796,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>2.85673cm</Top>
+            <Top>2.92023cm</Top>
             <Left>2.53024cm</Left>
             <Height>0.50299cm</Height>
             <Width>1.07734cm</Width>
@@ -804,7 +851,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>2.2479cm</Top>
+            <Top>2.3114cm</Top>
             <Left>0.2603cm</Left>
             <Height>0.55755cm</Height>
             <Width>2.17573cm</Width>
@@ -843,7 +890,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>3.47072cm</Top>
+            <Top>3.53422cm</Top>
             <Left>2.52413cm</Left>
             <Height>0.58692cm</Height>
             <Width>1.38161cm</Width>
@@ -895,7 +942,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>3.47072cm</Top>
+            <Top>3.53422cm</Top>
             <Left>0.2603cm</Left>
             <Height>0.58692cm</Height>
             <Width>2.17573cm</Width>
@@ -931,7 +978,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>2.31845cm</Top>
+            <Top>2.38195cm</Top>
             <Left>2.52413cm</Left>
             <Height>0.487cm</Height>
             <Width>0.88329cm</Width>
@@ -950,7 +997,7 @@
             </Style>
           </Textbox>
           <Line Name="Line8">
-            <Top>6.82211cm</Top>
+            <Top>6.88561cm</Top>
             <Left>0.2603cm</Left>
             <Height>0cm</Height>
             <Width>7.42292cm</Width>
@@ -963,7 +1010,7 @@
             </Style>
           </Line>
           <Line Name="Line10">
-            <Top>1.57403cm</Top>
+            <Top>1.63753cm</Top>
             <Left>0.20991cm</Left>
             <Height>0cm</Height>
             <Width>7.36638cm</Width>
@@ -992,7 +1039,7 @@
             <Source>External</Source>
             <Value>=Parameters!barcodeimage.Value</Value>
             <Sizing>Fit</Sizing>
-            <Top>7.87429cm</Top>
+            <Top>7.93779cm</Top>
             <Left>0.79258cm</Left>
             <Height>0.81184cm</Height>
             <Width>6.41761cm</Width>
@@ -1025,7 +1072,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>3.4615in</Top>
+            <Top>3.4865in</Top>
             <Left>2.57484in</Left>
             <Height>0.25in</Height>
             <Width>0.45005in</Width>
@@ -1061,7 +1108,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox7</rd:DefaultName>
-            <Top>3.46151in</Top>
+            <Top>3.48651in</Top>
             <Left>0.10248in</Left>
             <Height>0.25in</Height>
             <Width>2.47236in</Width>
@@ -1101,7 +1148,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>3.76845in</Top>
+            <Top>3.79345in</Top>
             <Left>0.12472in</Left>
             <Height>0.25in</Height>
             <Width>2.90015in</Width>
@@ -1138,7 +1185,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox7</rd:DefaultName>
-            <Top>2.78502in</Top>
+            <Top>2.81002in</Top>
             <Left>0.12472in</Left>
             <Height>0.26667in</Height>
             <Width>2.90017in</Width>
@@ -1196,7 +1243,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>2.85673cm</Top>
+            <Top>2.92023cm</Top>
             <Left>0.2603cm</Left>
             <Height>0.50299cm</Height>
             <Width>2.17573cm</Width>
@@ -1251,7 +1298,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>2.31845cm</Top>
+            <Top>2.38195cm</Top>
             <Left>0.2603cm</Left>
             <Height>0.487cm</Height>
             <Width>2.17573cm</Width>
@@ -1374,7 +1421,7 @@
             </TablixRowHierarchy>
             <LayoutDirection>RTL</LayoutDirection>
             <DataSetName>DataSetPayedInvclass</DataSetName>
-            <Top>2.32878cm</Top>
+            <Top>2.39228cm</Top>
             <Left>4.33515cm</Left>
             <Height>0.6cm</Height>
             <Width>3.29846cm</Width>
@@ -1405,7 +1452,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox41</rd:DefaultName>
-            <Top>1.71181cm</Top>
+            <Top>1.77531cm</Top>
             <Left>6.35208cm</Left>
             <Height>0.45115cm</Height>
             <Width>1.28153cm</Width>
@@ -1440,7 +1487,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox41</rd:DefaultName>
-            <Top>3.0099cm</Top>
+            <Top>3.0734cm</Top>
             <Left>6.64135cm</Left>
             <Height>0.48236cm</Height>
             <Width>0.99226cm</Width>
@@ -1498,7 +1545,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox41</rd:DefaultName>
-            <Top>3.0099cm</Top>
+            <Top>3.0734cm</Top>
             <Left>4.33515cm</Left>
             <Height>0.48236cm</Height>
             <Width>2.30619cm</Width>
@@ -1537,7 +1584,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox41</rd:DefaultName>
-            <Top>3.59809cm</Top>
+            <Top>3.66159cm</Top>
             <Left>5.91395cm</Left>
             <Height>0.40682cm</Height>
             <Width>1.71966cm</Width>
@@ -1595,7 +1642,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox41</rd:DefaultName>
-            <Top>3.56282cm</Top>
+            <Top>3.62632cm</Top>
             <Left>4.33515cm</Left>
             <Height>0.44209cm</Height>
             <Width>1.5788cm</Width>
@@ -1631,7 +1678,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>4.2699cm</Top>
+            <Top>4.3334cm</Top>
             <Left>2.50658cm</Left>
             <Height>0.50299cm</Height>
             <Width>1.54723cm</Width>
@@ -1670,7 +1717,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>4.2699cm</Top>
+            <Top>4.3334cm</Top>
             <Left>0.2603cm</Left>
             <Height>0.50299cm</Height>
             <Width>2.17573cm</Width>
@@ -1725,7 +1772,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>4.96519cm</Top>
+            <Top>5.02869cm</Top>
             <Left>0.2603cm</Left>
             <Height>0.50364cm</Height>
             <Width>2.17573cm</Width>
@@ -1764,7 +1811,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>4.96519cm</Top>
+            <Top>5.02869cm</Top>
             <Left>2.53024cm</Left>
             <Height>0.50364cm</Height>
             <Width>1.93113cm</Width>
@@ -1811,7 +1858,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>5.67693cm</Top>
+            <Top>5.74043cm</Top>
             <Left>4.60664cm</Left>
             <Height>0.45cm</Height>
             <Width>3.07653cm</Width>
@@ -1859,7 +1906,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>5.67693cm</Top>
+            <Top>5.74043cm</Top>
             <Left>0.2603cm</Left>
             <Height>0.45cm</Height>
             <Width>4.34634cm</Width>
@@ -1907,7 +1954,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>6.12693cm</Top>
+            <Top>6.19043cm</Top>
             <Left>0.2603cm</Left>
             <Height>0.45cm</Height>
             <Width>4.34639cm</Width>
@@ -1955,7 +2002,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>6.12693cm</Top>
+            <Top>6.19043cm</Top>
             <Left>4.60669cm</Left>
             <Height>0.45cm</Height>
             <Width>3.07653cm</Width>
@@ -1975,7 +2022,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>10.20686cm</Height>
+        <Height>10.36561cm</Height>
         <Style>
           <Border>
             <Style>None</Style>

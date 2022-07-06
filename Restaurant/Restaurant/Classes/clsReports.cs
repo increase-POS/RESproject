@@ -3275,10 +3275,57 @@ namespace Restaurant.Classes
                         if (prInvoice.invoiceId > 0)
                         {
                             #region fill invoice data
-
+                            ReportCls.checkLang();
                             //items
                             invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
-                            itemscount = invoiceItems.Count();
+                            #region items
+                            //items subTotal & itemTax
+                            decimal totaltax = 0;
+                            List<ItemTransfer> tempitemlist = new List<ItemTransfer>();
+                            foreach (var i in invoiceItems)
+                            {
+                                ItemTransfer tempobject = new ItemTransfer();
+
+                                i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+                                if (i.itemTax != null)
+                                {
+                                    totaltax += (decimal)i.itemTax;
+
+                                }
+                                i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
+
+                                i.isExtra = false;
+                                //tempobject = i;
+                                 tempitemlist.Add(tempobject);
+                                if (i.itemExtras.Count() > 0)
+                                {
+                                     tempobject = new ItemTransfer();
+                               
+                                    string extname=" -"+ AppSettings.resourcemanagerreport.GetString("extra")+":";
+                                    for (int j = 0; j < i.itemExtras.Count(); j++)
+                                    {
+
+                                        if (j == 0)
+                                        {
+                                            extname = extname + i.itemExtras[j].itemName;
+                                        }
+                                        else
+                                        {
+                                            extname = extname + "," + i.itemExtras[j].itemName;
+                                        }
+
+
+                                    }
+                                    //tempobject.itemName = extname;
+                                    //tempobject.isExtra = true;
+                                     tempitemlist.Add(tempobject);
+                                    i.itemName = i.itemName + extname;
+                                }
+
+                            }
+                            //invoiceItems = tempitemlist.ToList();
+                            #endregion
+                            itemscount = tempitemlist.ToList().Count();
 
                             rs = reportclass.GetreceiptInvoiceRdlcpath(prInvoice, 1, AppSettings.salePaperSize, itemscount, rs.rep);
                             //rs.rep;
@@ -3344,7 +3391,7 @@ namespace Restaurant.Classes
                                 prInvoice.branchName = branch.name;
                             }
 
-                            ReportCls.checkLang();
+                         
                             //shipping
                             ShippingCompanies shippingcom = new ShippingCompanies();
 
@@ -3368,20 +3415,9 @@ namespace Restaurant.Classes
                             }
                             prInvoice.shipUserName = shipuser.name + " " + shipuser.lastname;
                             //end shipping
-                            //items subTotal & itemTax
-                            decimal totaltax = 0;
-                            foreach (var i in invoiceItems)
-                            {
-                                i.price = decimal.Parse(HelpClass.DecTostring(i.price));
-                                if (i.itemTax != null)
-                                {
-                                    totaltax += (decimal)i.itemTax;
 
-                                }
-                                i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
-
-                            }
-
+                           
+                            //
                             if (totaltax > 0 && prInvoice.invType != "sbd" && prInvoice.invType != "sb")
                             {
                                 paramarr.Add(new ReportParameter("itemtax_note", AppSettings.itemtax_note.Trim()));
