@@ -364,6 +364,7 @@ namespace Restaurant.View.windows
         void Clear()
         {
             itemTransfer = new ItemTransfer();
+            itemTransfer.quantity = 1;
             this.DataContext = itemTransfer;
 
             // last 
