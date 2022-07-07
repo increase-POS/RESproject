@@ -3221,7 +3221,7 @@ namespace Restaurant.View.sales
                                     }
                                     if (AppSettings.print_kitchen_on_sale == "1" && (prInvoice.invType == "ss" || prInvoice.invType == "ts"))
                                     {
-                                        prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
+                                        prOrderPreparingList = await preparingOrder.GetOrdersforPrintByInvoiceId(prinvoiceId);
 
                                         // printInvoice();
                                        // Thread t2 = new Thread(() =>
@@ -3436,7 +3436,7 @@ namespace Restaurant.View.sales
                     if (invoice.invoiceId > 0)
                     {
                         prinvoiceId = invoice.invoiceId;
-                        OrderListBeforesave = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
+                        OrderListBeforesave = await preparingOrder.GetOrdersforPrintByInvoiceId(prinvoiceId);
 
                     }
                 }
@@ -3446,7 +3446,7 @@ namespace Restaurant.View.sales
                 if (AppSettings.print_kitchen_on_sale == "1")
                 {
 
-                    OrderListAftersave = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
+                    OrderListAftersave = await preparingOrder.GetOrdersforPrintByInvoiceId(prinvoiceId);
 
                     prOrderPreparingList = clsreport.newKitchenorderList(OrderListBeforesave, OrderListAftersave);
 

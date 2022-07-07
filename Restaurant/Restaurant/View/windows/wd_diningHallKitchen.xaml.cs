@@ -357,7 +357,7 @@ namespace Restaurant.View.windows
             {
                 //list before save->  orders
                 // OrderListbeforesave = orders;
-                OrderListBeforesave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
+                OrderListBeforesave = await preparingOrder.GetOrdersforPrintByInvoiceId(invoiceId);
             }
             var res = await preparingOrder.savePreparingOrder(preparingOrder, preparingItemsList,statusObject);
             if (res > 0)
@@ -402,7 +402,7 @@ namespace Restaurant.View.windows
                 {
                     //list after before save->  orders
                     // OrderListAftersave = orders;
-                    OrderListAftersave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
+                    OrderListAftersave = await preparingOrder.GetOrdersforPrintByInvoiceId(invoiceId);
 
                     prOrderPreparingList = clsreport.newKitchenorderList(OrderListBeforesave, OrderListAftersave);
 
@@ -458,7 +458,7 @@ namespace Restaurant.View.windows
                 {
                     //list before save->  orders
                     // OrderListbeforesave = orders;
-                    OrderListBeforesave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
+                    OrderListBeforesave = await preparingOrder.GetOrdersforPrintByInvoiceId(invoiceId);
                 }
                 var res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId, AppSettings.statusesOfPreparingOrder);
 
@@ -473,7 +473,7 @@ namespace Restaurant.View.windows
                     {
                         //list after before save->  orders
                         // OrderListAftersave = orders;
-                        OrderListAftersave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
+                        OrderListAftersave = await preparingOrder.GetOrdersforPrintByInvoiceId(invoiceId);
 
                     prOrderPreparingList =  clsreport.newKitchenorderList(OrderListBeforesave, OrderListAftersave);
 

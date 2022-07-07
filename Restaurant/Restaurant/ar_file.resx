@@ -4186,4 +4186,7 @@
   <data name="TheIngredients" xml:space="preserve">
     <value>المكونات</value>
   </data>
+  <data name="order" xml:space="preserve">
+    <value>الطلب</value>
+  </data>
 </root>

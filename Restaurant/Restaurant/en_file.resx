@@ -4201,4 +4201,7 @@ Please add Email in setting</value>
   <data name="TheIngredients" xml:space="preserve">
     <value>Ingredients</value>
   </data>
+  <data name="order" xml:space="preserve">
+    <value>Order</value>
+  </data>
 </root>

@@ -370,6 +370,22 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        
+        public async Task<List<OrderPreparing>> GetOrdersforPrintByInvoiceId(long invoiceId)
+        {
+            List<OrderPreparing> items = new List<OrderPreparing>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("invoiceId", invoiceId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetOrdersforPrintByInvoiceId", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<OrderPreparing>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+
     }
 }

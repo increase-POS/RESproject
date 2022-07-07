@@ -2808,44 +2808,119 @@ namespace Restaurant.Classes
             {
 
                 OrderPreparing tempObj = new OrderPreparing();
-
-                //empty row
-                tempObj.itemUnitId = -1;
-                tempObj.orderNum = CategoryConv(list[0].categoryName);
+                //add category
+                tempObj.invType = "cat";
+          
+                tempObj.itemName = CategoryConv(list[0].categoryName);
                 reportOrderList.Add(tempObj);
+                //end add category
+               
                 //header row
-                tempObj = addOrderHeader();
+                 tempObj = addOrderHeader();
                 reportOrderList.Add(tempObj);
                 for (int i = 0; i < list.Count(); i++)
                 {
+
                     tempObj = new OrderPreparing();
-                    //list[i].categoryName = CategoryConv(list[i].categoryName);
-                    //list[i].categoryCode = list[i].quantity.ToString();
-                    tempObj = list[i];
-                    //tempObj.categoryName= CategoryConv(list[i].categoryName);
-                    tempObj.categoryCode = list[i].quantity.ToString();
+                    //addorder num
+                    tempObj.invType = "ordernum";
+                    tempObj.itemName =   AppSettings.resourcemanagerreport.GetString("trOrderSharp")+": "+ list[i].orderNum;
                     reportOrderList.Add(tempObj);
+                    //end
                     tempObj = new OrderPreparing();
+                    //addorder 
+                    tempObj.invType = "order";
+                    tempObj.itemName = AppSettings.resourcemanagerreport.GetString("order") + ": " + list[i].itemName;
+                    //tempObj.categoryCode to view quantity
+                    tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR") + ": " + list[i].quantity.ToString();
+                    reportOrderList.Add(tempObj);
+                    //
+                    // add extra
+                    if (list[i].items.FirstOrDefault().itemExtras.Count()>0)
+                    {
+                       for(int j=0;j<list[i].items.FirstOrDefault().itemExtras.Count();j++)
+                        {
+                            tempObj = new OrderPreparing();
+                            //add first extre =>extra1
+                            if (j==0)
+                            {
+                                tempObj.invType = "extra1";
+                                tempObj.itemName = AppSettings.resourcemanagerreport.GetString("extra") + ": " + list[i].items.FirstOrDefault().itemExtras[j].itemName;
+                                //tempObj.categoryCode to view quantity
+                                tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR") + ": " + list[i].items.FirstOrDefault().itemExtras[j].quantity.ToString();
+
+                            }
+                            else
+                            {
+                                tempObj.invType = "extra";
+                                tempObj.itemName =   list[i].items.FirstOrDefault().itemExtras[j].itemName;
+                                //tempObj.categoryCode to view quantity
+                                tempObj.categoryCode = list[i].items.FirstOrDefault().itemExtras[j].quantity.ToString();
+
+                            }
+
+                            reportOrderList.Add(tempObj);
+                        }
+
+                    }
+
+
+                    //end add extra
+
+                    //add ingrident =>ing
+                    if (list[i].items.FirstOrDefault().itemsIngredients.Where(x=>x.isActive==0).Count() > 0)
+                    {
+                        tempObj = new OrderPreparing();
+                        List<itemsTransferIngredients> inglist = list[i].items.FirstOrDefault().itemsIngredients.Where(x => x.isActive == 0).ToList();
+                        tempObj.invType = "ing";
+                        tempObj.categoryCode= AppSettings.resourcemanagerreport.GetString("dishIngredients") + ":";
+                        string alling = "";
+                        for (int j = 0; j < inglist.Count(); j++)
+                        {
+
+
+                            if (j == 0)
+                            {
+                                alling = alling+  inglist[j].DishIngredientName;
+                            }
+                            else
+                            {
+                                alling = alling+ ", " + inglist[j].DishIngredientName;
+                            }
+                        }
+                        tempObj.itemName = alling;
+     reportOrderList.Add(tempObj);
+                    }
+
+                    //end add ing
+                    //
+
+             //add next category
+                
 
                     if (i + 1 < list.Count())
                     {
-                        //&& i< list.Count()
-                        //add headrer
+                  
                         if (list[i].categoryId != list[i + 1].categoryId)
                         {
                             tempObj = new OrderPreparing();
                             //empty row
-                            tempObj.itemUnitId = -1;
-                            tempObj.orderNum = CategoryConv(list[i + 1].categoryName);
-                            reportOrderList.Add(tempObj);
-                            //header row
-                            tempObj = addOrderHeader();
+                            //add category
+                            tempObj.invType = "cat";
 
+                            tempObj.itemName = CategoryConv(list[i + 1].categoryName);
                             reportOrderList.Add(tempObj);
-                            //  trCategorie
-                            //  trOrderSharp
+                            //end add category
+
+
+                         //   tempObj.orderNum = CategoryConv(list[i + 1].categoryName);
+                            reportOrderList.Add(tempObj);
+                       
+
+                          
                         }
                     }
+                    //end add category
                     //row.statusConv = preparingOrderStatusConvert(row.status);
                     //   row.status = preparingOrderStatusConvert(row.status);
                 }

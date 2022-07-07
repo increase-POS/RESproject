@@ -381,7 +381,7 @@ namespace Restaurant.View.kitchen
                             foreach (int prinvoiceId in invoiceIds)
                             {
                                 // get orders by invoiceid
-                                OrderList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
+                                OrderList = await preparingOrder.GetOrdersforPrintByInvoiceId(prinvoiceId);
                                 //get selected orders only
                                 OrderList = OrderList.Where(X => orderIds.Contains(X.orderPreparingId)).ToList();
                                 //Thread t2 = new Thread(() =>
