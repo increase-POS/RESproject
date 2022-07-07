@@ -147,18 +147,22 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trTag");
-            //txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_tagName, AppSettings.resourcemanager.GetString("trNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNote") + "...");
+            txt_title.Text = AppSettings.resourcemanager.GetString("dishIngredients");
+            txt_extraItem.Text = AppSettings.resourcemanager.GetString("extra");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_count, AppSettings.resourcemanager.GetString("trCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_extraItemId, AppSettings.resourcemanager.GetString("extraPriceHint"));
 
             btn_add.Content = AppSettings.resourcemanager.GetString("trAdd");
             btn_update.Content = AppSettings.resourcemanager.GetString("trUpdate");
             btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            btn_close.ToolTip = AppSettings.resourcemanager.GetString("trClose");
 
             dg_tag.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
             dg_tag.Columns[1].Header = AppSettings.resourcemanager.GetString("trCount");
+
+            dg_ingredient.Columns[0].Header = AppSettings.resourcemanager.GetString("TheIngredients");
         }
 
         void setButtonEnabled()

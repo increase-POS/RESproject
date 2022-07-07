@@ -4160,7 +4160,7 @@
     <value>السيرفر غير متوافق</value>
   </data>
   <data name="extra" xml:space="preserve">
-    <value>إضافي</value>
+    <value>اكسترا</value>
   </data>
   <data name="extraOrders" xml:space="preserve">
     <value>طلبات اضافية</value>
@@ -4179,5 +4179,11 @@
   </data>
   <data name="ingredientIsBasic" xml:space="preserve">
     <value>المكون أساسي</value>
+  </data>
+  <data name="extraPriceHint" xml:space="preserve">
+    <value>اكسترا - السعر...</value>
+  </data>
+  <data name="TheIngredients" xml:space="preserve">
+    <value>المكونات</value>
   </data>
 </root>

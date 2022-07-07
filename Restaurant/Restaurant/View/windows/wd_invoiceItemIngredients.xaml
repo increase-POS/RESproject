@@ -41,7 +41,7 @@
 
 
                             <Button   IsCancel="true"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" 
-                             BorderBrush="{x:Null}"  Foreground="White" Margin="7.5,0"  x:Name="btn_colse" Click="Btn_colse_Click"
+                             BorderBrush="{x:Null}"  Foreground="White" Margin="7.5,0"  x:Name="btn_close" Click="Btn_colse_Click"
                              FontWeight="SemiBold" Width="24" Padding="0" ToolTip="Close"  FontSize="14">
                                 <materialDesign:PackIcon Foreground="White" Kind="Close" 
                                          Width="20" Height="20"/>

@@ -4195,4 +4195,10 @@ Please add Email in setting</value>
   <data name="ingredientIsBasic" xml:space="preserve">
     <value>Ingredient is basic</value>
   </data>
+  <data name="extraPriceHint" xml:space="preserve">
+    <value>extra - price...</value>
+  </data>
+  <data name="TheIngredients" xml:space="preserve">
+    <value>Ingredients</value>
+  </data>
 </root>
