@@ -754,7 +754,7 @@
             <Top>1.36906cm</Top>
             <Left>3.88516cm</Left>
             <Height>0.38495cm</Height>
-            <Width>1.52247cm</Width>
+            <Width>1.64968cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -823,7 +823,7 @@
                     <Value>TOTAL:</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
-                      <FontSize>7pt</FontSize>
+                      <FontSize>6pt</FontSize>
                       <FontWeight>ExtraBold</FontWeight>
                     </Style>
                   </TextRun>
@@ -834,7 +834,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>2.69894cm</Top>
+            <Top>2.70983cm</Top>
             <Left>2.65466cm</Left>
             <Height>0.44296cm</Height>
             <Width>1.25203cm</Width>
@@ -859,7 +859,7 @@
                     <Value>=Parameters!totalNoShip.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
-                      <FontSize>6pt</FontSize>
+                      <FontSize>5pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
@@ -867,7 +867,7 @@
                     <Value xml:space="preserve"> </Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
-                      <FontSize>6pt</FontSize>
+                      <FontSize>5pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
@@ -875,7 +875,7 @@
                     <Value>=Parameters!Currency.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
-                      <FontSize>6pt</FontSize>
+                      <FontSize>5pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
@@ -889,7 +889,7 @@
             <Top>2.69894cm</Top>
             <Left>3.93882cm</Left>
             <Height>0.44296cm</Height>
-            <Width>1.45859cm</Width>
+            <Width>1.59602cm</Width>
             <ZIndex>7</ZIndex>
             <Style>
               <Border>

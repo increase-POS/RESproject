@@ -761,15 +761,15 @@
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Left</TextAlign>
+                  <TextAlign>Right</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>1.75868cm</Top>
-            <Left>0.58246cm</Left>
+            <Left>0.26277cm</Left>
             <Height>0.49748cm</Height>
-            <Width>2.78653cm</Width>
+            <Width>3.10622cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -943,15 +943,15 @@
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Left</TextAlign>
+                  <TextAlign>Right</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>3.53069cm</Top>
-            <Left>0.60673cm</Left>
+            <Left>0.26277cm</Left>
             <Height>0.58702cm</Height>
-            <Width>2.44476cm</Width>
+            <Width>2.78872cm</Width>
             <ZIndex>8</ZIndex>
             <Visibility>
               <Hidden>=Parameters!discountType.Value = 2</Hidden>
@@ -1247,15 +1247,15 @@
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Left</TextAlign>
+                  <TextAlign>Right</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>2.9234cm</Top>
-            <Left>0.58246cm</Left>
+            <Left>0.26277cm</Left>
             <Height>0.50299cm</Height>
-            <Width>2.78653cm</Width>
+            <Width>3.10622cm</Width>
             <ZIndex>18</ZIndex>
             <Visibility>
               <Hidden>=Parameters!tax.Value = 0</Hidden>
@@ -1294,15 +1294,15 @@
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Left</TextAlign>
+                  <TextAlign>Right</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>2.33229cm</Top>
-            <Left>0.56825cm</Left>
+            <Left>0.26277cm</Left>
             <Height>0.55755cm</Height>
-            <Width>2.80074cm</Width>
+            <Width>3.10622cm</Width>
             <ZIndex>19</ZIndex>
             <Visibility>
               <Hidden>= Parameters!discountType.Value &lt;&gt; 2 Or Parameters!discountValue.Value=0</Hidden>
@@ -1723,15 +1723,15 @@
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Left</TextAlign>
+                  <TextAlign>Right</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>4.32574cm</Top>
-            <Left>0.63696cm</Left>
+            <Left>0.26277cm</Left>
             <Height>0.50299cm</Height>
-            <Width>2.44477cm</Width>
+            <Width>2.81896cm</Width>
             <ZIndex>27</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!shippingCompanyId.Value=0 OR Parameters!shippingCompanyId.Value="0",True,False)</Hidden>
@@ -1778,15 +1778,15 @@
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Left</TextAlign>
+                  <TextAlign>Right</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>4.98222cm</Top>
-            <Left>0.62077cm</Left>
+            <Left>0.26277cm</Left>
             <Height>0.58702cm</Height>
-            <Width>2.44476cm</Width>
+            <Width>2.80276cm</Width>
             <ZIndex>28</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!shippingCost.Value=0 OR Parameters!shippingCost.Value="0",True,False)</Hidden>

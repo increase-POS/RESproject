@@ -3301,7 +3301,7 @@ namespace Restaurant.Classes
                                 {
                                      tempobject = new ItemTransfer();
                                
-                                    string extname=" -"+ AppSettings.resourcemanagerreport.GetString("extra")+":";
+                                    string extname=" - "+ AppSettings.resourcemanagerreport.GetString("extra")+": ";
                                     for (int j = 0; j < i.itemExtras.Count(); j++)
                                     {
 

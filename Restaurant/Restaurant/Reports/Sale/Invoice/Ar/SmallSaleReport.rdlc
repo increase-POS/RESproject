@@ -761,9 +761,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>1.61636cm</Top>
-            <Left>0.20991cm</Left>
+            <Left>0.14577cm</Left>
             <Height>0.42693cm</Height>
-            <Width>1.66981cm</Width>
+            <Width>1.73395cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -936,9 +936,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>3.19351cm</Top>
-            <Left>0.20991cm</Left>
+            <Left>0.09766cm</Left>
             <Height>0.50533cm</Height>
-            <Width>1.66981cm</Width>
+            <Width>1.78206cm</Width>
             <ZIndex>8</ZIndex>
             <Style>
               <Border>
@@ -1689,9 +1689,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>3.89727cm</Top>
-            <Left>0.20991cm</Left>
+            <Left>0.09766cm</Left>
             <Height>0.50299cm</Height>
-            <Width>1.66981cm</Width>
+            <Width>1.78206cm</Width>
             <ZIndex>27</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!shippingCompanyId.Value=0 OR Parameters!shippingCompanyId.Value="0",True,False)</Hidden>
@@ -1716,7 +1716,7 @@
                     <Value>=Parameters!totalNet.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
-                      <FontSize>7pt</FontSize>
+                      <FontSize>6pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
@@ -1724,7 +1724,7 @@
                     <Value xml:space="preserve"> </Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
-                      <FontSize>7pt</FontSize>
+                      <FontSize>6pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
@@ -1732,7 +1732,7 @@
                     <Value>=Parameters!Currency.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
-                      <FontSize>7pt</FontSize>
+                      <FontSize>6pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
@@ -1744,9 +1744,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>4.55375cm</Top>
-            <Left>0.20991cm</Left>
+            <Left>0.09766cm</Left>
             <Height>0.50953cm</Height>
-            <Width>1.66981cm</Width>
+            <Width>1.78206cm</Width>
             <ZIndex>28</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!shippingCost.Value=0 OR Parameters!shippingCost.Value="0",True,False)</Hidden>
