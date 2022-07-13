@@ -1156,7 +1156,7 @@ namespace Restaurant.Classes
                     {
                         addpath = @"\Reports\Sale\Kitchen\Ar\MediumReport.rdlc";
                         rs.width = 315;//315 =8cm
-                    rs.height = GetpageHeight(itemscount, 270, 19);
+                    rs.height = GetpageHeight(itemscount, 270, 25);
 
 
                 }
@@ -1164,7 +1164,7 @@ namespace Restaurant.Classes
                     {
                         addpath = @"\Reports\Sale\Kitchen\Ar\SmallReport.rdlc";
                         rs.width = 224;//224 =5.7cm
-                    rs.height = GetpageHeight(itemscount, 250, 19);
+                    rs.height = GetpageHeight(itemscount, 250, 25);
 
                 }
                     else //MainWindow.salePaperSize == "A4"
@@ -1189,14 +1189,14 @@ namespace Restaurant.Classes
                     {
                         addpath = @"\Reports\Sale\Kitchen\En\MediumReport.rdlc";
                         rs.width = 315;//315 =8cm
-                        rs.height = GetpageHeight(itemscount,270,19);
+                        rs.height = GetpageHeight(itemscount,270, 25);
 
                     }
                     else if (PaperSize == "5.7cm" )
                     {
                         addpath = @"\Reports\Sale\Kitchen\En\SmallReport.rdlc";
                         rs.width = 224;//224 =5.7cm
-                        rs.height = GetpageHeight(itemscount,250,19);
+                        rs.height = GetpageHeight(itemscount,250, 25);
 
                     }
                     else //MainWindow.salePaperSize == "A4"
@@ -1240,8 +1240,6 @@ namespace Restaurant.Classes
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
             rs= clsReports.PreparingOrdersPrint(OrderPreparingList.ToList(),  paramarr);
-       
-     
 
             rs.rep.SetParameters(paramarr);
 
@@ -1252,19 +1250,11 @@ namespace Restaurant.Classes
             //if (invType == "s" || invType == "sb" || invType == "ts"
             //    || invType == "ss")
             //{
-
-         
-
             return rs;
             //kitchen
-
-
-
             //}
             //else
             //{
-
-
 
             //}
             // end copy count

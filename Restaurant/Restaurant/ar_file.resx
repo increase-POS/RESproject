@@ -4160,7 +4160,7 @@
     <value>السيرفر غير متوافق</value>
   </data>
   <data name="extra" xml:space="preserve">
-    <value>اكسترا</value>
+    <value>إضافة</value>
   </data>
   <data name="extraOrders" xml:space="preserve">
     <value>طلبات اضافية</value>
@@ -4188,5 +4188,8 @@
   </data>
   <data name="order" xml:space="preserve">
     <value>الطلب</value>
+  </data>
+  <data name="without" xml:space="preserve">
+    <value>بدون</value>
   </data>
 </root>

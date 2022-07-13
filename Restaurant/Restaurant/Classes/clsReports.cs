@@ -2816,24 +2816,42 @@ namespace Restaurant.Classes
                 //end add category
                
                 //header row
-                 tempObj = addOrderHeader();
-                reportOrderList.Add(tempObj);
+               //  tempObj = addOrderHeader();
+              //  reportOrderList.Add(tempObj);
                 for (int i = 0; i < list.Count(); i++)
                 {
-
-                    tempObj = new OrderPreparing();
+                    //to select last row for make border solid
+                    string lastrowtype = "item";
+                    if (list[i].items.FirstOrDefault().itemExtras.Count() > 0)
+                    {
+                        lastrowtype = "extra";
+                    }
+                 if(list[i].items.FirstOrDefault().itemsIngredients.Where(x => x.isActive == 0).Count() > 0)
+                    {
+                        lastrowtype = "ing";
+                    }
+             
+                       tempObj = new OrderPreparing();
                     //addorder num
+                    tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("trOrderSharp")  ;
                     tempObj.invType = "ordernum";
-                    tempObj.itemName =   AppSettings.resourcemanagerreport.GetString("trOrderSharp")+": "+ list[i].orderNum;
+                    tempObj.itemName =   list[i].orderNum;
                     reportOrderList.Add(tempObj);
                     //end
                     tempObj = new OrderPreparing();
                     //addorder 
                     tempObj.invType = "order";
-                    tempObj.itemName = AppSettings.resourcemanagerreport.GetString("order") + ": " + list[i].itemName;
-                    //tempObj.categoryCode to view quantity
-                    tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR") + ": " + list[i].quantity.ToString();
+                    tempObj.itemName =list[i].itemName;
+                    // tempObj.orderNum to view title of order
+                    tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("order")  ;
+                     //tempObj.categoryCode to view quantity
+                     tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR") + ": " + list[i].quantity.ToString();
+                    if(lastrowtype== "item")
+                    {
+                        tempObj.IsChecked = true;
+                    }
                     reportOrderList.Add(tempObj);
+                    // end addorder
                     //
                     // add extra
                     if (list[i].items.FirstOrDefault().itemExtras.Count()>0)
@@ -2842,21 +2860,26 @@ namespace Restaurant.Classes
                         {
                             tempObj = new OrderPreparing();
                             //add first extre =>extra1
-                            if (j==0)
-                            {
+                            //if (j==0)
+                            //{
                                 tempObj.invType = "extra1";
-                                tempObj.itemName = AppSettings.resourcemanagerreport.GetString("extra") + ": " + list[i].items.FirstOrDefault().itemExtras[j].itemName;
-                                //tempObj.categoryCode to view quantity
-                                tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR") + ": " + list[i].items.FirstOrDefault().itemExtras[j].quantity.ToString();
+                                tempObj.itemName =list[i].items.FirstOrDefault().itemExtras[j].itemName;
+                            tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("extra") ;
+                             //tempObj.categoryCode to view quantity
+                             tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR") + ": " + list[i].items.FirstOrDefault().itemExtras[j].quantity.ToString();
 
-                            }
-                            else
+                            //}
+                            //else
+                            //{
+                            //    tempObj.invType = "extra";
+                            //    tempObj.itemName =   list[i].items.FirstOrDefault().itemExtras[j].itemName;
+                            //    //tempObj.categoryCode to view quantity
+                            //    tempObj.categoryCode = list[i].items.FirstOrDefault().itemExtras[j].quantity.ToString();
+
+                            //}
+                            if (lastrowtype == "extra" && j== list[i].items.FirstOrDefault().itemExtras.Count()-1)
                             {
-                                tempObj.invType = "extra";
-                                tempObj.itemName =   list[i].items.FirstOrDefault().itemExtras[j].itemName;
-                                //tempObj.categoryCode to view quantity
-                                tempObj.categoryCode = list[i].items.FirstOrDefault().itemExtras[j].quantity.ToString();
-
+                                tempObj.IsChecked = true;
                             }
 
                             reportOrderList.Add(tempObj);
@@ -2873,12 +2896,13 @@ namespace Restaurant.Classes
                         tempObj = new OrderPreparing();
                         List<itemsTransferIngredients> inglist = list[i].items.FirstOrDefault().itemsIngredients.Where(x => x.isActive == 0).ToList();
                         tempObj.invType = "ing";
-                        tempObj.categoryCode= AppSettings.resourcemanagerreport.GetString("dishIngredients") + ":";
+
+                    //    tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("without") + ": ";
                         string alling = "";
+                         tempObj.orderNum= AppSettings.resourcemanagerreport.GetString("without") ;
+
                         for (int j = 0; j < inglist.Count(); j++)
                         {
-
-
                             if (j == 0)
                             {
                                 alling = alling+  inglist[j].DishIngredientName;
@@ -2888,8 +2912,15 @@ namespace Restaurant.Classes
                                 alling = alling+ ", " + inglist[j].DishIngredientName;
                             }
                         }
+
                         tempObj.itemName = alling;
-     reportOrderList.Add(tempObj);
+
+                        //tempObj.
+                        if (lastrowtype == "ing")
+                        {
+                            tempObj.IsChecked = true;
+                        }
+                        reportOrderList.Add(tempObj);
                     }
 
                     //end add ing
@@ -2914,7 +2945,7 @@ namespace Restaurant.Classes
 
 
                          //   tempObj.orderNum = CategoryConv(list[i + 1].categoryName);
-                            reportOrderList.Add(tempObj);
+                           // reportOrderList.Add(tempObj);
                        
 
                           
@@ -2949,10 +2980,10 @@ namespace Restaurant.Classes
         public static OrderPreparing addOrderHeader()
         {
             OrderPreparing tempObj = new OrderPreparing();
-            tempObj.itemUnitId = -2;
+          //  tempObj.itemUnitId = -2;
             tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("trOrderSharp");
-            tempObj.itemName = AppSettings.resourcemanagerreport.GetString("trItem");
-            tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR");
+           // tempObj.itemName = AppSettings.resourcemanagerreport.GetString("trItem");
+           // tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR");
             return tempObj;
         }
         public static void DeliveryReport(IEnumerable<OrderPreparingSTS> list, LocalReport rep, string reppath, List<ReportParameter> paramarr)
