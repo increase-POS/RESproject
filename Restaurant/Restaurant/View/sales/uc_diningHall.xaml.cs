@@ -4978,6 +4978,108 @@ namespace Restaurant.View.sales
                     else
                     {
                         invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                        //extra && ingredient
+                        #region items
+                        //items subTotal & itemTax
+                        decimal totaltax = 0;
+                        List<ItemTransfer> tempitemlist = new List<ItemTransfer>();
+                        bool isArabic = ReportCls.checkLang();
+                        foreach (var i in invoiceItems)
+                        {
+                            ItemTransfer tempobject = new ItemTransfer();
+
+                            i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+                            if (i.itemTax != null)
+                            {
+                                totaltax += (decimal)i.itemTax;
+
+                            }
+                            i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
+
+                            //   i.isExtra = false;
+                            tempobject = i;
+
+                            //add without ingridient
+                            if (i.itemsIngredients.Where(x => x.isBasic == false && x.isActive == 0).Count() > 0)
+                            {
+                                string alling = "";
+                                List<itemsTransferIngredients> inglist = i.itemsIngredients.Where(x => x.isActive == 0 && x.isBasic == false).ToList();
+
+                                for (int k = 0; k < inglist.Count(); k++)
+                                {
+                                    if (isArabic)
+                                    {
+                                        if (k == 0)
+                                        {
+                                            alling = inglist[k].DishIngredientName;
+                                        }
+                                        else
+                                        {
+                                            alling = alling + "," + inglist[k].DishIngredientName;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (k == 0)
+                                        {
+                                            alling = " -" + AppSettings.resourcemanagerreport.GetString("without") + " : " + inglist[k].DishIngredientName;
+                                        }
+                                        else
+                                        {
+                                            alling = alling + ", " + inglist[k].DishIngredientName;
+                                        }
+                                    }
+
+
+                                }
+                                if (isArabic)
+                                {
+
+                                    tempobject.itemName = tempobject.itemName + " -" + AppSettings.resourcemanagerreport.GetString("without") + ":" + alling;
+
+                                }
+                                else
+                                {
+                                    tempobject.itemName = tempobject.itemName + alling;
+                                }
+
+                            }
+
+                            //end add without ingridient
+                            tempitemlist.Add(tempobject);
+                            //add extra row
+                            if (i.itemExtras.Count() > 0)
+                            {
+
+
+                                //   string extname=" - "+ AppSettings.resourcemanagerreport.GetString("extra")+": ";
+                                for (int j = 0; j < i.itemExtras.Count(); j++)
+                                {
+                                    tempobject = new ItemTransfer();
+                                    tempobject = i.itemExtras[j];
+                                    tempobject.itemName = AppSettings.resourcemanagerreport.GetString("extra") + ": " + tempobject.itemName;
+                                    tempobject.price = decimal.Parse(HelpClass.DecTostring(tempobject.price));
+                                    if (tempobject.itemTax != null)
+                                    {
+                                        totaltax += (decimal)tempobject.itemTax;
+
+                                    }
+                                    tempobject.subTotal = decimal.Parse(HelpClass.DecTostring(tempobject.price * tempobject.quantity));
+
+
+                                
+                                    tempitemlist.Add(tempobject);
+
+                                }
+                             
+                            }
+                            //end add extra row
+
+                        }
+                        invoiceItems = tempitemlist.ToList();
+                        #endregion
+
+                        //end extra and ingredient
                         SysEmails email = new SysEmails();
                         EmailClass mailtosend = new EmailClass();
                         email = await email.GetByBranchIdandSide(MainWindow.branchLogin.branchId, "sales");
@@ -5118,7 +5220,7 @@ namespace Restaurant.View.sales
                                             string msg = "";
                                             this.Dispatcher.Invoke(() =>
                                             {
-                                                msg = mailtosend.Sendmail();// temp comment
+                                             msg = mailtosend.Sendmail();// temp comment
                                                 if (msg == "Failure sending mail.")
                                                 {
                                                     // msg = "No Internet connection";
