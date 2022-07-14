@@ -238,9 +238,13 @@ namespace Restaurant.Classes
             else
             {
                 decimal dc = decimal.Parse(dec.ToString());
-
-                //sdc = dc.ToString("0.00");
-                switch (AppSettings.accuracy)
+                if (dc==0)
+                {
+                    sdc = "0";
+                }
+                else
+                {
+  switch (AppSettings.accuracy)
                 {
                     case "0":
                         sdc = string.Format("{0:F0}", dc);
@@ -258,6 +262,9 @@ namespace Restaurant.Classes
                         sdc = string.Format("{0:F1}", dc);
                         break;
                 }
+                }
+                //sdc = dc.ToString("0.00");
+              
 
             }
 
@@ -1832,6 +1839,7 @@ srb
             paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
             paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
             paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
+      
             return paramarr;
 
         }

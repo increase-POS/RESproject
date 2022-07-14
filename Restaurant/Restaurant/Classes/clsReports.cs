@@ -250,10 +250,10 @@ namespace Restaurant.Classes
             }
             rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
         }
-       
+
         public static string processTypeConvswitch(string processType)
         {
-            
+
             switch (processType)
             {
                 case "cash": return AppSettings.resourcemanagerreport.GetString("trCash");
@@ -578,10 +578,10 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
             paramarr.Add(new ReportParameter("trBranchStore", AppSettings.resourcemanagerreport.GetString("trBranch")));
 
-             
+
         }
-    
-               public static void reservationsUpdateReport(IEnumerable<TablesReservation> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+
+        public static void reservationsUpdateReport(IEnumerable<TablesReservation> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             List<TablesReservation> Query = JsonConvert.DeserializeObject<List<TablesReservation>>(JsonConvert.SerializeObject(Query1));
 
@@ -591,7 +591,7 @@ namespace Restaurant.Classes
 
             foreach (TablesReservation r in Query)
             {
-               // r.reservationTime = DateTime.Parse(timeFrameConv((DateTime)r.reservationTime));
+                // r.reservationTime = DateTime.Parse(timeFrameConv((DateTime)r.reservationTime));
                 r.isExceed = ExceedConv(r.isExceed);
                 r.notes = timeFrameConv((DateTime)r.reservationTime);
 
@@ -600,8 +600,8 @@ namespace Restaurant.Classes
 
             rep.DataSources.Add(new ReportDataSource("DataSetTables", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("tr_Sales")+" / "+ AppSettings.resourcemanagerreport.GetString("reservationsManagement")));
-     
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("tr_Sales") + " / " + AppSettings.resourcemanagerreport.GetString("reservationsManagement")));
+
             //table columns
             paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
@@ -628,13 +628,13 @@ namespace Restaurant.Classes
             return isExceed;
         }
         // timeFrameConverter
-        public static  string timeFrameConv(DateTime date)
+        public static string timeFrameConv(DateTime date)
         {
 
 
-        //    DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
-       
-            if (!(date is  DateTime))
+            //    DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
+
+            if (!(date is DateTime))
                 return date.ToString();
 
 
@@ -734,7 +734,7 @@ namespace Restaurant.Classes
         }
 
 
-        public static void deliveryManagement(IEnumerable<Invoice> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr,int isdriver)
+        public static void deliveryManagement(IEnumerable<Invoice> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr, int isdriver)
         {
             List<Invoice> Query = JsonConvert.DeserializeObject<List<Invoice>>(JsonConvert.SerializeObject(Query1));
             rep.ReportPath = reppath;
@@ -746,7 +746,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trInvoiceCharp")));
             paramarr.Add(new ReportParameter("deliveryTime", AppSettings.resourcemanagerreport.GetString("deliveryTime")));
             paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
-            if (isdriver==1)
+            if (isdriver == 1)
             {
                 paramarr.Add(new ReportParameter("deliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
             }
@@ -759,9 +759,9 @@ namespace Restaurant.Classes
                 row.status = preparingOrderStatusConvert(row.status);
                 row.orderTimeConv = dateTimeToTimeConvert(row.orderTime);
                 row.shipUserName = driverOrShipcompanyConvert(isdriver, row.shipUserName, row.shipUserLastName, row.shippingCompanyName);
-            } 
-               
-            
+            }
+
+
 
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
 
@@ -779,7 +779,7 @@ namespace Restaurant.Classes
             else
                 return "-";
         }
-        public static string driverOrShipcompanyConvert(int isDriver,string shipUserName,string shipUserLastName,string shippingCompanyName)
+        public static string driverOrShipcompanyConvert(int isDriver, string shipUserName, string shipUserLastName, string shippingCompanyName)
         {
             string name = "";
             if (isDriver == 1)
@@ -790,7 +790,7 @@ namespace Restaurant.Classes
             {
                 name = shippingCompanyName;
             }
-              
+
             return name;
         }
 
@@ -809,9 +809,9 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("deliveryTime", AppSettings.resourcemanagerreport.GetString("deliveryTime")));
             //paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
 
-           
+
             paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
-             paramarr.Add(new ReportParameter("trCustomerAddress", AppSettings.resourcemanagerreport.GetString("trAddress")));
+            paramarr.Add(new ReportParameter("trCustomerAddress", AppSettings.resourcemanagerreport.GetString("trAddress")));
 
             paramarr.Add(new ReportParameter("trCustomerMobile", AppSettings.resourcemanagerreport.GetString("trMobile")));
 
@@ -1095,7 +1095,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             foreach (Item r in items)
             {
-                r.categoryName = CategoryConv( r.categoryName);
+                r.categoryName = CategoryConv(r.categoryName);
             }
             rep.DataSources.Add(new ReportDataSource("DataSetItem", items));
 
@@ -1207,7 +1207,7 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemsStorage", invoiceItems));
-             paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNo.")));
             paramarr.Add(new ReportParameter("trItemUnit", AppSettings.resourcemanagerreport.GetString("trItemUnit")));
             paramarr.Add(new ReportParameter("trSectionLocation", AppSettings.resourcemanagerreport.GetString("trSectionLocation")));
             paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trQTR")));
@@ -1246,7 +1246,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             foreach (StorageCost r in invoiceItems)
             {
-                r.cost =decimal.Parse( HelpClass.DecTostring(r.cost));
+                r.cost = decimal.Parse(HelpClass.DecTostring(r.cost));
             }
             rep.DataSources.Add(new ReportDataSource("DataSetStorageCost", invoiceItems));
             paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trStorageCostPerDay")));// tt
@@ -1272,7 +1272,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
             paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trQuantity")));
 
-       //   DateFormConv(paramarr);
+            //   DateFormConv(paramarr);
 
         }
 
@@ -1351,7 +1351,7 @@ namespace Restaurant.Classes
 
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
             paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
-                paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trSubscriptionType", AppSettings.resourcemanagerreport.GetString("trSubscriptionType")));
 
@@ -1366,12 +1366,12 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             foreach (var c in Query)
             {
-               // c.subscriptionType = subscriptionTypeConverter(c.subscriptionType);
+                // c.subscriptionType = subscriptionTypeConverter(c.subscriptionType);
             }
 
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
             paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
-              paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trMinimumInvoiceValueHint", AppSettings.resourcemanagerreport.GetString("trMinInvoice")));
             paramarr.Add(new ReportParameter("trMaximumInvoiceValueHint", AppSettings.resourcemanagerreport.GetString("trMaxInvoice")));
         }
@@ -1525,17 +1525,17 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             foreach (var r in tempquery)
             {
-                r.invType= InvoiceTypeConv(r.invType);
+                r.invType = InvoiceTypeConv(r.invType);
                 r.categoryName = CategoryConv(r.categoryName);
-                if (r.CopdiscountValue!=null)
+                if (r.CopdiscountValue != null)
                 {
                     r.CopdiscountValue = decimal.Parse(accuracyDiscountConvert(r.CopdiscountValue, r.CopdiscountType));
                     r.couponTotalValue = decimal.Parse(HelpClass.DecTostring(r.couponTotalValue));//
 
                 }
-                if (r.OdiscountValue!=null)
+                if (r.OdiscountValue != null)
                 {
-                   
+
                     r.OdiscountValue = decimal.Parse(accuracyDiscountConvert(r.OdiscountValue, r.OdiscountType));
                     r.offerTotalValue = decimal.Parse(HelpClass.DecTostring(r.offerTotalValue));
                 }
@@ -1595,16 +1595,16 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("tr_Invoice", AppSettings.resourcemanager.GetString("trItem") + "/" + AppSettings.resourcemanager.GetString("trInvoices")));
 
             paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
-         //   saleInvoiceConverterForReport
+            //   saleInvoiceConverterForReport
             PurStsReport(tempquery, rep, reppath);
-          //  rep.DataSources.Add(new ReportDataSource("DataSetITinvoice", tempquery));
+            //  rep.DataSources.Add(new ReportDataSource("DataSetITinvoice", tempquery));
         }
 
         public static void SalePromoStsReport(IEnumerable<ItemTransferInvoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
 
             List<ItemTransferInvoice> tempquery = JsonConvert.DeserializeObject<List<ItemTransferInvoice>>(JsonConvert.SerializeObject(Query));
-    
+
 
             PurStsReport(tempquery, rep, reppath);
             paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
@@ -1618,15 +1618,15 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
             paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
             paramarr.Add(new ReportParameter("trInvoiceClass", AppSettings.resourcemanagerreport.GetString("trInvoiceClass")));
-         
+
             paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
 
             //  itemTransferDiscountTypeConv(paramarr);
             paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
 
 
-          
-      
+
+
 
         }
         public static void invoicClassReport(IEnumerable<SalesMembership> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -1781,7 +1781,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("invDate", date));
             paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
-    
+
             paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
             paramarr.Add(new ReportParameter("trType", AppSettings.resourcemanagerreport.GetString("trType")));
             paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
@@ -2788,9 +2788,9 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trNotes", AppSettings.resourcemanagerreport.GetString("trNotes")));
 
             paramarr.Add(new ReportParameter("trWaiter", AppSettings.resourcemanagerreport.GetString("trWaiter")));
-            
 
-            paramarr.Add(new ReportParameter("trTables", AppSettings.resourcemanagerreport.GetString("trSection") +"/"+ AppSettings.resourcemanagerreport.GetString("trTables")));
+
+            paramarr.Add(new ReportParameter("trTables", AppSettings.resourcemanagerreport.GetString("trSection") + "/" + AppSettings.resourcemanagerreport.GetString("trTables")));
 
             paramarr.Add(new ReportParameter("Tables", list.FirstOrDefault().sectionTable));
             paramarr.Add(new ReportParameter("trInvoice", AppSettings.resourcemanagerreport.GetString("trBranch")));
@@ -2810,14 +2810,14 @@ namespace Restaurant.Classes
                 OrderPreparing tempObj = new OrderPreparing();
                 //add category
                 tempObj.invType = "cat";
-          
+
                 tempObj.itemName = CategoryConv(list[0].categoryName);
                 reportOrderList.Add(tempObj);
                 //end add category
-               
+
                 //header row
-               //  tempObj = addOrderHeader();
-              //  reportOrderList.Add(tempObj);
+                //  tempObj = addOrderHeader();
+                //  reportOrderList.Add(tempObj);
                 for (int i = 0; i < list.Count(); i++)
                 {
                     //to select last row for make border solid
@@ -2826,27 +2826,27 @@ namespace Restaurant.Classes
                     {
                         lastrowtype = "extra";
                     }
-                 if(list[i].items.FirstOrDefault().itemsIngredients.Where(x => x.isActive == 0).Count() > 0)
+                    if (list[i].items.FirstOrDefault().itemsIngredients.Where(x => x.isActive == 0).Count() > 0)
                     {
                         lastrowtype = "ing";
                     }
-             
-                       tempObj = new OrderPreparing();
+
+                    tempObj = new OrderPreparing();
                     //addorder num
-                    tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("trOrderSharp")  ;
+                    tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("trOrderSharp");
                     tempObj.invType = "ordernum";
-                    tempObj.itemName =   list[i].orderNum;
+                    tempObj.itemName = list[i].orderNum;
                     reportOrderList.Add(tempObj);
                     //end
                     tempObj = new OrderPreparing();
                     //addorder 
                     tempObj.invType = "order";
-                    tempObj.itemName =list[i].itemName;
+                    tempObj.itemName = list[i].itemName;
                     // tempObj.orderNum to view title of order
-                    tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("order")  ;
-                     //tempObj.categoryCode to view quantity
-                     tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR") + ": " + list[i].quantity.ToString();
-                    if(lastrowtype== "item")
+                    tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("order");
+                    //tempObj.categoryCode to view quantity
+                    tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR") + ": " + list[i].quantity.ToString();
+                    if (lastrowtype == "item")
                     {
                         tempObj.IsChecked = true;
                     }
@@ -2854,19 +2854,19 @@ namespace Restaurant.Classes
                     // end addorder
                     //
                     // add extra
-                    if (list[i].items.FirstOrDefault().itemExtras.Count()>0)
+                    if (list[i].items.FirstOrDefault().itemExtras.Count() > 0)
                     {
-                       for(int j=0;j<list[i].items.FirstOrDefault().itemExtras.Count();j++)
+                        for (int j = 0; j < list[i].items.FirstOrDefault().itemExtras.Count(); j++)
                         {
                             tempObj = new OrderPreparing();
                             //add first extre =>extra1
                             //if (j==0)
                             //{
-                                tempObj.invType = "extra1";
-                                tempObj.itemName =list[i].items.FirstOrDefault().itemExtras[j].itemName;
-                            tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("extra") ;
-                             //tempObj.categoryCode to view quantity
-                             tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR") + ": " + list[i].items.FirstOrDefault().itemExtras[j].quantity.ToString();
+                            tempObj.invType = "extra1";
+                            tempObj.itemName = list[i].items.FirstOrDefault().itemExtras[j].itemName;
+                            tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("extra");
+                            //tempObj.categoryCode to view quantity
+                            tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR") + ": " + list[i].items.FirstOrDefault().itemExtras[j].quantity.ToString();
 
                             //}
                             //else
@@ -2877,7 +2877,7 @@ namespace Restaurant.Classes
                             //    tempObj.categoryCode = list[i].items.FirstOrDefault().itemExtras[j].quantity.ToString();
 
                             //}
-                            if (lastrowtype == "extra" && j== list[i].items.FirstOrDefault().itemExtras.Count()-1)
+                            if (lastrowtype == "extra" && j == list[i].items.FirstOrDefault().itemExtras.Count() - 1)
                             {
                                 tempObj.IsChecked = true;
                             }
@@ -2891,25 +2891,25 @@ namespace Restaurant.Classes
                     //end add extra
 
                     //add ingrident =>ing
-                    if (list[i].items.FirstOrDefault().itemsIngredients.Where(x=>x.isActive==0).Count() > 0)
+                    if (list[i].items.FirstOrDefault().itemsIngredients.Where(x => x.isActive == 0 && x.isBasic == false).Count() > 0)
                     {
                         tempObj = new OrderPreparing();
-                        List<itemsTransferIngredients> inglist = list[i].items.FirstOrDefault().itemsIngredients.Where(x => x.isActive == 0).ToList();
+                        List<itemsTransferIngredients> inglist = list[i].items.FirstOrDefault().itemsIngredients.Where(x => x.isActive == 0 && x.isBasic == false).ToList();
                         tempObj.invType = "ing";
 
-                    //    tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("without") + ": ";
+                        //    tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("without") + ": ";
                         string alling = "";
-                         tempObj.orderNum= AppSettings.resourcemanagerreport.GetString("without") ;
+                        tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("without");
 
                         for (int j = 0; j < inglist.Count(); j++)
                         {
                             if (j == 0)
                             {
-                                alling = alling+  inglist[j].DishIngredientName;
+                                alling = alling + inglist[j].DishIngredientName;
                             }
                             else
                             {
-                                alling = alling+ ", " + inglist[j].DishIngredientName;
+                                alling = alling + ", " + inglist[j].DishIngredientName;
                             }
                         }
 
@@ -2926,12 +2926,12 @@ namespace Restaurant.Classes
                     //end add ing
                     //
 
-             //add next category
-                
+                    //add next category
+
 
                     if (i + 1 < list.Count())
                     {
-                  
+
                         if (list[i].categoryId != list[i + 1].categoryId)
                         {
                             tempObj = new OrderPreparing();
@@ -2944,11 +2944,11 @@ namespace Restaurant.Classes
                             //end add category
 
 
-                         //   tempObj.orderNum = CategoryConv(list[i + 1].categoryName);
-                           // reportOrderList.Add(tempObj);
-                       
+                            //   tempObj.orderNum = CategoryConv(list[i + 1].categoryName);
+                            // reportOrderList.Add(tempObj);
 
-                          
+
+
                         }
                     }
                     //end add category
@@ -2960,7 +2960,7 @@ namespace Restaurant.Classes
 
             rs = reportclass.GetKitchenRdlcpath(AppSettings.kitchenPaperSize, reportOrderList.Count(), rs.rep);
             rs.rep.DataSources.Add(new ReportDataSource("DataSet", reportOrderList));
-          //  rs.height = rs.height;
+            //  rs.height = rs.height;
             if (rs.height > 0)
             {
                 XmlDocument doc = new XmlDocument();
@@ -2968,9 +2968,9 @@ namespace Restaurant.Classes
 
                 //   XmlNodeList nlist=   doc.GetElementsByTagName("PageHeight"); 
                 decimal h = (decimal)((decimal)rs.height / (decimal)40.0);// +(decimal)0.4;
-             
+
                 doc.GetElementsByTagName("PageHeight")[0].InnerXml = (h).ToString() + "cm";
-         
+
                 //InteractiveHeight
                 doc.Save(rs.rep.ReportPath);
             }
@@ -2980,10 +2980,10 @@ namespace Restaurant.Classes
         public static OrderPreparing addOrderHeader()
         {
             OrderPreparing tempObj = new OrderPreparing();
-          //  tempObj.itemUnitId = -2;
+            //  tempObj.itemUnitId = -2;
             tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("trOrderSharp");
-           // tempObj.itemName = AppSettings.resourcemanagerreport.GetString("trItem");
-           // tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR");
+            // tempObj.itemName = AppSettings.resourcemanagerreport.GetString("trItem");
+            // tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR");
             return tempObj;
         }
         public static void DeliveryReport(IEnumerable<OrderPreparingSTS> list, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -3194,11 +3194,11 @@ namespace Restaurant.Classes
             }
             else return "";
         }
-        public static string accuracyDiscountConvert(decimal? discountValue,string discountType)
+        public static string accuracyDiscountConvert(decimal? discountValue, string discountType)
         {
             if (discountValue != null && discountType != null)
             {
-               string type =  discountType;
+                string type = discountType;
                 decimal value = (decimal)discountValue;
 
                 decimal num = decimal.Parse(value.ToString());
@@ -3328,7 +3328,7 @@ namespace Restaurant.Classes
             resultmessage resmsg = new resultmessage();
             resmsg.pdfpath = "";
             resmsg.result = "";
-           // string result = "";
+            // string result = "";
             try
             {
                 Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
@@ -3369,7 +3369,7 @@ namespace Restaurant.Classes
                         //{
                         //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPrintDraftInvoice"), animation: ToasterAnimation.FadeIn);
                         //});
-                        resmsg.result  = "trPrintDraftInvoice";
+                        resmsg.result = "trPrintDraftInvoice";
                         return resmsg;
                     }
                     else
@@ -3381,7 +3381,8 @@ namespace Restaurant.Classes
                         if (prInvoice.invoiceId > 0)
                         {
                             #region fill invoice data
-                            ReportCls.checkLang();
+
+                            bool isArabic = ReportCls.checkLang();
                             //items
                             invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
                             #region items
@@ -3400,36 +3401,97 @@ namespace Restaurant.Classes
                                 }
                                 i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
 
-                                i.isExtra = false;
-                                //tempobject = i;
-                                 tempitemlist.Add(tempobject);
-                                if (i.itemExtras.Count() > 0)
-                                {
-                                     tempobject = new ItemTransfer();
-                               
-                                    string extname=" - "+ AppSettings.resourcemanagerreport.GetString("extra")+": ";
-                                    for (int j = 0; j < i.itemExtras.Count(); j++)
-                                    {
+                                //   i.isExtra = false;
+                                tempobject = i;
 
-                                        if (j == 0)
+                                //add without ingridient
+                                if (i.itemsIngredients.Where(x => x.isBasic == false && x.isActive == 0).Count() > 0)
+                                {
+                                    string alling = "";
+                                    List<itemsTransferIngredients> inglist = i.itemsIngredients.Where(x => x.isActive == 0 && x.isBasic == false).ToList();
+
+                                    for (int k = 0; k < inglist.Count(); k++)
+                                    {
+                                        if (isArabic)
                                         {
-                                            extname = extname + i.itemExtras[j].itemName;
+                                            if (k == 0)
+                                            {
+                                                alling = inglist[k].DishIngredientName;
+                                            }
+                                            else
+                                            {
+                                                alling = alling + "," + inglist[k].DishIngredientName;
+                                            }
                                         }
                                         else
                                         {
-                                            extname = extname + "," + i.itemExtras[j].itemName;
+                                            if (k == 0)
+                                            {
+                                                alling = " -" + AppSettings.resourcemanagerreport.GetString("without") + " : " + inglist[k].DishIngredientName;
+                                            }
+                                            else
+                                            {
+                                                alling = alling + ", " + inglist[k].DishIngredientName;
+                                            }
                                         }
 
 
                                     }
-                                    //tempobject.itemName = extname;
-                                    //tempobject.isExtra = true;
-                                     tempitemlist.Add(tempobject);
-                                    i.itemName = i.itemName + extname;
+                                    if (isArabic)
+                                    {
+                                        
+                                     tempobject.itemName = tempobject.itemName + " -"+ AppSettings.resourcemanagerreport.GetString("without")+":"+ alling    ;
+                                       
+                                    }
+                                    else
+                                    {
+                                        tempobject.itemName = tempobject.itemName + alling;
+                                    }
+
                                 }
 
+                                //end add without ingridient
+                                tempitemlist.Add(tempobject);
+                                //add extra row
+                                if (i.itemExtras.Count() > 0)
+                                {
+
+
+                                    //   string extname=" - "+ AppSettings.resourcemanagerreport.GetString("extra")+": ";
+                                    for (int j = 0; j < i.itemExtras.Count(); j++)
+                                    {
+                                        tempobject = new ItemTransfer();
+                                        tempobject = i.itemExtras[j];
+                                        tempobject.itemName = AppSettings.resourcemanagerreport.GetString("extra") + ": " + tempobject.itemName;
+                                        tempobject.price = decimal.Parse(HelpClass.DecTostring(tempobject.price));
+                                        if (tempobject.itemTax != null)
+                                        {
+                                            totaltax += (decimal)tempobject.itemTax;
+
+                                        }
+                                        tempobject.subTotal = decimal.Parse(HelpClass.DecTostring(tempobject.price * tempobject.quantity));
+
+
+                                        //if (j == 0)
+                                        //{
+                                        //    extname = extname + i.itemExtras[j].itemName;
+                                        //}
+                                        //else
+                                        //{
+                                        //    extname = extname + "," + i.itemExtras[j].itemName;
+                                        //}
+                                        tempitemlist.Add(tempobject);
+
+                                    }
+                                    //tempobject.itemName = extname;
+                                    //tempobject.isExtra = true;
+
+                                    // i.itemName = i.itemName + extname;
+                                }
+                                //end add extra row
+
                             }
-                            //invoiceItems = tempitemlist.ToList();
+                            invoiceItems = tempitemlist.ToList();
                             #endregion
                             itemscount = tempitemlist.ToList().Count();
 
@@ -3497,7 +3559,7 @@ namespace Restaurant.Classes
                                 prInvoice.branchName = branch.name;
                             }
 
-                         
+
                             //shipping
                             ShippingCompanies shippingcom = new ShippingCompanies();
 
@@ -3522,7 +3584,7 @@ namespace Restaurant.Classes
                             prInvoice.shipUserName = shipuser.name + " " + shipuser.lastname;
                             //end shipping
 
-                           
+
                             //
                             if (totaltax > 0 && prInvoice.invType != "sbd" && prInvoice.invType != "sb")
                             {
@@ -3551,7 +3613,7 @@ namespace Restaurant.Classes
                                 )
                             {
                                 CashTransfer cachModel = new CashTransfer();
-                             
+
                                 payedList = await cachModel.GetPayedByInvId(prInvoice.invoiceId);
                                 //mailpayedList = payedList;
                                 decimal sump = payedList.Sum(x => x.cash);
@@ -3566,22 +3628,22 @@ namespace Restaurant.Classes
                                 paramarr.Add(new ReportParameter("sumP", reportclass.DecTostring(sump)));
                                 paramarr.Add(new ReportParameter("deserved", reportclass.DecTostring(deservd)));
                                 rs.rep.DataSources.Add(new ReportDataSource("DataSetPayedInvclass", payedList));
-                            
+
 
                             }
-                         
+
                             //heigh
                             string sp = GetparameterByname(paramarr, "sumP");
                             int spn = GetparameterByname(paramarr, "sumP").Count();
                             //Currency
-                            int curlen= GetparameterByname(paramarr, "Currency").Count(); //deserved
-                            if (GetparameterByname(paramarr, "sumP").Count()+ curlen > 11)
+                            int curlen = GetparameterByname(paramarr, "Currency").Count(); //deserved
+                            if (GetparameterByname(paramarr, "sumP").Count() + curlen > 11)
                             {
                                 rs.height = rs.height + 40;
                             }
                             if (GetparameterByname(paramarr, "deserved").Count() + curlen > 8)
                             {
-                                rs.height = rs.height +40;
+                                rs.height = rs.height + 40;
                             }
                             //if (GetparameterByname(paramarr, "total").Count()  > 10)
                             //{
@@ -3595,7 +3657,7 @@ namespace Restaurant.Classes
                             //{
                             //    rs.height = rs.height + 40;
                             //}
-                            if (prInvoice.shippingCompanyId>0 &&  GetparameterByname(paramarr, "shippingCost").Count() + curlen > 10)
+                            if (prInvoice.shippingCompanyId > 0 && GetparameterByname(paramarr, "shippingCost").Count() + curlen > 10)
                             {
                                 rs.height = rs.height + 40;
                             }
@@ -3603,17 +3665,17 @@ namespace Restaurant.Classes
                             //{
                             //    rs.height = rs.height + 40;
                             //}
-                            if (prInvoice.shippingCompanyId > 0  )
+                            if (prInvoice.shippingCompanyId > 0)
                             {
                                 rs.height = rs.height + 80;
                             }
                             if (payedList.Count > 1)
                             {
-                                rs.height = rs.height + ((payedList.Count-1)*45);
+                                rs.height = rs.height + ((payedList.Count - 1) * 45);
                             }
-                           if( buttonSrc == "prev")
+                            if (buttonSrc == "prev")
                             {
-                                rs.height = rs.height +  40;
+                                rs.height = rs.height + 40;
                             }
                             //shippingCost 
                             if (rs.height > 0)
@@ -3634,7 +3696,7 @@ namespace Restaurant.Classes
 
                             rs.rep.Refresh();
                             //  int pcont = rs.rep.GetTotalPages();
-                           // int pcont = rs.rep.GetTotalPages(PageCountMode.Actual);
+                            // int pcont = rs.rep.GetTotalPages(PageCountMode.Actual);
 
                             #endregion
                             /////////////////////////////////////////////////////////
@@ -3674,7 +3736,7 @@ namespace Restaurant.Classes
                                     resmsg = await saveEmailpdf(prInvoice, resmsg);
                                     //if (resmsg.result != "")
                                     //{
-                                        return resmsg;
+                                    return resmsg;
                                     //}
                                 }
                             }
@@ -3701,9 +3763,9 @@ namespace Restaurant.Classes
 
                 //});
                 resmsg.result = "notCompleted";
-                return resmsg ;
+                return resmsg;
             }
-            return resmsg ;
+            return resmsg;
 
         }
         public async Task<string> savepdfinvoice(reportsize rs, Invoice prInvoice, List<ReportParameter> paramarr)
@@ -3819,25 +3881,25 @@ namespace Restaurant.Classes
             //end pdf
             return result;
         }
-        public async Task<resultmessage> saveEmailpdf( Invoice prInvoice, resultmessage resmsg)
+        public async Task<resultmessage> saveEmailpdf(Invoice prInvoice, resultmessage resmsg)
         {
-      
-           // resmsg.result = "";
-                  Invoice invoiceModel = new Invoice();
+
+            // resmsg.result = "";
+            Invoice invoiceModel = new Invoice();
             //pdf
-         
-         
+
+
             //Dispatcher.Invoke(() =>
             // {
-        
+
 
             //});
-                //copy count
-                if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p"
-                    || prInvoice.invType == "pb"
-                    || prInvoice.invType == "ss" || prInvoice.invType == "ts")
-                {
-                   resmsg.paramarr.Add(new ReportParameter("isOrginal", false.ToString()));
+            //copy count
+            if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p"
+                || prInvoice.invType == "pb"
+                || prInvoice.invType == "ss" || prInvoice.invType == "ts")
+            {
+                resmsg.paramarr.Add(new ReportParameter("isOrginal", false.ToString()));
 
                 //if (i > 1)
                 //{
@@ -3858,59 +3920,14 @@ namespace Restaurant.Classes
                 //    rs.rep.Refresh();
 
 
-                    if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
-                    {
-
-                        //Dispatcher.Invoke(() =>
-                        //{
-                        //LocalReportExtensions.ExportToPDF(rep, filepath);
-
-
-                        //if (AppSettings.salePaperSize != "A4")
-                        //{
-                        //    LocalReportExtensions.customExportToPDF(rs.rep, filepath, rs.width, rs.height);
-                        //}
-                        //else
-                        //{
-                        //    LocalReportExtensions.ExportToPDF(rs.rep, filepath);
-                        //}
-
-                        //});
-
-
-                        int res = 0;
-
-                        res = await invoiceModel.updateprintstat(prInvoice.invoiceId, 1, false, true);
-
-
-
-                        prInvoice.printedcount = prInvoice.printedcount + 1;
-
-                        prInvoice.isOrginal = false;
-
-
-                    }
-                    else
-                    {
-                        //this.Dispatcher.Invoke(() =>
-                        //{
-                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trYouExceedLimit"), animation: ToasterAnimation.FadeIn);
-
-                        //});
-                  
-                    resmsg.result = "trYouExceedLimit";
-                     
-
-                    }
-
-
-                }
-                else
+                if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
                 {
-                resmsg.result = "trPrintDraftInvoice";
-                    //this.Dispatcher.Invoke(() =>
+
+                    //Dispatcher.Invoke(() =>
                     //{
                     //LocalReportExtensions.ExportToPDF(rep, filepath);
+
+
                     //if (AppSettings.salePaperSize != "A4")
                     //{
                     //    LocalReportExtensions.customExportToPDF(rs.rep, filepath, rs.width, rs.height);
@@ -3919,6 +3936,51 @@ namespace Restaurant.Classes
                     //{
                     //    LocalReportExtensions.ExportToPDF(rs.rep, filepath);
                     //}
+
+                    //});
+
+
+                    int res = 0;
+
+                    res = await invoiceModel.updateprintstat(prInvoice.invoiceId, 1, false, true);
+
+
+
+                    prInvoice.printedcount = prInvoice.printedcount + 1;
+
+                    prInvoice.isOrginal = false;
+
+
+                }
+                else
+                {
+                    //this.Dispatcher.Invoke(() =>
+                    //{
+                    //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trYouExceedLimit"), animation: ToasterAnimation.FadeIn);
+
+                    //});
+
+                    resmsg.result = "trYouExceedLimit";
+
+
+                }
+
+
+            }
+            else
+            {
+                resmsg.result = "trPrintDraftInvoice";
+                //this.Dispatcher.Invoke(() =>
+                //{
+                //LocalReportExtensions.ExportToPDF(rep, filepath);
+                //if (AppSettings.salePaperSize != "A4")
+                //{
+                //    LocalReportExtensions.customExportToPDF(rs.rep, filepath, rs.width, rs.height);
+                //}
+                //else
+                //{
+                //    LocalReportExtensions.ExportToPDF(rs.rep, filepath);
+                //}
 
                 //});
 
@@ -3933,7 +3995,7 @@ namespace Restaurant.Classes
             //resmsg.rep = rs.rep;
             //resmsg.height = rs.height;
             //resmsg.width = rs.width;
-           
+
             return resmsg;
         }
 
@@ -3975,17 +4037,17 @@ namespace Restaurant.Classes
 
                         //this.Dispatcher.Invoke(() =>
                         //{
-                            if (AppSettings.salePaperSize == "A4")
-                            {
+                        if (AppSettings.salePaperSize == "A4")
+                        {
 
-                                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rs.rep, AppSettings.sale_printer_name, 1);
+                            LocalReportExtensions.PrintToPrinterbyNameAndCopy(rs.rep, AppSettings.sale_printer_name, 1);
 
-                            }
-                            else
-                            {
-                                LocalReportExtensions.customPrintToPrinter(rs.rep, AppSettings.sale_printer_name, 1, rs.width, rs.height);
+                        }
+                        else
+                        {
+                            LocalReportExtensions.customPrintToPrinter(rs.rep, AppSettings.sale_printer_name, 1, rs.width, rs.height);
 
-                            }
+                        }
 
                         //});
 
@@ -4010,7 +4072,7 @@ namespace Restaurant.Classes
                     }
 
                 }
-            
+
             }
             else
             {
@@ -4018,17 +4080,17 @@ namespace Restaurant.Classes
                 //this.Dispatcher.Invoke(() =>
                 //{
 
-                    if (AppSettings.salePaperSize == "A4")
-                    {
+                if (AppSettings.salePaperSize == "A4")
+                {
 
-                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rs.rep, AppSettings.sale_printer_name, short.Parse(AppSettings.sale_copy_count));
+                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rs.rep, AppSettings.sale_printer_name, short.Parse(AppSettings.sale_copy_count));
 
-                    }
-                    else
-                    {
-                        LocalReportExtensions.customPrintToPrinter(rs.rep, AppSettings.sale_printer_name, short.Parse(AppSettings.sale_copy_count), rs.width, rs.height);
+                }
+                else
+                {
+                    LocalReportExtensions.customPrintToPrinter(rs.rep, AppSettings.sale_printer_name, short.Parse(AppSettings.sale_copy_count), rs.width, rs.height);
 
-                    }
+                }
 
 
                 //});
@@ -4040,7 +4102,7 @@ namespace Restaurant.Classes
         }
         public async Task<resultmessage> previewinvoice(reportsize rs, Invoice prInvoice, List<ReportParameter> paramarr)
         {
-           // string result = "";
+            // string result = "";
             resultmessage resmsg = new resultmessage();
             resmsg.pdfpath = "";
             resmsg.result = "";
@@ -4055,12 +4117,12 @@ namespace Restaurant.Classes
             pdfpath = reportclass.PathUp(System.IO.Directory.GetCurrentDirectory(), 2, pdfpath);
 
             //////////////////////////////////
-            
+
             // start preview
             //copy count
             if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p" || prInvoice.invType == "pb" || prInvoice.invType == "ts" || prInvoice.invType == "ss")
             {
-   
+
                 paramarr.Add(new ReportParameter("isOrginal", prInvoice.isOrginal.ToString()));
                 //// update paramarr->isOrginal
                 //foreach (var item in paramarr.Where(x => x.Name == "isOrginal").ToList())
@@ -4105,9 +4167,9 @@ namespace Restaurant.Classes
                 }
                 else
                 {
-                    resmsg. result = "trYouExceedLimit";
+                    resmsg.result = "trYouExceedLimit";
                     return resmsg;
-                    
+
                     //Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trYouExceedLimit"), animation: ToasterAnimation.FadeIn);
                 }
 
@@ -4116,7 +4178,7 @@ namespace Restaurant.Classes
             else
             {
 
-                if ( AppSettings.salePaperSize != "A4")
+                if (AppSettings.salePaperSize != "A4")
                 {
                     LocalReportExtensions.customExportToPDF(rs.rep, pdfpath, rs.width, rs.height);
                 }
@@ -4143,7 +4205,7 @@ namespace Restaurant.Classes
         public string GetparameterByname(List<ReportParameter> paramarr, string name)
         {
             string value = "";
-            value= paramarr.Where(x => x.Name == name).FirstOrDefault().Values[0].ToString() ;
+            value = paramarr.Where(x => x.Name == name).FirstOrDefault().Values[0].ToString();
             return value;
         }
     }
