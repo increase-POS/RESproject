@@ -57,7 +57,6 @@ namespace Restaurant.Classes
         
 
         #endregion
-
         #region branch
         static public Branch branch = new Branch();
         static public List<Branch> branchsList ;
@@ -719,6 +718,7 @@ namespace Restaurant.Classes
         static public async Task<IEnumerable<Card>> RefreshCards()
         {
             cardsList = await card.GetAll();
+            cardsList = cardsList.Where(x => x.isActive == 1).ToList();
             return cardsList;
         }
         static public async Task FillComboCards(ComboBox cmb)
